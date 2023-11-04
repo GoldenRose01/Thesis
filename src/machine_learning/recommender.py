@@ -647,6 +647,3 @@ def evaluate_recommendations(input_log, labeling, prefixing, rules, paths):
         eval_res.fscore = 0
 
     return eval_res
-
-# Il codice continua fino alla fine della funzione "evaluate_recommendations".
-

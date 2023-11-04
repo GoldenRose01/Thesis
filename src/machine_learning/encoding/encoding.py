@@ -1,20 +1,15 @@
-from src.constants import *  # Importa costanti da src.constants
-from src.machine_learning.labeling import *  # Importa funzioni di labeling da src.machine_learning.labeling
-from src.models.DTInput import *  # Importa la classe DTInput da src.models.DTInput
-from src.enums.ConstraintChecker import *  # Importa enumerazioni da src.enums.ConstraintChecker
-import settings  # Importa il modulo settings
-from src.machine_learning.label.common import \
-    LabelTypes  # Importa il tipo di etichetta LabelTypes da src.machine_learning.label.common
-from pandas import DataFrame  # Importa la classe DataFrame dal modulo pandas
-from src.machine_learning.encoding.constants import \
-    EncodingType  # Importa l'enumerazione EncodingType da src.machine_learning.encoding.constants
-from src.machine_learning.encoding.feature_encoder.frequency_features import \
-    frequency_features  # Importa la funzione frequency_features da src.machine_learning.encoding.feature_encoder.frequency_features
-from src.machine_learning.encoding.feature_encoder.simple_features import \
-    simple_features  # Importa la funzione simple_features da src.machine_learning.encoding.feature_encoder.simple_features
-from src.machine_learning.encoding.feature_encoder.complex_features import \
-    complex_features  # Importa la funzione complex_features da src.machine_learning.encoding.feature_encoder.complex_features
-from src.machine_learning.encoding.data_encoder import *  # Importa funzioni di encoding dati da src.machine_learning.encoding.data_encoder
+from src.constants import *
+from src.machine_learning.labeling import *
+from src.models.DTInput import *
+from src.enums.ConstraintChecker import *
+import settings
+from src.machine_learning.label.common import LabelTypes
+from pandas import DataFrame
+from src.machine_learning.encoding.constants import EncodingType
+from src.machine_learning.encoding.feature_encoder.frequency_features import frequency_features
+from src.machine_learning.encoding.feature_encoder.simple_features import simple_features
+from src.machine_learning.encoding.feature_encoder.complex_features import complex_features
+from src.machine_learning.encoding.data_encoder import *
 
 TRACE_TO_DF = {
     EncodingType.SIMPLE.value: simple_features,
