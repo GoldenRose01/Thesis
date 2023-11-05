@@ -2,6 +2,8 @@
 import platform
 from src.dataset_manager.datasetManager import DatasetManager
 from src.machine_learning import *
+from src.machine_learning import recommender
+
 from pm4py.objects.conversion.log import converter as log_converter
 import argparse
 import multiprocessing
