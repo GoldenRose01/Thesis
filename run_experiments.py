@@ -3,13 +3,37 @@ import platform
 from src.dataset_manager.datasetManager import DatasetManager
 from src.machine_learning import *
 from src.machine_learning import recommender
-
 from pm4py.objects.conversion.log import converter as log_converter
 import argparse
 import multiprocessing
 import sys
 import time
 import numpy as np
+import os
+import csv
+import copy
+import shutil
+# Importa le librerie per l'accelerazione GPU
+import tensorflow as tf
+
+# Verifica della disponibilità della GPU e configurazione di TensorFlow
+if tf.test.gpu_device_name():
+    print(f"Default GPU Device: {tf.test.gpu_device_name()}")
+else:
+    print("TensorFlow non ha rilevato la presenza di una GPU compatibile.")
+
+gpus = tf.config.experimental.list_physical_devices('GPU')
+if gpus:
+    try:
+        # Imposta TensorFlow per l'allocazione di memoria dinamica sulla GPU
+        for gpu in gpus:
+            tf.config.experimental.set_memory_growth(gpu, True)
+        print("Utilizzo dinamico della memoria della GPU abilitato.")
+    except RuntimeError as e:
+        # Eccezione lanciata se la GPU è stata inizializzata prima di chiamare set_visible_devices
+        print(e)
+else:
+    print("Nessuna GPU trovata, verrà utilizzata la CPU.")
 
 
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione

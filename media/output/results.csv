@@ -61,3 +61,7 @@ Dataset,Score,Best hyperparams configuration,Min prefix length,Max prefix length
 Dataset,Score,Best hyperparams configuration,Min prefix length,Max prefix length,Decision Tree parameters
 
 "bpic2012_accepted,47.43,""(0.65, 0.1, 0.8, 0.1)"",1,35,""('balanced', 'entropy', 10, 1, 2)"""
+Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima del prefisso,Lunghezza massima del prefisso,Parametri dell'albero decisionale
+sepsis_cases_1,12.57,"(0.55, 0.1, 0.1, 0.8)",1,15,"(None, 'entropy', 4, 10, 0.1)"
+Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima del prefisso,Lunghezza massima del prefisso,Parametri dell'albero decisionale
+sepsis_cases_1,12.57,"(0.55, 0.1, 0.1, 0.8)",1,15,"(None, 'entropy', 4, 10, 0.1)"

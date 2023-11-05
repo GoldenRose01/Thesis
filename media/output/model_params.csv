@@ -994,3 +994,5 @@ bpic2015_3_f2	(None, 'gini', None, 10, 0.3)	93.28	96.46	-1	39
 bpic2015_3_f2	(None, 'gini', None, 10, 0.3)	93.28	96.46	-1	39
 bpic2012_accepted	('balanced', 'entropy', 10, 1, 2)	69.97	70.3	-1	10
 sepsis_cases_1	(None, 'entropy', 4, 10, 0.1)	90.98	91.42	-1	4
+sepsis_cases_1	(None, 'entropy', 4, 10, 0.1)	90.98	91.42	-1	4
+sepsis_cases_1	(None, 'entropy', 4, 10, 0.1)	90.98	91.42	-1	4
