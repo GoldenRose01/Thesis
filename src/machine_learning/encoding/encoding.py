@@ -73,6 +73,57 @@ class Encoding:
         self.encoder = Encoder(df=self.df, attribute_encoding=self.CONF['attribute_encoding'])
         self.encoded = 0
 
+    # Funzione per calcolare la differenza di tempo tra gli eventi
+    def calculate_time_diff(trace):
+        time_diffs = [0]  # Inizializza con 0 per il primo evento
+        timestamps = [event['timestamp'] for event in trace]
+        for i in range(1, len(trace)):
+            time_diff = (timestamps[i] - timestamps[i - 1]).total_seconds()
+            time_diffs.append(time_diff)
+        return time_diffs
+
+    # Includi il Trace ID, gli eventi, il timing e le risorse
+    def complex_features(log, prefix_length, padding, prefix_length_strategy, labeling_type, generation_type,
+                         feature_list=None):
+        data = []
+        for trace in log:
+            trace_id = trace.attributes['concept:name']  # Trace ID
+            events = [event['concept:name'] for event in trace]  # Eventi
+            time_diffs = calculate_time_diff(trace)  # Differenze di tempo
+            resources = [event['resource'] if 'resource' in event else None for event in trace]  # Risorse
+
+            if prefix_length_strategy == 'fixed':
+                prefix = events[:prefix_length]
+                time_diffs_prefix = time_diffs[:prefix_length]
+                resources_prefix = resources[:prefix_length]
+            elif prefix_length_strategy == 'percentage':
+                prefix_length = int(prefix_length * len(events))
+                prefix = events[:prefix_length]
+                time_diffs_prefix = time_diffs[:prefix_length]
+                resources_prefix = resources[:prefix_length]
+            else:
+                prefix = events
+                time_diffs_prefix = time_diffs
+                resources_prefix = resources
+
+            if padding and len(prefix) < prefix_length:
+                prefix += [PADDING_VALUE] * (prefix_length - len(prefix))
+                time_diffs_prefix += [0] * (prefix_length - len(time_diffs_prefix))
+                resources_prefix += [None] * (prefix_length - len(resources_prefix))
+
+            data.append([trace_id, prefix, time_diffs_prefix, resources_prefix])
+
+        df = pd.DataFrame(data, columns=['trace_id', 'prefix', 'time_diffs', 'resources'])
+
+        if labeling_type == LabelTypes.NEXT_ACTIVITY.value:
+            df['label'] = df['prefix'].apply(lambda x: x[-1] if len(x) > 0 else PADDING_VALUE)
+        elif labeling_type == LabelTypes.ATTRIBUTE_STRING.value:
+            df['label'] = df.apply(lambda row: add_label_column(log[row.name], labeling_type, prefix_length), axis=1)
+        else:
+            raise Exception('Label not set, please select one of LabelTypes(Enum) values!')
+
+        return df
+
     # Metodo per codificare le tracce
     def encode_traces(self):
         self.encoder.encode(df=self.df)
