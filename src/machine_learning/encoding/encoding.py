@@ -85,12 +85,12 @@ class Encoding:
     # Includi il Trace ID, gli eventi, il timing e le risorse
     def complex_features(log, prefix_length, padding, prefix_length_strategy, labeling_type, generation_type,
                          feature_list=None):
-        data = []
-        for trace in log:
+        data = [] #inizializza lista vuota
+        for trace in log: #itera traccia del log
             trace_id = trace.attributes['concept:name']  # Trace ID
             events = [event['concept:name'] for event in trace]  # Eventi
             time_diffs = calculate_time_diff(trace)  # Differenze di tempo
-            resources = [event['resource'] if 'resource' in event else None for event in trace]  # Risorse
+            resources = [event['resource'] if 'resource' in event else None for event in trace]  # Crea lista Risorse
 
             if prefix_length_strategy == 'fixed':
                 prefix = events[:prefix_length]

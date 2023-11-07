@@ -3,4 +3,4 @@
 TRACE_ID_ATTRIBUTE = 'case:concept:name'
 
 # Definisci il nome dell'attributo che contiene le risorse
-RESOURCE_ATTRIBUTE = 'resource'
+RESOURCE_ATTRIBUTE = 'resource' 
