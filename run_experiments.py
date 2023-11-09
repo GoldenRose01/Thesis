@@ -11,9 +11,14 @@ import time
 import numpy as np
 import csv
 import copy
-# Importa le librerie per la gestione dei file
+from dotenv import load_dotenv
 import os
-os.environ['PATH'] += os.pathsep + 'C:/Program Files/Graphviz/bin'
+
+# Carica le variabili d'ambiente dal file .env
+load_dotenv()
+
+# Imposta la variabile d'ambiente PATH
+os.environ['PATH'] = os.getenv('PATH')
 
 import shutil
 # Importa le librerie per l'accelerazione GPU
@@ -39,8 +44,8 @@ import shutil
 #    print("Nessuna GPU trovata, verrà utilizzata la CPU.")
 
 # Verifica se i file Resource_att.txt e Trace_att.txt esistono nella cartella desiderata
-resource_att_path = "src/machine_learning/encoding/feature_encoder/Resource_att.txt"
-trace_att_path = "src/machine_learning/encoding/feature_encoder/Trace_att.txt"
+resource_att_path = "src/machine_learning/encoding/Resource_att.txt"
+trace_att_path = "src/machine_learning/encoding/Trace_att.txt"
 
 if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
     print("I file Resource_att.txt e/o Trace_att.txt non esistono. Eseguire csvreader.py per crearli.")
