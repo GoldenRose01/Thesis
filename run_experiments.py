@@ -38,6 +38,13 @@ import shutil
 #else:
 #    print("Nessuna GPU trovata, verrà utilizzata la CPU.")
 
+# Verifica se i file Resource_att.txt e Trace_att.txt esistono nella cartella desiderata
+resource_att_path = "src/machine_learning/encoding/feature_encoder/Resource_att.txt"
+trace_att_path = "src/machine_learning/encoding/feature_encoder/Trace_att.txt"
+
+if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
+    print("I file Resource_att.txt e/o Trace_att.txt non esistono. Eseguire csvreader.py per crearli.")
+    # Esegui lo script csvreader.py qui se necessario.
 
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione
 def rec_sys_exp(dataset_name):

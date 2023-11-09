@@ -8,13 +8,13 @@ from pandas import DataFrame
 from src.machine_learning.encoding.constants import EncodingType
 from src.machine_learning.encoding.feature_encoder.frequency_features import frequency_features
 from src.machine_learning.encoding.feature_encoder.simple_features import simple_features
-from src.machine_learning.encoding.feature_encoder.complex_features import complex_features
+from src.machine_learning.encoding.feature_encoder.complex_features import complex_features  # Aggiunta questa linea
 from src.machine_learning.encoding.data_encoder import *
 
 TRACE_TO_DF = {
     EncodingType.SIMPLE.value: simple_features,
     EncodingType.FREQUENCY.value: frequency_features,
-    EncodingType.COMPLEX.value: complex_features,
+    EncodingType.COMPLEX.value: complex_features,  # Aggiunta questa linea
     # EncodingType.DECLARE.value : declare_features
 }
 
@@ -82,48 +82,6 @@ class Encoding:
             time_diffs.append(time_diff)
         return time_diffs
 
-    # Includi il Trace ID, gli eventi, il timing e le risorse
-    def complex_features(log, prefix_length, padding, prefix_length_strategy, labeling_type, generation_type,
-                         feature_list=None):
-        data = [] #inizializza lista vuota
-        for trace in log: #itera traccia del log
-            trace_id = trace.attributes['concept:name']  # Trace ID
-            events = [event['concept:name'] for event in trace]  # Eventi
-            time_diffs = calculate_time_diff(trace)  # Differenze di tempo
-            resources = [event['resource'] if 'resource' in event else None for event in trace]  # Crea lista Risorse
-
-            if prefix_length_strategy == 'fixed':
-                prefix = events[:prefix_length]
-                time_diffs_prefix = time_diffs[:prefix_length]
-                resources_prefix = resources[:prefix_length]
-            elif prefix_length_strategy == 'percentage':
-                prefix_length = int(prefix_length * len(events))
-                prefix = events[:prefix_length]
-                time_diffs_prefix = time_diffs[:prefix_length]
-                resources_prefix = resources[:prefix_length]
-            else:
-                prefix = events
-                time_diffs_prefix = time_diffs
-                resources_prefix = resources
-
-            if padding and len(prefix) < prefix_length:
-                prefix += [PADDING_VALUE] * (prefix_length - len(prefix))
-                time_diffs_prefix += [0] * (prefix_length - len(time_diffs_prefix))
-                resources_prefix += [None] * (prefix_length - len(resources_prefix))
-
-            data.append([trace_id, prefix, time_diffs_prefix, resources_prefix])
-
-        df = pd.DataFrame(data, columns=['trace_id', 'prefix', 'time_diffs', 'resources'])
-
-        if labeling_type == LabelTypes.NEXT_ACTIVITY.value:
-            df['label'] = df['prefix'].apply(lambda x: x[-1] if len(x) > 0 else PADDING_VALUE)
-        elif labeling_type == LabelTypes.ATTRIBUTE_STRING.value:
-            df['label'] = df.apply(lambda row: add_label_column(log[row.name], labeling_type, prefix_length), axis=1)
-        else:
-            raise Exception('Label not set, please select one of LabelTypes(Enum) values!')
-
-        return df
-
     # Metodo per codificare le tracce
     def encode_traces(self):
         self.encoder.encode(df=self.df)
@@ -159,3 +117,40 @@ class Encoding:
         df_input = pd.DataFrame(prefix_columns)
         self.encoder.encode(df=df_input)
         return df_input
+
+    # Funzione per ottenere gli attributi del Trace ID per un caso specifico
+    def get_trace_attributes(case_id, trace_attributes):
+        return trace_attributes.get(case_id, {})
+
+    # Funzione per ottenere gli attributi delle risorse per un caso specifico
+    def get_resource_attributes(case_id, resource_attributes):
+        return resource_attributes.get(case_id, {})
+
+    # Funzione per ottenere gli attributi combinati per un caso specifico
+    def get_combined_attributes(case_id, trace_attributes, resource_attributes):
+        trace_attr = get_trace_attributes(case_id, trace_attributes)
+        resource_attr = get_resource_attributes(case_id, resource_attributes)
+
+        combined_attributes = {**trace_attr, **resource_attr}
+        return combined_attributes
+
+    # Funzione per implementare il complex encoding
+    def complex_features(log, prefix_length, padding, prefix_length_strategy, labeling_type, generation_type,
+                         feature_list,
+                         trace_attributes, resource_attributes):
+        # Chiamata alla funzione simple_features per ottenere il dataframe
+        df = simple_features(log, prefix_length, padding, prefix_length_strategy, labeling_type, generation_type,
+                             feature_list)
+
+        # Aggiungi colonne per gli attributi del Trace ID e delle risorse
+        trace_id_column = log.columns[0]  # Assumendo che la colonna del Trace ID sia la prima
+        df['trace_id'] = log[trace_id_column]
+
+        df['trace_attributes'] = df['trace_id'].apply(lambda x: get_trace_attributes(x, trace_attributes))
+        df['resource_attributes'] = df['trace_id'].apply(lambda x: get_resource_attributes(x, resource_attributes))
+
+        # Combinazione degli attributi del Trace ID e delle risorse in un'unica colonna
+        df['combined_attributes'] = df.apply(
+            lambda row: get_combined_attributes(row['trace_id'], trace_attributes, resource_attributes), axis=1)
+
+        return df
