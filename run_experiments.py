@@ -11,16 +11,17 @@ import time
 import numpy as np
 import csv
 import copy
-from dotenv import load_dotenv
+import dotenv
 import os
 
-# Carica le variabili d'ambiente dal file .env
-load_dotenv()
+# Percorso al file .env
+env_path = '.env'
 
 # Imposta la variabile d'ambiente PATH
 os.environ['PATH'] = os.getenv('PATH')
 
 import shutil
+
 # Importa le librerie per l'accelerazione GPU
 #import tensorflow as tf
 
