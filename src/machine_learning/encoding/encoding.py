@@ -133,24 +133,3 @@ class Encoding:
 
         combined_attributes = {**trace_attr, **resource_attr}
         return combined_attributes
-
-    # Funzione per implementare il complex encoding
-    def complex_features(log, prefix_length, padding, prefix_length_strategy, labeling_type, generation_type,
-                         feature_list,
-                         trace_attributes, resource_attributes):
-        # Chiamata alla funzione simple_features per ottenere il dataframe
-        df = simple_features(log, prefix_length, padding, prefix_length_strategy, labeling_type, generation_type,
-                             feature_list)
-
-        # Aggiungi colonne per gli attributi del Trace ID e delle risorse
-        trace_id_column = log.columns[0]  # Assumendo che la colonna del Trace ID sia la prima
-        df['trace_id'] = log[trace_id_column]
-
-        df['trace_attributes'] = df['trace_id'].apply(lambda x: get_trace_attributes(x, trace_attributes))
-        df['resource_attributes'] = df['trace_id'].apply(lambda x: get_resource_attributes(x, resource_attributes))
-
-        # Combinazione degli attributi del Trace ID e delle risorse in un'unica colonna
-        df['combined_attributes'] = df.apply(
-            lambda row: get_combined_attributes(row['trace_id'], trace_attributes, resource_attributes), axis=1)
-
-        return df

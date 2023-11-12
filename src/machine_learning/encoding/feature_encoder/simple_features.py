@@ -83,3 +83,4 @@ def contains_numbers_iterative(string):
 def _compute_columns(prefix_length: int) -> list:
     """Calcola le colonne per le feature semplici"""
     return ["trace_id"] + [PREFIX_ + str(i + 1) for i in range(0, prefix_length)] + ['label']
+ 

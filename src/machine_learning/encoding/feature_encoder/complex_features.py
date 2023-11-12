@@ -10,27 +10,43 @@ ATTRIBUTE_CLASSIFIER = None  # Definisce una variabile globale ATTRIBUTE_CLASSIF
 PREFIX_ = 'prefix_'  # Definisce un prefisso
 
 
-def complex_features(log, prefix_length, padding, prefix_length_strategy: str, labeling_type, generation_type,
-                     feature_list: list = None, target_event: str = None) -> DataFrame:
-    # Questa funzione calcola le feature complesse a partire da un log di tracce
+def complex_features(log, prefix_length, padding, prefix_length_strategy, labeling_type, generation_type,
+                              feature_list=None, target_event=None, trace_attributes=None, resource_attributes=None):
+    """ Calcola le feature complesse da un log di eventi.
 
-    # Ottiene la lunghezza massima del prefisso
+    Args:
+        log: Il log di eventi.
+        prefix_length: La lunghezza del prefisso da utilizzare.
+        padding: True se è necessario aggiungere zeri ai prefissi più corti, False altrimenti.
+        prefix_length_strategy: La strategia per calcolare la lunghezza del prefisso.
+        labeling_type: Il tipo di etichettatura da applicare.
+        generation_type: Il tipo di generazione delle attività.
+        feature_list: Una lista delle colonne delle feature da utilizzare.
+        target_event: L'evento di destinazione da considerare.
+        trace_attributes: Gli attributi delle tracce da includere.
+        resource_attributes: Gli attributi delle risorse da includere.
+
+    Returns:
+        Un DataFrame contenente le feature complesse.
+    """
+
+    # Calculate the maximum prefix length
     max_prefix_length = get_max_prefix_length(log, prefix_length, prefix_length_strategy, target_event)
 
-    # Ottiene le colonne e le colonne aggiuntive per le feature complesse
+    # Obtain columns for complex features and handle additional columns
     columns, additional_columns = _columns_complex(log, max_prefix_length, feature_list)
     columns_number = len(columns)
     encoded_data = []
 
-    # Itera attraverso le tracce nel log
+    # Iterate through traces in the log
     for trace in log:
         trace_prefix_length = get_prefix_length(trace, prefix_length, prefix_length_strategy, target_event)
 
-        # Ignora le tracce troppo corte se non è richiesto il padding
+        # Ignore too short traces if padding is not required
         if len(trace) <= prefix_length - 1 and not padding:
             continue
 
-        # Genera le feature per ogni traccia in base alla strategia di generazione
+        # Generate features for each trace based on the generation strategy
         if generation_type == TaskGenerationType.ALL_IN_ONE.value:
             for event_index in range(1, min(trace_prefix_length + 1, len(trace) + 1)):
                 encoded_data.append(
@@ -41,7 +57,25 @@ def complex_features(log, prefix_length, padding, prefix_length_strategy: str, l
                 _trace_to_row(trace, trace_prefix_length, additional_columns, prefix_length_strategy, padding, columns,
                               labeling_type))
 
-    return DataFrame(columns=columns, data=encoded_data)
+    # Create DataFrame from encoded data
+    df = DataFrame(columns=columns, data=encoded_data)
+
+    # Assuming the trace ID is available, add columns for trace and resource attributes
+    if trace_attributes or resource_attributes:
+        trace_id_column = log.columns[0]  # Adjust if the trace ID column is located differently
+        df['trace_id'] = log[trace_id_column]
+
+        if trace_attributes:
+            df['trace_attributes'] = df['trace_id'].apply(lambda x: get_trace_attributes(x, trace_attributes))
+        if resource_attributes:
+            df['resource_attributes'] = df['trace_id'].apply(lambda x: get_resource_attributes(x, resource_attributes))
+
+        # Combine trace ID and resource attributes into one column if both are present
+        if trace_attributes and resource_attributes:
+            df['combined_attributes'] = df.apply(
+                lambda row: get_attributes(row['trace_id'], trace_attributes, resource_attributes), axis=1)
+
+    return df
 
 
 def _get_global_trace_attributes(log):
@@ -61,23 +95,21 @@ def _get_global_event_attributes(log):
 
 def _compute_additional_columns(log) -> dict:
     # Calcola le colonne aggiuntive in base al log
-    return {'trace_attributes': _get_global_trace_attributes(log),
-            'event_attributes': _get_global_event_attributes(log)}
-
+    return {'trace_attributes': sorted([att for att in _get_global_trace_attributes(log) if att not in ["concept:name", "time:timestamp", "label"]]),
+            'event_attributes': sorted([att for att in _get_global_event_attributes(log) if att not in ["concept:name"]])}
 
 def _columns_complex(log, prefix_length: int, feature_list: list = None) -> tuple:
     # Calcola le colonne per le feature complesse
     additional_columns = _compute_additional_columns(log)
-    columns = ['trace_id']
-    columns += additional_columns['trace_attributes']
-    for i in range(1, prefix_length + 1):
-        columns.append(PREFIX_ + str(i))
-        for additional_column in additional_columns['event_attributes']:
-            columns.append(additional_column + "_" + str(i))
+    columns = ['trace_id'] + additional_columns['trace_attributes']
+    columns += [PREFIX_ + str(i) for i in range(1, prefix_length + 1)]
+    for additional_column in additional_columns['event_attributes']:
+        columns += [additional_column + "_" + str(i) for i in range(1, prefix_length + 1)]
     columns += ['label']
     if feature_list is not None:
         assert (list(feature_list) == columns)
     return columns, additional_columns
+
 
 
 def _data_complex(trace, prefix_length: int, additional_columns: dict) -> list:
