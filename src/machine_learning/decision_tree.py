@@ -192,3 +192,27 @@ def generate_paths(dtc, dt_input_features, target_label):
         paths.append(path)
 
     return paths
+
+
+def process_log_and_model(log, encoding_params, dt_params, support_threshold_dict, dataset_name, render_dt):
+    # Encoding complesso
+    complex_data = complex_features(log, **encoding_params)
+    X = complex_data.drop(columns=['label'])  # Rimuove la colonna della label
+    y = complex_data['label']  # Assumi che la label sia presente in complex_data
+
+    # Dividi i dati in training e validation sets
+    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=0)
+
+    # Ottimizzazione dell'albero decisionale
+    model_dict, feature_names = find_best_dt(dataset_name, complex_data, support_threshold_dict, render_dt, (X_train, y_train))
+
+    # Calcolo dello score F1
+    f1 = dt_score((X_val, y_val, feature_names))
+
+    # Generazione dei percorsi dell'albero decisionale
+    paths = generate_paths(model_dict['model'], feature_names, LabelTypes.TRUE.value)
+
+    return model_dict, f1, paths
+
+# Esecuzione della funzione principale
+model_dict, f1_score, paths = process_log_and_model(log, encoding_params, dt_params, support_threshold_dict, dataset_name, render_dt)
