@@ -161,6 +161,11 @@ class DatasetManager:
 
         return data.groupby(self.case_id_col).last()["prefix_nr"]
 
+    def get_trace_attributes(self, data):
+
+        # Ottiene gli attributi a livello di traccia
+        return data[self.static_cat_cols + self.static_num_cols].drop_duplicates()
+
     def get_case_ids(self, data, nr_events=1):
         # Ottiene gli ID dei casi
 
@@ -168,6 +173,12 @@ class DatasetManager:
         if nr_events > 1:
             case_ids = case_ids.apply(lambda x: "_".join(x.split("_")[:-1]))
         return case_ids
+
+    def get_resource_attributes(self, data):
+        # Ottiene attributi specifici delle risorse
+        # Richiede che il dataset abbia colonne identificate per le risorse
+        resource_cols = [col for col in data.columns if 'resource' in col]
+        return data[resource_cols]
 
     def get_label_numeric(self, data):
         # Ottiene l'etichetta numerica dei dati
