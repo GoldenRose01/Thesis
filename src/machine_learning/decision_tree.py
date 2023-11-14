@@ -212,7 +212,4 @@ def process_log_and_model(log, dt_params, support_threshold_dict, dataset_name, 
     # Generazione dei percorsi dell'albero decisionale
     paths = generate_paths(model_dict['model'], feature_names, LabelTypes.TRUE.value)
 
-    return model_dict, f1, paths
-
-# Esecuzione della funzione principale
-model_dict, f1_score, paths = process_log_and_model(log, dt_params, support_threshold_dict, dataset_name, render_dt)
+    return  f1, paths
