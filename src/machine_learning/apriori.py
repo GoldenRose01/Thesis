@@ -104,5 +104,3 @@ def process_log(log, complex_encoding_params, support_threshold):
 
     return df_enriched
 
-df_final = process_log(log, complex_encoding_params, support_threshold)
-
