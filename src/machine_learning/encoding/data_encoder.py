@@ -1,7 +1,7 @@
-import numpy as np  # Importa il modulo numpy con l'alias 'np'
-import pandas as pd  # Importa il modulo pandas con l'alias 'pd'
-from pandas import DataFrame  # Importa la classe DataFrame dal modulo pandas
-from sklearn.preprocessing import LabelEncoder  # Importa la classe LabelEncoder dal modulo sklearn.preprocessing
+import numpy as np
+import pandas as pd
+from pandas import DataFrame
+from sklearn.preprocessing import LabelEncoder
 
 PADDING_VALUE = '0'  # Definisce il valore di padding come '0'
 

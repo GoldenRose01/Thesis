@@ -1,7 +1,6 @@
 from itertools import combinations
 from collections import defaultdict
 
-
 # Funzione per ottenere eventi frequenti
 def get_frequent_events(log, support_threshold):
     # Dizionario per contare la frequenza degli eventi
@@ -22,7 +21,6 @@ def get_frequent_events(log, support_threshold):
             frequent_events.append(key)
 
     return frequent_events
-
 
 # Funzione per ottenere coppie di eventi frequenti
 def get_frequent_pairs(log, pairs, support_threshold):

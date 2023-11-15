@@ -8,7 +8,7 @@ from pandas import DataFrame
 from src.machine_learning.encoding.constants import EncodingType
 from src.machine_learning.encoding.feature_encoder.frequency_features import frequency_features
 from src.machine_learning.encoding.feature_encoder.simple_features import simple_features
-from src.machine_learning.encoding.feature_encoder.complex_features import complex_features  # Aggiunta questa linea
+from src.machine_learning.encoding.feature_encoder.complex_features import complex_features
 from src.machine_learning.encoding.data_encoder import *
 
 TRACE_TO_DF = {
@@ -51,7 +51,7 @@ class Encoding:
             'prefix_length_strategy': 'fixed',
             'prefix_length': self.prefix,
             'padding': True,
-            'feature_selection': 'simple',
+            'feature_selection': 'complex',
             'task_generation_type': 'all_in_one',
             'attribute_encoding': 'label',
             'labeling_type': LabelTypes.ATTRIBUTE_STRING,

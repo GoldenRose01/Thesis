@@ -151,11 +151,15 @@ def rec_sys_exp(dataset_name):
             hyperparams_evaluation_list.append((v1,) + v2)
 
     # Esegue la creazione dei percorsi di allenamento
-    tmp_paths, dt = train_path_recommender(data_log=data_log, train_val_log=train_val_log, val_log=val_log,
-                                           train_log=train_log, labeling=labeling,
+    tmp_paths, dt = train_path_recommender(data_log=data_log,
+                                           train_val_log=train_val_log,
+                                           al_log=val_log,
+                                           train_log=train_log,
+                                           labeling=labeling,
                                            support_threshold=settings.support_threshold_dict,
                                            dataset_name=dataset_name,
-                                           output_dir=settings.output_dir, dt_input_trainval=dt_input_trainval_encoded)
+                                           output_dir=settings.output_dir,
+                                           dt_input_trainval=dt_input_trainval_encoded)
 
     counter = 0
 

@@ -1,6 +1,5 @@
 from enum import Enum
 
-
 class LabelTypes(Enum):
     NEXT_ACTIVITY = 'next_activity'
     ATTRIBUTE_STRING = 'label_attribute_string'
@@ -30,5 +29,3 @@ def next_event_name(trace: list, prefix_length: int):
         return name
     else:
         return 0
-
-
