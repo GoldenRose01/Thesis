@@ -147,3 +147,5 @@ media/input/BPIC17_O_Refused.csv
 media/input/BPIC17_O_Cancelled.csv
 media/input/BPIC17_O_Accepted.csv
 media/input/github_data.csv
+media/input/xes/Road_Traffic_Fine_Management_Process.xes
+media/input/xes/Hospital Billing - Event Log.xes
