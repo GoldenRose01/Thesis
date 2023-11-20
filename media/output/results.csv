@@ -81,3 +81,5 @@ Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima d
 sepsis_cases_1,12.57,"(0.55, 0.1, 0.1, 0.8)",1,15,"(None, 'entropy', 4, 10, 0.1)"
 Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima del prefisso,Lunghezza massima del prefisso,Parametri dell'albero decisionale
 sepsis_cases_1,3.67,"(0.65, 0.1, 0.8, 0.1)",1,15,"(None, 'entropy', 4, 10, 0.1)"
+Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima del prefisso,Lunghezza massima del prefisso,Parametri dell'albero decisionale
+sepsis_cases_1,3.67,"(0.65, 0.1, 0.8, 0.1)",1,15,"(None, 'entropy', 4, 10, 0.1)"
