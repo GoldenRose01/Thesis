@@ -49,7 +49,7 @@ resource_att_path = "src/machine_learning/encoding/Resource_att.txt"
 trace_att_path = "src/machine_learning/encoding/Trace_att.txt"
 
 if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
-    print("I file Resource_att.txt e/o Trace_att.txt non esistono. Eseguire csvreader.py per crearli.")
+    print("I file Resource_att.txt e/o Trace_att.txt non esistono. Eseguo csvreader.py per crearli.")
     # Esegui lo script csvreader.py qui se necessario.
 
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione
@@ -153,7 +153,7 @@ def rec_sys_exp(dataset_name):
     # Esegue la creazione dei percorsi di allenamento
     tmp_paths, dt = train_path_recommender(data_log=data_log,
                                            train_val_log=train_val_log,
-                                           al_log=val_log,
+                                           val_log=val_log,
                                            train_log=train_log,
                                            labeling=labeling,
                                            support_threshold=settings.support_threshold_dict,
