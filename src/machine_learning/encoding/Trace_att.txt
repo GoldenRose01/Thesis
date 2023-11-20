@@ -1,4 +1,4 @@
-BPIC15_1_f2.csv: Case ID
+BPIC15_1_f2.csv: Case ID , Age
 BPIC15_2_f2.csv: Case ID
 BPIC15_3_f2.csv: Case ID
 BPIC15_4_f2.csv: Case ID

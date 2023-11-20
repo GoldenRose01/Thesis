@@ -106,4 +106,3 @@ def _trace_to_row(trace, prefix_length: int, additional_columns, prefix_length_s
     trace_row += [add_label_column(trace, labeling_type, prefix_length)]
 
     return trace_row
-+

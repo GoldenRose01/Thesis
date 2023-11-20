@@ -1,4 +1,4 @@
-BPIC11_f1.csv: open_cases
+BPIC11_f1.csv: open_cases , Resource ,
 BPIC11_f2.csv: open_cases
 BPIC11_f3.csv: open_cases
 BPIC11_f4.csv: open_cases
