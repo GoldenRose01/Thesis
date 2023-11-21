@@ -14,6 +14,8 @@ import copy
 import dotenv
 import os
 import subprocess
+import shutil
+
 
 # Percorso al file .env
 env_path = '.env'
@@ -21,46 +23,21 @@ env_path = '.env'
 # Imposta la variabile d'ambiente PATH
 os.environ['PATH'] = os.getenv('PATH')
 
-import shutil
-
-# Importa le librerie per l'accelerazione GPU
-#import tensorflow as tf
-
-# Verifica della disponibilità della GPU e configurazione di TensorFlow
-#if tf.test.gpu_device_name():
-#   print(f"Default GPU Device: {tf.test.gpu_device_name()}")
-#else:
-#   print("TensorFlow non ha rilevato la presenza di una GPU compatibile.")
-
-#gpus = tf.config.experimental.list_physical_devices('GPU')
-#if gpus:
-#    try:
-#        # Imposta TensorFlow per l'allocazione di memoria dinamica sulla GPU
-#        for gpu in gpus:
-#            tf.config.experimental.set_memory_growth(gpu, True)
-#        print("Utilizzo dinamico della memoria della GPU abilitato.")
-#   except RuntimeError as e:
-#        # Eccezione lanciata se la GPU è stata inizializzata prima di chiamare set_visible_devices
-#        print(e)
-#else:
-#    print("Nessuna GPU trovata, verrà utilizzata la CPU.")
-
 # Verifica se i file Resource_att.txt e Trace_att.txt esistono nella cartella desiderata
 resource_att_path = "src/machine_learning/encoding/Resource_att.txt"
 trace_att_path = "src/machine_learning/encoding/Trace_att.txt"
 
-
 # Verifica dell'esistenza dei file
-if not os.path.exists(resource_file_path) or not os.path.exists(trace_attributes_file_path):
+if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
     print("File non trovati. Esecuzione degli script Xesreader.py e csvreader.")
 
     # Esegui Xesreader.py
-    subprocess.run(["python", "Xesreader.py"])
+    subprocess.run(["python", "Mediamanager/Xesreader.py"])
 
     # Esegui csvreader.py
-    subprocess.run(["python", "csvreader.py"])
+    subprocess.run(["python", "Mediamanager/csvreader.py"])
 
-    subprocess.run(["python", "xestocsv.py"])
+    subprocess.run(["python", "Mediamanager/xestocsv.py"])
 else:
     print("I file Resource_att.txt e Trace_att.txt esistono.")
 
@@ -304,3 +281,7 @@ if __name__ == "__main__":
                                    2)] +
                             [hyperparams] + [min_pref_length] + [max_pref_length] + [dt['parameters']])
     print(f"Le simulazioni hanno richiesto {(time.time() - start_time) / 3600.} ore")
+
+    # Elimina i file txt presenti in src/machine_learning/encoding?
+    os.remove("src/machine_learning/encoding/Resource_att.txt")
+    os.remove("src/machine_learning/encoding/Trace_att.txt")
