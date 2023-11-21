@@ -59,6 +59,8 @@ if not os.path.exists(resource_file_path) or not os.path.exists(trace_attributes
 
     # Esegui csvreader.py
     subprocess.run(["python", "csvreader.py"])
+
+    subprocess.run(["python", "xestocsv.py"])
 else:
     print("I file Resource_att.txt e Trace_att.txt esistono.")
 
