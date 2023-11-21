@@ -13,6 +13,7 @@ import csv
 import copy
 import dotenv
 import os
+import subprocess
 
 # Percorso al file .env
 env_path = '.env'
@@ -48,9 +49,18 @@ import shutil
 resource_att_path = "src/machine_learning/encoding/Resource_att.txt"
 trace_att_path = "src/machine_learning/encoding/Trace_att.txt"
 
-if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
-    print("I file Resource_att.txt e/o Trace_att.txt non esistono. Eseguo csvreader.py per crearli.")
-    # Esegui lo script csvreader.py qui se necessario.
+
+# Verifica dell'esistenza dei file
+if not os.path.exists(resource_file_path) or not os.path.exists(trace_attributes_file_path):
+    print("File non trovati. Esecuzione degli script Xesreader.py e csvreader.")
+
+    # Esegui Xesreader.py
+    subprocess.run(["python", "Xesreader.py"])
+
+    # Esegui csvreader.py
+    subprocess.run(["python", "csvreader.py"])
+else:
+    print("I file Resource_att.txt e Trace_att.txt esistono.")
 
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione
 def rec_sys_exp(dataset_name):
