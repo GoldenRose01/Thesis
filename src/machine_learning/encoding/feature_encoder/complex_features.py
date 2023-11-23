@@ -3,7 +3,7 @@ from pandas import DataFrame
 from src.machine_learning.encoding.constants import get_max_prefix_length, get_prefix_length, TaskGenerationType, \
     PrefixLengthStrategy
 from src.machine_learning.label.common import add_label_column
-from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes  # Import dictionaries
+from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
 
 ATTRIBUTE_CLASSIFIER = None  # Variabile globale, il suo utilizzo specifico non è chiaro dal contesto
 
@@ -30,8 +30,7 @@ def complex_features(log, prefix_length, padding, prefix_length_strategy, labeli
     """
 
     max_prefix_length = get_max_prefix_length(log, prefix_length, prefix_length_strategy, target_event)
-    columns, additional_columns = _columns_complex(log, max_prefix_length, feature_list, trace_attributes,
-                                                   resource_attributes)
+    columns, additional_columns = _columns_complex(log, max_prefix_length, feature_list, trace_attributes,resource_attributes)
     encoded_data = []
 
     for trace_index, trace in enumerate(log):
@@ -47,12 +46,12 @@ def complex_features(log, prefix_length, padding, prefix_length_strategy, labeli
     return df
 
 
-def _compute_additional_columns(log, trace_attributes, resource_attributes) -> dict:
+def _compute_additional_columns(log, trace_attributes, resource_attributes, prefix_length) -> dict:
     """
     Calcola le colonne aggiuntive in base agli attributi delle tracce e delle risorse.
     """
-    trace_attrs = [f'{att}-TA' for att in trace_attributes if att not in ["concept:name", "time:timestamp", "label"]]
-    resource_attrs = [att for att in resource_attributes if att not in ["concept:name", "time:timestamp", "label"]]
+    trace_attrs = [f'{value}-TA' for att,value in trace_attributes.items() if value not in ["concept:name", "time:timestamp", "label"]]
+    resource_attrs = [[value+"_"+ str(i + 1) for i in range(0, prefix_length)] for att,value in resource_attributes.items() if value not in ["concept:name", "time:timestamp", "label"]]
 
     return {'trace_attributes': trace_attrs, 'resource_attributes': resource_attrs}
 
@@ -61,7 +60,7 @@ def _columns_complex(log, prefix_length: int, feature_list: list, trace_attribut
     """
     Calcola le colonne per le feature complesse tenendo separate le feature delle tracce, eventi e risorse.
     """
-    additional_columns = _compute_additional_columns(log, trace_attributes, resource_attributes)
+    additional_columns = _compute_additional_columns(log, trace_attributes, resource_attributes, prefix_length)
     columns = ['trace_id'] + additional_columns['trace_attributes']
 
     # Aggiunta delle colonne degli eventi

@@ -31,13 +31,16 @@ trace_att_path = "src/machine_learning/encoding/Trace_att.txt"
 if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
     print("File non trovati. Esecuzione degli script Xesreader.py e csvreader.")
 
+
+    #subprocess.run(["python", "Mediamanager/xestocsv.py"])
+
     # Esegui Xesreader.py
-    subprocess.run(["python", "Mediamanager/Xesreader.py"])
+    #subprocess.run(["python", "Mediamanager/Xesreader.py"])
 
     # Esegui csvreader.py
     subprocess.run(["python", "Mediamanager/csvreader.py"])
 
-    subprocess.run(["python", "Mediamanager/xestocsv.py"])
+
 else:
     print("I file Resource_att.txt e Trace_att.txt esistono.")
 
@@ -282,6 +285,6 @@ if __name__ == "__main__":
                             [hyperparams] + [min_pref_length] + [max_pref_length] + [dt['parameters']])
     print(f"Le simulazioni hanno richiesto {(time.time() - start_time) / 3600.} ore")
 
-    # Elimina i file txt presenti in src/machine_learning/encoding?
+    # Elimina i file txt presenti in src/machine_learning/encoding
     os.remove("src/machine_learning/encoding/Resource_att.txt")
     os.remove("src/machine_learning/encoding/Trace_att.txt")

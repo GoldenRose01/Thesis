@@ -1,12 +1,3 @@
-BPIC15_1_f2.csv: Case ID , Age
-BPIC15_2_f2.csv: Case ID
-BPIC15_3_f2.csv: Case ID
-BPIC15_4_f2.csv: Case ID
-BPIC15_5_f2.csv: Case ID
-BPIC17_O_Accepted.csv: Case ID
-BPIC17_O_Cancelled.csv: Case ID
-BPIC17_O_Refused.csv: Case ID
-bpic2012_O_ACCEPTED-COMPLETE.csv: Case ID
-bpic2012_O_CANCELLED-COMPLETE.csv: Case ID
-bpic2012_O_DECLINED-COMPLETE.csv: Case ID
-traffic_fines_1.csv: Case ID
+sepsis_cases_1.csv: Case ID
+sepsis_cases_2.csv: Case ID
+sepsis_cases_4.csv: Case ID

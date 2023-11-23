@@ -12,7 +12,7 @@ def identify_trace_and_resource_attributes(df):
     trace_attribute = "Case ID" if "Case ID" in df.columns else None
 
     # Identifica l'attributo di risorsa (es. 'Resource')
-    resource_attribute = "Resource" if "Resource" in df.columns else None
+    resource_attribute = "Resource" if "org:group" in df.columns else None
 
     # Cerca un attributo di risorsa alternativo se 'Resource' non è presente
     if not resource_attribute:
@@ -24,7 +24,7 @@ def identify_trace_and_resource_attributes(df):
     return trace_attribute, resource_attribute
 
 # Percorso della cartella "media/input"
-cartella_input = 'media/input'
+cartella_input = 'media/input/processed_benchmark_event_logs'
 
 # Ottieni una lista di tutti i file nella cartella "media/input"
 elenco_file = [file for file in os.listdir(cartella_input) if file.endswith('.csv')]

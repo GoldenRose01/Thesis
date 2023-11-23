@@ -68,6 +68,7 @@ class Encoding:
             labeling_type=self.CONF['labeling_type'],
             generation_type=self.CONF['task_generation_type'],
             feature_list=train_cols,
+            target_event=None
         )
 
         self.encoder = Encoder(df=self.df, attribute_encoding=self.CONF['attribute_encoding'])
