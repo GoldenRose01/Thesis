@@ -93,28 +93,42 @@ class Encoding:
         column_names = list(self.df.columns[0:self.prefix + 1])
         for index, row in self.df.iterrows():
             labels.append(int(row['label']) - 1)
-            encoded_data.append(list(row[0:self.prefix + 1]))
+            trace_data = list(row[0:self.prefix + 1])
+
+            # Converti eventuali liste in tuple
+            trace_data = [tuple(data) if isinstance(data, list) else data for data in trace_data]
+
+            encoded_data.append(trace_data)
         if not features:
             features = list(column_names)
 
         return DTInput(features, encoded_data, labels), self.prefix
 
     # Metodo per decodificare un log codificato
+    # Funzione per convertire dati in tuple se sono liste
+    def convert_data_to_hashable(data):
+        if isinstance(data, list):
+            return tuple(data)
+        return data
+
+    # Modifica la funzione Encoding.decode
     def decode(self, log):
         prefix_columns = {}
         for i, prefix in enumerate(log):
             column_name = f'prefix_{i + 1}'
-            prefix_columns[column_name] = [prefix]
+            prefix_data = [convert_data_to_hashable(data) for data in prefix]  # Converti i dati in tuple
+            prefix_columns[column_name] = [prefix_data]
         df_input = pd.DataFrame(prefix_columns)
         self.encoder.decode(df=df_input)
         return df_input
 
-    # Metodo per codificare un log decodificato
+    # Modifica la funzione Encoding.encode
     def encode(self, log):
         prefix_columns = {}
         for i, prefix in enumerate(log):
             column_name = f'prefix_{i + 1}'
-            prefix_columns[column_name] = [prefix]
+            prefix_data = [convert_data_to_hashable(data) for data in prefix]  # Converti i dati in tuple
+            prefix_columns[column_name] = [prefix_data]
         df_input = pd.DataFrame(prefix_columns)
         self.encoder.encode(df=df_input)
         return df_input

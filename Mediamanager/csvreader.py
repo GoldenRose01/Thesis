@@ -6,22 +6,21 @@ def identify_trace_and_resource_attributes(df):
     """
     Identifica gli attributi di traccia e risorsa in un DataFrame.
     :param df: DataFrame da analizzare
-    :return: (attributo di traccia, attributo di risorsa)
+    :return: (lista di attributi di traccia, lista di attributi di risorsa)
     """
     # Identifica l'attributo di traccia (es. 'Case ID')
-    trace_attribute = "Case ID" if "Case ID" in df.columns else None
+    trace_attributes = ['Case ID'] if 'Case ID' in df.columns else []
 
     # Identifica l'attributo di risorsa (es. 'Resource')
-    resource_attribute = "Resource" if "org:group" in df.columns else None
+    resource_attributes = ['Resource'] if 'org:group' in df.columns else []
 
-    # Cerca un attributo di risorsa alternativo se 'Resource' non è presente
-    if not resource_attribute:
+    # Cerca attributi di risorsa alternativi se 'Resource' non è presente
+    if not resource_attributes:
         for col in df.columns:
             if "resource" in col.lower() or "producer" in col.lower():
-                resource_attribute = col
-                break
+                resource_attributes.append(col)
 
-    return trace_attribute, resource_attribute
+    return trace_attributes, resource_attributes
 
 # Percorso della cartella "media/input"
 cartella_input = 'media/input/processed_benchmark_event_logs'
@@ -39,17 +38,15 @@ for file_name in elenco_file:
 
     # Identifica gli attributi di traccia e risorsa
     trace_attr, resource_attr = identify_trace_and_resource_attributes(df)
-    if trace_attr:
-        trace_attributes[file_name] = trace_attr
-    if resource_attr:
-        resource_attributes[file_name] = resource_attr
+    trace_attributes[file_name] = ';'.join(trace_attr)
+    resource_attributes[file_name] = ';'.join(resource_attr)
 
 # Scrivi le informazioni sugli attributi in file separati
 with open('Trace_att.txt', 'w') as trace_file, open('Resource_att.txt', 'w') as resource_file:
-    for file_name, attr in trace_attributes.items():
-        trace_file.write(f"{file_name}: {attr}\n")
-    for file_name, attr in resource_attributes.items():
-        resource_file.write(f"{file_name}: {attr}\n")
+    for file_name, attrs in trace_attributes.items():
+        trace_file.write(f"{file_name}: {attrs}\n")
+    for file_name, attrs in resource_attributes.items():
+        resource_file.write(f"{file_name}: {attrs}\n")
 
 # Definisci il percorso della directory target
 target_directory = 'src/machine_learning/encoding'

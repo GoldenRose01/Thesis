@@ -47,11 +47,14 @@ def complex_features(log, prefix_length, padding, prefix_length_strategy, labeli
 
 
 def _compute_additional_columns(log, trace_attributes, resource_attributes, prefix_length) -> dict:
-    """
-    Calcola le colonne aggiuntive in base agli attributi delle tracce e delle risorse.
-    """
-    trace_attrs = [f'{value}-TA' for att,value in trace_attributes.items() if value not in ["concept:name", "time:timestamp", "label"]]
-    resource_attrs = [[value+"_"+ str(i + 1) for i in range(0, prefix_length)] for att,value in resource_attributes.items() if value not in ["concept:name", "time:timestamp", "label"]]
+    trace_attrs = [f'{value}_TA' for att, value in trace_attributes.items() if
+                   value not in ["concept:name", "time:timestamp", "label"]]
+
+    resource_attrs = []
+    for att, value in resource_attributes.items():
+        if value not in ["concept:name", "time:timestamp", "label"]:
+            attr_list = [f"{value}_{i + 1}" for i in range(0, prefix_length)]
+            resource_attrs.extend(attr_list)  # Extend instead of append
 
     return {'trace_attributes': trace_attrs, 'resource_attributes': resource_attrs}
 

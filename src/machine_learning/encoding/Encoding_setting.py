@@ -13,7 +13,7 @@ def read_attributes_from_file(file_path):
                 parts = line.strip().split(': ')
                 if len(parts) == 2:
                     file_name, attribute_value = parts
-                    attributes[file_name] = attribute_value.split()  # Split by space to get multiple elements
+                    attributes[file_name] = attribute_value.split(';')  # Split by ';' to get multiple elements
     return attributes
 
 # Percorsi dei file da cui leggere gli attributi
