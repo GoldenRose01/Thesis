@@ -14,7 +14,7 @@ from src.machine_learning.encoding.data_encoder import *
 TRACE_TO_DF = {
     EncodingType.SIMPLE.value: simple_features,
     EncodingType.FREQUENCY.value: frequency_features,
-    EncodingType.COMPLEX.value: complex_features,  # Aggiunta questa linea
+    EncodingType.COMPLEX.value: complex_features,
     # EncodingType.DECLARE.value : declare_features
 }
 
@@ -116,7 +116,7 @@ class Encoding:
         prefix_columns = {}
         for i, prefix in enumerate(log):
             column_name = f'prefix_{i + 1}'
-            prefix_data = [convert_data_to_hashable(data) for data in prefix]  # Converti i dati in tuple
+            prefix_data = [self.convert_data_to_hashable(data) for data in prefix]  # Converti i dati in tuple
             prefix_columns[column_name] = [prefix_data]
         df_input = pd.DataFrame(prefix_columns)
         self.encoder.decode(df=df_input)
@@ -127,7 +127,7 @@ class Encoding:
         prefix_columns = {}
         for i, prefix in enumerate(log):
             column_name = f'prefix_{i + 1}'
-            prefix_data = [convert_data_to_hashable(data) for data in prefix]  # Converti i dati in tuple
+            prefix_data = [self.convert_data_to_hashable(data) for data in prefix]  # Converti i dati in tuple
             prefix_columns[column_name] = [prefix_data]
         df_input = pd.DataFrame(prefix_columns)
         self.encoder.encode(df=df_input)

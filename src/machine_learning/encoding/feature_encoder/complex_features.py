@@ -30,7 +30,7 @@ def complex_features(log, prefix_length, padding, prefix_length_strategy, labeli
     """
 
     max_prefix_length = get_max_prefix_length(log, prefix_length, prefix_length_strategy, target_event)
-    columns, additional_columns = _columns_complex(log, max_prefix_length, feature_list, trace_attributes,resource_attributes)
+    columns, additional_columns = _columns_complex(log, max_prefix_length, feature_list, trace_attributes, resource_attributes)
     encoded_data = []
 
     for trace_index, trace in enumerate(log):
@@ -50,16 +50,23 @@ def _compute_additional_columns(log, trace_attributes, resource_attributes, pref
     """
     Calcola le colonne aggiuntive in base agli attributi delle tracce e delle risorse.
     """
-    trace_attrs = [f'{value}-TA' for att, value in trace_attributes.items() if value not in ["concept:name", "time:timestamp", "label"]]
+    # Initialize the dictionary to store processed trace attributes
+    trace_attrs = {}
+    # Process trace attributes for each file, excluding specific system attributes
+    for filename, attributes_list in trace_attributes.items():
+        trace_attrs = [
+            attribute for attribute in attributes_list
+            if attribute not in ["concept:name", "time:timestamp", "label","Case ID"]
+        ]
 
-    # Assuming prefix_length is defined elsewhere in your code
     resource_attrs = {}
     for key, attributes_list in resource_attributes.items():
+        # Initialize the key with an empty list
+        resource_attrs = []
         for attribute in attributes_list:
-            # For each attribute, create a list of strings with suffixes from 1 to prefix_length
-            resource_attrs[key + "_" + attribute] = [
-                attribute + "_" + str(i + 1) for i in range(prefix_length)
-            ]
+            # Append each attribute with suffixes from 1 to prefix_length
+            for i in range(prefix_length):
+                resource_attrs.append(attribute + "_" + str(i + 1))
 
     return {'trace_attributes': trace_attrs, 'resource_attributes': resource_attrs}
 
@@ -68,6 +75,33 @@ def _columns_complex(log, prefix_length: int, feature_list: list, trace_attribut
     """
     Calcola le colonne per le feature complesse tenendo separate le feature delle tracce, eventi e risorse.
     """
+    additional_columns = _compute_additional_columns(log, trace_attributes, resource_attributes, prefix_length)
+
+    # Inizializzazione delle colonne
+    columns = ['trace_id']
+
+    # Aggiunta delle colonne degli attributi delle tracce
+    for attrs in additional_columns['trace_attributes']:
+        columns += [attrs]
+
+    # Aggiunta delle colonne degli eventi
+    columns += [PREFIX_ + str(i) for i in range(1, prefix_length + 1)]
+
+    # Aggiunta delle colonne degli attributi delle risorse
+    for attrs in additional_columns['resource_attributes']:
+        columns += [attrs]
+
+    columns += ['label']
+    if feature_list is not None:
+        assert (list(feature_list) == columns)
+    return columns, additional_columns
+
+
+"""
+def _columns_complex(log, prefix_length: int, feature_list: list, trace_attributes, resource_attributes) -> tuple:
+    
+    #Calcola le colonne per le feature complesse tenendo separate le feature delle tracce, eventi e risorse.
+    
     additional_columns = _compute_additional_columns(log, trace_attributes, resource_attributes, prefix_length)
     columns = ['trace_id'] + additional_columns['trace_attributes']
 
@@ -81,7 +115,7 @@ def _columns_complex(log, prefix_length: int, feature_list: list, trace_attribut
     if feature_list is not None:
         assert (list(feature_list) == columns)
     return columns, additional_columns
-
+"""
 
 def _trace_to_row(trace, prefix_length: int, additional_columns, prefix_length_strategy: str, padding, columns: list,
                   labeling_type, trace_index) -> list:
@@ -104,9 +138,22 @@ def _trace_to_row(trace, prefix_length: int, additional_columns, prefix_length_s
     if padding or prefix_length_strategy == PrefixLengthStrategy.PERCENTAGE.value:
         trace_row += [0 for _ in range(len(trace_row), len(columns) - 1 - len(additional_columns['resource_attributes']))]
 
+    #Aggiunta delle feature delle risorse
+    for idx, event in enumerate(trace):
+        if idx == prefix_length:
+            break
+        resource_name = event["org:group"] #da sistemare deve prendere nome file txt
+        trace_row.append(resource_name)
+
+
     # Modifica per aggiungere il numero della riga alle risorse
-    resource_attributes_with_row_numbers = [f'{att}_{trace_index}' for att in additional_columns['resource_attributes']]
-    trace_row += [trace.attributes.get(att, 0) for att in resource_attributes_with_row_numbers]
+   # resource_attributes_with_row_numbers = [f'{att}_{trace_index}' for att in additional_columns['resource_attributes']] #fai come eventi:riga 97 solo senza event name ma con risorsa
+   # trace_row += [trace.attributes.get(att, 0) for att in resource_attributes_with_row_numbers]
+
+    # Padding se necessario
+    if padding or prefix_length_strategy == PrefixLengthStrategy.PERCENTAGE.value:
+        trace_row += [0 for _ in
+                      range(len(trace_row), len(columns) - 1)]
 
     # Aggiunta della colonna label
     trace_row += [add_label_column(trace, labeling_type, prefix_length)]
