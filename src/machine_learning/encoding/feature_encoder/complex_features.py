@@ -53,7 +53,7 @@ def _compute_additional_columns(log, trace_attributes, resource_attributes, pref
     # Initialize the dictionary to store processed trace attributes
     trace_attrs = {}
     # Process trace attributes for each file, excluding specific system attributes
-    for filename, attributes_list in trace_attributes.items():
+    for log, attributes_list in trace_attributes.items():
         trace_attrs = [
             attribute for attribute in attributes_list
             if attribute not in ["concept:name", "time:timestamp", "label","Case ID"]

@@ -8,10 +8,10 @@ def identify_trace_and_resource_attributes(df):
     :param df: DataFrame da analizzare
     :return: (lista di attributi di traccia, lista di attributi di risorsa)
     """
-    # Identifica l'attributo di traccia (es. 'Case ID')
+    # Identifica l'attributo di traccia
     trace_attributes = ['Case ID'] if 'Case ID' in df.columns else []
 
-    # Identifica l'attributo di risorsa (es. 'Resource')
+    # Identifica l'attributo di risorsa
     resource_attributes = ['Resource'] if 'org:group' in df.columns else []
 
     # Cerca attributi di risorsa alternativi se 'Resource' non è presente
@@ -23,7 +23,7 @@ def identify_trace_and_resource_attributes(df):
     return trace_attributes, resource_attributes
 
 # Percorso della cartella "media/input"
-cartella_input = 'media/input/processed_benchmark_event_logs'
+cartella_input = '../media/input/processed_benchmark_event_logs'
 
 # Ottieni una lista di tutti i file nella cartella "media/input"
 elenco_file = [file for file in os.listdir(cartella_input) if file.endswith('.csv')]
@@ -49,7 +49,7 @@ with open('Trace_att.txt', 'w') as trace_file, open('Resource_att.txt', 'w') as 
         resource_file.write(f"{file_name}: {attrs}\n")
 
 # Definisci il percorso della directory target
-target_directory = 'src/machine_learning/encoding'
+target_directory = '..src/machine_learning/Settings/encoding'
 
 # Crea la directory target se non esiste e sposta i file
 os.makedirs(target_directory, exist_ok=True)

@@ -24,8 +24,8 @@ env_path = '.env'
 os.environ['PATH'] = os.getenv('PATH')
 
 # Verifica se i file Resource_att.txt e Trace_att.txt esistono nella cartella desiderata
-resource_att_path = "src/machine_learning/encoding/Resource_att.txt"
-trace_att_path = "src/machine_learning/encoding/Trace_att.txt"
+resource_att_path = "src/machine_learning/encoding/Settings/Resource_att.txt"
+trace_att_path = "src/machine_learning/encoding/Settings/Trace_att.txt"
 
 # Verifica dell'esistenza dei file
 if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
@@ -286,5 +286,5 @@ if __name__ == "__main__":
     print(f"Le simulazioni hanno richiesto {(time.time() - start_time) / 3600.} ore")
 
     # Elimina i file txt presenti in src/machine_learning/encoding
-    os.remove("src/machine_learning/encoding/Resource_att.txt")
-    os.remove("src/machine_learning/encoding/Trace_att.txt")
+    os.remove("src/machine_learning/encoding/Settings/Resource_att.txt")
+    os.remove("src/machine_learning/encoding/Settings/Trace_att.txt")

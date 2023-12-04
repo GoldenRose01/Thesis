@@ -40,8 +40,8 @@ def process_all_xes_files(input_dir, resource_output_path, trace_attributes_outp
 
 def main():
     input_dir = '../media/input/xes'
-    resource_output_path = '../src/machine_learning/encoding/Resource_att.txt'
-    trace_attributes_output_path = '../src/machine_learning/encoding/Trace_att.txt'
+    resource_output_path = '../src/machine_learning/encoding/Settings/Resource_att.txt'
+    trace_attributes_output_path = '../src/machine_learning/encoding/Settings/Trace_att.txt'
 
     process_all_xes_files(input_dir, resource_output_path, trace_attributes_output_path)
 

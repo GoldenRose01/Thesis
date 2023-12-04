@@ -17,8 +17,8 @@ def read_attributes_from_file(file_path):
     return attributes
 
 # Percorsi dei file da cui leggere gli attributi
-trace_attributes_path = 'src/machine_learning/encoding/Trace_att.txt'
-resource_attributes_path = 'src/machine_learning/encoding/Resource_att.txt'
+trace_attributes_path = 'src/machine_learning/encoding/Settings/Trace_att.txt'
+resource_attributes_path = 'src/machine_learning/encoding/Settings/Resource_att.txt'
 
 # Leggi gli attributi Trace ID e delle risorse
 trace_attributes = read_attributes_from_file(trace_attributes_path)
