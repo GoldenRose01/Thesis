@@ -1,3 +1,28 @@
+BPIC11_f1.csv: group
+BPIC11_f2.csv: group
+BPIC11_f3.csv: group
+BPIC11_f4.csv: group
+BPIC15_1_f2.csv: 
+BPIC15_2_f2.csv: 
+BPIC15_3_f2.csv: 
+BPIC15_4_f2.csv: 
+BPIC15_5_f2.csv: 
+bpic2012_O_ACCEPTED-COMPLETE.csv: Resource
+bpic2012_O_CANCELLED-COMPLETE.csv: Resource
+bpic2012_O_DECLINED-COMPLETE.csv: Resource
+hospital_billing_2.csv: Resource
+hospital_billing_3.csv: Resource
+Production.csv: Resource.1;Resource
 sepsis_cases_1.csv: org:group
 sepsis_cases_2.csv: org:group
 sepsis_cases_4.csv: org:group
+traffic_fines_1.csv: Resource
+xes_BPIC15_1.csv: question,dateFinished,dueDate,action_code,activityNameEN,planned,time:timestamp,monitoringResource,org:resource,activityNameNL,concept:name,lifecycle:transition,endDate,caseStatus,SUMleges,last_phase,case_type,Responsible_actor,parts,termName,endDatePlanned,startDate,requestComplete,IDofConceptCase,landRegisterID,caseProcedure,Includes_subCases,dateStop
+xes_BPIC15_2.csv: monitoringResource,org:resource,activityNameNL,concept:name,question,dateFinished,action_code,activityNameEN,planned,lifecycle:transition,time:timestamp,Includes_subCases,Responsible_actor,endDate,caseStatus,parts,caseProcedure,last_phase,case_type,startDate,requestComplete,SUMleges,termName,IDofConceptCase,landRegisterID,dueDate,dateStop
+xes_BPIC15_3.csv: question,dateFinished,dueDate,action_code,activityNameEN,planned,time:timestamp,monitoringResource,org:resource,activityNameNL,concept:name,lifecycle:transition,Includes_subCases,Responsible_actor,caseStatus,last_phase,case_type,termName,startDate,requestComplete,endDate,parts,SUMleges,caseProcedure,IDofConceptCase,endDatePlanned,dateStop,landRegisterID
+xes_BPIC15_4.csv: question,dateFinished,dueDate,action_code,activityNameEN,planned,time:timestamp,monitoringResource,org:resource,activityNameNL,concept:name,lifecycle:transition,Responsible_actor,endDate,caseStatus,parts,SUMleges,last_phase,case_type,startDate,requestComplete,IDofConceptCase,termName,caseProcedure,landRegisterID,Includes_subCases,dateStop,endDatePlanned
+xes_BPIC15_5.csv: question,dateFinished,dueDate,action_code,activityNameEN,planned,time:timestamp,monitoringResource,org:resource,activityNameNL,concept:name,lifecycle:transition,endDate,caseStatus,SUMleges,last_phase,case_type,Responsible_actor,landRegisterID,parts,termName,startDate,requestComplete,IDofConceptCase,caseProcedure,Includes_subCases,endDatePlanned,dateStop
+xes_BPI_Challenge_2012.csv: org:resource,lifecycle:transition,concept:name,time:timestamp,REG_DATE,AMOUNT_REQ
+xes_Hospital Billing - Event Log.csv: diagnosis,time:timestamp,caseType,speciality,org:resource,concept:name,state,lifecycle:transition,closeCode,msgCount,version,msgType,msgCode
+xes_Road_Traffic_Fine_Management_Process.csv: amount,org:resource,dismissal,concept:name,vehicleClass,totalPaymentAmount,lifecycle:transition,time:timestamp,article,points,expense,notificationType,lastSent,paymentAmount,matricola
+xes_Sepsis Cases - Event Log.csv: org:group,concept:name,Age,time:timestamp,lifecycle:transition,Diagnose,Leucocytes,CRP,LacticAcid
