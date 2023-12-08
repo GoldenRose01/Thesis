@@ -37,8 +37,8 @@ def convert_all_xes_in_directory(xes_directory, csv_directory):
             print(f"Converted {file} to {csv_file_name}")
 
 # Percorsi delle cartelle
-xes_directory = 'media/input/xes'
-csv_directory = 'media/input'
+xes_directory = '../media/input/xes'
+csv_directory = '../media/input/csvconverted'
 
 # Converti tutti i file XES
 convert_all_xes_in_directory(xes_directory, csv_directory)

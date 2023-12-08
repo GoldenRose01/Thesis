@@ -31,14 +31,13 @@ trace_att_path = "src/machine_learning/encoding/Settings/Trace_att.txt"
 if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
     print("File non trovati. Esecuzione degli script Xesreader.py e csvreader.")
 
+    # Esegui csvreader.py
+    subprocess.run(["python", "Mediamanager/csvreader.py"])
 
     #subprocess.run(["python", "Mediamanager/xestocsv.py"])
 
     # Esegui Xesreader.py
     #subprocess.run(["python", "Mediamanager/Xesreader.py"])
-
-    # Esegui csvreader.py
-    subprocess.run(["python", "Mediamanager/csvreader.py"])
 
 
 else:
@@ -131,7 +130,7 @@ def rec_sys_exp(dataset_name):
     prefix_lenght_list_test = list(range(min_prefix_length, max_prefix_length_test + 1))
     prefix_lenght_list_val = list(range(min_prefix_length, max_prefix_length_val + 1))
 
-    # Lista delle combinazioni di iperparametri per l'valutazione
+    # Lista delle combinazioni di iperparametri per l'evalutazione
     hyperparams_evaluation_list = []
     results_hyperparams_evaluation = {}
     hyperparams_evaluation_list_baseline = []

@@ -90,10 +90,10 @@ class Encoding:
         features = []
         encoded_data = []
         labels = []
-        column_names = list(self.df.columns[0:self.prefix + 1])
+        column_names = list(self.df.columns[0:len(self.df.columns) - 1])
         for index, row in self.df.iterrows():
             labels.append(int(row['label']) - 1)
-            trace_data = list(row[0:self.prefix + 1])
+            trace_data = list(row[0:len(self.df.columns)-1])
 
             # Converti eventuali liste in tuple
             trace_data = [tuple(data) if isinstance(data, list) else data for data in trace_data]
@@ -116,8 +116,7 @@ class Encoding:
         prefix_columns = {}
         for i, prefix in enumerate(log):
             column_name = f'prefix_{i + 1}'
-            prefix_data = [self.convert_data_to_hashable(data) for data in prefix]  # Converti i dati in tuple
-            prefix_columns[column_name] = [prefix_data]
+            prefix_columns[column_name] = [prefix]
         df_input = pd.DataFrame(prefix_columns)
         self.encoder.decode(df=df_input)
         return df_input
@@ -127,8 +126,7 @@ class Encoding:
         prefix_columns = {}
         for i, prefix in enumerate(log):
             column_name = f'prefix_{i + 1}'
-            prefix_data = [self.convert_data_to_hashable(data) for data in prefix]  # Converti i dati in tuple
-            prefix_columns[column_name] = [prefix_data]
+            prefix_columns[column_name] = [prefix]
         df_input = pd.DataFrame(prefix_columns)
         self.encoder.encode(df=df_input)
         return df_input

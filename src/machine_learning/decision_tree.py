@@ -62,7 +62,7 @@ def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input
         for trace in prefix_log:
             if len(trace) > 2:
                 data.append(trace)
-
+ #!!!!!!!!!!!!!!!!!!!!!!!
     X_train = pd.DataFrame(dt_input_trainval.encoded_data, columns=dt_input_trainval.features)
     y_train = pd.Categorical(dt_input_trainval.labels, categories=categories)
 

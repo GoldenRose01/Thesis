@@ -34,7 +34,7 @@ def identify_trace_and_resource_attributes(df):
     :param df: DataFrame da analizzare
     :return: (lista di attributi di traccia, lista di attributi di risorsa)
     """
-    trace_keywords = ['case', 'id', 'trace', 'process']
+    trace_keywords = ['case', 'id', 'trace', 'process','age']
     resource_keywords = ['resource', 'user', 'agent', 'group', 'role', 'operator', 'worker',
                          'member', 'participant', 'assignee', 'doctor', 'nurse', 'staff',
                          'officer', 'employee']

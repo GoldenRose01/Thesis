@@ -97,26 +97,6 @@ def _columns_complex(log, prefix_length: int, feature_list: list, trace_attribut
     return columns, additional_columns
 
 
-"""
-def _columns_complex(log, prefix_length: int, feature_list: list, trace_attributes, resource_attributes) -> tuple:
-    
-    #Calcola le colonne per le feature complesse tenendo separate le feature delle tracce, eventi e risorse.
-    
-    additional_columns = _compute_additional_columns(log, trace_attributes, resource_attributes, prefix_length)
-    columns = ['trace_id'] + additional_columns['trace_attributes']
-
-    # Aggiunta delle colonne degli eventi
-    columns += [PREFIX_ + str(i) for i in range(1, prefix_length + 1)]
-
-    # Aggiunta delle colonne delle risorse
-    columns += additional_columns['resource_attributes']
-
-    columns += ['label']
-    if feature_list is not None:
-        assert (list(feature_list) == columns)
-    return columns, additional_columns
-"""
-
 def _trace_to_row(trace, prefix_length: int, additional_columns, prefix_length_strategy: str, padding, columns: list,
                   labeling_type, trace_index) -> list:
     """
