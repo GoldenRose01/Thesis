@@ -17,7 +17,7 @@ import subprocess
 import shutil
 
 
-# Percorso al file .env
+# Percorso al file .env per graphviz
 env_path = '.env'
 
 # Imposta la variabile d'ambiente PATH
@@ -34,11 +34,10 @@ if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
     # Esegui csvreader.py
     subprocess.run(["python", "Mediamanager/csvreader.py"])
 
-    #subprocess.run(["python", "Mediamanager/xestocsv.py"])
-
     # Esegui Xesreader.py
-    #subprocess.run(["python", "Mediamanager/Xesreader.py"])
+    # subprocess.run(["python", "Mediamanager/Xesreader.py"])
 
+    #subprocess.run(["python", "Mediamanager/xestocsv.py"])
 
 else:
     print("I file Resource_att.txt e Trace_att.txt esistono.")
@@ -282,8 +281,8 @@ if __name__ == "__main__":
                             [round(100 * np.mean([getattr(res_obj, 'fscore') for res_obj in final_results[dataset]]),
                                    2)] +
                             [hyperparams] + [min_pref_length] + [max_pref_length] + [dt['parameters']])
-    print(f"Le simulazioni hanno richiesto {(time.time() - start_time) / 3600.} ore")
+    print(f"Le simulazioni hanno richiesto {(time.time() - start_time) / 3600.} ore o {(time.time() - start_time) / 60.} minuti")
 
     # Elimina i file txt presenti in src/machine_learning/encoding
-    os.remove("src/machine_learning/encoding/Settings/Resource_att.txt")
-    os.remove("src/machine_learning/encoding/Settings/Trace_att.txt")
+   # os.remove("src/machine_learning/encoding/Settings/Resource_att.txt")
+   # os.remove("src/machine_learning/encoding/Settings/Trace_att.txt")

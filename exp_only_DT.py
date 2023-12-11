@@ -11,7 +11,6 @@ import pandas as pd
 from pm4py.objects.log.util import dataframe_utils
 from pm4py.objects.conversion.log import converter as log_converter
 
-
 if __name__ == "__main__":
         # ================ inputs ================
         support_threshold = 0.6
@@ -137,8 +136,6 @@ if __name__ == "__main__":
                 # generate recommendations and evaluation
                 dataset_result = []
 
-
-
                 for constr_family in constr_family_list:
                     print(f"<--- DATASET: {dataset_name}, CONSTRAINTS: {constr_family} --->")
 
@@ -151,7 +148,3 @@ if __name__ == "__main__":
                     dataset_result.append(f1_score)
 
                 writer.writerow([dataset_name] + dataset_result)
-
-
-
-

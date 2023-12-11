@@ -16,15 +16,15 @@ def extract_and_save_xes_data(xes_file_path, resource_file_path, trace_attribute
                 trace_attributes = {child.attrib['key']: child.attrib['value']
                                     for child in elem
                                     if child.tag.endswith(('string', 'date', 'int', 'float'))}
-                trace_attributes_file.write(str(trace_attributes) + "\n")
+                trace_attributes_str = ";".join([f"{key}:{value}" for key, value in trace_attributes.items()])
+                trace_attributes_file.write(trace_attributes_str + "\n")
 
             elif elem.tag.endswith("event") and event == "end":
                 # Extracting resource information from events
                 resources = [child.attrib['value']
                              for child in elem
                              if child.tag.endswith('string') and child.attrib.get('key') == 'org:resource']
-                for resource in resources:
-                    resource_file.write(resource + "\n")
+                resource_file.write(";".join(resources) + "\n")
 
             root.clear()  # Free up memory
 
@@ -45,3 +45,5 @@ def main():
 
     process_all_xes_files(input_dir, resource_output_path, trace_attributes_output_path)
 
+if __name__ == "__main__":
+    main()

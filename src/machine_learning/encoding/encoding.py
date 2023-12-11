@@ -74,15 +74,6 @@ class Encoding:
         self.encoder = Encoder(df=self.df, attribute_encoding=self.CONF['attribute_encoding'])
         self.encoded = 0
 
-    # Funzione per calcolare la differenza di tempo tra gli eventi
-    def calculate_time_diff(trace):
-        time_diffs = [0]  # Inizializza con 0 per il primo evento
-        timestamps = [event['timestamp'] for event in trace]
-        for i in range(1, len(trace)):
-            time_diff = (timestamps[i] - timestamps[i - 1]).total_seconds()
-            time_diffs.append(time_diff)
-        return time_diffs
-
     # Metodo per codificare le tracce
     def encode_traces(self):
         self.encoder.encode(df=self.df)
@@ -130,19 +121,3 @@ class Encoding:
         df_input = pd.DataFrame(prefix_columns)
         self.encoder.encode(df=df_input)
         return df_input
-
-    # Funzione per ottenere gli attributi del Trace ID per un caso specifico
-    def get_trace_attributes(case_id, trace_attributes):
-        return trace_attributes.get(case_id, {})
-
-    # Funzione per ottenere gli attributi delle risorse per un caso specifico
-    def get_resource_attributes(case_id, resource_attributes):
-        return resource_attributes.get(case_id, {})
-
-    # Funzione per ottenere gli attributi combinati per un caso specifico
-    def get_combined_attributes(case_id, trace_attributes, resource_attributes):
-        trace_attr = get_trace_attributes(case_id, trace_attributes)
-        resource_attr = get_resource_attributes(case_id, resource_attributes)
-
-        combined_attributes = {**trace_attr, **resource_attr}
-        return combined_attributes

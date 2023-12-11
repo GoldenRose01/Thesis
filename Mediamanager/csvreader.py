@@ -81,7 +81,12 @@ csv_files = find_csv_files(root_directory)
 trace_attributes = {}
 resource_attributes = {}
 
+
 for file_path in csv_files:
+    # Escludi i file che iniziano con "xes_"
+    if os.path.basename(file_path).startswith('xes_'):
+        continue
+
     # Leggi il file CSV
     df = pd.read_csv(file_path, sep=';', low_memory=False)
 
