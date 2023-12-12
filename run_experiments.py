@@ -16,14 +16,17 @@ import os
 import subprocess
 import shutil
 
-
 # Percorso al file .env per graphviz
 env_path = '.env'
 
 # Imposta la variabile d'ambiente PATH
 os.environ['PATH'] = os.getenv('PATH')
 
-# Verifica se i file Resource_att.txt e Trace_att.txt esistono nella cartella desiderata
+
+
+"""=====----------Preparazione inizio sperimento----------====="""
+
+#___Verifica se i file Resource_att.txt e Trace_att.txt esistono nella cartella desiderata___#
 resource_att_path = "src/machine_learning/encoding/Settings/Resource_att.txt"
 trace_att_path = "src/machine_learning/encoding/Settings/Trace_att.txt"
 
@@ -34,13 +37,14 @@ if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
     # Esegui csvreader.py
     subprocess.run(["python", "Mediamanager/csvreader.py"])
 
-    # Esegui Xesreader.py
+    # Esegui Xesreader.py e poi converti all'uso gli xes
     # subprocess.run(["python", "Mediamanager/Xesreader.py"])
-
     #subprocess.run(["python", "Mediamanager/xestocsv.py"])
 
 else:
     print("I file Resource_att.txt e Trace_att.txt esistono.")
+
+
 
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione
 def rec_sys_exp(dataset_name):
@@ -186,8 +190,9 @@ def rec_sys_exp(dataset_name):
                 eval_res = copy.deepcopy(evaluation)
             res_val_list.append(evaluation.fscore)
         results_hyperparams_evaluation[hyperparams_evaluation] = np.mean(res_val_list)
-        timeF = (time.time() - timeI) / 3600.
-        print("Simulazione: ", counter, ", tempo: ", timeF)
+        timeF = (time.time() - timeI) / 60.
+        timeH = (time.time() - timeI) / 3600
+        print("Simulazione: ", counter, ", tempo: ", timeF, "minuti o ",timeH,"ore")
 
     results_hyperparams_evaluation = dict(sorted(results_hyperparams_evaluation.items(), key=lambda item: item[1]))
     best_hyperparams_combination = list(results_hyperparams_evaluation.keys())[-1]

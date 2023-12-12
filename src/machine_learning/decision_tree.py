@@ -62,12 +62,13 @@ def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input
         for trace in prefix_log:
             if len(trace) > 2:
                 data.append(trace)
-    #!!!!!!!!!!!!!!!!!!!!!!!
+
+
     X_train = pd.DataFrame(dt_input_trainval.encoded_data, columns=dt_input_trainval.features)
     y_train = pd.Categorical(dt_input_trainval.labels, categories=categories)
 
     X_train = X_train.astype(str)
-    prefix_columns = [col for col in X_train.columns if col.startswith('prefix_')]
+    prefix_columns = [col for col in X_train.columns if col.startswith('prefix_') or col.startswith('Resource_') or col.startswith('resource_')]
     one_hot_data = pd.get_dummies(X_train[prefix_columns], drop_first=True)
     new_feature_names = np.array(one_hot_data.columns)
 

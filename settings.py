@@ -23,6 +23,8 @@ compute_baseline = False
 output_dir = "media/output"
 results_dir = os.path.join(output_dir, "result")
 dataset_folder = "media/input/processed_benchmark_event_logs"
+#dataset_folder = "media/input"
+
 
 # ================ checkers ================
 existence_family = [ConstraintChecker.EXISTENCE, ConstraintChecker.ABSENCE, ConstraintChecker.INIT,

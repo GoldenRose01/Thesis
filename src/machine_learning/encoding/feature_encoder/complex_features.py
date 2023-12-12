@@ -122,7 +122,7 @@ def _trace_to_row(trace, prefix_length: int, additional_columns, prefix_length_s
     for idx, event in enumerate(trace):
         if idx == prefix_length:
             break
-        resource_name = event["org:group"] #da sistemare deve prendere nome file txt
+        resource_name = event["org:group"] or event["group"] or event["Resource"] #da sistemare deve prendere nome file txt
         trace_row.append(resource_name)
 
 

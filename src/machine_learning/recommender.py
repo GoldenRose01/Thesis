@@ -200,7 +200,7 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeli
     else:
         cm = ConfusionMatrix.FN if label == TraceLabel.TRUE else ConfusionMatrix.TN
 
-    print(is_compliant)
+    #print(is_compliant)
     return is_compliant, cm
 
 
@@ -387,7 +387,7 @@ def generate_recommendations_and_evaluation(test_log, train_log, labeling, prefi
                     break
 
                 recommendation = recommend(prefix.events, path, dt_input_trainval)
-                print(recommendation)
+                #print(recommendation)
                 # print(f"{prefix_length} {prefix.trace_num} {prefix.trace_id} {path_index}->{recommendation}")
 
                 if recommendation != "Contradiction" and recommendation != "":
