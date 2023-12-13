@@ -68,7 +68,7 @@ def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input
     y_train = pd.Categorical(dt_input_trainval.labels, categories=categories)
 
     X_train = X_train.astype(str)
-    prefix_columns = [col for col in X_train.columns if col.startswith('prefix_') or col.startswith('Resource_') or col.startswith('resource_')]
+    prefix_columns = [col for col in X_train.columns if col.startswith('prefix_') or col.startswith('Resource_')]
     one_hot_data = pd.get_dummies(X_train[prefix_columns], drop_first=True)
     new_feature_names = np.array(one_hot_data.columns)
 

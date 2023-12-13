@@ -90,7 +90,16 @@ def extract_numbers_from_string(input_string):
         numbers = [(int(match[0]), int(match[1])) for match in matches]
         return numbers
     else:
-        return None
+        pattern = r"Resource_(\d+)_(\d+)"
+
+        matches = re.findall(pattern, input_string)
+
+        if matches:
+            numbers = [(int(match[0]), int(match[1])) for match in matches]
+            return numbers
+        else:
+            return None
+
 
 # Definizione della funzione `calcPathFitnessOnPrefix` per il calcolo della fitness del percorso su un prefisso
 def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval):

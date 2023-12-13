@@ -22,8 +22,8 @@ compute_baseline = False
 # ================ folders ================
 output_dir = "media/output"
 results_dir = os.path.join(output_dir, "result")
-dataset_folder = "media/input/processed_benchmark_event_logs"
-#dataset_folder = "media/input"
+#dataset_folder = "media/input/processed_benchmark_event_logs"
+dataset_folder = "media/input"
 
 
 # ================ checkers ================
@@ -64,20 +64,21 @@ datasets_labels = {"bpic2011_f1": "bpic2011_1", "bpic2011_f2": "bpic2011_2", "bp
                    "hospital_billing_2": "hospital_billing_1", "hospital_billing_3": "hospital_billing_2",
                    "Production": "production", "sepsis_cases_1": "sepsis_cases_1", "sepsis_cases_2": "sepsis_cases_2",
                    "sepsis_cases_4": "sepsis_cases_3", "traffic_fines_1": "traffic_fines"}
-"""
+
 datasets_names = ["bpic2011_f1", "bpic2011_f2", "bpic2011_f3", "bpic2011_f4",
                   "bpic2012_accepted", "bpic2012_cancelled", "bpic2012_declined",
                   "bpic2015_3_f2", "bpic2015_4_f2",
                   "bpic2015_5_f2", "bpic2017_accepted", "bpic2017_cancelled",
                   "bpic2017_refused", "hospital_billing_2", "hospital_billing_3", "Production",
                   "sepsis_cases_1", "sepsis_cases_2", "sepsis_cases_4", "traffic_fines_1"]
+"""
 datasets_names = ["Production"]
 """
 """
 datasets_names = ["hospital_billing_3"]
 """
 #"bpic2012_cancelled", "bpic2012_declined"
-datasets_names = ["sepsis_cases_1"]
+#datasets_names = ["sepsis_cases_2","sepsis_cases_4"]
 # ================ hyperparameters ================
 """
 hyperparameters = {'support_threshold': [support_threshold_dict['min']-0.2, support_threshold_dict['min']-0.1,

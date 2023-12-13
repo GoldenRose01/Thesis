@@ -119,12 +119,19 @@ def _trace_to_row(trace, prefix_length: int, additional_columns, prefix_length_s
         trace_row += [0 for _ in range(len(trace_row), len(columns) - 1 - len(additional_columns['resource_attributes']))]
 
     #Aggiunta delle feature delle risorse
+    # Aggiunta delle feature delle risorse
     for idx, event in enumerate(trace):
         if idx == prefix_length:
             break
-        resource_name = event["org:group"] or event["group"] or event["Resource"] #da sistemare deve prendere nome file txt
+        if "org:group" in event:
+            resource_name = event["org:group"]
+        elif "group" in event:
+            resource_name = event["group"]
+        elif "Resource" in event:
+            resource_name = event["Resource"]
+        else:
+            print("Unknown Event,need hardcode here")
         trace_row.append(resource_name)
-
 
     # Modifica per aggiungere il numero della riga alle risorse
    # resource_attributes_with_row_numbers = [f'{att}_{trace_index}' for att in additional_columns['resource_attributes']] #fai come eventi:riga 97 solo senza event name ma con risorsa

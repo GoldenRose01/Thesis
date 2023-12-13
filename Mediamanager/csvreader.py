@@ -105,6 +105,9 @@ with open('Trace_att.txt', 'w') as trace_file, open('Resource_att.txt', 'w') as 
 
 # Definisci il percorso della directory target
 target_directory = '../src/machine_learning/encoding/Settings'
+#target_directory = 'src/machine_learning/encoding/Settings'
+
+
 
 # Crea la directory target se non esiste e sposta i file
 os.makedirs(target_directory, exist_ok=True)
