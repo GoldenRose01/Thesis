@@ -34,12 +34,10 @@ trace_att_path = "src/machine_learning/encoding/Settings/Trace_att.txt"
 if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
     print("File non trovati. Esecuzione degli script Xesreader.py e csvreader.")
 
-    # Esegui csvreader.py
+    # Esegui csvreader.py e poi converti xes to csv
     subprocess.run(["python", "Mediamanager/csvreader.py"])
 
-    # Esegui Xesreader.py e poi converti all'uso gli xes
-    # subprocess.run(["python", "Mediamanager/Xesreader.py"])
-    #subprocess.run(["python", "Mediamanager/xestocsv.py"])
+    subprocess.run(["python", "Mediamanager/xestocsv.py"])
 
 else:
     print("I file Resource_att.txt e Trace_att.txt esistono.")
