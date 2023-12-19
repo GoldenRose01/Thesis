@@ -74,17 +74,17 @@ def calcPathFitnessOnPrefixGOOD(prefix, path, rules, fitness_type):
     return fitness
 
 # Definizione della funzione `extract_numbers_from_string` per l'estrazione dei numeri da una stringa
-def extract_numbers_from_string(input_string, log, trace_attributes_for_numb, resource_attributes_for_numb, excluded_attributes):
+def extract_numbers_from_string(input_string, log, trace_attributes_for_numb, resource_attributes_for_numb):
     # Filtra trace_attributes per il log specifico, escludendo gli attributi non desiderati
     trace_attributes_for_log = [
         attribute for attribute in trace_attributes_for_numb.get(log, [])
-        if attribute not in excluded_attributes
+        if attribute not in settings.excluded_attributes
     ]
 
     # Filtra resource_attributes per il log specifico, escludendo gli attributi non desiderati
     resource_attributes_for_log = [
         attribute for attribute in resource_attributes_for_numb.get(log, [])
-        if attribute not in excluded_attributes
+        if attribute not in settings.excluded_attributes
     ]
 
     # Controlla il pattern "prefix"
@@ -113,7 +113,6 @@ def extract_numbers_from_string(input_string, log, trace_attributes_for_numb, re
     return None
 
 
-
 # Definizione della funzione `calcPathFitnessOnPrefix` per il calcolo della fitness del percorso su un prefisso
 def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval):
 
@@ -137,7 +136,7 @@ def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval):
     for rule in path.rules:
         feature, state, parent = rule
 
-        numbers = extract_numbers_from_string(feature)
+        numbers = extract_numbers_from_string(input_string, log, trace_attributes_for_numb, resource_attributes_for_numb)
         for n1, n2 in numbers:
             num1 = n1
             num2 = n2

@@ -3,6 +3,7 @@ from pandas import DataFrame
 from src.machine_learning.encoding.constants import get_max_prefix_length, get_prefix_length, PrefixLengthStrategy
 from src.machine_learning.label.common import add_label_column
 from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
+import settings
 
 ATTRIBUTE_CLASSIFIER = None  # Variabile globale, il suo utilizzo specifico non è chiaro dal contesto
 
@@ -49,19 +50,16 @@ def _compute_additional_columns(log, trace_attributes, resource_attributes, pref
     """
     Calcola le colonne aggiuntive in base agli attributi delle tracce e delle risorse.
     """
-
-    excluded_attributes = ["concept:name", "time:timestamp", "label","Case ID"]
-
     trace_attrs = []
     for log, attributes_list in trace_attributes.items():
         trace_attrs = [
             attribute for attribute in trace_attributes.get(log, [])
-            if attribute not in excluded_attributes
+            if attribute not in settings.excluded_attributes
         ]
 
     resource_attrs = []
     for attribute in resource_attributes.get(log, []):
-        if attribute not in excluded_attributes + trace_attrs:
+        if attribute not in settings.excluded_attributes + trace_attrs:
             for i in range(prefix_length):
                 resource_attrs.append(attribute + "_" + str(i + 1))
 

@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import pdb
+import settings
 import graphviz
 from sklearn.svm import SVC
 from sklearn.neural_network import MLPClassifier
@@ -68,16 +69,15 @@ def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input
     X_train = pd.DataFrame(dt_input_trainval.encoded_data, columns=dt_input_trainval.features)
     y_train = pd.Categorical(dt_input_trainval.labels, categories=categories)
 
-    excluded_attributes = ["concept:name", "time:timestamp", "label", "Case ID"]
     trace_attributes_for_log = []
     for log, attributes_list in trace_attributes.items():
         trace_attributes_for_log = [
             attribute for attribute in trace_attributes.get(log,[])
-            if attribute not in excluded_attributes
+            if attribute not in settings.excluded_attributes
         ]
     resource_attributes_for_log = []
     for attribute in resource_attributes.get(log, []):
-        if attribute not in excluded_attributes + trace_attributes_for_log:
+        if attribute not in settings.excluded_attributes + trace_attributes_for_log:
             resource_attributes_for_log.append(attribute + "_")
     Prefixcolumns = ["prefix_"] + trace_attributes_for_log + resource_attributes_for_log
 

@@ -18,7 +18,7 @@ train_prefix_log = False
 one_hot_encoding = False
 use_score = True
 compute_baseline = False
-
+excluded_attributes = ["concept:name", "time:timestamp", "label", "Case ID"] #add the names to exclude from trace_att and resource_att
 # ================ folders ================
 output_dir = "media/output"
 results_dir = os.path.join(output_dir, "result")
