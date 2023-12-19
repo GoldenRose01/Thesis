@@ -67,7 +67,7 @@ class ParamsOptimizer:
 
                 evaluation = evaluate_recommendations(input_log=self.val_log,
                                                       labeling=self.labeling, prefixing=prefixing,
-                                                      rules=self.rules, paths=paths)
+                                                      rules=self.rules, paths=paths,log=self.train_log)
                 results.append(evaluation)
 
             model_dict['model'] = dtc
@@ -115,7 +115,7 @@ def recommend(prefix, path, dt_input_trainval):
     for rule in path.rules:
         feature, state, parent = rule
 
-        numbers = extract_numbers_from_string(feature)
+        numbers = extract_numbers_from_string(feature,log,trace_attributes_for_numb,resource_attributes_for_numb)
         for n1, n2 in numbers:
             num1 = n1
             num2 = n2
@@ -165,7 +165,7 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeli
 
     for rule in path.rules:
         feature, state, parent = rule
-        numbers = extract_numbers_from_string(feature)
+        numbers = extract_numbers_from_string(feature, log, trace_attributes_for_numb, resource_attributes_for_numb)
         for n1, n2 in numbers:
             num1 = n1
             num2 = n2
@@ -176,7 +176,7 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeli
 
     for rule in path.rules:
         feature, state, parent = rule
-        numbers = extract_numbers_from_string(feature)
+        numbers = extract_numbers_from_string(feature, log, trace_attributes_for_numb, resource_attributes_for_numb)
         for n1, n2 in numbers:
             num1 = n1
             num2 = n2
@@ -255,7 +255,7 @@ def train_path_recommender(data_log, train_val_log, val_log, train_log, labeling
     return paths, best_model_dict
 
 
-def evaluate_recommendations(input_log, labeling, prefixing, rules, paths):
+def evaluate_recommendations(input_log, labeling, prefixing, rules, paths,train_log):
     # if labeling["threshold_type"] == LabelThresholdType.LABEL_MEAN:
     #    labeling["custom_threshold"] = calc_mean_label_threshold(train_log, labeling)
 
@@ -270,7 +270,7 @@ def evaluate_recommendations(input_log, labeling, prefixing, rules, paths):
         # for id, pref in enumerate(prefixes[prefix_length]): print(id, input_log[pref.trace_num][0]['label'])
         for prefix in prefixes[prefix_length]:
             for path in paths:
-                path.fitness = calcPathFitnessOnPrefix(prefix.events, path, rules, settings.fitness_type)
+                path.fitness = calcPathFitnessOnPrefix(prefix.events, path, rules, settings.fitness_type,train_log)
 
             paths = sorted(paths, key=lambda path: (- path.fitness, path.impurity, - path.num_samples["total"]),
                            reverse=False)
@@ -356,7 +356,7 @@ def generate_recommendations_and_evaluation(test_log, train_log, labeling, prefi
             for path in paths:
                 pos_paths_total_samples += path.num_samples['node_samples']
             for path in paths:
-                path.fitness = calcPathFitnessOnPrefix(prefix.events, path, dt_input_trainval)
+                path.fitness = calcPathFitnessOnPrefix(prefix.events, path, dt_input_trainval,log)
                 path.score = calcScore(path, pos_paths_total_samples, weights=hyperparams_evaluation[1:])
             # paths = sorted(paths, key=lambda path: (- path.fitness, path.impurity, - path.num_samples["total"]), reverse=False)
             if settings.use_score:
