@@ -1,7 +1,6 @@
 from functools import reduce
 from pandas import DataFrame
-from src.machine_learning.encoding.constants import get_max_prefix_length, get_prefix_length, TaskGenerationType, \
-    PrefixLengthStrategy
+from src.machine_learning.encoding.constants import get_max_prefix_length, get_prefix_length, PrefixLengthStrategy
 from src.machine_learning.label.common import add_label_column
 from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
 
@@ -50,13 +49,14 @@ def _compute_additional_columns(log, trace_attributes, resource_attributes, pref
     """
     Calcola le colonne aggiuntive in base agli attributi delle tracce e delle risorse.
     """
-    # Initialize the dictionary to store processed trace attributes
-    trace_attrs = {}
-    # Process trace attributes for each file, excluding specific system attributes
+
+    excluded_attributes = ["concept:name", "time:timestamp", "label","Case ID"]
+
+    trace_attrs = []
     for log, attributes_list in trace_attributes.items():
         trace_attrs = [
-            attribute for attribute in attributes_list
-            if attribute not in ["concept:name", "time:timestamp", "label","Case ID"]
+            attribute for attribute in trace_attributes.get(log,[])
+            if attribute not in excluded_attributes
         ]
 
     resource_attrs = {}
@@ -64,12 +64,13 @@ def _compute_additional_columns(log, trace_attributes, resource_attributes, pref
         # Initialize the key with an empty list
         resource_attrs = []
         for attribute in attributes_list:
-            # Append each attribute with suffixes from 1 to prefix_length
+    resource_attrs = []
+    for attribute in resource_attributes.get(log, []):
+        if attribute not in excluded_attributes + trace_attrs:
             for i in range(prefix_length):
                 resource_attrs.append(attribute + "_" + str(i + 1))
 
     return {'trace_attributes': trace_attrs, 'resource_attributes': resource_attrs}
-
 
 def _columns_complex(log, prefix_length: int, feature_list: list, trace_attributes, resource_attributes) -> tuple:
     """

@@ -1064,3 +1064,4 @@ bpic2011_f4	(None, 'entropy', 6, 16, 0.1)	87.81	89.54	-1	6
 bpic2012_accepted	(None, 'gini', None, 1, 0.3)	79.72	81.33	-1	23
 sepsis_cases_1	(None, 'entropy', 4, 10, 0.2)	91.99	91.99	-1	4
 sepsis_cases_1	(None, 'entropy', 4, 10, 0.2)	91.99	91.99	-1	4
+sepsis_cases_1	(None, 'entropy', 4, 10, 0.2)	91.99	91.99	-1	4
