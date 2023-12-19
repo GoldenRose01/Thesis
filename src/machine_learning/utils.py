@@ -12,20 +12,13 @@ import itertools
 from src.enums import TraceLabel
 import pandas as pd
 import numpy as np
-from sklearn.ensemble import ExtraTreesClassifier
-from sklearn.datasets import load_iris
-from sklearn.feature_selection import SelectFromModel
-from sklearn.svm import SVC
-from sklearn.model_selection import StratifiedKFold
-from sklearn.feature_selection import RFECV
-from sklearn.feature_selection import RFE
-from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import chi2, mutual_info_classif
-import pdb
+from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
 import settings
 import math
 import re
 
+trace_attributes_for_numb=trace_attributes
+resource_attributes_for_numb=resource_attributes
 # Definizione della funzione `gain` per il calcolo del guadagno
 def gain(c, nc, pc, pnc):
     prob_pos_comp = (pc + settings.smooth_factor) / (c + settings.smooth_factor * settings.num_classes)
@@ -81,24 +74,44 @@ def calcPathFitnessOnPrefixGOOD(prefix, path, rules, fitness_type):
     return fitness
 
 # Definizione della funzione `extract_numbers_from_string` per l'estrazione dei numeri da una stringa
-def extract_numbers_from_string(input_string):
-    pattern = r"prefix_(\d+)_(\d+)"
+def extract_numbers_from_string(input_string, log, trace_attributes_for_numb, resource_attributes_for_numb, excluded_attributes):
+    # Filtra trace_attributes per il log specifico, escludendo gli attributi non desiderati
+    trace_attributes_for_log = [
+        attribute for attribute in trace_attributes_for_numb.get(log, [])
+        if attribute not in excluded_attributes
+    ]
 
-    matches = re.findall(pattern, input_string)
+    # Filtra resource_attributes per il log specifico, escludendo gli attributi non desiderati
+    resource_attributes_for_log = [
+        attribute for attribute in resource_attributes_for_numb.get(log, [])
+        if attribute not in excluded_attributes
+    ]
 
+    # Controlla il pattern "prefix"
+    prefix_pattern = r"prefix_(\d+)_(\d+)"
+    matches = re.findall(prefix_pattern, input_string)
     if matches:
         numbers = [(int(match[0]), int(match[1])) for match in matches]
         return numbers
-    else:
-        pattern = r"Resource_(\d+)_(\d+)"
 
-        matches = re.findall(pattern, input_string)
-
+    # Controlla i pattern in trace_attributes_for_log
+    for attribute in trace_attributes_for_log:
+        trace_pattern = rf"{attribute}_(\d+)"
+        matches = re.findall(trace_pattern, input_string)
         if matches:
             numbers = [(int(match[0]), int(match[1])) for match in matches]
             return numbers
-        else:
-            return None
+
+    # Controlla i pattern in resource_attributes_for_log
+    for attribute in resource_attributes_for_log:
+        resource_pattern = rf"{attribute}_(\d+)_(\d+)"
+        matches = re.findall(resource_pattern, input_string)
+        if matches:
+            numbers = [(int(match[0]), int(match[1])) for match in matches]
+            return numbers
+    # Nessuna corrispondenza trovata
+    return None
+
 
 
 # Definizione della funzione `calcPathFitnessOnPrefix` per il calcolo della fitness del percorso su un prefisso

@@ -116,11 +116,11 @@ datasets_names = ["bpic2011_f1",
 
 #datasets_names = ["bpic2012_cancelled", "bpic2012_declined"]
 
-#datasets_names = ["sepsis_cases_2","sepsis_cases_4"]
+datasets_names = ["bpic2011_f4","bpic2012_accepted","sepsis_cases_1","sepsis_cases_2","sepsis_cases_4"]
 
 #datasets_names = ["traffic_fines_1"]
 
-datasets_names = ["sepsis_cases_1"]
+#datasets_names = ["sepsis_cases_4"]
 """
 datasets_names = ["bpic15_1",
                   "bpic15_2",

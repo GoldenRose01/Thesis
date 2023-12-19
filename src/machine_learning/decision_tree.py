@@ -30,6 +30,7 @@ from pm4py.objects.log.util.get_prefixes import get_log_with_log_prefixes
 from src.machine_learning.encoding.feature_encoder.frequency_features import frequency_features
 from src.machine_learning.encoding.feature_encoder.simple_features import simple_features
 from src.machine_learning.encoding.feature_encoder.complex_features import complex_features
+from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
 from src.machine_learning.encoding.constants import EncodingType
 from pandas import DataFrame
 from src.machine_learning.encoding.data_encoder import *
@@ -67,8 +68,25 @@ def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input
     X_train = pd.DataFrame(dt_input_trainval.encoded_data, columns=dt_input_trainval.features)
     y_train = pd.Categorical(dt_input_trainval.labels, categories=categories)
 
+    excluded_attributes = ["concept:name", "time:timestamp", "label", "Case ID"]
+    trace_attributes_for_log = []
+    for log, attributes_list in trace_attributes.items():
+        trace_attributes_for_log = [
+            attribute for attribute in trace_attributes.get(log,[])
+            if attribute not in excluded_attributes
+        ]
+    resource_attributes_for_log = []
+    for attribute in resource_attributes.get(log, []):
+        if attribute not in excluded_attributes + trace_attributes_for_log:
+            resource_attributes_for_log.append(attribute + "_")
+    Prefixcolumns = ["prefix_"] + trace_attributes_for_log + resource_attributes_for_log
+
     X_train = X_train.astype(str)
-    prefix_columns = [col for col in X_train.columns if col.startswith('prefix_') or col.startswith('Resource_')]
+
+    prefix_columns = []
+    for attr in Prefixcolumns:
+        prefix_columns.extend([col for col in X_train.columns if col.startswith(attr)])
+
     one_hot_data = pd.get_dummies(X_train[prefix_columns], drop_first=True)
     new_feature_names = np.array(one_hot_data.columns)
 

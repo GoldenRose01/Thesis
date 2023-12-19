@@ -55,7 +55,7 @@ def _compute_additional_columns(log, trace_attributes, resource_attributes, pref
     trace_attrs = []
     for log, attributes_list in trace_attributes.items():
         trace_attrs = [
-            attribute for attribute in trace_attributes.get(log,[])
+            attribute for attribute in trace_attributes.get(log, [])
             if attribute not in excluded_attributes
         ]
 
