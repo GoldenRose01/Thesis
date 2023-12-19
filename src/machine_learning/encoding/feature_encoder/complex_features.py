@@ -59,11 +59,6 @@ def _compute_additional_columns(log, trace_attributes, resource_attributes, pref
             if attribute not in excluded_attributes
         ]
 
-    resource_attrs = {}
-    for key, attributes_list in resource_attributes.items():
-        # Initialize the key with an empty list
-        resource_attrs = []
-        for attribute in attributes_list:
     resource_attrs = []
     for attribute in resource_attributes.get(log, []):
         if attribute not in excluded_attributes + trace_attrs:
