@@ -76,10 +76,11 @@ def calcPathFitnessOnPrefixGOOD(prefix, path, rules, fitness_type):
 # Definizione della funzione `extract_numbers_from_string` per l'estrazione dei numeri da una stringa
 def extract_numbers_from_string(input_string, log, trace_attributes_for_numb, resource_attributes_for_numb):
     # Filtra trace_attributes per il log specifico, escludendo gli attributi non desiderati
-    trace_attributes_for_log = [
-        attribute for attribute in trace_attributes_for_numb.get(log, [])
-        if attribute not in settings.excluded_attributes
-    ]
+    for log, attributes_list in trace_attributes_for_numb.items():
+        trace_attributes_for_log = [
+            attribute for attribute in trace_attributes_for_numb.get(log, [])
+            if attribute not in settings.excluded_attributes
+        ]
 
     # Filtra resource_attributes per il log specifico, escludendo gli attributi non desiderati
     resource_attributes_for_log = [

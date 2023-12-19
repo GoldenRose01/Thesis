@@ -356,7 +356,7 @@ def generate_recommendations_and_evaluation(test_log, train_log, labeling, prefi
             for path in paths:
                 pos_paths_total_samples += path.num_samples['node_samples']
             for path in paths:
-                path.fitness = calcPathFitnessOnPrefix(prefix.events, path, dt_input_trainval,log)
+                path.fitness = calcPathFitnessOnPrefix(prefix.events, path, dt_input_trainval,train_log)
                 path.score = calcScore(path, pos_paths_total_samples, weights=hyperparams_evaluation[1:])
             # paths = sorted(paths, key=lambda path: (- path.fitness, path.impurity, - path.num_samples["total"]), reverse=False)
             if settings.use_score:

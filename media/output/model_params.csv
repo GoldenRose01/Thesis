@@ -1077,3 +1077,7 @@ bpic2011_f4	(None, 'entropy', 6, 16, 0.1)	87.81	89.54	-1	6
 bpic2011_f4	(None, 'entropy', 6, 16, 0.1)	87.81	89.54	-1	6
 bpic2011_f4	(None, 'entropy', 6, 16, 0.1)	87.81	89.54	-1	6
 bpic2011_f4	(None, 'entropy', 6, 16, 0.1)	87.81	89.54	-1	6
+bpic2011_f4	(None, 'entropy', 6, 16, 0.1)	87.81	89.54	-1	6
+bpic2011_f4	(None, 'entropy', 6, 16, 0.1)	87.81	89.54	-1	6
+sepsis_cases_4	(None, 'entropy', 8, 1, 0.3)	66.5	70.48	-1	8
+sepsis_cases_4	(None, 'entropy', 8, 1, 0.3)	66.5	70.48	-1	8
