@@ -10,6 +10,8 @@ import csv  # Importa il modulo csv per la manipolazione dei file CSV.
 import numpy as np  # Importa la libreria numpy per operazioni matematiche su array.
 import settings  # Importa il modulo settings, che sembra essere un file di configurazione personalizzato.
 from sklearn import metrics  # Importa il modulo metrics dalla libreria sklearn per valutare i modelli.
+from run_experiments import *
+from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
 
 # Crea una classe ParamsOptimizer per ottimizzare i parametri del modello.
 class ParamsOptimizer:
@@ -136,14 +138,20 @@ def recommend(prefix, path, dt_input_trainval):
     return recommendation
 
 # Definisci una funzione per valutare la conformità di un trace rispetto a un percorso
-def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeling):
+def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeling, numerical_data, categorical_data):
     is_compliant = True
     activities = []
+    trace_attrs = []
+    resource_attrs = []
 
     for idx, event in enumerate(trace):
         for attribute_key, attribute_value in event.items():
             if (attribute_key == 'concept:name'):
                 activities.append(attribute_value)
+            elif (attribute_key in trace_attributes):
+                trace_attrs.append(attribute_value)
+            elif (attribute_key in resource_attributes):
+                resource_attrs.append(attribute_value)
 
     activities = dt_input_trainval.encode(activities)
 
@@ -186,7 +194,8 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeli
     ref = ref[num_prefixes:]
     ref = ref.tolist()
 
-    ed = evaluateEditDistance.edit(ref, hyp)
+    ed = evaluateEditDistance.edit(ref, hyp, numerical_data=numerical_data, categorical_data=categorical_data)
+
 
     if (ed < sat_threshold):
         is_compliant = True
@@ -255,7 +264,7 @@ def train_path_recommender(data_log, train_val_log, val_log, train_log, labeling
     return paths, best_model_dict
 
 
-def evaluate_recommendations(input_log, labeling, prefixing, rules, paths,train_log):
+def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train_log, numerical_data, categorical_data):
     # if labeling["threshold_type"] == LabelThresholdType.LABEL_MEAN:
     #    labeling["custom_threshold"] = calc_mean_label_threshold(train_log, labeling)
 
@@ -291,7 +300,7 @@ def evaluate_recommendations(input_log, labeling, prefixing, rules, paths,train_
                     # if recommendation != "":
                     selected_path = path
                     trace = input_log[prefix.trace_num]
-                    is_compliant, e = evaluate(trace, path, rules, labeling)
+                    is_compliant, e = evaluate(trace, path, rules, labeling, numerical_data, categorical_data)
 
                     """
                     if prefix_length > 2:
@@ -331,7 +340,8 @@ def evaluate_recommendations(input_log, labeling, prefixing, rules, paths,train_
 
 
 def generate_recommendations_and_evaluation(test_log, train_log, labeling, prefixing, rules, paths,
-                                            hyperparams_evaluation, dt_input_trainval, eval_res=None, debug=False):
+                                            hyperparams_evaluation, dt_input_trainval, eval_res=None, debug=False,
+                                            numerical_data=None,categorical_data=None):
     if labeling["threshold_type"] == LabelThresholdType.LABEL_MEAN:
         labeling["custom_threshold"] = calc_mean_label_threshold(train_log, labeling)
 
@@ -374,7 +384,7 @@ def generate_recommendations_and_evaluation(test_log, train_log, labeling, prefi
                 trace = test_log[prefix.trace_num]
                 path = reranked_paths[0]
                 label = generate_label(trace, labeling)
-                compliant, _ = evaluate(trace, path, rules, labeling, eval_type=settings.sat_type)
+                compliant, _ = evaluate(trace, path, rules, labeling, eval_type=settings.sat_type, numerical_data=numerical_data, categorical_data=categorical_data)
                 eval_res.comp += 1 if compliant else 0
                 eval_res.non_comp += 0 if compliant else 1
                 eval_res.pos_comp += 1 if compliant and label.value == TraceLabel.TRUE.value else 0
@@ -398,7 +408,8 @@ def generate_recommendations_and_evaluation(test_log, train_log, labeling, prefi
                     trace = test_log[prefix.trace_num]
                     # print(prefix.trace_id, trace[0]['label'])
                     is_compliant, e = evaluate(trace, path, prefix_length, dt_input_trainval, labeling=labeling,
-                                               sat_threshold=hyperparams_evaluation[0])
+                                               sat_threshold=hyperparams_evaluation[0],numerical_data=numerical_data,
+                                               categorical_data=categorical_data)
                     # if prefix_length == 12 or prefix_length == 12:
                     # pdb.set_trace()
                     # pdb.set_trace()

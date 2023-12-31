@@ -1,8 +1,6 @@
-# Importazioni delle librerie necessarie
 import platform
 from src.dataset_manager.datasetManager import DatasetManager
 from src.machine_learning import *
-from src.machine_learning import recommender
 from pm4py.objects.conversion.log import converter as log_converter
 import argparse
 import multiprocessing
@@ -21,7 +19,6 @@ env_path = '.env'
 
 # Imposta la variabile d'ambiente PATH
 os.environ['PATH'] = os.getenv('PATH')
-
 
 
 """=====----------Preparazione inizio sperimento----------====="""
@@ -43,7 +40,6 @@ else:
     print("I file Resource_att.txt e Trace_att.txt esistono.")
 
 
-
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione
 def rec_sys_exp(dataset_name):
     # ================ inputs ================
@@ -59,7 +55,12 @@ def rec_sys_exp(dataset_name):
     # Crea un oggetto DatasetManager per il dataset specificato
     dataset_manager = DatasetManager(dataset_name.lower())
     data = dataset_manager.read_dataset(os.path.join(os.getcwd(), settings.dataset_folder))
+    # Aggiunta riferimenti del dataset per le colonne Numerical e Categorical
+    numerical_df = data[dataset_manager.dynamic_num_cols + dataset_manager.static_num_cols]
+    categorical_df = data[dataset_manager.dynamic_cat_cols + dataset_manager.static_cat_cols]
 
+    numerical_data=numerical_df.columns.tolist()
+    categorical_data=categorical_df.columns.tolist()
     # Suddivide il dataset in training e test
     train_val_ratio = 0.8
     if dataset_name == "bpic2015_4_f2":
@@ -113,6 +114,7 @@ def rec_sys_exp(dataset_name):
         "trace_label": dataset_manager.pos_label,
         "custom_threshold": 0.0
     }
+
 
     # Creazione dell'oggetto Encoding
     dt_input_trainval = Encoding(train_val_log)
@@ -182,7 +184,9 @@ def rec_sys_exp(dataset_name):
                                                                                   paths=tmp_paths,
                                                                                   hyperparams_evaluation=hyperparams_evaluation,
                                                                                   eval_res=eval_res,
-                                                                                  dt_input_trainval=dt_input_trainval
+                                                                                  dt_input_trainval=dt_input_trainval,
+                                                                                  numerical_data=numerical_data,
+                                                                                  categorical_data=categorical_data
                                                                                   )
             if settings.cumulative_res is True:
                 eval_res = copy.deepcopy(evaluation)
@@ -220,7 +224,9 @@ def rec_sys_exp(dataset_name):
                                                                               paths=paths,
                                                                               hyperparams_evaluation=best_hyperparams_combination,
                                                                               eval_res=eval_res,
-                                                                              dt_input_trainval=dt_input_trainval
+                                                                              dt_input_trainval=dt_input_trainval,
+                                                                              numerical_data=numerical_data,
+                                                                              categorical_data=categorical_data
                                                                               )
         results.append(evaluation)
         if settings.cumulative_res is True:
@@ -235,7 +241,7 @@ def rec_sys_exp(dataset_name):
 
     # Salva i risultati della valutazione dei prefissi in un file CSV
     prefix_evaluation_to_csv(results, dataset_name)
-    return dataset_name, results, best_hyperparams_combination, max_prefix_length_test, min_prefix_length, dt
+    return dataset_name, results, best_hyperparams_combination, max_prefix_length_test, min_prefix_length, dt ,categorical_data, numerical_data
 
 
 # Funzione principale che gestisce la parallelizzazione degli esperimenti
@@ -287,5 +293,5 @@ if __name__ == "__main__":
     print(f"Le simulazioni hanno richiesto {(time.time() - start_time) / 3600.} ore o {(time.time() - start_time) / 60.} minuti")
 
     # Elimina i file txt presenti in src/machine_learning/encoding
-   # os.remove("src/machine_learning/encoding/Settings/Resource_att.txt")
-   # os.remove("src/machine_learning/encoding/Settings/Trace_att.txt")
+    # os.remove("src/machine_learning/encoding/Settings/Resource_att.txt")
+    # os.remove("src/machine_learning/encoding/Settings/Trace_att.txt")

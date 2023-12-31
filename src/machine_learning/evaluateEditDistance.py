@@ -3,19 +3,27 @@ import itertools
 
 # Definizione della funzione edit con due parametri ref e hyp
 def edit(ref, hyp):
+    hyp2 = hyp.copy()
 
-    ref2 = ref.copy()  # Crea una copia della lista ref
-    hyp2 = hyp.copy()  # Crea una copia della lista hyp
     hyp2 = hyp2[:len(ref2)]  # Limita la lunghezza di hyp2 alla lunghezza di ref2
     hyp2 = [int(elemento) for elemento in hyp2]  # Converte gli elementi di hyp2 in interi
+    '''#Ricrea variabili per mia parte
+    hyp3 = hyp.copy()
 
-    maxi = max(len(ref2), len(hyp2))  # Calcola il massimo tra le lunghezze di ref2 e hyp2
+    ref3 = [int(elemento) for elemento in ref3]  # Converte gli elementi di hyp3 in interi
+    maxi = max(len(ref2), len(hyp2))
 
-    for i in range(len(ref)-1, -1, -1):  # Itera all'indietro attraverso gli elementi di ref
-        if (ref2[i] == "" or ref2[i] == 0) and i < len(hyp):  # Controlla se l'elemento in ref è vuoto o zero e se è presente nell'indice corrispondente in hyp
-            ref2.pop(i)  # Rimuovi l'elemento vuoto o zero da ref2
-            hyp2.pop(i)  # Rimuovi l'elemento corrispondente da hyp2
+    for i in range(len(ref2)-1, -1, -1):
+        if (ref2[i] == "" or ref2[i] == 0) and i < len(hyp2):
+            ref2.pop(i)
+            hyp2.pop(i)
 
-    ed = editdistance.eval(ref2, hyp2)  # Calcola la distanza di edit tra ref2 e hyp2
-    ed_ratio = ed / maxi  # Calcola il rapporto tra la distanza di edit ed il massimo delle lunghezze
-    return ed_ratio  # Restituisci il rapporto della distanza di edit
+    # Calcola la distanza di edit con la libreria editdistance
+    ed_lib = editdistance.eval(ref2, hyp2)
+
+
+    # Calcola il rapporto totale della distanza di edit utilizzando solo le tue regole
+    ed_ratio = ed_lib / maxi
+    print("Ed tramite Libreria:"+ str(ed_ratio))
+    #print("Ed tramite funzione:"+ str(total_distance))
+    return ed_ratio
