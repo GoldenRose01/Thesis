@@ -1,16 +1,14 @@
 import editdistance  # Importa la libreria per calcolare la distanza di edit
 import itertools
 
-# Definizione della funzione edit con due parametri ref e hyp
-def edit(ref, hyp):
+def edit(ref, hyp):#numerical e categorical erano stati presi per una prova di extract a posteriori
+
+    ref2 = ref.copy()
     hyp2 = hyp.copy()
 
     hyp2 = hyp2[:len(ref2)]  # Limita la lunghezza di hyp2 alla lunghezza di ref2
     hyp2 = [int(elemento) for elemento in hyp2]  # Converte gli elementi di hyp2 in interi
-    '''#Ricrea variabili per mia parte
-    hyp3 = hyp.copy()
 
-    ref3 = [int(elemento) for elemento in ref3]  # Converte gli elementi di hyp3 in interi
     maxi = max(len(ref2), len(hyp2))
 
     for i in range(len(ref2)-1, -1, -1):

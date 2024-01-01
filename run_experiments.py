@@ -55,12 +55,7 @@ def rec_sys_exp(dataset_name):
     # Crea un oggetto DatasetManager per il dataset specificato
     dataset_manager = DatasetManager(dataset_name.lower())
     data = dataset_manager.read_dataset(os.path.join(os.getcwd(), settings.dataset_folder))
-    # Aggiunta riferimenti del dataset per le colonne Numerical e Categorical
-    numerical_df = data[dataset_manager.dynamic_num_cols + dataset_manager.static_num_cols]
-    categorical_df = data[dataset_manager.dynamic_cat_cols + dataset_manager.static_cat_cols]
 
-    numerical_data=numerical_df.columns.tolist()
-    categorical_data=categorical_df.columns.tolist()
     # Suddivide il dataset in training e test
     train_val_ratio = 0.8
     if dataset_name == "bpic2015_4_f2":
@@ -184,9 +179,7 @@ def rec_sys_exp(dataset_name):
                                                                                   paths=tmp_paths,
                                                                                   hyperparams_evaluation=hyperparams_evaluation,
                                                                                   eval_res=eval_res,
-                                                                                  dt_input_trainval=dt_input_trainval,
-                                                                                  numerical_data=numerical_data,
-                                                                                  categorical_data=categorical_data
+                                                                                  dt_input_trainval=dt_input_trainval
                                                                                   )
             if settings.cumulative_res is True:
                 eval_res = copy.deepcopy(evaluation)
@@ -224,9 +217,7 @@ def rec_sys_exp(dataset_name):
                                                                               paths=paths,
                                                                               hyperparams_evaluation=best_hyperparams_combination,
                                                                               eval_res=eval_res,
-                                                                              dt_input_trainval=dt_input_trainval,
-                                                                              numerical_data=numerical_data,
-                                                                              categorical_data=categorical_data
+                                                                              dt_input_trainval=dt_input_trainval
                                                                               )
         results.append(evaluation)
         if settings.cumulative_res is True:
