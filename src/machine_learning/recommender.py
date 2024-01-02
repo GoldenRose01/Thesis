@@ -32,7 +32,7 @@ class ParamsOptimizer:
         self.max_prefix_length = max_prefix_length  # Lunghezza massima del prefisso.
 
     # Funzione per la ricerca nella griglia dei parametri.
-    def params_grid_search(self, dataset_name, constr_family):
+    def params_grid_search(self, dataset_name, constr_family,numerical_data,categorical_data):
         categories = [TraceLabel.FALSE.value, TraceLabel.TRUE.value]  # Definisci categorie.
 
         for param_id, param_tuple in enumerate(self.param_grid):

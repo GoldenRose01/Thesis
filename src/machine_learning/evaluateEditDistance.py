@@ -21,7 +21,7 @@ def edit(ref, hyp):#numerical e categorical erano stati presi per una prova di e
 
     # Calcola il rapporto totale della distanza di edit utilizzando solo le tue regole
     ed_ratio = ed_lib / maxi
-    
+
     print("Ed tramite Libreria:"+ str(ed_ratio))
 
     return ed_ratio

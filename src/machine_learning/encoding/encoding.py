@@ -95,6 +95,15 @@ class Encoding:
 
         return DTInput(features, encoded_data, labels), self.prefix
 
+    # Funzione per separare e codificare i dati in vettori categorici e numerici
+    def _separate_and_encode(self):
+        # Implementazione specifica per separare e codificare i dati
+        # Questa parte del codice dipenderà dalla struttura dei tuoi dati e dalle tue esigenze specifiche
+        # ...
+        encoded_categorical, encoded_numerical = [], []
+        return encoded_categorical, encoded_numerical
+
+
     # Metodo per decodificare un log codificato
     # Funzione per convertire dati in tuple se sono liste
     def convert_data_to_hashable(data):

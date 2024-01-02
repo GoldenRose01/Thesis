@@ -13,32 +13,39 @@ import dotenv
 import os
 import subprocess
 import shutil
-
 # Percorso al file .env per graphviz
 env_path = '.env'
-
 # Imposta la variabile d'ambiente PATH
 os.environ['PATH'] = os.getenv('PATH')
-
-
-"""=====----------Preparazione inizio sperimento----------====="""
-
 #___Verifica se i file Resource_att.txt e Trace_att.txt esistono nella cartella desiderata___#
-resource_att_path = "src/machine_learning/encoding/Settings/Resource_att.txt"
-trace_att_path = "src/machine_learning/encoding/Settings/Trace_att.txt"
+def Attributes_verifier(directory):
+    resource_filename = "Resource_att.txt"
+    trace_filename = "Trace_att.txt"
+    resource_att_path = directory+"/"+resource_filename
+    trace_att_path = directory+"/"+trace_filename
+    if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
+        print("File non trovati. Esecuzione degli script Xesreader.py e csvreader.")
+        # Esegui csvreader.py e poi converti xes to csv
+        subprocess.run(["python", "Mediamanager/csvreader.py"])
 
-# Verifica dell'esistenza dei file
-if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
-    print("File non trovati. Esecuzione degli script Xesreader.py e csvreader.")
+        subprocess.run(["python", "Mediamanager/xestocsv.py"])
+    else:
+        print("File trovati,inizio esperimento")
 
-    # Esegui csvreader.py e poi converti xes to csv
-    subprocess.run(["python", "Mediamanager/csvreader.py"])
+def remove_files(directory):
+    for filename in os.listdir(directory):
+        if filename.endswith(".txt"):
+            os.remove(os.path.join(directory, filename))
 
-    subprocess.run(["python", "Mediamanager/xestocsv.py"])
-
-else:
-    print("I file Resource_att.txt e Trace_att.txt esistono.")
-
+def rename_and_convert_to_log(df, dataset_manager):
+    renamed_df = df.rename(
+        columns={
+            dataset_manager.timestamp_col: 'time:timestamp',
+            dataset_manager.case_id_col: 'case:concept:name',
+            dataset_manager.activity_col: 'concept:name'
+        }
+    )
+    return log_converter.apply(renamed_df)
 
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione
 def rec_sys_exp(dataset_name):
@@ -55,7 +62,12 @@ def rec_sys_exp(dataset_name):
     # Crea un oggetto DatasetManager per il dataset specificato
     dataset_manager = DatasetManager(dataset_name.lower())
     data = dataset_manager.read_dataset(os.path.join(os.getcwd(), settings.dataset_folder))
+    # Aggiunta riferimenti del dataset per le colonne Numerical e Categorical
+    numerical_df = data[dataset_manager.dynamic_num_cols + dataset_manager.static_num_cols]
+    categorical_df = data[dataset_manager.dynamic_cat_cols + dataset_manager.static_cat_cols]
 
+    numerical_data=numerical_df.columns.tolist()
+    categorical_data=categorical_df.columns.tolist()
     # Suddivide il dataset in training e test
     train_val_ratio = 0.8
     if dataset_name == "bpic2015_4_f2":
@@ -109,7 +121,6 @@ def rec_sys_exp(dataset_name):
         "trace_label": dataset_manager.pos_label,
         "custom_threshold": 0.0
     }
-
 
     # Creazione dell'oggetto Encoding
     dt_input_trainval = Encoding(train_val_log)
@@ -237,6 +248,7 @@ def rec_sys_exp(dataset_name):
 
 # Funzione principale che gestisce la parallelizzazione degli esperimenti
 if __name__ == "__main__":
+    Attributes_verifier("src/machine_learning/encoding/Settings")
     print_lock = multiprocessing.Lock()
     parser = argparse.ArgumentParser(
         description="Esperimenti per il monitoraggio dei processi prescrittivi basati sui risultati")
@@ -284,5 +296,4 @@ if __name__ == "__main__":
     print(f"Le simulazioni hanno richiesto {(time.time() - start_time) / 3600.} ore o {(time.time() - start_time) / 60.} minuti")
 
     # Elimina i file txt presenti in src/machine_learning/encoding
-    # os.remove("src/machine_learning/encoding/Settings/Resource_att.txt")
-    # os.remove("src/machine_learning/encoding/Settings/Trace_att.txt")
+    # remove_files("src/machine_learning/encoding/Settings")
