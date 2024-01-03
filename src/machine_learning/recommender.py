@@ -1,15 +1,15 @@
-import copy  # Importa la libreria copy per la copia profonda degli oggetti.
+import copy
 #from src.machine_learning.utils import *
 #from src.machine_learning.apriori import *
 #from src.machine_learning.encoding import *
 from src.machine_learning.decision_tree import *  # Importa il modulo decision_tree dalla directory src.machine_learning.
 from src.models import EvaluationResult  # Importa la classe EvaluationResult dalla directory src.models.
 from src.constants import *  # Importa tutte le costanti definite nella directory src.constants.
-from src.machine_learning import evaluateEditDistance  # Importa la funzione evaluateEditDistance dalla directory src.machine_learning.
-import csv  # Importa il modulo csv per la manipolazione dei file CSV.
-import numpy as np  # Importa la libreria numpy per operazioni matematiche su array.
-import settings  # Importa il modulo settings, che sembra essere un file di configurazione personalizzato.
-from sklearn import metrics  # Importa il modulo metrics dalla libreria sklearn per valutare i modelli.
+from src.machine_learning import evaluateEditDistance
+import csv
+import numpy as np
+import settings
+from sklearn import metrics
 from run_experiments import *
 from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
 
@@ -555,7 +555,7 @@ def write_recommendations_to_csv(recommendations, dataset):
 
 
 def prefix_evaluation_to_csv(result_dict, dataset):
-    csv_file = os.path.join(settings.results_dir, f"{dataset}_evaluation.csv")
+    csv_file = os.path.join(settings.results_dir, "{dataset}_evaluation.csv")
     fieldnames = ["prefix_length", "num_cases", "tp", "fp", "tn", "fn", "precision", "recall", "fscore"]
     basic_fields = ["tp", "fp", "tn", "fn", "precision", "recall", "fscore"]
 

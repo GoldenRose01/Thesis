@@ -67,12 +67,6 @@ def rec_sys_exp(dataset_name):
     dataset_manager = DatasetManager(dataset_name.lower())
     data = dataset_manager.read_dataset(os.path.join(os.getcwd(), settings.dataset_folder))
 
-    # Aggiunta riferimenti del dataset per le colonne Numerical e Categorical
-    numerical_df = data[dataset_manager.dynamic_num_cols + dataset_manager.static_num_cols]
-    categorical_df = data[dataset_manager.dynamic_cat_cols + dataset_manager.static_cat_cols]
-
-    numerical_data = numerical_df.columns.tolist()
-    categorical_data = categorical_df.columns.tolist()
     # Suddivide il dataset in training e test
     train_val_ratio = 0.8
     if dataset_name == "bpic2015_4_f2":
@@ -135,9 +129,9 @@ def rec_sys_exp(dataset_name):
     results = []
 
     # Imposta la lunghezza massima dei prefissi di test e validazione
-    if (max_prefix_length_test > prefix_length):
+    if max_prefix_length_test > prefix_length:
         max_prefix_length_test = prefix_length - 1
-    if (max_prefix_length_val > prefix_length):
+    if max_prefix_length_val > prefix_length:
         max_prefix_length_val = prefix_length - 1
 
     # Lista delle lunghezze dei prefissi per il test e la validazione
@@ -240,16 +234,15 @@ def rec_sys_exp(dataset_name):
             eval_res = copy.deepcopy(evaluation)
 
         for metric in ["fscore"]:  # ["accuracy", "fscore", "auc", "gain"]:
-            print("{metric}: {getattr(results[pref_id], metric)}")
+            print("{metric}: {value}".format(metric=metric, value=getattr(results[pref_id], metric)))
     plot = PlotResult(results, prefix_lenght_list_test, settings.results_dir)
 
     for metric in ["fscore"]:
         plot.toPng(metric, "{dataset_name}_{metric}")
 
     # Salva i risultati della valutazione dei prefissi in un file CSV
-    prefix_evaluation_to_csv(results, dataset_name)
-    return dataset_name, results, best_hyperparams_combination, max_prefix_length_test, min_prefix_length, dt, categorical_data, numerical_data
-
+    recommender.prefix_evaluation_to_csv(results, dataset_name)
+    return dataset_name, results, best_hyperparams_combination, max_prefix_length_test, min_prefix_length, dt
 
 
 if __name__ == "__main__":
@@ -298,8 +291,8 @@ if __name__ == "__main__":
                             [round(100 * np.mean([getattr(res_obj, 'fscore') for res_obj in final_results[dataset]]),
                                    2)] +
                             [hyperparams] + [min_pref_length] + [max_pref_length] + [dt['parameters']])
-    print("Le simulazioni hanno richiesto" + {(time.time() - start_time) / 3600} + "ore o " + {(time.time() - start_time) / 60} + "minuti")
-
+    print("Le simulazioni hanno richiesto " + str((time.time() - start_time) / 3600) + " ore o " + str(
+        (time.time() - start_time) / 60) + " minuti")
 
     # Elimina i file txt presenti in src/machine_learning/encoding
     # remove_files("src/machine_learning/encoding/Settings")

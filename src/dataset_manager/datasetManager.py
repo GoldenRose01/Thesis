@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt  # Importa il modulo matplotlib per la visualizz
 from sklearn.model_selection import StratifiedKFold  # Importa StratifiedKFold per la divisione stratificata del dataset
 
 
+# noinspection DuplicatedCode
 class DatasetManager:
 
     def __init__(self, dataset_name):
@@ -46,6 +47,7 @@ class DatasetManager:
 
         return data
 
+    # noinspection DuplicatedCode
     def split_data(self, data, train_ratio, split="temporal", seed=22):
         # Divide il dataset in train e test utilizzando una divisione temporale o casuale
 
