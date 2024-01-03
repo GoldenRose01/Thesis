@@ -9,7 +9,7 @@ reranking = False
 sat_type = 'count_occurrences'  # count_occurrences or count_activations or strong
 fitness_type = 'mean'  # mean or wmean
 cumulative_res = False
-optmize_dt = True
+optimize_dt = True
 print_dt = True
 compute_gain = False
 smooth_factor = 1
@@ -18,13 +18,16 @@ train_prefix_log = False
 one_hot_encoding = False
 use_score = True
 compute_baseline = False
-excluded_attributes = ["concept:name", "time:timestamp", "label", "Case ID"] #add the names to exclude from trace_att and resource_att
+Print_edit_distance = False
+excluded_attributes = ["concept:name", "time:timestamp", "label", "Case ID"]
+# add the names to exclude from trace_att and resource_att
+
 # ================ folders ================
 output_dir = "media/output"
 results_dir = os.path.join(output_dir, "result")
 dataset_folder = "media/input/processed_benchmark_event_logs"
-#dataset_folder = "media/input"
-#dataset_folder = "media/input/csvconverted"
+# dataset_folder = "media/input"
+# dataset_folder = "media/input/csvconverted"
 
 # ================ checkers ================
 existence_family = [ConstraintChecker.EXISTENCE, ConstraintChecker.ABSENCE, ConstraintChecker.INIT,
@@ -110,15 +113,15 @@ datasets_names = ["bpic2011_f1",
                     "sepsis_cases_4", 
                     "traffic_fines_1"]
 """
-#datasets_names = ["Production"]
+# datasets_names = ["Production"]
 
-#datasets_names = ["hospital_billing_3"]
+# datasets_names = ["hospital_billing_3"]
 
-#datasets_names = ["bpic2012_cancelled", "bpic2012_declined"]
+# datasets_names = ["bpic2012_cancelled", "bpic2012_declined"]
 
-#datasets_names = ["bpic2011_f4","bpic2012_accepted","sepsis_cases_1","sepsis_cases_2","sepsis_cases_4"]
+# datasets_names = ["bpic2011_f4","bpic2012_accepted","sepsis_cases_1","sepsis_cases_2","sepsis_cases_4"]
 
-#datasets_names = ["traffic_fines_1"]
+# datasets_names = ["traffic_fines_1"]
 
 datasets_names = ["sepsis_cases_4"]
 """
@@ -142,13 +145,14 @@ dt_hyperparameters = {'criterion': ['entropy', 'gini'],
                       'min_samples_split': [0.1, 2, 0.2, 0.3],
                       'min_samples_leaf': [10, 1, 16]}
 
-num_feat_strategy = ['sqrt',  0.3, 0.5]
-#num_feat_strategy = [0.5]
-#sat_threshold_list = [0.55, 0.65, 0.75, 0.85]
+num_feat_strategy = ['sqrt', 0.3, 0.5]
+# num_feat_strategy = [0.5]
+# sat_threshold_list = [0.55, 0.65, 0.75, 0.85]
 sat_threshold_list = [0.35, 0.45, 0.55, 0.65]
-#sat_threshold_list = [0.85]
-weight_combination_list = [(0.2, 0.4, 0.4), (0.6, 0.2, 0.2), (0.4, 0.4, 0.2), (0.4, 0.2, 0.4), (0.8, 0.1, 0.1), (0.4, 0.3, 0.3), (0.1, 0.8, 0.1), (0.1, 0.1, 0.8)]
-#weight_combination_list = [(0.4, 0.4, 0.2)]
+# sat_threshold_list = [0.85]
+weight_combination_list = [(0.2, 0.4, 0.4), (0.6, 0.2, 0.2), (0.4, 0.4, 0.2), (0.4, 0.2, 0.4), (0.8, 0.1, 0.1),
+                           (0.4, 0.3, 0.3), (0.1, 0.8, 0.1), (0.1, 0.1, 0.8)]
+# weight_combination_list = [(0.4, 0.4, 0.2)]
 
 # ================ checkers satisfaction ================
 rules = {
@@ -167,7 +171,7 @@ method_label = {'existence': r'$\mathcal{E}$', 'choice': r'$\mathcal{\widehat{C}
                 'positive relations': r'$\mathcal{\widehat{PR}}$', 'negative relations': r'$\mathcal{\widehat{NR}}$',
                 'all': r'$\mathcal{A}$'}
 method_marker = {'existence': 'x', 'choice': '1', 'positive relations': '.', 'negative relations': '', 'all': '+'}
-#method_color = {'existence': 'mediumpurple', 'choice': 'deepskyblue', 'positive relations': 'orange',
+# method_color = {'existence': 'mediumpurple', 'choice': 'deepskyblue', 'positive relations': 'orange',
 #                'negative relations': 'crimson', 'all': 'forestgreen'}
 method_color = 'orange'
 method_style = {'existence': 'solid', 'choice': (0, (1, 1)), 'positive relations': 'dashdot',

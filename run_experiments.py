@@ -1,4 +1,3 @@
-import platform
 from src.dataset_manager.datasetManager import DatasetManager
 from src.machine_learning import *
 from pm4py.objects.conversion.log import converter as log_converter
@@ -9,33 +8,37 @@ import time
 import numpy as np
 import csv
 import copy
-import dotenv
 import os
 import subprocess
-import shutil
+import platform
+import settings
+
 # Percorso al file .env per graphviz
 env_path = '.env'
 # Imposta la variabile d'ambiente PATH
 os.environ['PATH'] = os.getenv('PATH')
-#___Verifica se i file Resource_att.txt e Trace_att.txt esistono nella cartella desiderata___#
-def Attributes_verifier(directory):
+
+
+# ___Verifica se i file Resource_att.txt e Trace_att.txt esistono nella cartella desiderata___#
+def attributes_verifier(directory):
     resource_filename = "Resource_att.txt"
     trace_filename = "Trace_att.txt"
-    resource_att_path = directory+"/"+resource_filename
-    trace_att_path = directory+"/"+trace_filename
+    resource_att_path = directory + "/" + resource_filename
+    trace_att_path = directory + "/" + trace_filename
     if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
         print("File non trovati. Esecuzione degli script Xesreader.py e csvreader.")
         # Esegui csvreader.py e poi converti xes to csv
         subprocess.run(["python", "Mediamanager/csvreader.py"])
-
         subprocess.run(["python", "Mediamanager/xestocsv.py"])
     else:
         print("File trovati,inizio esperimento")
 
+
 def remove_files(directory):
     for filename in os.listdir(directory):
-        if filename.endswith(".txt"):
+        if filename.endswith(".txt") or filename.endswith(".csv"):
             os.remove(os.path.join(directory, filename))
+
 
 def rename_and_convert_to_log(df, dataset_manager):
     renamed_df = df.rename(
@@ -46,6 +49,7 @@ def rename_and_convert_to_log(df, dataset_manager):
         }
     )
     return log_converter.apply(renamed_df)
+
 
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione
 def rec_sys_exp(dataset_name):
@@ -62,12 +66,13 @@ def rec_sys_exp(dataset_name):
     # Crea un oggetto DatasetManager per il dataset specificato
     dataset_manager = DatasetManager(dataset_name.lower())
     data = dataset_manager.read_dataset(os.path.join(os.getcwd(), settings.dataset_folder))
+
     # Aggiunta riferimenti del dataset per le colonne Numerical e Categorical
     numerical_df = data[dataset_manager.dynamic_num_cols + dataset_manager.static_num_cols]
     categorical_df = data[dataset_manager.dynamic_cat_cols + dataset_manager.static_cat_cols]
 
-    numerical_data=numerical_df.columns.tolist()
-    categorical_data=categorical_df.columns.tolist()
+    numerical_data = numerical_df.columns.tolist()
+    categorical_data = categorical_df.columns.tolist()
     # Suddivide il dataset in training e test
     train_val_ratio = 0.8
     if dataset_name == "bpic2015_4_f2":
@@ -164,7 +169,7 @@ def rec_sys_exp(dataset_name):
     counter = 0
 
     # Scopre sul set di validazione con la migliore configurazione degli iperparametri di valutazione
-    print(f"Hyperparametri per la valutazione per {dataset_name} ...")
+    print("Hyperparametri per la valutazione per {dataset_name} ...")
     if settings.compute_baseline:
         hyperparams_evaluation_list = hyperparams_evaluation_list_baseline
 
@@ -198,14 +203,14 @@ def rec_sys_exp(dataset_name):
         results_hyperparams_evaluation[hyperparams_evaluation] = np.mean(res_val_list)
         timeF = (time.time() - timeI) / 60.
         timeH = (time.time() - timeI) / 3600
-        print("Simulazione: ", counter, ", tempo: ", timeF, "minuti o ",timeH,"ore")
+        print("Simulazione: ", counter, ", tempo: ", timeF, "minuti o ", timeH, "ore")
 
     results_hyperparams_evaluation = dict(sorted(results_hyperparams_evaluation.items(), key=lambda item: item[1]))
     best_hyperparams_combination = list(results_hyperparams_evaluation.keys())[-1]
     paths = tmp_paths
     best_hyperparams_combination = best_hyperparams_combination
-    print(f"MIGLIORE COMBINAZIONE DI IPERPARAMETRI {best_hyperparams_combination}")
-    print(f"LUNGHEZZA MINIMA E MASSIMA DEI PREFISSI {min_prefix_length} {max_prefix_length_test}")
+    print("MIGLIORE COMBINAZIONE DI IPERPARAMETRI {best_hyperparams_combination}")
+    print("LUNGHEZZA MINIMA E MASSIMA DEI PREFISSI {min_prefix_length} {max_prefix_length_test}")
 
     # Test sul set di test con la migliore configurazione degli iperparametri di valutazione
     eval_res = None
@@ -214,7 +219,7 @@ def rec_sys_exp(dataset_name):
 
     for pref_id, prefix_len in enumerate(prefix_lenght_list_test):
         print(
-            f"<--- DATASET: {dataset_name}, LUNGHEZZA PREFISSO: {prefix_len}/{max_prefix_length_test} --->")
+            "<--- DATASET: {dataset_name}, LUNGHEZZA PREFISSO: {prefix_len}/{max_prefix_length_test} --->")
         prefixing = {
             "type": PrefixType.ONLY,
             "length": prefix_len
@@ -235,20 +240,20 @@ def rec_sys_exp(dataset_name):
             eval_res = copy.deepcopy(evaluation)
 
         for metric in ["fscore"]:  # ["accuracy", "fscore", "auc", "gain"]:
-            print(f"{metric}: {getattr(results[pref_id], metric)}")
+            print("{metric}: {getattr(results[pref_id], metric)}")
     plot = PlotResult(results, prefix_lenght_list_test, settings.results_dir)
 
     for metric in ["fscore"]:
-        plot.toPng(metric, f"{dataset_name}_{metric}")
+        plot.toPng(metric, "{dataset_name}_{metric}")
 
     # Salva i risultati della valutazione dei prefissi in un file CSV
     prefix_evaluation_to_csv(results, dataset_name)
-    return dataset_name, results, best_hyperparams_combination, max_prefix_length_test, min_prefix_length, dt ,categorical_data, numerical_data
+    return dataset_name, results, best_hyperparams_combination, max_prefix_length_test, min_prefix_length, dt, categorical_data, numerical_data
 
 
-# Funzione principale che gestisce la parallelizzazione degli esperimenti
+
 if __name__ == "__main__":
-    Attributes_verifier("src/machine_learning/encoding/Settings")
+    attributes_verifier("src/machine_learning/encoding/Settings")
     print_lock = multiprocessing.Lock()
     parser = argparse.ArgumentParser(
         description="Esperimenti per il monitoraggio dei processi prescrittivi basati sui risultati")
@@ -260,7 +265,7 @@ if __name__ == "__main__":
     available_jobs = multiprocessing.cpu_count()
     if args.jobs:
         if args.jobs < -1 or args.jobs == 0:
-            print(f"-j deve essere -1 o maggiore di 0")
+            print("-j deve essere -1 o maggiore di 0")
             sys.exit(2)
         jobs = available_jobs if args.jobs == -1 else args.jobs
 
@@ -283,7 +288,7 @@ if __name__ == "__main__":
         final_results = dict(tmp_list_results)
 
     # Salva i risultati finali in un file CSV
-    with open(os.path.join(settings.output_dir, f"results.csv"), mode='a') as out_file:
+    with open(os.path.join(settings.output_dir, "results.csv"), mode='a') as out_file:
         writer = csv.writer(out_file, delimiter=',')
         writer.writerow(
             ["Dataset", "Punteggio", "Migliore configurazione degli iperparametri", "Lunghezza minima del prefisso",
@@ -293,7 +298,9 @@ if __name__ == "__main__":
                             [round(100 * np.mean([getattr(res_obj, 'fscore') for res_obj in final_results[dataset]]),
                                    2)] +
                             [hyperparams] + [min_pref_length] + [max_pref_length] + [dt['parameters']])
-    print(f"Le simulazioni hanno richiesto {(time.time() - start_time) / 3600.} ore o {(time.time() - start_time) / 60.} minuti")
+    print("Le simulazioni hanno richiesto" + {(time.time() - start_time) / 3600} + "ore o " + {(time.time() - start_time) / 60} + "minuti")
+
 
     # Elimina i file txt presenti in src/machine_learning/encoding
     # remove_files("src/machine_learning/encoding/Settings")
+    # remove_files("media/input/csvconverted")

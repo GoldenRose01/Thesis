@@ -245,7 +245,7 @@ def train_path_recommender(data_log, train_val_log, val_log, train_log, labeling
     target_label = labeling["target"]
 
     print("Generating decision tree with params optimization ...")
-    if settings.optmize_dt:
+    if settings.optimize_dt:
         best_model_dict, feature_names = find_best_dt(dataset_name, train_val_log,
                                                       support_threshold, settings.print_dt, dt_input_trainval)
     # else:

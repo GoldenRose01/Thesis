@@ -1,5 +1,6 @@
 import editdistance  # Importa la libreria per calcolare la distanza di edit
 import itertools
+from settings import Print_edit_distance
 
 def edit(ref, hyp):#numerical e categorical erano stati presi per una prova di extract a posteriori
 
@@ -21,7 +22,7 @@ def edit(ref, hyp):#numerical e categorical erano stati presi per una prova di e
 
     # Calcola il rapporto totale della distanza di edit utilizzando solo le tue regole
     ed_ratio = ed_lib / maxi
-
-    print("Ed tramite Libreria:"+ str(ed_ratio))
+    if Print_edit_distance==True:
+        print("Ed tramite Libreria:"+ str(ed_ratio))
 
     return ed_ratio
