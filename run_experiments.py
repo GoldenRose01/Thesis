@@ -38,6 +38,7 @@ def remove_files(directory):
     for filename in os.listdir(directory):
         if filename.endswith(".txt") or filename.endswith(".csv"):
             os.remove(os.path.join(directory, filename))
+    print("File eliminati")
 
 
 def rename_and_convert_to_log(df, dataset_manager):
@@ -87,22 +88,32 @@ def rec_sys_exp(dataset_name):
         max_prefix_length_val = min(40, dataset_manager.get_pos_case_length_quantile(val_df, 0.90))
 
     # Rinomina le colonne del dataset
-    data = data.rename(columns={dataset_manager.timestamp_col: 'time:timestamp',
-                                dataset_manager.case_id_col: 'case:concept:name',
-                                dataset_manager.activity_col: 'concept:name'})
+    data = data.rename(
+        columns={dataset_manager.timestamp_col: 'time:timestamp',
+                dataset_manager.case_id_col: 'case:concept:name',
+                dataset_manager.activity_col: 'concept:name'
+                })
 
     train_df = train_df.rename(
-        columns={dataset_manager.timestamp_col: 'time:timestamp', dataset_manager.case_id_col: 'case:concept:name',
-                 dataset_manager.activity_col: 'concept:name'})
+        columns={dataset_manager.timestamp_col: 'time:timestamp',
+                 dataset_manager.case_id_col: 'case:concept:name',
+                 dataset_manager.activity_col: 'concept:name'
+                 })
     test_df = test_df.rename(
-        columns={dataset_manager.timestamp_col: 'time:timestamp', dataset_manager.case_id_col: 'case:concept:name',
-                 dataset_manager.activity_col: 'concept:name'})
+        columns={dataset_manager.timestamp_col: 'time:timestamp',
+                 dataset_manager.case_id_col: 'case:concept:name',
+                 dataset_manager.activity_col: 'concept:name'
+                 })
     val_df = val_df.rename(
-        columns={dataset_manager.timestamp_col: 'time:timestamp', dataset_manager.case_id_col: 'case:concept:name',
-                 dataset_manager.activity_col: 'concept:name'})
+        columns={dataset_manager.timestamp_col: 'time:timestamp',
+                 dataset_manager.case_id_col: 'case:concept:name',
+                 dataset_manager.activity_col: 'concept:name'
+                 })
     train_val_df = train_val_df.rename(
-        columns={dataset_manager.timestamp_col: 'time:timestamp', dataset_manager.case_id_col: 'case:concept:name',
-                 dataset_manager.activity_col: 'concept:name'})
+        columns={dataset_manager.timestamp_col: 'time:timestamp',
+                 dataset_manager.case_id_col: 'case:concept:name',
+                 dataset_manager.activity_col: 'concept:name'
+                 })
 
     # Converte i dataframe in oggetti di log PM4Py
     val_log = log_converter.apply(val_df)
@@ -169,7 +180,7 @@ def rec_sys_exp(dataset_name):
 
     for hyperparams_evaluation in hyperparams_evaluation_list:
         counter = counter + 1
-        timeI = time.time()
+        time_i = time.time()
         res_val_list = []
         eval_res = None
         if settings.cumulative_res is True:
@@ -195,9 +206,9 @@ def rec_sys_exp(dataset_name):
                 eval_res = copy.deepcopy(evaluation)
             res_val_list.append(evaluation.fscore)
         results_hyperparams_evaluation[hyperparams_evaluation] = np.mean(res_val_list)
-        timeF = (time.time() - timeI) / 60.
-        timeH = (time.time() - timeI) / 3600
-        print("Simulazione: ", counter, ", tempo: ", timeF, "minuti o ", timeH, "ore")
+        time_f = (time.time() - time_i) / 60.
+        time_h = (time.time() - time_i) / 3600
+        print("Simulazione: ", counter, ", tempo: ", time_f, "minuti o ", time_h, "ore")
 
     results_hyperparams_evaluation = dict(sorted(results_hyperparams_evaluation.items(), key=lambda item: item[1]))
     best_hyperparams_combination = list(results_hyperparams_evaluation.keys())[-1]
@@ -291,8 +302,9 @@ if __name__ == "__main__":
                             [round(100 * np.mean([getattr(res_obj, 'fscore') for res_obj in final_results[dataset]]),
                                    2)] +
                             [hyperparams] + [min_pref_length] + [max_pref_length] + [dt['parameters']])
-    print("Le simulazioni hanno richiesto " + str((time.time() - start_time) / 3600) + " ore o " + str(
-        (time.time() - start_time) / 60) + " minuti")
+    time_h_finale = (time.time() - start_time) / 3600
+    time_m_finale = (time.time() - start_time) / 60
+    print("Le simulazioni hanno richiesto " + str(time_h_finale) + " ore o " + str(time_m_finale) + " minuti")
 
     # Elimina i file txt presenti in src/machine_learning/encoding
     # remove_files("src/machine_learning/encoding/Settings")
