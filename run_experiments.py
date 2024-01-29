@@ -68,6 +68,10 @@ def rec_sys_exp(dataset_name):
     dataset_manager = DatasetManager(dataset_name.lower())
     data = dataset_manager.read_dataset(os.path.join(os.getcwd(), settings.dataset_folder))
 
+    # Ottieni le colonne categoriche e numeriche dal DatasetManager
+    categoric_columns = dataset_manager.dynamic_cat_cols + dataset_manager.static_cat_cols
+    numeric_columns = dataset_manager.dynamic_num_cols + dataset_manager.static_num_cols
+
     # Suddivide il dataset in training e test
     train_val_ratio = 0.8
     if dataset_name == "bpic2015_4_f2":
@@ -134,7 +138,17 @@ def rec_sys_exp(dataset_name):
 
     # Creazione dell'oggetto Encoding
     dt_input_trainval = Encoding(train_val_log)
-    dt_input_trainval_encoded, prefix_length = dt_input_trainval.encode_traces()
+    dt_input_trainval_encoded , prefix_length = dt_input_trainval.encode_traces()
+
+    df_encoded = dt_input_trainval_encoded.df.copy()
+    existing_categoric_cols = [col for col in categoric_columns if col in df_encoded.columns]
+    existing_numeric_cols = [col for col in numeric_columns if col in df_encoded.columns]
+
+    # Crea DataFrame per dati categorici e numerici
+    #categorical_data = df_encoded[existing_categoric_cols].copy()
+    #numerical_data = df_encoded[existing_numeric_cols].copy()
+
+    #TODO separare encoding in copia + numerical_encoded e categorical_encoded
 
     # Lista dei risultati
     results = []
