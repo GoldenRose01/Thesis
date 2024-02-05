@@ -112,7 +112,6 @@ def _trace_to_row(trace, prefix_length: int, additional_columns, prefix_length_s
     if padding or prefix_length_strategy == PrefixLengthStrategy.PERCENTAGE.value:
         trace_row += [0 for _ in range(len(trace_row), len(columns) - 1 - len(additional_columns['resource_attributes']))]
 
-    #Aggiunta delle feature delle risorse
     # Aggiunta delle feature delle risorse
     for idx, event in enumerate(trace):
         if idx == prefix_length:

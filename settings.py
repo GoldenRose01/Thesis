@@ -4,21 +4,21 @@ from src.enums.ConstraintChecker import ConstraintChecker
 # ================ thresholds ================
 support_threshold_dict = {'min': 0.05, 'max': 1.75}
 sat_threshold = 0.75
-top_K_paths = 6
+top_K_paths = 6  #-
 reranking = False
 sat_type = 'count_occurrences'  # count_occurrences or count_activations or strong
 fitness_type = 'mean'  # mean or wmean   #
 cumulative_res = False
 optimize_dt = True #
 print_dt = True #
-compute_gain = False #
+compute_gain = False
 smooth_factor = 1
 num_classes = 2
 train_prefix_log = False
 one_hot_encoding = False #
 use_score = True  #
 compute_baseline = False
-Print_edit_distance = False #
+Print_edit_distance = False
 excluded_attributes = ["concept:name", "time:timestamp", "label", "Case ID"]
 # add the names to exclude from trace_att and resource_att
 

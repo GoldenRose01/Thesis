@@ -140,13 +140,14 @@ def rec_sys_exp(dataset_name):
     dt_input_trainval = Encoding(train_val_log)
     dt_input_trainval_encoded , prefix_length = dt_input_trainval.encode_traces()
 
-    df_encoded = dt_input_trainval_encoded.df.copy()
-    existing_categoric_cols = [col for col in categoric_columns if col in df_encoded.columns]
-    existing_numeric_cols = [col for col in numeric_columns if col in df_encoded.columns]
+    df_encoded = dt_input_trainval_encoded
 
-    # Crea DataFrame per dati categorici e numerici
-    #categorical_data = df_encoded[existing_categoric_cols].copy()
-    #numerical_data = df_encoded[existing_numeric_cols].copy()
+    existing_categoric_cols = [col for col in df_encoded.features if any(feature in col for feature in categoric_columns+['prefix'])]
+    existing_numeric_cols = [col for col in df_encoded.features if any(feature in col for feature in numeric_columns)]
+    valori_categorici = df_encoded.encoded_data[existing_categoric_cols]
+    valori_numerici = df_encoded.encoded_data[existing_numeric_cols]
+
+
 
     #TODO separare encoding in copia + numerical_encoded e categorical_encoded
 

@@ -11,7 +11,7 @@ def open_settings(encoding_type):
 def create_main_window():
     main_window = tk.Tk()
     main_window.title("Encoding Selection")
-    main_window.geometry('300x200')
+    main_window.geometry('800x500')
 
     simplex_button = tk.Button(main_window, text="Simplex Encoding", command=lambda: open_settings("Simplex"))
     simplex_button.pack(pady=10)
@@ -25,7 +25,7 @@ def create_main_window():
 create_main_window()
 
 def run_settings():
-    print("Settings Run")
+     print("Settings Run")
     # Add code to handle the settings here
 
 def create_rounded_button(parent, width, height, text, command):
