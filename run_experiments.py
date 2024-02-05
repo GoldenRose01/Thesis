@@ -144,10 +144,11 @@ def rec_sys_exp(dataset_name):
 
     existing_categoric_cols = [col for col in df_encoded.features if any(feature in col for feature in categoric_columns+['prefix'])]
     existing_numeric_cols = [col for col in df_encoded.features if any(feature in col for feature in numeric_columns)]
-    valori_categorici = df_encoded.encoded_data[existing_categoric_cols]
-    valori_numerici = df_encoded.encoded_data[existing_numeric_cols]
 
+    df_encoded_data = pd.DataFrame(df_encoded.encoded_data)
 
+    valori_categorici = df_encoded_data[existing_categoric_cols]
+    valori_numerici = df_encoded_data[existing_numeric_cols]
 
     #TODO separare encoding in copia + numerical_encoded e categorical_encoded
 
