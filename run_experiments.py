@@ -51,7 +51,7 @@ def rename_and_convert_to_log(df, dataset_manager):
     )
     return log_converter.apply(renamed_df)
 
-def filterdf(df_encoded, categoric_columns, numeric_columns):
+def filterdf(dt_input_trainval_encoded, categoric_columns, numeric_columns):
 
     df_encoded = dt_input_trainval_encoded
 
@@ -62,6 +62,7 @@ def filterdf(df_encoded, categoric_columns, numeric_columns):
 
     df_categorici = df_encoded_data_cat_num_col[existing_categoric_cols]
     df_numerici = df_encoded_data_cat_num_col[existing_numeric_cols]
+
     dati_categorici_as_lists = df_categorici.values.tolist()
     dati_numerici_as_lists = df_numerici.values.tolist()
 
@@ -160,7 +161,7 @@ def rec_sys_exp(dataset_name):
     # Lista dei risultati
     results = []
 
-    filterdf(df_encoded, categoric_columns, numeric_columns)
+    filterdf(dt_input_trainval_encoded, categoric_columns, numeric_columns)
 
     # Imposta la lunghezza massima dei prefissi di test e validazione
     if max_prefix_length_test > prefix_length:

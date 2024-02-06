@@ -22,6 +22,11 @@ Print_edit_distance = False
 excluded_attributes = ["concept:name", "time:timestamp", "label", "Case ID"]
 # add the names to exclude from trace_att and resource_att
 
+# ================ weights ================
+wtrace_att=0.25
+wsimple_encoding=0.5
+wresource_att=0.25
+#weights of the three components of the encoding
 # ================ folders ================
 output_dir = "media/output"
 results_dir = os.path.join(output_dir, "result")

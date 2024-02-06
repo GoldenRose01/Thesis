@@ -19,7 +19,7 @@ class MainWindow(QMainWindow):
         self.central_widget = QWidget()
         self.central_widget.setLayout(self.main_layout)
         self.setCentralWidget(self.central_widget)
-        self.central_widget.setStyleSheet("background-color: black;")
+        #self.central_widget.setStyleSheet("background-color: black;")
 
         self.btn_simple = QPushButton('Simple Encoding')
         self.btn_complex = QPushButton('Complex Encoding')
