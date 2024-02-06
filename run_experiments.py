@@ -51,6 +51,23 @@ def rename_and_convert_to_log(df, dataset_manager):
     )
     return log_converter.apply(renamed_df)
 
+def filterdf(df_encoded, categoric_columns, numeric_columns):
+
+    df_encoded = dt_input_trainval_encoded
+
+    existing_categoric_cols = [col for col in df_encoded.features if any(feature in col for feature in categoric_columns+['prefix'])]
+    existing_numeric_cols = [col for col in df_encoded.features if any(feature in col for feature in numeric_columns)]
+
+    df_encoded_data_cat_num_col = pd.DataFrame(df_encoded.encoded_data, columns=df_encoded.features)
+
+    df_categorici = df_encoded_data_cat_num_col[existing_categoric_cols]
+    df_numerici = df_encoded_data_cat_num_col[existing_numeric_cols]
+    dati_categorici_as_lists = df_categorici.values.tolist()
+    dati_numerici_as_lists = df_numerici.values.tolist()
+
+    return dati_categorici_as_lists, dati_numerici_as_lists
+
+
 
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione
 def rec_sys_exp(dataset_name):
@@ -140,20 +157,10 @@ def rec_sys_exp(dataset_name):
     dt_input_trainval = Encoding(train_val_log)
     dt_input_trainval_encoded , prefix_length = dt_input_trainval.encode_traces()
 
-    df_encoded = dt_input_trainval_encoded
-
-    existing_categoric_cols = [col for col in df_encoded.features if any(feature in col for feature in categoric_columns+['prefix'])]
-    existing_numeric_cols = [col for col in df_encoded.features if any(feature in col for feature in numeric_columns)]
-
-    df_encoded_data = pd.DataFrame(df_encoded.encoded_data)
-
-    valori_categorici = df_encoded_data[existing_categoric_cols]
-    valori_numerici = df_encoded_data[existing_numeric_cols]
-
-    #TODO separare encoding in copia + numerical_encoded e categorical_encoded
-
     # Lista dei risultati
     results = []
+
+    filterdf(df_encoded, categoric_columns, numeric_columns)
 
     # Imposta la lunghezza massima dei prefissi di test e validazione
     if max_prefix_length_test > prefix_length:
