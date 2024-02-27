@@ -51,22 +51,22 @@ def rename_and_convert_to_log(df, dataset_manager):
     )
     return log_converter.apply(renamed_df)
 
-def filterdf(dt_input_trainval_encoded, categoric_columns, numeric_columns):
-
+def filtercatdf(dt_input_trainval_encoded, categoric_columns):
     df_encoded = dt_input_trainval_encoded
-
     existing_categoric_cols = [col for col in df_encoded.features if any(feature in col for feature in categoric_columns+['prefix'])]
-    existing_numeric_cols = [col for col in df_encoded.features if any(feature in col for feature in numeric_columns)]
-
     df_encoded_data_cat_num_col = pd.DataFrame(df_encoded.encoded_data, columns=df_encoded.features)
-
     df_categorici = df_encoded_data_cat_num_col[existing_categoric_cols]
-    df_numerici = df_encoded_data_cat_num_col[existing_numeric_cols]
-
     dati_categorici_as_lists = df_categorici.values.tolist()
+
+    return dati_categorici_as_lists
+def filternumdf(dt_input_trainval_encoded, numeric_columns):
+    df_encoded = dt_input_trainval_encoded
+    existing_numeric_cols = [col for col in df_encoded.features if any(feature in col for feature in numeric_columns)]
+    df_encoded_data_cat_num_col = pd.DataFrame(df_encoded.encoded_data, columns=df_encoded.features)
+    df_numerici = df_encoded_data_cat_num_col[existing_numeric_cols]
     dati_numerici_as_lists = df_numerici.values.tolist()
 
-    return dati_categorici_as_lists, dati_numerici_as_lists
+    return dati_numerici_as_lists
 
 
 
@@ -161,7 +161,9 @@ def rec_sys_exp(dataset_name):
     # Lista dei risultati
     results = []
 
-    filterdf(dt_input_trainval_encoded, categoric_columns, numeric_columns)
+    # Creazione dell'oggetto Numeric Encoding e Categorical Encoding
+    numericaldf = filternumdf(dt_input_trainval_encoded,numeric_columns)
+    categoricaldf = filtercatdf(dt_input_trainval_encoded, categoric_columns)
 
     # Imposta la lunghezza massima dei prefissi di test e validazione
     if max_prefix_length_test > prefix_length:
@@ -194,8 +196,28 @@ def rec_sys_exp(dataset_name):
                                            dataset_name=dataset_name,
                                            output_dir=settings.output_dir,
                                            dt_input_trainval=dt_input_trainval_encoded)
-
     counter = 0
+
+    num_tmp_paths,num_dt=train_path_recommender(data_log=data_log,
+                                                train_val_log=train_val_log,
+                                                val_log=val_log,
+                                                train_log=train_log,
+                                                labeling=labeling,
+                                                support_threshold=settings.support_threshold_dict,
+                                                dataset_name=dataset_name,
+                                                output_dir=settings.output_dir,
+                                            dt_input_trainval=numericaldf)
+
+
+    cat_tmp_paths,cat_dt=train_path_recommender(data_log=data_log,
+                                           train_val_log=train_val_log,
+                                           val_log=val_log,
+                                           train_log=train_log,
+                                           labeling=labeling,
+                                           support_threshold=settings.support_threshold_dict,
+                                           dataset_name=dataset_name,
+                                           output_dir=settings.output_dir,
+                                           dt_input_trainval=categoricaldf)
 
     # Scopre sul set di validazione con la migliore configurazione degli iperparametri di valutazione
     print("Hyperparametri per la valutazione per {dataset_name} ...")
@@ -225,6 +247,26 @@ def rec_sys_exp(dataset_name):
                                                                                   hyperparams_evaluation=hyperparams_evaluation,
                                                                                   eval_res=eval_res,
                                                                                   dt_input_trainval=dt_input_trainval
+                                                                                  )
+            numeric_recommendations, numeric_evaluation = generate_recommendations_and_evaluation(test_log=val_log,
+                                                                                  train_log=train_log,
+                                                                                  labeling=labeling,
+                                                                                  prefixing=prefixing,
+                                                                                  rules=settings.rules,
+                                                                                  paths=num_tmp_paths,
+                                                                                  hyperparams_evaluation=hyperparams_evaluation,
+                                                                                  eval_res=eval_res,
+                                                                                  dt_input_trainval=num_dt
+                                                                                  )
+            categorical_recommendations, categorical_evaluation = generate_recommendations_and_evaluation(test_log=val_log,
+                                                                                  train_log=train_log,
+                                                                                  labeling=labeling,
+                                                                                  prefixing=prefixing,
+                                                                                  rules=settings.rules,
+                                                                                  paths=cat_tmp_paths,
+                                                                                  hyperparams_evaluation=hyperparams_evaluation,
+                                                                                  eval_res=eval_res,
+                                                                                  dt_input_trainval=cat_dt
                                                                                   )
             if settings.cumulative_res is True:
                 eval_res = copy.deepcopy(evaluation)
@@ -263,6 +305,26 @@ def rec_sys_exp(dataset_name):
                                                                               hyperparams_evaluation=best_hyperparams_combination,
                                                                               eval_res=eval_res,
                                                                               dt_input_trainval=dt_input_trainval
+                                                                              )
+        numeric_recommendations, numeric_evaluation = generate_recommendations_and_evaluation(test_log=test_log,
+                                                                              train_log=train_log,
+                                                                              labeling=labeling,
+                                                                              prefixing=prefixing,
+                                                                              rules=settings.rules,
+                                                                              paths=num_tmp_paths,
+                                                                              hyperparams_evaluation=best_hyperparams_combination,
+                                                                              eval_res=eval_res,
+                                                                              dt_input_trainval=dati_numerici_as_lists
+                                                                              )
+        categorical_recommendations, categorical_evaluation = generate_recommendations_and_evaluation(test_log=test_log,
+                                                                              train_log=train_log,
+                                                                              labeling=labeling,
+                                                                              prefixing=prefixing,
+                                                                              rules=settings.rules,
+                                                                              paths=cat_tmp_paths,
+                                                                              hyperparams_evaluation=best_hyperparams_combination,
+                                                                              eval_res=eval_res,
+                                                                              dt_input_trainval=dati_categorici_as_lists
                                                                               )
         results.append(evaluation)
         if settings.cumulative_res is True:

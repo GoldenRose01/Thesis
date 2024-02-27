@@ -26,3 +26,24 @@ def edit(ref, hyp):#numerical e categorical erano stati presi per una prova di e
         print("Ed tramite Libreria:"+ str(ed_ratio))
 
     return ed_ratio
+
+def edit_separate(ref, hyp, is_categorical=False):
+    # Inizializza la lista delle distanze
+    distances = []
+
+    if is_categorical:
+        # Per dati categorici: 0 se uguali, 1 se diversi
+        distances = [0 if ref[i] == hyp[i] else 1 for i in range(len(ref))]
+    else:
+        # Per dati numerici: calcola la distanza basata sulla variazione massima per posizione
+        for i in range(len(ref)):
+            # Trova la variazione massima per la posizione corrente
+            all_values = [hyp_instance[i] for hyp_instance in hyp] + [ref[i]]
+            max_variation = max(all_values) - min(all_values)
+            # Calcola la distanza per la posizione corrente
+            distance = abs(ref[i] - hyp[0][i]) / max_variation if max_variation else 0
+            distances.append(distance)
+
+    # Calcola il rapporto totale della distanza di edit
+    ed_ratio = sum(distances) / len(distances) if distances else 0
+    return ed_ratio

@@ -32,7 +32,7 @@ class ParamsOptimizer:
         self.max_prefix_length = max_prefix_length  # Lunghezza massima del prefisso.
 
     # Funzione per la ricerca nella griglia dei parametri.
-    def params_grid_search(self, dataset_name, constr_family,numerical_data,categorical_data):
+    def params_grid_search(self, dataset_name, constr_family):
         categories = [TraceLabel.FALSE.value, TraceLabel.TRUE.value]  # Definisci categorie.
 
         for param_id, param_tuple in enumerate(self.param_grid):
@@ -264,7 +264,7 @@ def train_path_recommender(data_log, train_val_log, val_log, train_log, labeling
     return paths, best_model_dict
 
 
-def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train_log, numerical_data, categorical_data):
+def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train_log):
     # if labeling["threshold_type"] == LabelThresholdType.LABEL_MEAN:
     #    labeling["custom_threshold"] = calc_mean_label_threshold(train_log, labeling)
 
