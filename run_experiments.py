@@ -246,7 +246,9 @@ def rec_sys_exp(dataset_name):
                                                                                   paths=tmp_paths,
                                                                                   hyperparams_evaluation=hyperparams_evaluation,
                                                                                   eval_res=eval_res,
-                                                                                  dt_input_trainval=dt_input_trainval
+                                                                                  dt_input_trainval=dt_input_trainval,
+                                                                                  num=False,
+                                                                                  cat=False,
                                                                                   )
             numeric_recommendations, numeric_evaluation = generate_recommendations_and_evaluation(test_log=val_log,
                                                                                   train_log=train_log,
@@ -256,7 +258,9 @@ def rec_sys_exp(dataset_name):
                                                                                   paths=num_tmp_paths,
                                                                                   hyperparams_evaluation=hyperparams_evaluation,
                                                                                   eval_res=eval_res,
-                                                                                  dt_input_trainval=num_dt
+                                                                                  dt_input_trainval=num_dt,
+                                                                                  num=True,
+                                                                                  cat=False,
                                                                                   )
             categorical_recommendations, categorical_evaluation = generate_recommendations_and_evaluation(test_log=val_log,
                                                                                   train_log=train_log,
@@ -266,7 +270,9 @@ def rec_sys_exp(dataset_name):
                                                                                   paths=cat_tmp_paths,
                                                                                   hyperparams_evaluation=hyperparams_evaluation,
                                                                                   eval_res=eval_res,
-                                                                                  dt_input_trainval=cat_dt
+                                                                                  dt_input_trainval=cat_dt,
+                                                                                  cat=True,
+                                                                                  num=False,
                                                                                   )
             if settings.cumulative_res is True:
                 eval_res = copy.deepcopy(evaluation)
@@ -314,7 +320,7 @@ def rec_sys_exp(dataset_name):
                                                                               paths=num_tmp_paths,
                                                                               hyperparams_evaluation=best_hyperparams_combination,
                                                                               eval_res=eval_res,
-                                                                              dt_input_trainval=dati_numerici_as_lists
+                                                                              dt_input_trainval=dati_numerici_as_lists,
                                                                               )
         categorical_recommendations, categorical_evaluation = generate_recommendations_and_evaluation(test_log=test_log,
                                                                               train_log=train_log,

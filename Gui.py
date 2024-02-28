@@ -1,6 +1,6 @@
 import sys
 import subprocess
-from PySide6 import QtCore, QtWidgets, QtGui
+from PySide6 import QtCore, QtWidgets
 
 # Finestra principale
 class MainWindow(QtWidgets.QMainWindow):
@@ -25,9 +25,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.declarative_button = QtWidgets.QPushButton("Declarative encoding")
 
         # Imposta stile dei pulsanti
-        self.simple_button.setStyleSheet("QPushButton { width: 300px; height: 50px; }")
-        self.complex_button.setStyleSheet("QPushButton { width: 300px; height: 50px; }")
-        self.declarative_button.setStyleSheet("QPushButton { width: 300px; height: 50px; }")
+        self.simple_button.setStyleSheet("QPushButton { width: 300px; height: 50px; background-color: #6CA0DC; }")
+        self.complex_button.setStyleSheet("QPushButton { width: 300px; height: 50px; background-color: #4CAF50; }")
+        self.declarative_button.setStyleSheet("QPushButton { width: 300px; height: 50px; background-color: #FFC107; }")
 
         # Aggiunge pulsanti al layout
         layout.addWidget(self.simple_button)
@@ -40,155 +40,24 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(central_widget)
 
         # Collega azioni ai pulsanti
-        self.simple_button.clicked.connect(self.show_simple_page)
-        self.complex_button.clicked.connect(self.show_complex_page)
-        self.declarative_button.clicked.connect(self.show_declarative_page)
+        self.simple_button.clicked.connect(lambda: self.show_page("simple"))
+        self.complex_button.clicked.connect(lambda: self.show_page("complex"))
+        self.declarative_button.clicked.connect(lambda: self.show_page("declarative"))
 
-    # Mostra pagina per "Simple encoding"
-    def show_simple_page(self):
-        print("Simple encoding selected")
+    # Funzione per mostrare la pagina corrispondente in gui2.py
+    def show_page(self, encoding_type):
+        # Chiude la finestra corrente
+        self.close()
+        # Esegue gui2.py passando l'encoding_type come argomento
+        subprocess.Popen(["python", "gui2.py", encoding_type])
 
-    # Mostra pagina per "Complex encoding"
-    def show_complex_page(self):
-        print("Complex encoding selected")
-
-    # Mostra pagina per "Declarative encoding"
-    def show_declarative_page(self):
-        print("Declarative encoding selected")
-
-class SecondWindow(QtWidgets.QMainWindow):
-    def __init__(self, encoding_type):
-        super().__init__()
-        self.setWindowTitle("Dettagli Encoding")
-        self.setGeometry(300, 300, 800, 600)
-        self.initUI(encoding_type)
-
-        # Crea layout a due colonne
-        layout = QtWidgets.QHBoxLayout()
-
-        # Crea widget a sinistra con le scelte
-        left_widget = QtWidgets.QWidget()
-        left_layout = QtWidgets.QVBoxLayout()
-        self.buttons = []
-
-        simple_button = QtWidgets.QPushButton("Simple encoding")
-        simple_button.setStyleSheet("QPushButton { background-color: #6CA0DC; }")
-        simple_button.clicked.connect(lambda: self.on_button_clicked(simple_button))
-        left_layout.addWidget(simple_button)
-        self.buttons.append(simple_button)
-
-        complex_button = QtWidgets.QPushButton("Complex encoding")
-        complex_button.setStyleSheet("QPushButton { background-color: #4CAF50; }")
-        complex_button.clicked.connect(lambda: self.on_button_clicked(complex_button))
-        left_layout.addWidget(complex_button)
-        self.buttons.append(complex_button)
-
-        declarative_button = QtWidgets.QPushButton("Declarative encoding")
-        declarative_button.setStyleSheet("QPushButton { background-color: #FFC107; }")
-        declarative_button.clicked.connect(lambda: self.on_button_clicked(declarative_button))
-        left_layout.addWidget(declarative_button)
-        self.buttons.append(declarative_button)
-
-        left_widget.setLayout(left_layout)
-        layout.addWidget(left_widget)
-
-        # Crea widget a destra con le opzioni
-        self.stacked_widget = QtWidgets.QStackedWidget()
-        self.encoding_widgets = {}
-
-        self.encoding_widgets["simple"] = self.create_simple_widget()
-        self.encoding_widgets["complex"] = self.create_complex_widget()
-        self.encoding_widgets["declarative"] = self.create_declarative_widget()
-
-        layout.addWidget(self.stacked_widget)
-
-        # Crea widget centrale e imposta layout
-        central_widget = QtWidgets.QWidget()
-        central_widget.setLayout(layout)
-        self.setCentralWidget(central_widget)
-
-    def create_simple_widget(self):
-        layout = QtWidgets.QVBoxLayout()
-
-        layout.addWidget(QtWidgets.QLabel("Threshold:"))
-        self.threshold_slider = QtWidgets.QSlider(QtCore.Horizontal)
-        self.threshold_slider.setMinimum(0)
-        self.threshold_slider.setMaximum(120)
-        self.threshold_slider.setValue(1)
-        self.threshold_slider.valueChanged.connect(lambda value: self.update_setting("Threshold", value * 0.0125))
-        layout.addWidget(self.threshold_slider)
-
-        btn_minus = QtWidgets.QPushButton("-")
-        btn_plus = QtWidgets.QPushButton("+")
-        btn_minus.clicked.connect(lambda: self.adjust_t_threshold(-1))
-        btn_plus.clicked.connect(lambda: self.adjust_threshold(1))
-        layout.addWidget(btn_minus)
-        layout.addWidget(btn_plus)
-
-        options = ["Optimize_dt", "Print_dt", "Reranking", "Sat_type", "Compute_gain"]
-
-        for option in options: checkbox = QtWidgets.QCheckBox(option)
-        checkbox.stateChanged.connect(lambda state, x=option: self.update_setting(x, state == QtCore.Qt.Checked))
-        layout.addWidget(checkbox)
-
-        settings_widget = QtWidgets.QWidget()
-        settings_widget.setLayout(layout)
-        return settings_widget
-
-    def create_complex_widget(self):
-        layout = QtWidgets.QVBoxLayout()
-
-        options = ["Optimize_dt", "Print_dt", "Reranking", "Sat_type", "Compute_gain"]
-
-        for option in options: checkbox = QtWidgets.QCheckBox(option)
-        checkbox.stateChanged.connect(lambda state, x=option: self.update_setting(x, state == QtCore.Qt.Checked))
-        layout.addWidget(checkbox)
-
-        settings_widget = QtWidgets.QWidget()
-        settings_widget.setLayout(layout)
-        return settings_widget
-
-    def create_declarative_widget(self):
-        layout = QtWidgets.QVBoxLayout()
-
-        options = ["Optimize_dt", "Print_dt", "Reranking", "Sat_type", "Compute_gain", "One_hot_encoding",
-            "Use_score"]
-
-        for option in options: checkbox = QtWidgets.QCheckBox(option)
-        checkbox.stateChanged.connect(lambda state, x=option: self.update_setting(x, state == QtCore.Qt.Checked))
-        layout.addWidget(checkbox)
-
-        settings_widget = QtWidgets.QWidget()
-        settings_widget.setLayout(layout)
-        return settings_widget
-
-    def on_button_clicked(self, selected_button):
-        encoding_type = selected_button.text().lower()
-
-        self.update_setting("EncodingType", encoding_type)
-        self.stacked_widget.setCurrentWidget(self.encoding_widgets[encoding_type])
-        self.update_button_styles(selected_button)
-
-    def update_button_styles(self, active_button):
-        for button in self.buttons:
-            if button == active_button:
-            # Preserva lo stile di background corrente del pulsante attivo
-            # Assumendo che lo stile di background sia definito correttamente
-                current_style = button.styleSheet()
-                background_style = current_style.split('background-color:')[1].split(';')[
-                    0] if 'background-color:' in current_style else 'none'
-                button.setStyleSheet(
-                                f"QPushButton {{ background-color: {background_style}; border-radius: 20px; padding: 10px; font-size: 16pt; }}")
-                else
-                button.setStyleSheet("QPushButton { border-radius: 20px; padding: 10px; font-size: 16pt; }")
 # Esegui applicazione
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-
     window = MainWindow()
     window.show()
-
     sys.exit(app.exec_())
+
 """
 class MainWindow(QMainWindow):
     def __init__(self):
