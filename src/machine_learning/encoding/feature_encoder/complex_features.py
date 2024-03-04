@@ -3,12 +3,11 @@ from pandas import DataFrame
 from src.machine_learning.encoding.constants import get_max_prefix_length, get_prefix_length, PrefixLengthStrategy
 from src.machine_learning.label.common import add_label_column
 from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
+from src.machine_learning.encoding.addons import clean_lists
 import settings
 
 ATTRIBUTE_CLASSIFIER = None  # Variabile globale, il suo utilizzo specifico non è chiaro dal contesto
-
 PREFIX_ = 'prefix_'  # Prefisso utilizzato nelle colonne del DataFrame
-
 
 def complex_features(log, prefix_length, padding, prefix_length_strategy, labeling_type, generation_type,
                      feature_list=None, target_event=None):
@@ -127,11 +126,28 @@ def _trace_to_row(trace, prefix_length: int, additional_columns, prefix_length_s
     Returns:
         List representing a row of data for complex features.
     """
+    #Aggiungi l'ID della traccia
+
     trace_row = [trace.attributes["concept:name"]]
 
-    # Aggiunta degli attributi delle tracce
-
-    trace_row += [trace.attributes.get(att, 0) for att in additional_columns['trace_attributes']]
+    # Ciclo attraverso gli attributi aggiuntivi definiti per le tracce
+    for att in additional_columns['trace_attributes']:
+        # Se l'attributo è presente direttamente negli attributi della traccia, aggiungilo
+        if att in trace.attributes:
+            trace_row.append(trace.attributes[att])
+        else:
+            # Altrimenti, cerca l'attributo negli eventi della traccia fino alla lunghezza del prefisso
+            attributo_trovato = False
+            for idx, event in enumerate(trace):
+                if idx == prefix_length:
+                    break
+                if att in event:
+                    trace_row.append(event[att])
+                    attributo_trovato = True
+                    break  # Interrompi il ciclo una volta trovato l'attributo
+            if not attributo_trovato:
+                # Se l'attributo non è stato trovato né negli attributi della traccia né negli eventi, aggiungi un valore di default
+                trace_row.append(0)
 
     # Aggiunta delle feature degli eventi
     for idx, event in enumerate(trace):
@@ -142,34 +158,24 @@ def _trace_to_row(trace, prefix_length: int, additional_columns, prefix_length_s
         trace_row.append(event_name)
 
     # Padding se necessario
-
     if padding or prefix_length_strategy == PrefixLengthStrategy.PERCENTAGE.value:
         trace_row += [0 for _ in
                       range(len(trace_row), len(columns) - 1 - len(additional_columns['resource_attributes']))]
 
     # Aggiunta delle feature delle risorse
-    for idx, event in enumerate(trace):
+    clean_resource=clean_lists(additional_columns['resource_attributes'])
 
-        if idx == prefix_length:
-            break
+    for event in trace:
+        resource_found = False
+        for resource_attribute in clean_resource:
+            if resource_attribute in event:
+                resource_name = event[resource_attribute]
+                trace_row.append(resource_name)
+                resource_found = True
+                break  # Interrompe il ciclo una volta trovato il primo attributo valido
 
-        if "org:group" in event:
-
-            resource_name = event["org:group"]
-
-        elif "group" in event:
-
-            resource_name = event["group"]
-
-        elif "Resource" in event:
-
-            resource_name = event["Resource"]
-
-        else:
-
-            print("Unknown Event,need hardcode here")
-
-        trace_row.append(resource_name)
+        if not resource_found:
+            trace_row.append("Unknown Resource")
 
     # Modifica per aggiungere il numero della riga alle risorse
 
@@ -184,5 +190,9 @@ def _trace_to_row(trace, prefix_length: int, additional_columns, prefix_length_s
 
     # Aggiunta della colonna label
     trace_row += [add_label_column(trace, labeling_type, prefix_length)]
+
+    # Modifica per aggiungere il numero della riga alle risorse
+    # trace_row += [trace.attributes.get(att, 0) for att in resource_attributes_with_row_numbers]
+    # resource_attributes_with_row_numbers = [f'{att}_{trace_index}' for att in additional_columns['resource_attributes']] #fai come eventi:riga 97 solo senza event name ma con risorsa
 
     return trace_row
