@@ -48,7 +48,16 @@ def complex_features(log, prefix_length, padding, prefix_length_strategy, labeli
 
 def _compute_additional_columns(log, trace_attributes, resource_attributes, prefix_length) -> dict:
     """
-    Calcola le colonne aggiuntive in base agli attributi delle tracce e delle risorse.
+    Computes additional columns based on trace and resource attributes.
+
+    Args:
+        log: Log identifier.
+        trace_attributes: Dictionary of trace attributes per log.
+        resource_attributes: Dictionary of resource attributes per log.
+        prefix_length: Number of events considered from the beginning.
+
+    Returns:
+        Dictionary with trace and resource attribute columns.
     """
     trace_attrs = []
     for log, attributes_list in trace_attributes.items():
@@ -67,7 +76,17 @@ def _compute_additional_columns(log, trace_attributes, resource_attributes, pref
 
 def _columns_complex(log, prefix_length: int, feature_list: list, trace_attributes, resource_attributes) -> tuple:
     """
-    Calcola le colonne per le feature complesse tenendo separate le feature delle tracce, eventi e risorse.
+    Computes columns for complex features, separating trace, event, and resource columns.
+
+    Args:
+        log: Log identifier.
+        prefix_length: Number of events considered from the beginning.
+        feature_list: Optional list of expected feature names.
+        trace_attributes: Dictionary of trace attributes per log.
+        resource_attributes: Dictionary of resource attributes per log.
+
+    Returns:
+        Tuple containing the list of columns and additional columns dictionary.
     """
     additional_columns = _compute_additional_columns(log, trace_attributes, resource_attributes, prefix_length)
 
@@ -90,50 +109,78 @@ def _columns_complex(log, prefix_length: int, feature_list: list, trace_attribut
         assert (list(feature_list) == columns)
     return columns, additional_columns
 
-
 def _trace_to_row(trace, prefix_length: int, additional_columns, prefix_length_strategy: str, padding, columns: list,
                   labeling_type, trace_index) -> list:
     """
-    Converte una traccia in una riga di dati per le feature complesse.
+    Converts a trace to a row of data for complex features.
+
+    Args:
+        trace: The trace to convert.
+        prefix_length: Number of events to include from the trace start.
+        additional_columns: Dictionary with additional columns to include.
+        prefix_length_strategy: Strategy for handling prefix length ("FIXED" or "PERCENTAGE").
+        padding: Whether to pad the data row with zeros.
+        columns: List of all column names.
+        labeling_type: Type of label to add.
+        trace_index: Index of the current trace.
+
+    Returns:
+        List representing a row of data for complex features.
     """
     trace_row = [trace.attributes["concept:name"]]
 
     # Aggiunta degli attributi delle tracce
+
     trace_row += [trace.attributes.get(att, 0) for att in additional_columns['trace_attributes']]
 
     # Aggiunta delle feature degli eventi
     for idx, event in enumerate(trace):
         if idx == prefix_length:
             break
+
         event_name = event["concept:name"]
         trace_row.append(event_name)
 
     # Padding se necessario
+
     if padding or prefix_length_strategy == PrefixLengthStrategy.PERCENTAGE.value:
-        trace_row += [0 for _ in range(len(trace_row), len(columns) - 1 - len(additional_columns['resource_attributes']))]
+        trace_row += [0 for _ in
+                      range(len(trace_row), len(columns) - 1 - len(additional_columns['resource_attributes']))]
 
     # Aggiunta delle feature delle risorse
     for idx, event in enumerate(trace):
+
         if idx == prefix_length:
             break
+
         if "org:group" in event:
+
             resource_name = event["org:group"]
+
         elif "group" in event:
+
             resource_name = event["group"]
+
         elif "Resource" in event:
+
             resource_name = event["Resource"]
+
         else:
+
             print("Unknown Event,need hardcode here")
+
         trace_row.append(resource_name)
 
     # Modifica per aggiungere il numero della riga alle risorse
-   # resource_attributes_with_row_numbers = [f'{att}_{trace_index}' for att in additional_columns['resource_attributes']] #fai come eventi:riga 97 solo senza event name ma con risorsa
-   # trace_row += [trace.attributes.get(att, 0) for att in resource_attributes_with_row_numbers]
+
+    # resource_attributes_with_row_numbers = [f'{att}_{trace_index}' for att in additional_columns['resource_attributes']] #fai come eventi:riga 97 solo senza event name ma con risorsa
+
+    # trace_row += [trace.attributes.get(att, 0) for att in resource_attributes_with_row_numbers]
 
     # Padding se necessario
+
     if padding or prefix_length_strategy == PrefixLengthStrategy.PERCENTAGE.value:
-        trace_row += [0 for _ in
-                      range(len(trace_row), len(columns) - 1)]
+        trace_row += [0 for _ in range(len(trace_row), len(columns) - 1)]
 
     # Aggiunta della colonna label
     trace_row += [add_label_column(trace, labeling_type, prefix_length)]

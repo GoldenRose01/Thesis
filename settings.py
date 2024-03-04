@@ -1,38 +1,102 @@
 import os
 from src.enums.ConstraintChecker import ConstraintChecker
+def read_options_from_dat(filepath):
+    options = {}
+    with open(filepath, 'r') as file:
+        for line in file:
+            key, value = line.strip().split('=')
+            if value.lower() in ['true', 'false']:
+                options[key] = value.lower() == 'true'
+            elif value.replace('.', '', 1).isdigit():
+                options[key] = float(value) if '.' in value else int(value)
+            elif key == 'excluded_attributes':
+                options[key] = value.split(',')
+            else:
+                options[key] = value
+    return options
 
-# ================ thresholds ================
-support_threshold_dict = {'min': 0.05, 'max': 1.75}
+def read_datasets_from_dat(filepath):
+    with open(filepath, 'r') as file:
+        datasets_names = [line.strip() for line in file]
+    return datasets_names
+
+#========================================paths===========================================================
+options_filepath = 'Option.dat'
+datasets_names_filepath = 'Datasets_names.dat'
+#========================================encoding_selection==============================================
+type_encoding = 'complex'
+# simple, frequency, complex
+#========================================datasets_names===================================================
+#datasets_names = read_datasets_from_dat(datasets_names_filepath)
+
+# datasets_names = ["bpic2011_f1","bpic2011_f2","bpic2011_f3","bpic2011_f4","bpic2012_accepted","bpic2012_cancelled","bpic2012_declined","bpic2015_3_f2","bpic2015_4_f2","bpic2015_5_f2","bpic2017_accepted","bpic2017_cancelled","bpic2017_refused","hospital_billing_2","hospital_billing_3","Production","sepsis_cases_1","sepsis_cases_2","sepsis_cases_4","traffic_fines_1"]
+
+# datasets_names = ["Production"]
+
+# datasets_names = ["hospital_billing_3"]
+
+# datasets_names = ["bpic2012_cancelled", "bpic2012_declined"]
+
+# datasets_names = ["bpic2011_f4","bpic2012_accepted","sepsis_cases_1","sepsis_cases_2","sepsis_cases_4"]
+
+# datasets_names = ["traffic_fines_1"]
+
+datasets_names = ["sepsis_cases_4"]
+
+#datasets_names = ["bpic15_1","bpic15_2","bpic15_3","bpic15_4","bpic15_5"]
+
+support_threshold_dict= {'min': 0.05, 'max': 1.75}
 sat_threshold = 0.75
-top_K_paths = 6  #-
+top_K_paths = 6
 reranking = False
-sat_type = 'count_occurrences'  # count_occurrences or count_activations or strong
-fitness_type = 'mean'  # mean or wmean   #
+sat_type = 'count_occurrences'
+fitness_type = 'mean'
 cumulative_res = False
-optimize_dt = True #
-print_dt = True #
+optimize_dt = True
+print_dt = True
 compute_gain = False
 smooth_factor = 1
 num_classes = 2
 train_prefix_log = False
-one_hot_encoding = False #
-use_score = True  #
+one_hot_encoding = False
+use_score = True
 compute_baseline = False
 Print_edit_distance = False
 excluded_attributes = ["concept:name", "time:timestamp", "label", "Case ID"]
-# add the names to exclude from trace_att and resource_att
-
+"""
+#==================================================read_options_from_dat==================================================
+options = read_options_from_dat(options_filepath)
+# ================================================= thresholds ===============================================================================
+support_threshold_min= {'min': 0.05, 'max': 1.75}
+sat_threshold = options['sat_threshold']
+top_K_paths = options['top_K_paths']
+reranking = options['reranking']
+sat_type = options['sat_type']
+fitness_type = options['fitness_type']
+cumulative_res = options['cumulative_res']
+optimize_dt = options['optimize_dt']
+print_dt = options['print_dt']
+compute_gain = options['compute_gain']
+smooth_factor = options['smooth_factor']
+num_classes = options['num_classes']
+train_prefix_log = options['train_prefix_log']
+one_hot_encoding = options['one_hot_encoding']
+use_score = options['use_score']
+compute_baseline = options['compute_baseline']
+Print_edit_distance = options['Print_edit_distance']
+excluded_attributes = options['excluded_attributes']
+"""
 # ================ weights ================
 wtrace_att=0.25
 wsimple_encoding=0.5
 wresource_att=0.25
 #weights of the three components of the encoding
+
 # ================ folders ================
 output_dir = "media/output"
 results_dir = os.path.join(output_dir, "result")
-dataset_folder = "media/input/processed_benchmark_event_logs"
-# dataset_folder = "media/input"
-# dataset_folder = "media/input/csvconverted"
+#dataset_folder = "media/input/processed_benchmark_event_logs"
+dataset_folder = "media/input"
 
 # ================ checkers ================
 existence_family = [ConstraintChecker.EXISTENCE, ConstraintChecker.ABSENCE, ConstraintChecker.INIT,
@@ -96,46 +160,7 @@ datasets_labels = {"bpic2011_f1": "bpic2011_1",
                    "xes_Sepsis Cases - Event Log": "xes_Sepsis_cases"
                    }
 
-"""
-datasets_names = ["bpic2011_f1",
-                    "bpic2011_f2", 
-                    "bpic2011_f3",
-                    "bpic2011_f4",
-                    "bpic2012_accepted",
-                    "bpic2012_cancelled",
-                    "bpic2012_declined",
-                    "bpic2015_3_f2",
-                    "bpic2015_4_f2",
-                    "bpic2015_5_f2",
-                    "bpic2017_accepted",
-                    "bpic2017_cancelled",
-                    "bpic2017_refused",
-                    "hospital_billing_2",
-                    "hospital_billing_3",
-                    "Production",
-                    "sepsis_cases_1", 
-                    "sepsis_cases_2", 
-                    "sepsis_cases_4", 
-                    "traffic_fines_1"]
-"""
-# datasets_names = ["Production"]
 
-# datasets_names = ["hospital_billing_3"]
-
-# datasets_names = ["bpic2012_cancelled", "bpic2012_declined"]
-
-# datasets_names = ["bpic2011_f4","bpic2012_accepted","sepsis_cases_1","sepsis_cases_2","sepsis_cases_4"]
-
-# datasets_names = ["traffic_fines_1"]
-
-datasets_names = ["sepsis_cases_4"]
-"""
-datasets_names = ["bpic15_1",
-                  "bpic15_2",
-                  "bpic15_3",
-                  "bpic15_4",
-                  "bpic15_5"]
-"""
 # ================ hyperparameters ================
 """
 hyperparameters = {'support_threshold': [support_threshold_dict['min']-0.2, support_threshold_dict['min']-0.1,

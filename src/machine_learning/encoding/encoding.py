@@ -1,21 +1,21 @@
+from src.machine_learning.encoding.feature_encoder.frequency_features import frequency_features
+from src.machine_learning.encoding.feature_encoder.simple_features import simple_features
+from src.machine_learning.encoding.feature_encoder.complex_features import complex_features
 from src.constants import *
 from src.machine_learning.labeling import *
 from src.models.DTInput import *
 from src.enums.ConstraintChecker import *
-import settings
 from src.machine_learning.label.common import LabelTypes
-from pandas import DataFrame
 from src.machine_learning.encoding.constants import EncodingType
-from src.machine_learning.encoding.feature_encoder.frequency_features import frequency_features
-from src.machine_learning.encoding.feature_encoder.simple_features import simple_features
-from src.machine_learning.encoding.feature_encoder.complex_features import complex_features
 from src.machine_learning.encoding.data_encoder import *
+from pandas import DataFrame
+import settings
 
 TRACE_TO_DF = {
     EncodingType.SIMPLE.value: simple_features,
     EncodingType.FREQUENCY.value: frequency_features,
     EncodingType.COMPLEX.value: complex_features,
-    # EncodingType.DECLARE.value : declare_features
+    #todo EncodingType.DECLARE.value : declare_features
 }
 
 
@@ -51,7 +51,7 @@ class Encoding:
             'prefix_length_strategy': 'fixed',
             'prefix_length': self.prefix,
             'padding': True,
-            'feature_selection': 'complex',
+            'feature_selection': settings.type_encoding,
             'task_generation_type': 'all_in_one',
             'attribute_encoding': 'label',
             'labeling_type': LabelTypes.ATTRIBUTE_STRING,
