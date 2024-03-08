@@ -76,15 +76,15 @@ for file_path in csv_files:
     df = pd.read_csv(file_path, sep=';', low_memory=False)
     trace_attr, resource_attr = identify_trace_and_resource_attributes(df)
     file_name = os.path.splitext(os.path.basename(file_path))[0] + '.csv'  # Aggiunta dell'estensione .csv
-    trace_attributes[file_name] = ' ; '.join(trace_attr)
-    resource_attributes[file_name] = ' ; '.join(resource_attr)
+    trace_attributes[file_name] = ';'.join(trace_attr)
+    resource_attributes[file_name] = ';'.join(resource_attr)
 
 xes_files = find_xes_files(root_directory)
 for file_path in xes_files:
     trace_attr, resource_attr = process_xes_file(file_path)
     file_name = 'xes_' + os.path.splitext(os.path.basename(file_path))[0] + '.csv'  # Prefisso 'xes_' e aggiunta dell'estensione .csv
-    trace_attributes[file_name] = ' ; '.join(trace_attr)
-    resource_attributes[file_name] = ' ; '.join(resource_attr)
+    trace_attributes[file_name] = ';'.join(trace_attr)
+    resource_attributes[file_name] = ';'.join(resource_attr)
 
 # Scrivi gli attributi di traccia e risorsa in file separati
 with open('Trace_att.txt', 'w') as trace_file:

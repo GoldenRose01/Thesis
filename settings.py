@@ -4,30 +4,43 @@ def read_options_from_dat(filepath):
     options = {}
     with open(filepath, 'r') as file:
         for line in file:
-            key, value = line.strip().split('=')
-            if value.lower() in ['true', 'false']:
-                options[key] = value.lower() == 'true'
-            elif value.replace('.', '', 1).isdigit():
-                options[key] = float(value) if '.' in value else int(value)
-            elif key == 'excluded_attributes':
-                options[key] = value.split(',')
-            else:
-                options[key] = value
+            line = line.strip()
+            if '=' in line:
+                key, value = line.split('=', 1)
+                if value.lower() in ['true', 'false']:
+                    options[key] = value.lower() == 'true'
+                elif value.replace('.', '', 1).isdigit():
+                    options[key] = float(value) if '.' in value else int(value)
+                elif key == 'excluded_attributes':
+                    options[key] = value.split(',')
+                else:
+                    options[key] = value
     return options
 
 def read_datasets_from_dat(filepath):
+    datasets_names = []
     with open(filepath, 'r') as file:
-        datasets_names = [line.strip() for line in file]
+        for line in file:
+            dataset_name = line.replace('"', '').replace(',', '').strip()
+            if dataset_name:
+                datasets_names.append(dataset_name)
     return datasets_names
 
 #========================================paths===========================================================
 options_filepath = 'Option.dat'
 datasets_names_filepath = 'Datasets_names.dat'
+encoding_path = 'Encoding.dat'
 #========================================encoding_selection==============================================
+def read_type_encoding(filepath):
+    with open(filepath, 'r') as file:
+        type_encoding = file.readline().strip()
+    return type_encoding
+
+#type_encoding = read_type_encoding(encoding_path)
 type_encoding = 'complex'
 # simple, frequency, complex
 #========================================datasets_names===================================================
-#datasets_names = read_datasets_from_dat(datasets_names_filepath)
+datasets_names = read_datasets_from_dat(datasets_names_filepath)
 
 # datasets_names = ["bpic2011_f1","bpic2011_f2","bpic2011_f3","bpic2011_f4","bpic2012_accepted","bpic2012_cancelled","bpic2012_declined","bpic2015_3_f2","bpic2015_4_f2","bpic2015_5_f2","bpic2017_accepted","bpic2017_cancelled","bpic2017_refused","hospital_billing_2","hospital_billing_3","Production","sepsis_cases_1","sepsis_cases_2","sepsis_cases_4","traffic_fines_1"]
 
@@ -41,11 +54,10 @@ type_encoding = 'complex'
 
 # datasets_names = ["traffic_fines_1"]
 
-datasets_names = ["sepsis_cases_4"]
+#datasets_names = ["sepsis_cases_4"]
 
 #datasets_names = ["bpic15_1","bpic15_2","bpic15_3","bpic15_4","bpic15_5"]
-
-support_threshold_dict= {'min': 0.05, 'max': 1.75}
+"""
 sat_threshold = 0.75
 top_K_paths = 6
 reranking = False
@@ -67,7 +79,7 @@ excluded_attributes = ["concept:name", "time:timestamp", "label", "Case ID"]
 #==================================================read_options_from_dat==================================================
 options = read_options_from_dat(options_filepath)
 # ================================================= thresholds ===============================================================================
-support_threshold_min= {'min': 0.05, 'max': 1.75}
+support_threshold_dict= {'min': 0.05, 'max': 1.75}
 sat_threshold = options['sat_threshold']
 top_K_paths = options['top_K_paths']
 reranking = options['reranking']
@@ -85,7 +97,7 @@ use_score = options['use_score']
 compute_baseline = options['compute_baseline']
 Print_edit_distance = options['Print_edit_distance']
 excluded_attributes = options['excluded_attributes']
-"""
+
 # ================ weights ================
 wtrace_att=0.25
 wsimple_encoding=0.5

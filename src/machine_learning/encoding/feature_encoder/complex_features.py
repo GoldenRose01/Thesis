@@ -165,7 +165,11 @@ def _trace_to_row(trace, prefix_length: int, additional_columns, prefix_length_s
     # Aggiunta delle feature delle risorse
     clean_resource=clean_lists(additional_columns['resource_attributes'])
 
+    count = 0
     for event in trace:
+        count += 1
+        if count == prefix_length:
+            break
         resource_found = False
         for resource_attribute in clean_resource:
             if resource_attribute in event:
