@@ -9,9 +9,11 @@ class AppRunner(QMainWindow):
         super().__init__()
         self.stack = QStackedWidget()
 
-        self.main_window = MainWindow(self)
-        self.details_window = DetailsWindow(self.switch_view_callback,)
-        self.run_window = RunWindow(self)
+        self.encoding = "default"
+
+        self.main_window = MainWindow(self,self.switch_view_callback)
+        self.details_window = DetailsWindow(self.main_window, self.encoding, self.switch_view_callback)
+        self.run_window = RunWindow(self.switch_view_callback)
 
         self.stack.addWidget(self.main_window)
         self.stack.addWidget(self.details_window)
@@ -28,6 +30,8 @@ class AppRunner(QMainWindow):
         elif view_name == 'details':
             self.details_window.show()
             self.main_window.hide()
+        elif view_name == 'run':
+            self.stack.setCurrentWidget(self.run_window)
 
     def show_main_window(self):
         self.stack.setCurrentWidget(self.main_window)

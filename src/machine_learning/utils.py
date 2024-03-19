@@ -10,11 +10,12 @@ from src.machine_learning import fitnessEditDistance
 from sklearn.model_selection import train_test_split
 import itertools
 from src.enums import TraceLabel
-import pandas as pd
-import numpy as np
 from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
+from pm4py.objects.conversion.log import converter as log_converter
 import settings
 import math
+import pandas as pd
+import numpy as np
 import re
 
 trace_attributes_for_numb=trace_attributes
@@ -231,3 +232,13 @@ def generate_rules(rules):
     words = list(filter(lambda word: word != "", words))
     rules = " ".join(words)
     return rules
+
+def rename_and_convert_to_log(df, dataset_manager):
+    renamed_df = df.rename(
+        columns={
+            dataset_manager.timestamp_col: 'time:timestamp',
+            dataset_manager.case_id_col: 'case:concept:name',
+            dataset_manager.activity_col: 'concept:name'
+        }
+    )
+    return log_converter.apply(renamed_df)

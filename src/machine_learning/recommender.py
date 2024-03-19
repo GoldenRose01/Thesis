@@ -138,7 +138,7 @@ def recommend(prefix, path, dt_input_trainval):
     return recommendation
 
 # Definisci una funzione per valutare la conformità di un trace rispetto a un percorso
-def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeling,num,cat):
+def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeling):
     is_compliant = True
     activities = []
     trace_attrs = []
@@ -194,12 +194,7 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeli
     ref = ref[num_prefixes:]
     ref = ref.tolist()
 
-    if not cat and not num:
-        ed = evaluateEditDistance.edit(ref, hyp)
-    elif cat and not num:
-        ed = evaluateEditDistance.edit_separate(ref, hyp, is_categorical=True)
-    elif not cat and num:
-        ed = evaluateEditDistance.edit_separate(ref, hyp, is_categorical=False)
+    ed = evaluateEditDistance.edit(ref, hyp)
 
     if (ed < sat_threshold):
         is_compliant = True
@@ -344,7 +339,7 @@ def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train
 
 
 def generate_recommendations_and_evaluation(test_log, train_log, labeling, prefixing, rules, paths,
-                                            hyperparams_evaluation, dt_input_trainval,num,cat,eval_res=None, debug=False):
+                                            hyperparams_evaluation, dt_input_trainval,cd,nd,eval_res=None, debug=False):
     if labeling["threshold_type"] == LabelThresholdType.LABEL_MEAN:
         labeling["custom_threshold"] = calc_mean_label_threshold(train_log, labeling)
 
@@ -410,7 +405,7 @@ def generate_recommendations_and_evaluation(test_log, train_log, labeling, prefi
                     selected_path = path
                     trace = test_log[prefix.trace_num]
                     # print(prefix.trace_id, trace[0]['label'])
-                    is_compliant, e = evaluate(trace, path, prefix_length, dt_input_trainval,num,cat,labeling=labeling,
+                    is_compliant, e = evaluate(trace, path, prefix_length, dt_input_trainval,labeling=labeling,
                                                sat_threshold=hyperparams_evaluation[0])
                     # if prefix_length == 12 or prefix_length == 12:
                     # pdb.set_trace()

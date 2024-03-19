@@ -6,31 +6,35 @@ from content import contents_details
 import subprocess
 
 class DetailsWindow(QWidget):
-    def __init__(self, encoding, switch_view_callback):
+    def __init__(self, main_window,encoding, switch_view_callback):
         super().__init__()
+        self.main_window = main_window
         self.encoding = encoding
         self.switch_view_callback = switch_view_callback
         self.initUI()
 
     def initUI(self):
-        self.setStyleSheet(f"background-color: {color_map[self.encoding]};")
-        layout = QVBoxLayout()
+        color = color_map.get(self.encoding, color_map.get("default"))
+        self.setStyleSheet(f"background-color: {color};")
 
-        title = QLabel(contents_details["window_title_details"].format(self.encoding.capitalize()))
-        title.setAlignment(Qt.AlignCenter)
-        layout.addWidget(title)
+        title = QLabel(contents_details["window_title_details"].format(self.encoding))
+        title.setStyleSheet(contents_details["window_title_details"])
+        title.setAlignment(Qt.Qt.AlignCenter)
 
-        # Example content, replace with actual content for your details view
         description = QLabel("Detailed settings for " + self.encoding + " encoding")
-        description.setAlignment(Qt.AlignCenter)
-        layout.addWidget(description)
+        #description.setStyleSheet(contents_details["window_description_style"])
 
-        back_button = QPushButton('Indietro')
-        back_button.setStyleSheet(button_style)
-        back_button.clicked.connect(self.on_back_clicked)
-        layout.addWidget(back_button)
+        self.back_button = QPushButton(contents_details["back_button"])
+        self.back_button.setStyleSheet(button_style)
+        self.back_button.clicked.connect(lambda: self.switch_view_callback("main"))
+
+        layout = QVBoxLayout()
+        layout.addWidget(title)
+        layout.addWidget(description)
+        layout.addWidget(self.back_button)
 
         self.setLayout(layout)
+        self.setWindowTitle(contents_details["window_title_details"].format(self.encoding))
 
     def on_back_clicked(self):
         # Signal to switch back to the main view or another appropriate view

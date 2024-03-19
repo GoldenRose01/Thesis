@@ -1,14 +1,12 @@
-from src.machine_learning.encoding.feature_encoder.frequency_features import frequency_features
-from src.machine_learning.encoding.feature_encoder.simple_features import simple_features
-from src.machine_learning.encoding.feature_encoder.complex_features import complex_features
-from src.constants import *
-from src.machine_learning.labeling import *
-from src.models.DTInput import *
-from src.enums.ConstraintChecker import *
-from src.machine_learning.label.common import LabelTypes
-from src.machine_learning.encoding.constants import EncodingType
-from src.machine_learning.encoding.data_encoder import *
-from pandas import DataFrame
+from src.machine_learning.encoding.feature_encoder.frequency_features   import frequency_features
+from src.machine_learning.encoding.feature_encoder.simple_features      import simple_features
+from src.machine_learning.encoding.feature_encoder.complex_features     import complex_features
+from src.machine_learning.encoding.data_encoder                         import *
+from src.machine_learning.encoding.constants                            import EncodingType
+from src.machine_learning.label.common                                  import LabelTypes
+from src.machine_learning.utils                                         import *
+from src.models.DTInput                                                 import *
+from pandas                                                             import DataFrame
 import settings
 
 TRACE_TO_DF = {
@@ -74,8 +72,9 @@ class Encoding:
         self.encoder = Encoder(df=self.df, attribute_encoding=self.CONF['attribute_encoding'])
         self.encoded = 0
 
+
     # Metodo per codificare le tracce
-    def encode_traces(self):
+    def encode_traces(self, numeric_columns, categoric_columns):
         self.encoder.encode(df=self.df)
 
         features = []
@@ -93,15 +92,38 @@ class Encoding:
         if not features:
             features = list(column_names)
 
-        return DTInput(features, encoded_data, labels), self.prefix
+        numeric_data, categoric_data = self.separate_and_encode(encoded_data,features,numeric_columns, categoric_columns)
+
+        return DTInput(features, encoded_data, labels), self.prefix, numeric_data, categoric_data
 
     # Funzione per separare e codificare i dati in vettori categorici e numerici
-    def _separate_and_encode(self):
+
+    def separate_and_encode(self,encoded_data, features, numeric_columns, categoric_columns):
         # Implementazione specifica per separare e codificare i dati
-        # Questa parte del codice dipenderà dalla struttura dei tuoi dati e dalle tue esigenze specifiche
-        # ...
-        encoded_categorical, encoded_numerical = [], []
-        return encoded_categorical, encoded_numerical
+        # Estrazione dei dati numerici
+        numeric_data = []
+        categoric_data = []
+
+        # Indici delle colonne numeriche e categoriche
+        numeric_indices = [index for index, feature in enumerate(features) if feature in numeric_columns]
+        categoric_indices = [index for index, feature in enumerate(features) if feature in categoric_columns]
+
+        # Estrazione dei dati numerici
+        for row in encoded_data:
+            numeric_row = [row[index] for index in numeric_indices]
+            numeric_data.append(numeric_row)
+
+        # Estrazione dei dati categorici
+        for row in encoded_data:
+            categoric_row = [row[index] for index in categoric_indices]
+            categoric_data.append(categoric_row)
+
+        return numeric_data, categoric_data
+        # Creazione dell'oggetto Numeric Encoding e Categorical Encoding
+        numericaldf = filternumdf(df, numeric_data)
+        categoricaldf = filtercatdf(df, categoric_data)
+
+        return numericaldf, categoricaldf,numeric_data, categoric_data
 
 
     # Metodo per decodificare un log codificato

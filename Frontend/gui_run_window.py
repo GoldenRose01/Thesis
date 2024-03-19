@@ -2,6 +2,7 @@ import os
 from PySide6 import QtCore as Qt
 from PySide6.QtWidgets import *
 from function import *
+from styles import *
 from content import contents_run_window
 import sys
 
@@ -16,7 +17,7 @@ class RunWindow(QWidget):
         layout = QVBoxLayout()
 
         title = QLabel("Run Encoding Process")
-        title.setAlignment(Qt.AlignCenter)
+        title.setAlignment(Qt.Qt.AlignCenter)
         layout.addWidget(title)
 
         # Placeholder for file selection list or other content

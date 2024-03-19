@@ -9,12 +9,13 @@ from function import save_type_encoding
 class MainWindow(QWidget):
     options_dat_path = "../Option.dat"
 
-    def __init__(self, switch_view_callback):
+    def __init__(self,encoding,switch_view_callback):
         super().__init__()
         self.switch_view_callback = switch_view_callback
         self.initUI()
 
     def initUI(self):
+        self.setFixedSize(1280, 720)
         self.setStyleSheet(f"background-color: {color_map['default']}; {main_window_style}")
         layout = QVBoxLayout()
 
@@ -34,7 +35,8 @@ class MainWindow(QWidget):
 
         self.setLayout(layout)
 
-
-    def on_encoding_selected(self, encoding):
-        # Callback function to switch view to details or run window
+    def on_button_clicked(self, encoding):
+        # Salva il tipo di encoding selezionato
+        self.selected_encoding = encoding
+        # Utilizza il callback per cambiare la vista e passa l'encoding selezionato
         self.switch_view_callback(encoding)

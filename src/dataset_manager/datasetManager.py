@@ -1,7 +1,3 @@
-import pdb  # Importa il modulo pdb per il debug
-import sys  # Importa il modulo sys per l'accesso alle variabili e ai puntatori
-
-# Importa i moduli e le librerie necessarie
 from src.dataset_manager import dataset_confs  # Importa le configurazioni dei dataset
 import pandas as pd  # Importa la libreria pandas per la manipolazione dei dati
 import numpy as np  # Importa la libreria numpy per operazioni numeriche
@@ -29,6 +25,8 @@ class DatasetManager:
         self.static_cat_cols = dataset_confs.static_cat_cols[self.dataset_name]
         self.dynamic_num_cols = dataset_confs.dynamic_num_cols[self.dataset_name]
         self.static_num_cols = dataset_confs.static_num_cols[self.dataset_name]
+        self.categoric_columns = self.dynamic_cat_cols + self.static_cat_cols
+        self.numeric_columns = self.dynamic_num_cols + self.static_num_cols
 
         # Definisce le colonne per la classificazione temporale
         self.sorting_cols = [self.timestamp_col, self.activity_col]
@@ -45,7 +43,18 @@ class DatasetManager:
         data = pd.read_csv(os.path.join(dataset_path, dataset_confs.filename[self.dataset_name]), sep=";", dtype=dtypes)
         data[self.timestamp_col] = pd.to_datetime(data[self.timestamp_col])
 
-        return data
+        #Ottieni dal dataset le colonne categoriche e numeriche
+        categoric_columns = self.dynamic_cat_cols + self.static_cat_cols
+        numeric_columns = self.dynamic_num_cols + self.static_num_cols
+
+        return data, categoric_columns, numeric_columns
+
+    def split_categorics(self, data, categoric_columns):
+        # Separa le colonne categoriche in base a trace_attributes e resource_attributes
+        for col in categoric_columns:
+            if col in dataset_confs.trace_attributes[self.dataset_name]:
+                categoric_columns.remove(col)
+        return data[categoric_columns]
 
     # noinspection DuplicatedCode
     def split_data(self, data, train_ratio, split="temporal", seed=22):
