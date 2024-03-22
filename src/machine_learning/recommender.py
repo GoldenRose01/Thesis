@@ -1,17 +1,14 @@
-import copy
 #from src.machine_learning.utils import *
 #from src.machine_learning.apriori import *
 #from src.machine_learning.encoding import *
-from src.machine_learning.decision_tree import *  # Importa il modulo decision_tree dalla directory src.machine_learning.
-from src.models import EvaluationResult  # Importa la classe EvaluationResult dalla directory src.models.
-from src.constants import *  # Importa tutte le costanti definite nella directory src.constants.
 from src.machine_learning import evaluateEditDistance
-import csv
-import numpy as np
-import settings
-from sklearn import metrics
 from run_experiments import *
+import csv
+import copy
+from src.machine_learning.decision_tree import *
 from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
+from src.constants import *
+
 
 # Crea una classe ParamsOptimizer per ottimizzare i parametri del modello.
 class ParamsOptimizer:
@@ -138,61 +135,58 @@ def recommend(prefix, path, dt_input_trainval):
     return recommendation
 
 # Definisci una funzione per valutare la conformità di un trace rispetto a un percorso
-def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeling):
+def evaluate(trace, path, num_prefixes, dt_input_trainval,dt_input_trainval_encoded, sat_threshold, labeling,indices,max_variation):
     is_compliant = True
-    activities = []
-    trace_attrs = []
-    resource_attrs = []
+    dt_encoded = dt_input_trainval_encoded
 
-    for idx, event in enumerate(trace):
-        for attribute_key, attribute_value in event.items():
-            if (attribute_key == 'concept:name'):
-                activities.append(attribute_value)
-            elif (attribute_key in trace_attributes):
-                trace_attrs.append(attribute_value)
-            elif (attribute_key in resource_attributes):
-                resource_attrs.append(attribute_value)
+    trace_id = str(trace['trace_id'])
 
-    activities = dt_input_trainval.encode(activities)
+    # Trova la sottolista corrispondente in dt_input_trainval_encoded utilizzando trace_id
+    selected_encoded_data = None
+    for encoded_data in dt_encoded:
+        if encoded_data[0] == trace_id:  # Il primo elemento è il trace_id come stringa
+            selected_encoded_data = encoded_data[1:]  # Ignora il primo elemento (trace_id)
+            break
 
-    hyp = []
-    hypInt = []
-    for column in activities.columns:
-        hyp.extend(activities[column].values)
-    hyp = np.array(hyp)
-    hyp = hyp.tolist()
+    if selected_encoded_data is None:
+        raise ValueError(f"Trace ID {trace_id} non trovato in dt_input_trainval_encoded.")
 
-    for value in hyp:
-        if isinstance(value, str) and value.isdigit():
-            hypInt.append(int(value))
-    if len(hypInt) > 0:
-        hyp = copy.deepcopy(hypInt)
-    hyp = hyp[num_prefixes:]
+    # Pre-elaborazione di hyp da dati codificati
+    hyp = [int(value) if isinstance(value, str) and value.isdigit() else value for value in selected_encoded_data]
+    hyp = hyp[num_prefixes:]  # Applica il numero di prefissi da ignorare
 
     n_max = 0
-
+    # Inizializza ref con il valore massimo derivato dalle regole
     for rule in path.rules:
         feature, state, parent = rule
-        numbers = extract_numbers_from_string(feature, log, trace_attributes_for_numb, resource_attributes_for_numb)
+        # Supponiamo che extract_numbers_from_string sia una funzione definita altrove che estrae numeri dalla stringa della feature
+        numbers = extract_numbers_from_string(feature)
         for n1, n2 in numbers:
             num1 = n1
             num2 = n2
-        if (num1) > n_max:
-            n_max = num1
+            if num1 > n_max:
+                n_max = num1
 
     ref = np.zeros(n_max, dtype=int)
-
     for rule in path.rules:
         feature, state, parent = rule
-        numbers = extract_numbers_from_string(feature, log, trace_attributes_for_numb, resource_attributes_for_numb)
+        numbers = extract_numbers_from_string(feature)
         for n1, n2 in numbers:
             num1 = n1
             num2 = n2
-        if (num1) > num_prefixes:
-            ref[num1 - 1] = int(num2)
+            if num1 > num_prefixes:
+                ref[num1 - 1] = int(num2)
 
     ref = ref[num_prefixes:]
     ref = ref.tolist()
+
+    # Calcolo della distanza pura basata su num e categoric
+    ed_separate = evaluateEditDistance.edit_separate(ref, hyp, indices, max_variation)
+
+    if (ed_separate < sat_threshold):
+        is_compliant_s = True
+    else:
+        is_compliant_s = False
 
     ed = evaluateEditDistance.edit(ref, hyp)
 
@@ -238,6 +232,7 @@ def test_dt(test_log, train_log, labeling, prefixing, support_threshold, checker
 
 def train_path_recommender(data_log, train_val_log, val_log, train_log, labeling, support_threshold,
                            dataset_name, output_dir, dt_input_trainval):
+
     if labeling["threshold_type"] == LabelThresholdType.LABEL_MEAN:
         labeling["custom_threshold"] = calc_mean_label_threshold(train_log, labeling)
 
@@ -338,8 +333,20 @@ def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train
     return eval_res
 
 
-def generate_recommendations_and_evaluation(test_log, train_log, labeling, prefixing, rules, paths,
-                                            hyperparams_evaluation, dt_input_trainval,cd,nd,eval_res=None, debug=False):
+def generate_recommendations_and_evaluation(test_log,
+                                            train_log,
+                                            labeling,
+                                            prefixing,
+                                            rules,
+                                            paths,
+                                            hyperparams_evaluation,
+                                            dt_input_trainval,
+                                            dt_input_trainval_encoded,
+                                            indices,
+                                            max_variations,
+                                            eval_res=None,
+                                            debug=False):
+
     if labeling["threshold_type"] == LabelThresholdType.LABEL_MEAN:
         labeling["custom_threshold"] = calc_mean_label_threshold(train_log, labeling)
 
@@ -405,8 +412,17 @@ def generate_recommendations_and_evaluation(test_log, train_log, labeling, prefi
                     selected_path = path
                     trace = test_log[prefix.trace_num]
                     # print(prefix.trace_id, trace[0]['label'])
-                    is_compliant, e = evaluate(trace, path, prefix_length, dt_input_trainval,labeling=labeling,
-                                               sat_threshold=hyperparams_evaluation[0])
+                    is_compliant, e = evaluate(trace,
+                                               path,
+                                               prefix_length,
+                                               dt_input_trainval,
+                                               dt_input_trainval_encoded,
+                                               labeling=labeling,
+                                               indices=indices,
+                                               max_variation=max_variations,
+                                               sat_threshold=hyperparams_evaluation[0]
+                                               )
+
                     # if prefix_length == 12 or prefix_length == 12:
                     # pdb.set_trace()
                     # pdb.set_trace()

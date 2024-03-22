@@ -215,7 +215,7 @@ def generate_paths(dtc, dt_input_features, target_label):
 
 def process_log_and_model(log, dt_params, support_threshold_dict, dataset_name, render_dt):
     # Encoding complesso
-    complex_data = complex_features(log, {})
+    complex_data , index = complex_features(log, {})
     X = complex_data.drop(columns=['label'])  # Rimuove la colonna della label
     y = complex_data['label']  # Assumi che la label sia presente in complex_data
 

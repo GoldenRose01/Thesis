@@ -58,16 +58,29 @@ class Encoding:
         train_cols: DataFrame = None
 
         # Crea un DataFrame 'df' basato sulla strategia di encoding selezionata
-        self.df = TRACE_TO_DF[self.CONF['feature_selection']](
-            log,
-            prefix_length=self.CONF['prefix_length'],
-            padding=self.CONF['padding'],
-            prefix_length_strategy=self.CONF['prefix_length_strategy'],
-            labeling_type=self.CONF['labeling_type'],
-            generation_type=self.CONF['task_generation_type'],
-            feature_list=train_cols,
-            target_event=None
-        )
+        if self.CONF['feature_selection'] == 'complex':
+            self.df, index = TRACE_TO_DF[self.CONF['feature_selection']](
+                log,
+                prefix_length=self.CONF['prefix_length'],
+                padding=self.CONF['padding'],
+                prefix_length_strategy=self.CONF['prefix_length_strategy'],
+                labeling_type=self.CONF['labeling_type'],
+                generation_type=self.CONF['task_generation_type'],
+                feature_list=train_cols,
+                target_event=None
+            )
+        else:
+            self.df = TRACE_TO_DF[self.CONF['feature_selection']](
+                log,
+                prefix_length=self.CONF['prefix_length'],
+                padding=self.CONF['padding'],
+                prefix_length_strategy=self.CONF['prefix_length_strategy'],
+                labeling_type=self.CONF['labeling_type'],
+                generation_type=self.CONF['task_generation_type'],
+                feature_list=train_cols,
+                target_event=None
+            )
+
 
         self.encoder = Encoder(df=self.df, attribute_encoding=self.CONF['attribute_encoding'])
         self.encoded = 0
@@ -92,38 +105,55 @@ class Encoding:
         if not features:
             features = list(column_names)
 
-        numeric_data, categoric_data = self.separate_and_encode(encoded_data,features,numeric_columns, categoric_columns)
+        (ncu_data,indices,max_variations) = self.separate_and_encode(encoded_data,features,numeric_columns, categoric_columns)
 
-        return DTInput(features, encoded_data, labels), self.prefix, numeric_data, categoric_data
+        return DTInput(features, encoded_data, labels), self.prefix, ncu_data,indices,max_variations
 
     # Funzione per separare e codificare i dati in vettori categorici e numerici
 
     def separate_and_encode(self,encoded_data, features, numeric_columns, categoric_columns):
-        # Implementazione specifica per separare e codificare i dati
-        # Estrazione dei dati numerici
+        # Inizializzazione delle liste per dati numerici, categorici e sconosciuti
         numeric_data = []
         categoric_data = []
+        unknown_data = []
 
-        # Indici delle colonne numeriche e categoriche
-        numeric_indices = [index for index, feature in enumerate(features) if feature in numeric_columns]
-        categoric_indices = [index for index, feature in enumerate(features) if feature in categoric_columns]
+        # Organize data into a dictionary
+        ncu_data = {
+            'numeric': numeric_data,
+            'categoric': categoric_data,
+            'unknown': unknown_data
+        }
 
-        # Estrazione dei dati numerici
+        # Distinguiamo tra colonne numeriche, categoriche esplicite e il resto come unknown
+        numeric_columns_set = set(numeric_columns)
+        categoric_columns_set = set(categoric_columns)
+
+        # Calcoliamo gli indici per ogni tipo di colonna
+        numeric_indices = [index for index, feature in enumerate(features) if feature in numeric_columns_set]
+        categoric_indices = [index for index, feature in enumerate(features) if feature in categoric_columns_set]
+        unknown_indices = [index for index, feature in enumerate(features) if
+                           feature not in numeric_columns_set and feature not in categoric_columns_set]
+
+        # Organize indices into another dictionary
+        indices = {
+            'numeric': numeric_indices,
+            'categoric': categoric_indices,
+            'unknown': unknown_indices
+        }
+
+        # Estrazione dei dati per ogni categoria
         for row in encoded_data:
-            numeric_row = [row[index] for index in numeric_indices]
-            numeric_data.append(numeric_row)
+            numeric_data.append([row[index] for index in numeric_indices])
+            categoric_data.append([row[index] for index in categoric_indices])
+            unknown_data.append([row[index] for index in unknown_indices])
+        # Calcolo del max e min per le colonne dei dati numerici
+        max_values = [max(column) for column in zip(*numeric_data)]
+        min_values = [min(column) for column in zip(*numeric_data)]
 
-        # Estrazione dei dati categorici
-        for row in encoded_data:
-            categoric_row = [row[index] for index in categoric_indices]
-            categoric_data.append(categoric_row)
+        # Calcolo della variazione massima per ogni colonna numerica
+        max_variations = [max_val - min_val for max_val, min_val in zip(max_values, min_values)]
 
-        return numeric_data, categoric_data
-        # Creazione dell'oggetto Numeric Encoding e Categorical Encoding
-        numericaldf = filternumdf(df, numeric_data)
-        categoricaldf = filtercatdf(df, categoric_data)
-
-        return numericaldf, categoricaldf,numeric_data, categoric_data
+        return ncu_data, indices, max_variations
 
 
     # Metodo per decodificare un log codificato

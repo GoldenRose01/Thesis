@@ -1,5 +1,5 @@
-from src.dataset_manager.datasetManager import DatasetManager
-from src.machine_learning import *
+from src.dataset_manager.datasetManager import *
+from machine_learning import *
 import argparse
 import multiprocessing
 import sys
@@ -31,7 +31,6 @@ def remove_files(directory):
         if filename.endswith(".txt") or filename.endswith(".csv"):
             os.remove(os.path.join(directory, filename))
     print("File eliminati")
-
 
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione
 def rec_sys_exp(dataset_name):
@@ -115,9 +114,10 @@ def rec_sys_exp(dataset_name):
 
     # Creazione dell'oggetto Encoding
     dt_input_trainval = Encoding(train_val_log)
-    dt_input_trainval_encoded , prefix_length, numeric_data, categoric_data = dt_input_trainval.encode_traces(numeric_columns, categoric_columns)
-    cd=categoric_data
-    nd=numeric_data
+
+    (dt_input_trainval_encoded , prefix_length,
+     ncu_data,indices,max_variations) = dt_input_trainval.encode_traces(numeric_columns, categoric_columns)
+
     # Lista dei risultati
     results = []
 
@@ -182,8 +182,9 @@ def rec_sys_exp(dataset_name):
                                                                                   hyperparams_evaluation=hyperparams_evaluation,
                                                                                   eval_res=eval_res,
                                                                                   dt_input_trainval=dt_input_trainval,
-                                                                                  cd=categoric_data,
-                                                                                  nd=numeric_data
+                                                                                  dt_input_trainval_encoded=dt_input_trainval_encoded,
+                                                                                  indices=indices,
+                                                                                  max_variations=max_variations
                                                                                   )
             if settings.cumulative_res is True:
                 eval_res = copy.deepcopy(evaluation)
@@ -221,6 +222,7 @@ def rec_sys_exp(dataset_name):
                                                                               paths=paths,
                                                                               hyperparams_evaluation=best_hyperparams_combination,
                                                                               eval_res=eval_res,
+                                                                              indices=indices,
                                                                               dt_input_trainval=dt_input_trainval
                                                                               )
         results.append(evaluation)

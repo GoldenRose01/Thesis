@@ -4,7 +4,7 @@ color_map = {
     "simple": "#add8e6",
     "complex": "#ffb6c1",
     "declarative": "#90ee90",
-    "selected": "#ffd700",  # Example for a selected item or button
+    "selected": "#ffd700",
 }
 
 # Stile per i pulsanti
@@ -38,3 +38,10 @@ selected_color_map = {
     "complex": "#FFA500",  # Arancione
     "declarative": "#98FF98"  # Verde menta
 }
+title_label_style = """
+QLabel {
+    font-size: 18px;
+    color: #333;
+    padding: 10px 0;
+}
+"""

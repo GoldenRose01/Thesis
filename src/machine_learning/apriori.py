@@ -96,7 +96,7 @@ def add_frequent_event_features(df, log, support_threshold):
 # Funzione principale che calcola le feature complesse e aggiunge le feature degli eventi frequenti
 def process_log(log, complex_encoding_params, support_threshold):
     # Genera le feature complesse
-    df_complex = complex_features(log, **complex_encoding_params)
+    df_complex ,index = complex_features(log, **complex_encoding_params)
 
     # Aggiunge le feature degli eventi e delle coppie di eventi frequenti
     df_enriched = add_frequent_event_features(df_complex, log, support_threshold)

@@ -2,7 +2,7 @@ import editdistance  # Importa la libreria per calcolare la distanza di edit
 import itertools
 from settings import Print_edit_distance
 
-def edit(ref, hyp):#numerical e categorical erano stati presi per una prova di extract a posteriori
+def edit(ref, hyp):
 
     ref2 = ref.copy()
     hyp2 = hyp.copy()
@@ -27,20 +27,30 @@ def edit(ref, hyp):#numerical e categorical erano stati presi per una prova di e
 
     return ed_ratio
 
-def edit_separate(ref, hyp):
+def edit_separate(ref, hyp,indices, max_variation):
     # Inizializza la lista delle distanze
     distances = []
+    # Correzione: per calcolare correttamente la distanza basata sulla variazione massima per una colonna numerica,
+    # abbiamo bisogno di un mapping da indice assoluto a indice relativo nelle colonne numeriche.
+    # Creiamo un dizionario per questo scopo.
+    index_to_numeric = {abs_index: rel_index for rel_index, abs_index in enumerate(indices['numeric'])}
 
-    # Per dati categorici: 0 se uguali, 1 se diversi
-    distances = [0 if ref[i] == hyp[i] else 1 for i in range(len(ref))]
-
-    # Per dati numerici: calcola la distanza basata sulla variazione massima per posizione
+    # Calcola la distanza in base al tipo di dato
     for i in range(len(ref)):
-        # Trova la variazione massima per la posizione corrente
-        all_values = [hyp_instance[i] for hyp_instance in hyp] + [ref[i]]
-        max_variation = max(all_values) - min(all_values)
-        # Calcola la distanza per la posizione corrente
-        distance = abs(ref[i] - hyp[0][i]) / max_variation if max_variation else 0
+        if i in indices['numeric']:
+            # Utilizziamo l'indice relativo per ottenere la variazione massima corretta
+            rel_index = index_to_numeric[i]  # Ottiene l'indice relativo corrispondente
+            # Calcola la distanza basata sulla variazione massima per colonna
+            if max_variation[rel_index] != 0:  # Evita divisione per zero
+                distance = abs(ref[i] - hyp[0][i]) / max_variation[rel_index]
+            else:
+                distance = 0
+        elif i in indices['categoric'] or i in indices['unknown']:
+            # Per dati categorici e sconosciuti: 0 se uguali, 1 se diversi
+            distance = 0 if ref[i] == hyp[0][i] else 1
+        else:
+            # Per sicurezza, ma tutti gli indici dovrebbero essere coperti dalle categorie sopra
+            distance = 0
         distances.append(distance)
 
     # Calcola il rapporto totale della distanza di edit

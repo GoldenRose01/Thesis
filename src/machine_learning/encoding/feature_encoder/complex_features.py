@@ -29,7 +29,7 @@ def complex_features(log, prefix_length, padding, prefix_length_strategy, labeli
     """
 
     max_prefix_length = get_max_prefix_length(log, prefix_length, prefix_length_strategy, target_event)
-    columns, additional_columns = _columns_complex(log, max_prefix_length, feature_list, trace_attributes, resource_attributes)
+    columns, additional_columns , index = _columns_complex(log, max_prefix_length, feature_list, trace_attributes, resource_attributes)
     encoded_data = []
 
     for trace_index, trace in enumerate(log):
@@ -42,7 +42,7 @@ def complex_features(log, prefix_length, padding, prefix_length_strategy, labeli
         encoded_data.append(trace_encoded)
 
     df = DataFrame(columns=columns, data=encoded_data)
-    return df
+    return df , index
 
 
 def _compute_additional_columns(log, trace_attributes, resource_attributes, prefix_length) -> dict:
@@ -88,25 +88,41 @@ def _columns_complex(log, prefix_length: int, feature_list: list, trace_attribut
         Tuple containing the list of columns and additional columns dictionary.
     """
     additional_columns = _compute_additional_columns(log, trace_attributes, resource_attributes, prefix_length)
+    complex_indices = []
+    resource_indices = []
 
     # Inizializzazione delle colonne
     columns = ['trace_id']
 
-    # Aggiunta delle colonne degli attributi delle tracce
+    # Aggiunta delle colonne degli attributi delle tracce e salvataggio degli indici
     for attrs in additional_columns['trace_attributes']:
-        columns += [attrs]
+        columns.append(attrs)
+        # Aggiunge l'indice corrente dell'attributo delle tracce alla lista
+        complex_indices.append(columns.index(attrs))
 
-    # Aggiunta delle colonne degli eventi
+    # Aggiunta delle colonne degli eventi e salvataggio degli indici dei prefissi
+    prefix_indices = [len(columns) + i for i in range(prefix_length)]
     columns += [PREFIX_ + str(i) for i in range(1, prefix_length + 1)]
 
-    # Aggiunta delle colonne degli attributi delle risorse
+    # Aggiunta delle colonne degli attributi delle risorse e salvataggio degli indici
     for attrs in additional_columns['resource_attributes']:
-        columns += [attrs]
+        columns.append(attrs)
+        # Aggiunge l'indice corrente dell'attributo delle risorse alla lista
+        resource_indices.append(columns.index(attrs))
 
     columns += ['label']
     if feature_list is not None:
         assert (list(feature_list) == columns)
-    return columns, additional_columns
+
+    index = {
+        'complex': complex_indices,
+        'prefix': prefix_indices,
+        'resource': resource_indices
+    }
+
+    return columns, additional_columns, index
+
+
 
 def _trace_to_row(trace, prefix_length: int, additional_columns, prefix_length_strategy: str, padding, columns: list,
                   labeling_type, trace_index) -> list:

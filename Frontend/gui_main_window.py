@@ -27,11 +27,17 @@ class MainWindow(QWidget):
         description.setAlignment(Qt.AlignCenter)
         layout.addWidget(description)
 
-        for encoding in ["simple", "complex", "declarative"]:
-            btn = QPushButton(contents[f"{encoding}_encoding"])
-            btn.setStyleSheet(button_style)
-            btn.clicked.connect(lambda checked, e=encoding: self.on_encoding_selected(e))
-            layout.addWidget(btn)
+        simple_button = QPushButton(contents["simple_encoding"])
+        complex_button = QPushButton(contents["complex_encoding"])
+        declarative_button = QPushButton(contents["declarative_encoding"])
+
+        simple_button.clicked.connect(lambda: self.on_button_clicked("simple"))
+        complex_button.clicked.connect(lambda: self.on_button_clicked("complex"))
+        declarative_button.clicked.connect(lambda: self.on_button_clicked("declarative"))
+
+        layout.addWidget(simple_button)
+        layout.addWidget(complex_button)
+        layout.addWidget(declarative_button)
 
         self.setLayout(layout)
 

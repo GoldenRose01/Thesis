@@ -5,7 +5,6 @@ import os  # Importa il modulo os per l'accesso al sistema operativo
 import matplotlib.pyplot as plt  # Importa il modulo matplotlib per la visualizzazione dei dati
 from sklearn.model_selection import StratifiedKFold  # Importa StratifiedKFold per la divisione stratificata del dataset
 
-
 # noinspection DuplicatedCode
 class DatasetManager:
 

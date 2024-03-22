@@ -19,3 +19,7 @@ contents_run_window = {
     "run_confirmation": "Confermi di voler procedere con l'analisi dei seguenti file con queste scelte?",
     "run_button_text": "Run",
 }
+
+contents_terminal_window = {
+    "terminal_title": "Flusso dati del terminale",
+}
