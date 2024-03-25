@@ -59,7 +59,7 @@ class Encoding:
 
         # Crea un DataFrame 'df' basato sulla strategia di encoding selezionata
         if self.CONF['feature_selection'] == 'complex':
-            self.df, index = TRACE_TO_DF[self.CONF['feature_selection']](
+            self.df, self.index = TRACE_TO_DF[self.CONF['feature_selection']](
                 log,
                 prefix_length=self.CONF['prefix_length'],
                 padding=self.CONF['padding'],
@@ -107,10 +107,18 @@ class Encoding:
 
         (ncu_data,indices,max_variations) = self.separate_and_encode(encoded_data,features,numeric_columns, categoric_columns)
 
+        if self.CONF['feature_selection'] == 'complex':
+            for key, values in self.index.items():
+                # Se la chiave esiste già in indices, uniamo le liste (assicurandoci che siano uniche)
+                if key in indices:
+                    indices[key] = list(set(indices[key] + values))
+                else:
+                    # Altrimenti, aggiungiamo direttamente la lista a indices sotto la nuova chiave
+                    indices[key] = values
+
         return DTInput(features, encoded_data, labels), self.prefix, ncu_data,indices,max_variations
 
     # Funzione per separare e codificare i dati in vettori categorici e numerici
-
     def separate_and_encode(self,encoded_data, features, numeric_columns, categoric_columns):
         # Inizializzazione delle liste per dati numerici, categorici e sconosciuti
         numeric_data = []

@@ -98,11 +98,13 @@ use_score = options['use_score']
 compute_baseline = options['compute_baseline']
 Print_edit_distance = options['Print_edit_distance']
 excluded_attributes = options['excluded_attributes']
+selected_evaluation_edit_distance = options['selected_evaluation_edit_distance']
+#['edit_distance', 'edit_distance_separate','weighted_edit_distance']
 
 # ================ weights ================
-wtrace_att=0.25
-wsimple_encoding=0.5
-wresource_att=0.25
+wtrace_att=1
+wsimple_encoding=1
+wresource_att=1
 #weights of the three components of the encoding
 
 # ================ folders ================

@@ -1,6 +1,7 @@
 import editdistance  # Importa la libreria per calcolare la distanza di edit
 import itertools
-from settings import Print_edit_distance
+from settings import Print_edit_distance, wtrace_att, wsimple_encoding, wresource_att
+
 
 def edit(ref, hyp):
 
@@ -56,3 +57,43 @@ def edit_separate(ref, hyp,indices, max_variation):
     # Calcola il rapporto totale della distanza di edit
     ed_ratio = sum(distances) / len(distances) if distances else 0
     return ed_ratio
+
+def weighted_edit_distance(ref, hyp,indices, max_variation):
+    # Calcola la distanza di edit con i pesi di trace_attributes,event e resource_attributes
+    weighted_distances = []
+
+    # Mapping dei pesi per ogni indice basato sui segmenti
+    weights = {}
+    for i in indices['complex']:
+        weights[i] = wtrace_att
+    for i in indices['prefix']:
+        weights[i] = wsimple_encoding
+    for i in indices['resource']:
+        weights[i] = wresource_att
+
+    # Correzione per mappare indici numerici a indici relativi
+    index_to_numeric = {abs_index: rel_index for rel_index, abs_index in enumerate(indices['numeric'])}
+
+    for i in range(len(ref)):
+        if i in indices['numeric']:
+            # Calcolo della distanza per dati numerici
+            rel_index = index_to_numeric[i]
+            if max_variation[rel_index] != 0:
+                distance = abs(ref[i] - hyp[i]) / max_variation[rel_index]
+            else:
+                distance = 0
+        elif i in indices['categoric'] or i in indices['unknown']:
+            # Distanza per dati categorici e sconosciuti
+            distance = 0 if ref[i] == hyp[i] else 1
+        else:
+            # Precauzione, tutti gli indici dovrebbero essere coperti
+            distance = 0
+
+        # Applica il peso basato sul segmento di appartenenza
+        weighted_distance = distance * weights.get(i, 1)  # Default weight is 1 if not in complex/prefix/resource
+        weighted_distances.append(weighted_distance)
+
+    # Calcolo del rapporto totale della distanza di edit ponderata
+    weighted_ed_ratio = sum(weighted_distances) / len(weighted_distances) if weighted_distances else 0
+
+    return weighted_ed_ratio

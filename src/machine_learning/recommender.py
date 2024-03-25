@@ -8,6 +8,7 @@ import copy
 from src.machine_learning.decision_tree import *
 from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
 from src.constants import *
+from settings import selected_evaluation_edit_distance
 
 
 # Crea una classe ParamsOptimizer per ottimizzare i parametri del modello.
@@ -135,11 +136,12 @@ def recommend(prefix, path, dt_input_trainval):
     return recommendation
 
 # Definisci una funzione per valutare la conformità di un trace rispetto a un percorso
-def evaluate(trace, path, num_prefixes, dt_input_trainval,dt_input_trainval_encoded, sat_threshold, labeling,indices,max_variation):
+def evaluate(trace, path, num_prefixes, dt_input_trainval_encoded, sat_threshold, labeling,indices,max_variation):
     is_compliant = True
     dt_encoded = dt_input_trainval_encoded
 
-    trace_id = str(trace['trace_id'])
+    trace_id = int(trace['attributes']['concept:name'])
+
 
     # Trova la sottolista corrispondente in dt_input_trainval_encoded utilizzando trace_id
     selected_encoded_data = None
@@ -180,15 +182,16 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval,dt_input_trainval_enco
     ref = ref[num_prefixes:]
     ref = ref.tolist()
 
-    # Calcolo della distanza pura basata su num e categoric
-    ed_separate = evaluateEditDistance.edit_separate(ref, hyp, indices, max_variation)
 
-    if (ed_separate < sat_threshold):
-        is_compliant_s = True
-    else:
-        is_compliant_s = False
+    if selected_evaluation_edit_distance == "edit":
+        # Calcolo della distanza pura basata sulla libreria editdistance
+        ed = evaluateEditDistance.edit(ref, hyp)
+    elif selected_evaluation_edit_distance == "edit_separate":
+        # Calcolo della distanza pura basata su num e categoric
+        ed = evaluateEditDistance.edit_separate(ref, hyp, indices, max_variation)
+    elif selected_evaluation_edit_distance == "weighted_edit_distance":
+        ed=evaluateEditDistance.weighted_edit_distance(ref,hyp,indices, max_variation)
 
-    ed = evaluateEditDistance.edit(ref, hyp)
 
     if (ed < sat_threshold):
         is_compliant = True
@@ -412,15 +415,14 @@ def generate_recommendations_and_evaluation(test_log,
                     selected_path = path
                     trace = test_log[prefix.trace_num]
                     # print(prefix.trace_id, trace[0]['label'])
-                    is_compliant, e = evaluate(trace,
-                                               path,
-                                               prefix_length,
-                                               dt_input_trainval,
-                                               dt_input_trainval_encoded,
+                    is_compliant, e = evaluate(trace=trace,
+                                               path=path,
+                                               num_prefixes=prefix_length,
+                                               dt_input_trainval_encoded=dt_input_trainval_encoded,
+                                               sat_threshold=hyperparams_evaluation[0],
                                                labeling=labeling,
                                                indices=indices,
-                                               max_variation=max_variations,
-                                               sat_threshold=hyperparams_evaluation[0]
+                                               max_variation=max_variations
                                                )
 
                     # if prefix_length == 12 or prefix_length == 12:

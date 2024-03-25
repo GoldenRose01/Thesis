@@ -42,7 +42,7 @@ def complex_features(log, prefix_length, padding, prefix_length_strategy, labeli
         encoded_data.append(trace_encoded)
 
     df = DataFrame(columns=columns, data=encoded_data)
-    return df , index
+    return df, index
 
 
 def _compute_additional_columns(log, trace_attributes, resource_attributes, prefix_length) -> dict:

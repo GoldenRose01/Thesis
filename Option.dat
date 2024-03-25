@@ -15,3 +15,4 @@ use_score=True
 compute_baseline=False
 Print_edit_distance=False
 excluded_attributes=concept:name,time:timestamp,label,Case ID
+selected_evaluation_edit_distance='edit_distance'
