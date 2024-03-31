@@ -1,3 +1,4 @@
+import os
 def save_type_encoding(encoding_type):
     with open('../Encoding.dat','w') as file:
         file.write(encoding_type)
@@ -25,3 +26,36 @@ def update_option(option_key, option_value):
     if option_found:
         with open('../Option.dat', 'w') as file:
             file.writelines(updated_lines)
+
+def add_excluded_attribute(attribute):
+    with open('../Option.dat', 'r') as file:
+        lines = file.readlines()
+    for i, line in enumerate(lines):
+        if line.startswith('excluded_attributes ='):
+            attributes = line.split('=')[1].strip()
+            if attributes:
+                attributes_list = attributes.split(';')
+                if attribute not in attributes_list:
+                    attributes_list.append(attribute)
+                attributes = ';'.join(attributes_list)
+            else:
+                attributes = attribute
+            lines[i] = f'excluded_attributes = {attributes}\n'
+            break
+    with open('../Option.dat', 'w') as file:
+        file.writelines(lines)
+
+def remove_excluded_attribute(attribute):
+    with open('../Option.dat', 'r') as file:
+        lines = file.readlines()
+    for i, line in enumerate(lines):
+        if line.startswith('excluded_attributes ='):
+            attributes = line.split('=')[1].strip()
+            attributes_list = attributes.split(';')
+            if attribute in attributes_list:
+                attributes_list.remove(attribute)
+                attributes = ';'.join(attributes_list)
+                lines[i] = f'excluded_attributes = {attributes}\n'
+            break
+    with open('../Option.dat', 'w') as file:
+        file.writelines(lines)

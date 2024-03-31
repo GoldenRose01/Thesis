@@ -140,14 +140,15 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval_encoded, sat_threshold
     is_compliant = True
     dt_encoded = dt_input_trainval_encoded
 
-    trace_id = int(trace['attributes']['concept:name'])
+    #selected_encoded_data = dt_encoded[0][1:]
 
+    trace_id = str(trace.attributes['concept:name'])
 
     # Trova la sottolista corrispondente in dt_input_trainval_encoded utilizzando trace_id
     selected_encoded_data = None
-    for encoded_data in dt_encoded:
-        if encoded_data[0] == trace_id:  # Il primo elemento è il trace_id come stringa
-            selected_encoded_data = encoded_data[1:]  # Ignora il primo elemento (trace_id)
+    for row in dt_encoded.encoded_data:
+        if row[0] == trace_id:  # Il primo elemento è il trace_id come stringa
+            selected_encoded_data = row[1:]  # Ignora il primo elemento (trace_id)
             break
 
     if selected_encoded_data is None:
@@ -162,7 +163,7 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval_encoded, sat_threshold
     for rule in path.rules:
         feature, state, parent = rule
         # Supponiamo che extract_numbers_from_string sia una funzione definita altrove che estrae numeri dalla stringa della feature
-        numbers = extract_numbers_from_string(feature)
+        numbers = extract_numbers_from_string(feature,log,trace_attributes_for_numb,resource_attributes_for_numb)
         for n1, n2 in numbers:
             num1 = n1
             num2 = n2
@@ -172,7 +173,7 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval_encoded, sat_threshold
     ref = np.zeros(n_max, dtype=int)
     for rule in path.rules:
         feature, state, parent = rule
-        numbers = extract_numbers_from_string(feature)
+        numbers = extract_numbers_from_string(feature,log,trace_attributes_for_numb,resource_attributes_for_numb)
         for n1, n2 in numbers:
             num1 = n1
             num2 = n2
@@ -182,16 +183,15 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval_encoded, sat_threshold
     ref = ref[num_prefixes:]
     ref = ref.tolist()
 
-
-    if selected_evaluation_edit_distance == "edit":
+    ed = 0
+    if selected_evaluation_edit_distance == "edit": #todo aggiorna i nomi in base alle impostazioni
         # Calcolo della distanza pura basata sulla libreria editdistance
         ed = evaluateEditDistance.edit(ref, hyp)
     elif selected_evaluation_edit_distance == "edit_separate":
         # Calcolo della distanza pura basata su num e categoric
         ed = evaluateEditDistance.edit_separate(ref, hyp, indices, max_variation)
     elif selected_evaluation_edit_distance == "weighted_edit_distance":
-        ed=evaluateEditDistance.weighted_edit_distance(ref,hyp,indices, max_variation)
-
+        ed = evaluateEditDistance.weighted_edit_distance(ref,hyp,indices, max_variation)
 
     if (ed < sat_threshold):
         is_compliant = True

@@ -99,7 +99,7 @@ compute_baseline = options['compute_baseline']
 Print_edit_distance = options['Print_edit_distance']
 excluded_attributes = options['excluded_attributes']
 selected_evaluation_edit_distance = options['selected_evaluation_edit_distance']
-#['edit_distance', 'edit_distance_separate','weighted_edit_distance']
+#['edit_distance_lib', 'edit_distance_separate','weighted_edit_distance']
 
 # ================ weights ================
 wtrace_att=1

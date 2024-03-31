@@ -13,7 +13,7 @@ class AppRunner(QMainWindow):
         self.encoding = "default"
 
         self.main_window = MainWindow(self,self.switch_view_callback)
-        self.details_window = DetailsWindow(self.main_window, self.encoding, self.switch_view_callback)
+        self.details_window = DetailsWindow(self.switch_view_callback)
         self.run_window = RunWindow(self.switch_view_callback)
         self.terminal_window = TerminalWindow(self.switch_view_callback)
 
@@ -31,18 +31,10 @@ class AppRunner(QMainWindow):
             self.details_window.hide()
             self.run_window.hide()
             # Add other windows to hide if necessary
-        elif view_name == "simple":
-            self.show_details_window("simple")
-            self.main_window.hide()
-            self.run_window.hide()
-        elif view_name == "complex":
-            self.show_details_window("complex")
-            self.main_window.hide()
-            self.run_window.hide()
-        elif view_name == "declarative":
-            self.show_details_window("declarative")
-            self.main_window.hide()
-            self.run_window.hide()
+        #elif view_name in ["simple", "complex", "declarative"]:
+        #    self.show_details_window(view_name)
+        #    self.main_window.hide()
+        #    self.run_window.hide()
         elif view_name == 'run':
             self.main_window.hide()
             self.details_window.hide()
@@ -53,13 +45,11 @@ class AppRunner(QMainWindow):
             self.run_window.hide()
             self.terminal_window.show()
 
-
-
     def show_main_window(self):
         self.stack.setCurrentWidget(self.main_window)
 
     def show_details_window(self, encoding):
-        self.details_window.update_for_encoding(encoding)
+        self.details_window.set_encoding(encoding)
         self.stack.setCurrentWidget(self.details_window)
 
     def show_run_window(self):
