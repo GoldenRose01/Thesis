@@ -10,7 +10,7 @@ contents_details = {
     "simple_encoding": "Simple Encoding",
     "complex_encoding": "Complex Encoding",
     "declarative_encoding": "Declarative Encoding",
-    "window_title_details": "Dettagli Encoding - {}",
+    "window_title_details": "Impostazioni Encoding - {}",
     "back_button": "Indietro",
     "specific_content_label": "Il contenuto specifico dell'encoding verrà aggiunto qui.",
 }

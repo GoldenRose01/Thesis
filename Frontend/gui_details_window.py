@@ -161,7 +161,7 @@ class DetailsWindow(QWidget):
             attribute = selected_items[0].text()
             remove_excluded_attribute(attribute)  # Assumes this function is defined in function.py
             self.load_excluded_attributes_into_table()
-
+"""
     def on_back_clicked(self):
         # Signal to switch back to the main view or another appropriate view
         self.switch_view_callback('main')
@@ -170,4 +170,3 @@ class DetailsWindow(QWidget):
         # This method will be triggered when the "Next" button is clicked
         # Signal to switch to the RunWindow view
         self.switch_view_callback('run')
-"""
