@@ -68,10 +68,3 @@ if __name__ == "__main__":
     time_m_finale = (time.time() - start_time) / 60
 
     print("Le simulazioni hanno richiesto " + str(time_h_finale) + " ore o " + str(time_m_finale) + " minuti")
-
-    # Elimina file configurazione trace_id e resource_attribute
-    if input("Vuoi eliminare i preset di trace_id e resource_attribute? (y/n/Y/N): ") == "y"|"Y":
-        remove_files("src/machine_learning/encoding/Settings")
-        remove_files("media/input/csvconverted")
-    else:
-        print("I file non sono stati eliminati")

@@ -27,6 +27,7 @@ def edit(ref, hyp):
 
     return ed_ratio
 
+
 def edit_separate(ref, hyp, indices, max_variation):
     # Inizializza la lista delle distanze
     distances = []
@@ -39,11 +40,11 @@ def edit_separate(ref, hyp, indices, max_variation):
             # Usa l'indice aggiustato per ottenere la variazione massima corretta
             rel_index = index_to_numeric[i]  # Usa l'indice originale di ref/hyp
             if max_variation[rel_index] != 0:
-                distance = abs(ref[i] - hyp[0][i]) / max_variation[rel_index]
+                distance = abs(ref[i] - hyp[i]) / max_variation[rel_index]
             else:
                 distance = 0
         elif adjusted_index in indices['categoric'] or adjusted_index in indices['unknown']:
-            distance = 0 if ref[i] == hyp[0][i] else 1
+            distance = 0 if ref[i] == hyp[i] else 1
         else:
             distance = 0
         distances.append(distance)

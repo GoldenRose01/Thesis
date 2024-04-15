@@ -9,6 +9,7 @@ from src.machine_learning.decision_tree import *
 from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
 from src.constants import *
 from settings import selected_evaluation_edit_distance
+from src.machine_learning.labeling import generate_label
 
 
 # Crea una classe ParamsOptimizer per ottimizzare i parametri del modello.
@@ -152,7 +153,8 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval_encoded, sat_threshold
             break
 
     if selected_encoded_data is None:
-        raise ValueError(f"Trace ID {trace_id} non trovato in dt_input_trainval_encoded.")
+        print(f"Trace {trace_id} not found in the encoded data")
+        return is_compliant, ConfusionMatrix.UNCLASSIFIED
 
     # Pre-elaborazione di hyp da dati codificati
     hyp = [int(value) if isinstance(value, str) and value.isdigit() else value for value in selected_encoded_data]

@@ -223,7 +223,9 @@ def rec_sys_exp(dataset_name):
                                                                               hyperparams_evaluation=best_hyperparams_combination,
                                                                               eval_res=eval_res,
                                                                               indices=indices,
-                                                                              dt_input_trainval=dt_input_trainval
+                                                                              max_variations=max_variations,
+                                                                              dt_input_trainval=dt_input_trainval,
+                                                                              dt_input_trainval_encoded=dt_input_trainval_encoded
                                                                               )
         results.append(evaluation)
         if settings.cumulative_res is True:
