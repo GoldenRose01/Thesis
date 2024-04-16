@@ -1185,3 +1185,5 @@ bpic2011_f1	(None, 'entropy', None, 1, 2)	90.56	100.0	-1	22
 bpic2011_f1	(None, 'entropy', None, 1, 2)	90.56	100.0	-1	22
 bpic2011_f1	(None, 'entropy', None, 1, 2)	90.56	100.0	-1	22
 bpic2011_f1	(None, 'entropy', None, 1, 2)	90.56	100.0	-1	22
+bpic2011_f1	(None, 'entropy', None, 1, 2)	90.56	100.0	-1	22
+bpic2011_f1	(None, 'entropy', 8, 1, 2)	82.14	84.37	-1	8

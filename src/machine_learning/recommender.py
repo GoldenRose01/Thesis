@@ -8,7 +8,7 @@ import copy
 from src.machine_learning.decision_tree import *
 from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
 from src.constants import *
-from settings import selected_evaluation_edit_distance,print_log,print_length
+from settings import *
 from src.machine_learning.labeling import generate_label
 
 
@@ -151,7 +151,7 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval_encoded, sat_threshold
             break
 
     if selected_encoded_data is None:
-        print(f"Trace {trace_id} not found in the encoded data")
+        #print(f"Trace {trace_id} not found in the encoded data")
         return is_compliant, None
 
     # Pre-elaborazione di hyp da dati codificati
@@ -528,7 +528,7 @@ def generate_recommendations_and_evaluation(test_log,
 
 
 def write_evaluation_to_csv(e, dataset):
-    csv_file = os.path.join(settings.results_dir, f"{dataset}_evaluation.csv")
+    csv_file = os.path.join(settings.results_dir, f"{dataset}__{type_encoding}_evaluation_{selected_evaluation_edit_distance}.csv")
     fieldnames = ["tp", "fp", "tn", "fn", "precision", "recall", "accuracy", "fscore", "auc"]
     values = {
         "tp": e.tp,
@@ -551,7 +551,7 @@ def write_evaluation_to_csv(e, dataset):
 
 
 def write_recommendations_to_csv(recommendations, dataset):
-    csv_file = os.path.join(settings.results_dir, f"{dataset}_recommendations.csv")
+    csv_file = os.path.join(settings.results_dir, f"{dataset}_{type_encoding}_recommendations_{selected_evaluation_edit_distance}.csv")
     fieldnames = ["Trace id", "Prefix len", "Complete trace", "Current prefix", "Recommendation", "Actual label",
                   "Target label", "Compliant", "Confusion matrix", "Impurity", "Fitness", "Num samples"]
     values = []
@@ -584,7 +584,7 @@ def write_recommendations_to_csv(recommendations, dataset):
 
 
 def prefix_evaluation_to_csv(result_dict, dataset):
-    csv_file = os.path.join(settings.results_dir, "{dataset}_evaluation.csv")
+    csv_file = os.path.join(settings.results_dir, f"{dataset}_{type_encoding}_evaluation_{selected_evaluation_edit_distance}.csv")
     fieldnames = ["prefix_length", "num_cases", "tp", "fp", "tn", "fn", "precision", "recall", "fscore"]
     basic_fields = ["tp", "fp", "tn", "fn", "precision", "recall", "fscore"]
 
@@ -599,7 +599,7 @@ def prefix_evaluation_to_csv(result_dict, dataset):
                 res_list.append([eval_obj.prefix_length, eval_obj.num_cases] +
                                 [getattr(eval_obj, field) for field in basic_fields])
 
-            table_res = np.array(res_list)  # Convertemo la lista in un array numpy
+            table_res = np.array(res_list)  # Converti la lista in un array numpy
 
             for row in table_res:
                 writer.writerow(row)

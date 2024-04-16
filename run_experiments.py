@@ -198,8 +198,8 @@ def rec_sys_exp(dataset_name):
     best_hyperparams_combination = list(results_hyperparams_evaluation.keys())[-1]
     paths = tmp_paths
     best_hyperparams_combination = best_hyperparams_combination
-    print("MIGLIORE COMBINAZIONE DI IPERPARAMETRI {best_hyperparams_combination}")
-    print("LUNGHEZZA MINIMA E MASSIMA DEI PREFISSI {min_prefix_length} {max_prefix_length_test}")
+    print(f"MIGLIORE COMBINAZIONE DI IPERPARAMETRI {best_hyperparams_combination}")
+    print(f"LUNGHEZZA MINIMA E MASSIMA DEI PREFISSI {min_prefix_length} {max_prefix_length_test}")
 
     # Test sul set di test con la migliore configurazione degli iperparametri di valutazione
     eval_res = None
@@ -208,7 +208,7 @@ def rec_sys_exp(dataset_name):
 
     for pref_id, prefix_len in enumerate(prefix_lenght_list_test):
         print(
-            "<--- DATASET: {dataset_name}, LUNGHEZZA PREFISSO: {prefix_len}/{max_prefix_length_test} --->")
+            f"<--- DATASET: {dataset_name}, LUNGHEZZA PREFISSO: {prefix_len}/{max_prefix_length_test} --->")
         prefixing = {
             "type": PrefixType.ONLY,
             "length": prefix_len
@@ -232,11 +232,12 @@ def rec_sys_exp(dataset_name):
             eval_res = copy.deepcopy(evaluation)
 
         for metric in ["fscore"]:  # ["accuracy", "fscore", "auc", "gain"]:
-            print("{metric}: {value}".format(metric=metric, value=getattr(results[pref_id], metric)))
+            value = getattr(results[pref_id], metric)
+            print(f"{metric}:{value}".format(metric=metric, value=value))
     plot = PlotResult(results, prefix_lenght_list_test, settings.results_dir)
 
     for metric in ["fscore"]:
-        plot.toPng(metric, "{dataset_name}_{metric}")
+        plot.toPng(metric, f"{dataset_name}_{metric}")
 
     # Salva i risultati della valutazione dei prefissi in un file CSV
     recommender.prefix_evaluation_to_csv(results, dataset_name)

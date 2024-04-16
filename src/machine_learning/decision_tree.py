@@ -36,6 +36,7 @@ from src.machine_learning.encoding.constants import EncodingType
 from pandas import DataFrame
 from src.machine_learning.encoding.data_encoder import *
 from src.machine_learning.label.common import LabelTypes
+import settings
 
 # Definizione di un dizionario per associare il tipo di encoding alla funzione di encoding
 TRACE_TO_DF = {
@@ -106,7 +107,7 @@ def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input
         dot_data = tree.export_graphviz(search.best_estimator_, out_file=None, impurity=True,
                                         feature_names=new_feature_names, node_ids=True, filled=True)
         graph = graphviz.Source(dot_data, format="pdf")
-        graph.render(os.path.join(settings.output_dir, f'DT_{dataset_name}'))
+        graph.render(os.path.join(settings.output_dir, f'DT_{dataset_name}_{settings.type_encoding}'))
         print("PDF generated")
 
     return model_dict, new_feature_names
