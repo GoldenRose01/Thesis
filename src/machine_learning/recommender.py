@@ -8,7 +8,7 @@ import copy
 from src.machine_learning.decision_tree import *
 from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
 from src.constants import *
-from settings import selected_evaluation_edit_distance
+from settings import selected_evaluation_edit_distance,print_log,print_length
 from src.machine_learning.labeling import generate_label
 
 
@@ -141,8 +141,6 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval_encoded, sat_threshold
     is_compliant = True
     dt_encoded = dt_input_trainval_encoded
 
-    #selected_encoded_data = dt_encoded[0][1:]
-
     trace_id = str(trace.attributes['concept:name'])
 
     # Trova la sottolista corrispondente in dt_input_trainval_encoded utilizzando trace_id
@@ -154,7 +152,7 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval_encoded, sat_threshold
 
     if selected_encoded_data is None:
         print(f"Trace {trace_id} not found in the encoded data")
-        return is_compliant, ConfusionMatrix.UNCLASSIFIED
+        return is_compliant, None
 
     # Pre-elaborazione di hyp da dati codificati
     hyp = [int(value) if isinstance(value, str) and value.isdigit() else value for value in selected_encoded_data]
@@ -356,10 +354,16 @@ def generate_recommendations_and_evaluation(test_log,
         labeling["custom_threshold"] = calc_mean_label_threshold(train_log, labeling)
 
     target_label = labeling["target"]
-    # print(test_log)
+
+    if print_log==True:
+        print(test_log)
+
     print("Generating test prefixes ...")
     test_prefixes = generate_prefixes(test_log, prefixing)
-    # print(prefixing["length"])
+
+    if print_length==True:
+        print(prefixing["length"])
+
     print("Generating recommendations ...")
     recommendations = []
     if eval_res is None:
@@ -426,6 +430,10 @@ def generate_recommendations_and_evaluation(test_log,
                                                indices=indices,
                                                max_variation=max_variations
                                                )
+                    if e is None:
+                        e_name = "UnknownError"
+                    else:
+                        e_name = e.name
 
                     # if prefix_length == 12 or prefix_length == 12:
                     # pdb.set_trace()
@@ -437,7 +445,7 @@ def generate_recommendations_and_evaluation(test_log,
                             # pdb.set_trace()
                         if prefix.trace_id == 'DS' and prefix_length == 5:
                             for event in prefix.events: print(event['concept:name'])
-                            print(e)
+                            print(e_name)
                             print(prefix_length)
                             # pdb.set_trace()
 
@@ -449,6 +457,8 @@ def generate_recommendations_and_evaluation(test_log,
                         eval_res.fn += 1
                     elif e == ConfusionMatrix.TN:
                         eval_res.tn += 1
+
+
 
                     prefixes = []
                     for n in prefix.events:
@@ -462,7 +472,7 @@ def generate_recommendations_and_evaluation(test_log,
                         actual_label=generate_label(trace, labeling).name,
                         target_label=target_label.name,
                         is_compliant=str(is_compliant).upper(),
-                        confusion_matrix=e.name,
+                        confusion_matrix=e_name,
                         impurity=path.impurity,
                         num_samples=path.num_samples,
                         fitness=path.fitness,
@@ -508,10 +518,10 @@ def generate_recommendations_and_evaluation(test_log,
     if settings.compute_gain:
         eval_res.gain = gain(eval_res.comp, eval_res.non_comp, eval_res.pos_comp, eval_res.pos_non_comp)
 
-    # print("Writing evaluation result into csv file ...")
+    print("Writing evaluation result into csv file ...")
     # write_evaluation_to_csv(eval_res, dataset_name)
 
-    # print("Writing recommendations into csv file ...")
+    print("Writing recommendations into csv file ...")
     # write_recommendations_to_csv(recommendations, dataset_name)
 
     return recommendations, eval_res
