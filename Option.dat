@@ -17,4 +17,4 @@ Print_edit_distance=False
 print_log=False
 print_length=False
 excluded_attributes=concept:name,time:timestamp,label,Case ID
-selected_evaluation_edit_distance=edit_distance_separate
+selected_evaluation_edit_distance=edit_distance_lib

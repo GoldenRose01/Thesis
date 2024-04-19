@@ -155,7 +155,7 @@ def rec_sys_exp(dataset_name):
     counter = 0
 
     # Scopre sul set di validazione con la migliore configurazione degli iperparametri di valutazione
-    print("Hyperparametri per la valutazione per {dataset_name} ...")
+    print(f"Hyperparametri per la valutazione per {dataset_name} ...")
     if settings.compute_baseline:
         hyperparams_evaluation_list = hyperparams_evaluation_list_baseline
 

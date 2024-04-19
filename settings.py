@@ -40,44 +40,9 @@ def read_type_encoding(filepath):
 #type_encoding = read_type_encoding(encoding_path)
 type_encoding = 'simple'
 # simple, frequency, complex
-#========================================datasets_names===================================================
+#================================================== datasets_names ===================================================
 datasets_names = read_datasets_from_dat(datasets_names_filepath)
-
-# datasets_names = ["bpic2011_f1","bpic2011_f2","bpic2011_f3","bpic2011_f4","bpic2012_accepted","bpic2012_cancelled","bpic2012_declined","bpic2015_3_f2","bpic2015_4_f2","bpic2015_5_f2","bpic2017_accepted","bpic2017_cancelled","bpic2017_refused","hospital_billing_2","hospital_billing_3","Production","sepsis_cases_1","sepsis_cases_2","sepsis_cases_4","traffic_fines_1"]
-
-# datasets_names = ["Production"]
-
-# datasets_names = ["hospital_billing_3"]
-
-# datasets_names = ["bpic2012_cancelled", "bpic2012_declined"]
-
-# datasets_names = ["bpic2011_f4","bpic2012_accepted","sepsis_cases_1","sepsis_cases_2","sepsis_cases_4"]
-
-# datasets_names = ["traffic_fines_1"]
-
-#datasets_names = ["sepsis_cases_4"]
-
-#datasets_names = ["bpic15_1","bpic15_2","bpic15_3","bpic15_4","bpic15_5"]
-"""
-sat_threshold = 0.75
-top_K_paths = 6
-reranking = False
-sat_type = 'count_occurrences'
-fitness_type = 'mean'
-cumulative_res = False
-optimize_dt = True
-print_dt = True
-compute_gain = False
-smooth_factor = 1
-num_classes = 2
-train_prefix_log = False
-one_hot_encoding = False
-use_score = True
-compute_baseline = False
-Print_edit_distance = False
-excluded_attributes = ["concept:name", "time:timestamp", "label", "Case ID"]
-"""
-#==================================================read_options_from_dat==================================================
+#================================================== read_options_from_dat ==================================================
 options = read_options_from_dat(options_filepath)
 # ================================================= thresholds ===============================================================================
 support_threshold_dict= {'min': 0.05, 'max': 1.75}
@@ -195,11 +160,10 @@ dt_hyperparameters = {'criterion': ['entropy', 'gini'],
 num_feat_strategy = ['sqrt', 0.3, 0.5]
 # num_feat_strategy = [0.5]
 # sat_threshold_list = [0.55, 0.65, 0.75, 0.85]
-sat_threshold_list = [0.35, 0.45, 0.55, 0.65]
-# sat_threshold_list = [0.85]
-weight_combination_list = [(0.2, 0.4, 0.4), (0.6, 0.2, 0.2), (0.4, 0.4, 0.2), (0.4, 0.2, 0.4), (0.8, 0.1, 0.1),
-                           (0.4, 0.3, 0.3), (0.1, 0.8, 0.1), (0.1, 0.1, 0.8)]
-# weight_combination_list = [(0.4, 0.4, 0.2)]
+# sat_threshold_list = [0.35, 0.45, 0.55, 0.65]
+sat_threshold_list = [0.85]
+# weight_combination_list = [(0.2, 0.4, 0.4), (0.6, 0.2, 0.2), (0.4, 0.4, 0.2), (0.4, 0.2, 0.4), (0.8, 0.1, 0.1), (0.4, 0.3, 0.3), (0.1, 0.8, 0.1), (0.1, 0.1, 0.8)]
+weight_combination_list = [(0.4, 0.4, 0.2)]
 
 # ================ checkers satisfaction ================
 rules = {

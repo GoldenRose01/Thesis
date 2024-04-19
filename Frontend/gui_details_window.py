@@ -8,24 +8,15 @@ import subprocess
 import os
 
 class DetailsWindow(QWidget):
-    def __init__(self,switch_view_callback):
+    def __init__(self,switch_view_callback,encoding):
         super().__init__()
-        self.encoding = 'simple'
+        self.encoding=encoding
         self.switch_view_callback = switch_view_callback
         self.options = self.load_options()
         self.initUI()
 
     def set_encoding(self, encoding):
         self.encoding = encoding
-        self.update_for_encoding(encoding)  # Aggiorna l'UI basata sull'encoding
-
-    def update_for_encoding(self, encoding):
-        self.encoding = encoding
-        self.options = self.load_options()  # Ricarica le opzioni nel caso siano cambiate
-        color = color_map.get(self.encoding, color_map.get("default"))
-        self.setStyleSheet(f"background-color: {color};")
-        self.title.setText(contents_details["window_title_details"].format(self.encoding.capitalize()))
-        self.setup_options()
 
     def load_options(self):
         options = {}
@@ -37,15 +28,19 @@ class DetailsWindow(QWidget):
 
     def initUI(self):
         color = color_map.get(self.encoding, color_map.get("default"))
-
         self.setStyleSheet(f"background-color: {color};")
 
         self.title = QLabel(contents_details["window_title_details"].format(self.encoding))
-        self.title.setAlignment(Qt.Qt.AlignCenter)
+        self.title.setAlignment(Qt.Qt.AlignCenter)  # Corrected from previous feedback
         self.title.setStyleSheet(title_label_style)
         self.title.setFixedHeight(40)
 
-        self.description = QLabel("Detailed settings for " + self.encoding + " encoding")
+        self.description = QLabel("Impostazioni dettagliate per il " + self.encoding + " encoding")
+        self.description.setMinimumHeight(100)
+        # Initialize the layout before setting up options
+        self.main_layout = QVBoxLayout()
+        self.main_layout.addWidget(self.title)
+        self.main_layout.addWidget(self.description)
 
         self.setup_options()
 
@@ -54,62 +49,60 @@ class DetailsWindow(QWidget):
         self.back_button.clicked.connect(lambda: self.switch_view_callback("main"))
 
         self.next_button = QPushButton("Avanti")
-        self.next_button.setStyleSheet(button_style)  # Assuming you have a global button style
+        self.next_button.setStyleSheet(button_style)
         self.next_button.clicked.connect(self.on_next_clicked)
 
-        self.layout = QVBoxLayout()
-        self.layout.addWidget(self.title)
-        self.layout.addWidget(self.description)
-        self.layout.addWidget(self.back_button)
-        self.layout.addWidget(self.next_button)
+        self.main_layout.addWidget(self.back_button)
+        self.main_layout.addWidget(self.next_button)
 
-        self.setLayout(self.layout)
+        self.setLayout(self.main_layout)
         self.setWindowTitle(contents_details["window_title_details"].format(self.encoding.capitalize()))
 
     def setup_options(self):
+
+        self.add_boolean_option("optimize_dt")
+        self.add_boolean_option("print_dt")
+        self.add_boolean_option("Print_edit_distance")
+        self.add_boolean_option("train_prefix_log")
+        self.add_boolean_option("one_hot_encoding")
+        self.add_boolean_option("use_score")
+        self.add_boolean_option("print_log")
+        self.add_boolean_option("print_length")
+        self.add_numeric_option("sat_threshold", 0, 1, 0.05)
+        self.add_choice_option("fitness_type", ["mean", "wmean"])
+
+        #Per ogni tipo di encoding aggiungi le caratteristiche specifiche
         if self.encoding == "simple":
-            """
-            self.add_boolean_option("optimize_dt")
-            self.add_boolean_option("print_dt")
-            self.add_boolean_option("Print_edit_distance")
-            self.add_boolean_option("train_prefix_log")
-            self.add_boolean_option("one_hot_encoding")
-            self.add_boolean_option("use_score")
-            self.add_numeric_option("sat_threshold", 0, 1, 0.05)
-            self.add_choice_option("selected_evaluation_edit_distance",
-                                    ["edit_distance", "edit_distance_separate", "weighted_edit_distance"])
-            self.add_choice_option("fitness_type", ["mean", "wmean"])
-            """
+            #self.add_{tipo_di_impostazione}("{nome_dell'impostazione}", ["parametro1" ,"parametro2"])
             pass
         elif self.encoding == "complex":
-             """
-             self.add_table_option()
-             # Qui potresti voler aggiungere le opzioni specifiche per l'encoding "complex"
-             """
-             pass
+            # self.add_{tipo_di_impostazione}("{nome_dell'impostazione}", ["parametro1" ,"parametro2"])
+            self.add_table_option()
+            self.add_choice_option("selected_evaluation_edit_distance", ["edit_distance", "edit_distance_separate", "weighted_edit_distance"])
+            pass
         elif self.encoding == "declarative":
+            # self.add_{tipo_di_impostazione}("{nome_dell'impostazione}", ["parametro1" ,"parametro2"])
             pass
 
-    """
     def add_boolean_option(self, option_name):
         checkbox = QCheckBox(option_name.replace('_', ' ').capitalize())
         checkbox.setChecked(self.options[option_name] == 'True')
         checkbox.stateChanged.connect(lambda state, name=option_name: self.update_option(name, state))
-        self.layout.addWidget(checkbox)
+        self.main_layout.addWidget(checkbox)
 
     def add_numeric_option(self, option_name, min_value, max_value, step):
         layout = QHBoxLayout()
         label = QLabel(option_name.replace('_', ' ').capitalize())
-        spinBox = QSpinBox()
+        spinBox = QDoubleSpinBox()
         spinBox.setMinimum(min_value)
         spinBox.setMaximum(max_value)
         spinBox.setSingleStep(step)
-        spinBox.setValue(int(self.options.get(option_name, min_value)))
+        current_value = float(self.options.get(option_name, min_value))
+        spinBox.setValue(current_value)
         spinBox.valueChanged.connect(lambda value, name=option_name: self.update_option(name, str(value)))
         layout.addWidget(label)
         layout.addWidget(spinBox)
-        self.layout.addLayout(layout)
-        pass
+        self.main_layout.addLayout(layout)
 
     def add_choice_option(self, option_name, choices):
         combobox = QComboBox()
@@ -118,7 +111,7 @@ class DetailsWindow(QWidget):
         if current_value in choices:
             combobox.setCurrentText(current_value)
         combobox.currentTextChanged.connect(lambda value, name=option_name: self.update_option(name, value))
-        self.layout.addWidget(combobox)
+        self.main_layout.addWidget(combobox)
 
     def add_table_option(self):
         # Gestione dell'opzione excluded_attributes per l'encoding complex
@@ -137,8 +130,8 @@ class DetailsWindow(QWidget):
         layout.addWidget(add_button)
         layout.addWidget(remove_button)
 
-        self.layout.addWidget(self.table)
-        self.layout.addLayout(layout)
+        self.main_layout.addWidget(self.table)
+        self.main_layout.addLayout(layout)
 
     def load_excluded_attributes_into_table(self):
         attributes = self.options.get('excluded_attributes', '').split(';')
@@ -161,12 +154,13 @@ class DetailsWindow(QWidget):
             attribute = selected_items[0].text()
             remove_excluded_attribute(attribute)  # Assumes this function is defined in function.py
             self.load_excluded_attributes_into_table()
-"""
+
     def on_back_clicked(self):
         # Signal to switch back to the main view or another appropriate view
         self.switch_view_callback('main')
 
     def on_next_clicked(self):
-        # This method will be triggered when the "Next" button is clicked
-        # Signal to switch to the RunWindow view
         self.switch_view_callback('run')
+
+    def update_option(self, option_name, value):
+        self.options[option_name] = value

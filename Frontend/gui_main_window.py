@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QRect, QCoreApplication
 from PySide6.QtWidgets import *
 from gui_details_window import DetailsWindow
 from content import contents_main as contents
@@ -15,34 +15,58 @@ class MainWindow(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setFixedSize(1280, 720)
+        self.setWindowTitle(contents["window_title"])
         self.setStyleSheet(f"background-color: {color_map['default']}; {main_window_style}")
-        layout = QVBoxLayout()
+        self.setMinimumSize(800, 600)
 
-        title = QLabel(contents["title"])
-        title.setAlignment(Qt.AlignCenter)
-        layout.addWidget(title)
+        layout = QVBoxLayout()
+        layout.setAlignment(Qt.AlignCenter)
 
         description = QLabel(contents["description"])
         description.setAlignment(Qt.AlignCenter)
+        description.setMinimumHeight(200)
         layout.addWidget(description)
 
         simple_button = QPushButton(contents["simple_encoding"])
         complex_button = QPushButton(contents["complex_encoding"])
         declarative_button = QPushButton(contents["declarative_encoding"])
 
+        # Set specific colors for buttons based on the type
+        simple_button.setStyleSheet(f"background-color: {color_map['simple']}; {button_style}")
+        complex_button.setStyleSheet(f"background-color: {color_map['complex']}; {button_style}")
+        declarative_button.setStyleSheet(f"background-color: {color_map['declarative']}; {button_style}")
+
+        # Impostare la politica di dimensionamento per espansione
+        policy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        simple_button.setSizePolicy(policy)
+        complex_button.setSizePolicy(policy)
+        declarative_button.setSizePolicy(policy)
+
+        # Impostazione di dimensioni minime
+        simple_button.setMinimumHeight(100)
+        complex_button.setMinimumHeight(100)
+        declarative_button.setMinimumHeight(100)
+
         simple_button.clicked.connect(lambda: self.on_button_clicked("simple"))
         complex_button.clicked.connect(lambda: self.on_button_clicked("complex"))
         declarative_button.clicked.connect(lambda: self.on_button_clicked("declarative"))
 
-        layout.addWidget(simple_button)
-        layout.addWidget(complex_button)
-        layout.addWidget(declarative_button)
+        layout.addWidget(simple_button, 1)
+        layout.addWidget(complex_button, 1)
+        layout.addWidget(declarative_button, 1)
 
         self.setLayout(layout)
+        self.center_window()
+
+    def center_window(self):
+        qr = self.frameGeometry()
+        cp = QApplication.primaryScreen().geometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
 
     def on_button_clicked(self, encoding):
-        # Salva il tipo di encoding selezionato
-        self.selected_encoding = encoding
-        # Utilizza il callback per cambiare la vista e passa l'encoding selezionato
-        self.switch_view_callback(encoding)
+        try:
+            self.selected_encoding = encoding
+            self.switch_view_callback(encoding)
+        except Exception as e:
+            print(f"Error: {e}")

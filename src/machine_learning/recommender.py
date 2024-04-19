@@ -1,6 +1,8 @@
 #from src.machine_learning.utils import *
 #from src.machine_learning.apriori import *
 #from src.machine_learning.encoding import *
+from sklearn import metrics
+
 from src.machine_learning import evaluateEditDistance
 from run_experiments import *
 import csv
@@ -519,10 +521,10 @@ def generate_recommendations_and_evaluation(test_log,
         eval_res.gain = gain(eval_res.comp, eval_res.non_comp, eval_res.pos_comp, eval_res.pos_non_comp)
 
     print("Writing evaluation result into csv file ...")
-    # write_evaluation_to_csv(eval_res, dataset_name)
+    #write_evaluation_to_csv(eval_res, dataset_name)
 
     print("Writing recommendations into csv file ...")
-    # write_recommendations_to_csv(recommendations, dataset_name)
+    #write_recommendations_to_csv(recommendations, dataset_name)
 
     return recommendations, eval_res
 
