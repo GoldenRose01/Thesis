@@ -38,7 +38,7 @@ def read_type_encoding(filepath):
     return type_encoding
 
 #type_encoding = read_type_encoding(encoding_path)
-type_encoding = 'simple'
+type_encoding = 'complex'
 # simple, frequency, complex
 #================================================== datasets_names ===================================================
 datasets_names = read_datasets_from_dat(datasets_names_filepath)

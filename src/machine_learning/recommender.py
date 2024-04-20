@@ -139,25 +139,19 @@ def recommend(prefix, path, dt_input_trainval):
     return recommendation
 
 # Definisci una funzione per valutare la conformità di un trace rispetto a un percorso
-def evaluate(trace, path, num_prefixes, dt_input_trainval_encoded, sat_threshold, labeling,indices,max_variation):
+def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeling,indices,max_variation):
     is_compliant = True
-    dt_encoded = dt_input_trainval_encoded
+    activities = []
+#TOdo sistemare qui:::::prende solo event e non trace_att o res_att
+    for idx, event in enumerate(trace):
+        for attribute_key, attribute_value in event.items():
+            if (attribute_key == 'concept:name'):
+                activities.append(attribute_value)
 
-    trace_id = str(trace.attributes['concept:name'])
-
-    # Trova la sottolista corrispondente in dt_input_trainval_encoded utilizzando trace_id
-    selected_encoded_data = None
-    for row in dt_encoded.encoded_data:
-        if row[0] == trace_id:  # Il primo elemento è il trace_id come stringa
-            selected_encoded_data = row[1:]  # Ignora il primo elemento (trace_id)
-            break
-
-    if selected_encoded_data is None:
-        #print(f"Trace {trace_id} not found in the encoded data")
-        return is_compliant, None
+    activities = dt_input_trainval.encode(activities)
 
     # Pre-elaborazione di hyp da dati codificati
-    hyp = [int(value) if isinstance(value, str) and value.isdigit() else value for value in selected_encoded_data]
+    hyp = [int(value) if isinstance(value, str) and value.isdigit() else value for value in activities]
     hyp = hyp[num_prefixes:]  # Applica il numero di prefissi da ignorare
 
     n_max = 0
@@ -426,7 +420,7 @@ def generate_recommendations_and_evaluation(test_log,
                     is_compliant, e = evaluate(trace=trace,
                                                path=path,
                                                num_prefixes=prefix_length,
-                                               dt_input_trainval_encoded=dt_input_trainval_encoded,
+                                               dt_input_trainval=dt_input_trainval,
                                                sat_threshold=hyperparams_evaluation[0],
                                                labeling=labeling,
                                                indices=indices,
