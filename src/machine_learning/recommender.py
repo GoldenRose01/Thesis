@@ -142,11 +142,14 @@ def recommend(prefix, path, dt_input_trainval):
 def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeling,indices,max_variation):
     is_compliant = True
     activities = []
-#TOdo sistemare qui:::::prende solo event e non trace_att o res_att
+
+#TOdo sistemare qui:::::prende solo concept:name e non trace_att o res_att
     for idx, event in enumerate(trace):
-        for attribute_key, attribute_value in event.items():
-            if (attribute_key == 'concept:name'):
-                activities.append(attribute_value)
+        if 'concept:name' in event:
+            activities.append(event['concept:name'])
+        for attr in trace_attributes + resource_attributes:
+            if attr in event and attr not in excluded_attributes:
+                activities.append(event[attr])
 
     activities = dt_input_trainval.encode(activities)
 

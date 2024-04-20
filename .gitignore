@@ -111,7 +111,6 @@ celerybeat.pid
 
 # Environments
 .env
-.venv
 env/
 venv/
 ENV/
@@ -147,7 +146,3 @@ media/input/BPIC17_O_Refused.csv
 media/input/BPIC17_O_Cancelled.csv
 media/input/BPIC17_O_Accepted.csv
 media/input/github_data.csv
-media/input/xes/Road_Traffic_Fine_Management_Process.xes
-media/input/xes/Hospital Billing - Event Log.xes
-src/machine_learning/encoding/Settings/Resource_att.txt
-src/machine_learning/encoding/Settings/Trace_att.txt
