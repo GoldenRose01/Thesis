@@ -218,7 +218,7 @@ def rec_sys_exp(dataset_name):
     plot = PlotResult(results, prefix_lenght_list_test, settings.results_dir)
 
     for metric in ["fscore"]:
-        plot.toPng(metric, f"{dataset_name}_{metric}")
+        plot.toPng(metric, f"{dataset_name}_{settings.type_encoding}_{settings.selected_evaluation_edit_distance}_{metric}")
 
     # Salva i risultati della valutazione dei prefissi in un file CSV
     rcm.prefix_evaluation_to_csv(results, dataset_name)
