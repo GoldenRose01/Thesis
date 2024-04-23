@@ -5,3 +5,4 @@ from .utils import *
 from .encoding import *
 from .recommender import *
 from .Bucketers import *
+from .filter_attributes import *

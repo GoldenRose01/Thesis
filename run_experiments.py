@@ -1,36 +1,15 @@
+from src.machine_learning import *
+from src.machine_learning import recommender as rcm
 from src.dataset_manager.datasetManager import *
-from machine_learning import *
-import argparse
-import multiprocessing
-import sys
-import time
 import numpy as np
-import csv
+import settings
+import time
 import copy
 import os
-import subprocess
 import platform
-import settings
-
-# ___Verifica se i file Resource_att.txt e Trace_att.txt esistono nella cartella desiderata___#
-def attributes_verifier(directory):
-    resource_filename = "Resource_att.txt"
-    trace_filename = "Trace_att.txt"
-    resource_att_path = directory + "/" + resource_filename
-    trace_att_path = directory + "/" + trace_filename
-    if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
-        print("File non trovati. Esecuzione degli script Xesreader.py e csvreader.")
-        # Esegui csvreader.py e poi converti xes to csv
-        subprocess.run(["python", "Mediamanager/csvreader.py"])
-        subprocess.run(["python", "Mediamanager/xestocsv.py"])
-    else:
-        print("File trovati,inizio esperimento")
-
-def remove_files(directory):
-    for filename in os.listdir(directory):
-        if filename.endswith(".txt") or filename.endswith(".csv"):
-            os.remove(os.path.join(directory, filename))
-    print("File eliminati")
+import argparse
+import multiprocessing
+import csv
 
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione
 def rec_sys_exp(dataset_name):
@@ -143,7 +122,7 @@ def rec_sys_exp(dataset_name):
             hyperparams_evaluation_list.append((v1,) + v2)
 
     # Esegue la creazione dei percorsi di allenamento
-    tmp_paths, dt = train_path_recommender(data_log=data_log,
+    tmp_paths, dt = rcm.train_path_recommender(data_log=data_log,
                                            train_val_log=train_val_log,
                                            val_log=val_log,
                                            train_log=train_log,
@@ -173,7 +152,7 @@ def rec_sys_exp(dataset_name):
             }
             print("Counter: ", counter)
             print("raccomandazione", prefix_len, "/", max_prefix_length_val)
-            recommendations, evaluation = generate_recommendations_and_evaluation(test_log=val_log,
+            recommendations, evaluation = rcm.generate_recommendations_and_evaluation(test_log=val_log,
                                                                                   train_log=train_log,
                                                                                   labeling=labeling,
                                                                                   prefixing=prefixing,
@@ -184,7 +163,8 @@ def rec_sys_exp(dataset_name):
                                                                                   dt_input_trainval=dt_input_trainval,
                                                                                   dt_input_trainval_encoded=dt_input_trainval_encoded,
                                                                                   indices=indices,
-                                                                                  max_variations=max_variations
+                                                                                  max_variations=max_variations,
+                                                                                  dataset_name=dataset_name
                                                                                   )
             if settings.cumulative_res is True:
                 eval_res = copy.deepcopy(evaluation)
@@ -214,7 +194,7 @@ def rec_sys_exp(dataset_name):
             "length": prefix_len
         }
         print("valutazione", prefix_len, "/", max_prefix_length_test)
-        recommendations, evaluation = generate_recommendations_and_evaluation(test_log=test_log,
+        recommendations, evaluation = rcm.generate_recommendations_and_evaluation(test_log=test_log,
                                                                               train_log=train_log,
                                                                               labeling=labeling,
                                                                               prefixing=prefixing,
@@ -225,7 +205,8 @@ def rec_sys_exp(dataset_name):
                                                                               indices=indices,
                                                                               max_variations=max_variations,
                                                                               dt_input_trainval=dt_input_trainval,
-                                                                              dt_input_trainval_encoded=dt_input_trainval_encoded
+                                                                              dt_input_trainval_encoded=dt_input_trainval_encoded,
+                                                                              dataset_name=dataset_name
                                                                               )
         results.append(evaluation)
         if settings.cumulative_res is True:
@@ -240,5 +221,5 @@ def rec_sys_exp(dataset_name):
         plot.toPng(metric, f"{dataset_name}_{metric}")
 
     # Salva i risultati della valutazione dei prefissi in un file CSV
-    recommender.prefix_evaluation_to_csv(results, dataset_name)
+    rcm.prefix_evaluation_to_csv(results, dataset_name)
     return dataset_name, results, best_hyperparams_combination, max_prefix_length_test, min_prefix_length, dt

@@ -29,7 +29,7 @@ def complex_features(log, prefix_length, padding, prefix_length_strategy, labeli
     """
 
     max_prefix_length = get_max_prefix_length(log, prefix_length, prefix_length_strategy, target_event)
-    columns, additional_columns , index = _columns_complex(log, max_prefix_length, feature_list, trace_attributes, resource_attributes)
+    columns, additional_columns , index = columns_complex(log, max_prefix_length, feature_list, trace_attributes, resource_attributes)
     encoded_data = []
 
     for trace_index, trace in enumerate(log):
@@ -37,7 +37,7 @@ def complex_features(log, prefix_length, padding, prefix_length_strategy, labeli
         if len(trace) <= prefix_length - 1 and not padding:
             continue
 
-        trace_encoded = _trace_to_row(trace, trace_prefix_length, additional_columns, prefix_length_strategy, padding,
+        trace_encoded = trace_to_row(trace, trace_prefix_length, additional_columns, prefix_length_strategy, padding,
                                       columns, labeling_type, trace_index)
         encoded_data.append(trace_encoded)
 
@@ -45,7 +45,7 @@ def complex_features(log, prefix_length, padding, prefix_length_strategy, labeli
     return df, index
 
 
-def _compute_additional_columns(log, trace_attributes, resource_attributes, prefix_length) -> dict:
+def compute_additional_columns(log, trace_attributes, resource_attributes, prefix_length) -> dict:
     """
     Computes additional columns based on trace and resource attributes.
 
@@ -73,7 +73,7 @@ def _compute_additional_columns(log, trace_attributes, resource_attributes, pref
 
     return {'trace_attributes': trace_attrs, 'resource_attributes': resource_attrs}
 
-def _columns_complex(log, prefix_length: int, feature_list: list, trace_attributes, resource_attributes) -> tuple:
+def columns_complex(log, prefix_length: int, feature_list: list, trace_attributes, resource_attributes) -> tuple:
     """
     Computes columns for complex features, separating trace, event, and resource columns.
 
@@ -87,7 +87,7 @@ def _columns_complex(log, prefix_length: int, feature_list: list, trace_attribut
     Returns:
         Tuple containing the list of columns and additional columns dictionary.
     """
-    additional_columns = _compute_additional_columns(log, trace_attributes, resource_attributes, prefix_length)
+    additional_columns = compute_additional_columns(log, trace_attributes, resource_attributes, prefix_length)
     complex_indices = []
     resource_indices = []
 
@@ -124,7 +124,7 @@ def _columns_complex(log, prefix_length: int, feature_list: list, trace_attribut
 
 
 
-def _trace_to_row(trace, prefix_length: int, additional_columns, prefix_length_strategy: str, padding, columns: list,
+def trace_to_row(trace, prefix_length: int, additional_columns, prefix_length_strategy: str, padding, columns: list,
                   labeling_type, trace_index) -> list:
     """
     Converts a trace to a row of data for complex features.

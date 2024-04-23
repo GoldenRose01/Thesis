@@ -1,18 +1,18 @@
 #from src.machine_learning.utils import *
 #from src.machine_learning.apriori import *
 #from src.machine_learning.encoding import *
-from sklearn import metrics
-
+from machine_learning.filter_attributes import get_attributes_by_dataset
+from src.machine_learning.labeling import generate_label
 from src.machine_learning import evaluateEditDistance
 from run_experiments import *
-import csv
-import copy
 from src.machine_learning.decision_tree import *
-from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
 from src.constants import *
+from sklearn import metrics
 from settings import *
-from src.machine_learning.labeling import generate_label
-
+import openpyxl
+import pm4py
+import copy
+import csv
 
 # Crea una classe ParamsOptimizer per ottimizzare i parametri del modello.
 class ParamsOptimizer:
@@ -139,15 +139,60 @@ def recommend(prefix, path, dt_input_trainval):
     return recommendation
 
 # Definisci una funzione per valutare la conformità di un trace rispetto a un percorso
-def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeling,indices,max_variation):
-    is_compliant = True
-    activities = []
-#TOdo sistemare qui:::::prende solo event e non trace_att o res_att
-    for idx, event in enumerate(trace):
-        for attribute_key, attribute_value in event.items():
-            if (attribute_key == 'concept:name'):
-                activities.append(attribute_value)
+def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeling,indices,max_variation,dataset_name):
+    trace_att_d, resource_att_d = get_attributes_by_dataset(dataset_name)
 
+    encoding_map = {}
+
+    activities = []
+    if settings.type_encoding == "complex":
+        # Handle trace-level attributes
+        if hasattr(trace, 'attributes'):
+            trace_attributes = trace.attributes
+            for attr in trace_att_d:
+                if attr in trace_attributes:
+                    value = trace_attributes[attr]
+                    if isinstance(value, str) and value.isdigit():
+                        value = int(value)
+                    activities.append(encoding_map.get(attr, attr))  # Fallback to attribute name if not in map
+
+        # Handling events and resource attributes
+        if hasattr(trace, '__iter__'):  # Check if trace is iterable for events
+            for event in trace:
+                # Process event-specific attributes
+                for attr in event:
+                    if attr not in ['attributes', 'events'] and attr not in excluded_attributes:
+                        value = event[attr]
+                        if isinstance(value, str) and value.isdigit():
+                            value = int(value)
+                        activities.append(encoding_map.get(attr, attr))
+
+                # Extract and process resource attributes
+                resource_values = []
+                for res_attr in resource_att_d:
+                    if res_attr in event:
+                        value = event[res_attr]
+                        # Process resource value, e.g., convert strings or apply mappings
+                        if isinstance(value, str) and value.isdigit():
+                            value = int(value)
+                        resource_values.append(value)
+                    else:
+                        # Use None or a default value if the resource attribute is not present
+                        resource_values.append(None)
+                activities.extend(resource_values)  # Append processed resource attributes
+
+        else:
+            print("Trace does not contain events or is not iterable.")
+            return False, None
+    elif settings.type_encoding == "simple":
+        for idx, event in enumerate(trace):
+            for attribute_key, attribute_value in event.items():
+                if (attribute_key == 'concept:name'):
+                    activities.append(attribute_value)
+    #elif settings.type_encoding == "frequency":
+        #todo implementa encoding per frequency
+
+    # Continue with encoding and further processing...
     activities = dt_input_trainval.encode(activities)
 
     # Pre-elaborazione di hyp da dati codificati
@@ -256,7 +301,6 @@ def train_path_recommender(data_log, train_val_log, val_log, train_log, labeling
                            target_label=target_label)
     return paths, best_model_dict
 
-
 def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train_log):
     # if labeling["threshold_type"] == LabelThresholdType.LABEL_MEAN:
     #    labeling["custom_threshold"] = calc_mean_label_threshold(train_log, labeling)
@@ -343,6 +387,7 @@ def generate_recommendations_and_evaluation(test_log,
                                             dt_input_trainval_encoded,
                                             indices,
                                             max_variations,
+                                            dataset_name,
                                             eval_res=None,
                                             debug=False):
 
@@ -408,7 +453,7 @@ def generate_recommendations_and_evaluation(test_log,
 
                 recommendation = recommend(prefix.events, path, dt_input_trainval)
                 #print(recommendation)
-                # print(f"{prefix_length} {prefix.trace_num} {prefix.trace_id} {path_index}->{recommendation}")
+                #print(f"{prefix_length} {prefix.trace_num} {prefix.trace_id} {path_index}->{recommendation}")
 
                 if recommendation != "Contradiction" and recommendation != "":
                     # if True:
@@ -424,7 +469,8 @@ def generate_recommendations_and_evaluation(test_log,
                                                sat_threshold=hyperparams_evaluation[0],
                                                labeling=labeling,
                                                indices=indices,
-                                               max_variation=max_variations
+                                               max_variation=max_variations,
+                                               dataset_name=dataset_name,
                                                )
                     if e is None:
                         e_name = "UnknownError"
@@ -547,9 +593,12 @@ def write_evaluation_to_csv(e, dataset):
 
 
 def write_recommendations_to_csv(recommendations, dataset):
-    csv_file = os.path.join(settings.results_dir, f"{dataset}_{type_encoding}_recommendations_{selected_evaluation_edit_distance}.csv")
+    csv_file = os.path.join(settings.results_dir,
+                            f"{dataset}_{type_encoding}_recommendations_{selected_evaluation_edit_distance}.csv")
     fieldnames = ["Trace id", "Prefix len", "Complete trace", "Current prefix", "Recommendation", "Actual label",
                   "Target label", "Compliant", "Confusion matrix", "Impurity", "Fitness", "Num samples"]
+
+    # Write to CSV
     values = []
     for r in recommendations:
         values.append(
@@ -578,27 +627,87 @@ def write_recommendations_to_csv(recommendations, dataset):
     except IOError:
         print("I/O error")
 
+    # Write to Excel
+    excel_file = os.path.join(settings.results_dir,
+                              f"{dataset}_{type_encoding}_recommendations_{selected_evaluation_edit_distance}.xlsx")
+    workbook = openpyxl.Workbook()
+    worksheet = workbook.active
+    worksheet.title = "Recommendations"
+
+    # Write headers
+    for col_idx, field in enumerate(fieldnames, start=1):
+        worksheet.cell(row=1, column=col_idx).value = field
+
+    # Write data
+    for row_idx, value in enumerate(values, start=2):
+        for col_idx, field_value in enumerate(value.values(), start=1):
+            worksheet.cell(row=row_idx, column=col_idx).value = field_value
+
+    workbook.save(excel_file)
+
 
 def prefix_evaluation_to_csv(result_dict, dataset):
-    csv_file = os.path.join(settings.results_dir, f"{dataset}_{type_encoding}_evaluation_{selected_evaluation_edit_distance}.csv")
-    fieldnames = ["prefix_length", "num_cases", "tp", "fp", "tn", "fn", "precision", "recall", "fscore"]
-    basic_fields = ["tp", "fp", "tn", "fn", "precision", "recall", "fscore"]
+    csv_file = os.path.join(settings.results_dir,
+                            f"{dataset}_{type_encoding}_evaluation_{selected_evaluation_edit_distance}.csv")
+    excel_file = os.path.join(settings.results_dir,
+                              f"{dataset}_{type_encoding}_evaluation_{selected_evaluation_edit_distance}.xlsx")
 
+    fieldnames = ["prefix_length", "num_cases", "tp", "fp", "tn", "fn", "precision", "recall", "fscore"]
+
+    # Write to CSV with improved clarity
     try:
         with open(csv_file, 'w', newline='') as f:
             writer = csv.writer(f, delimiter=',')
-            writer.writerow(fieldnames)
+            writer.writerow(fieldnames)  # Write header row
 
-            res_list = []
-
+            # Prepare data list with concise variable names
+            data_list = []
             for eval_obj in result_dict:
-                res_list.append([eval_obj.prefix_length, eval_obj.num_cases] +
-                                [getattr(eval_obj, field) for field in basic_fields])
+                data = [  # Use a shorter variable name for clarity
+                    eval_obj.prefix_length,
+                    eval_obj.num_cases,
+                    getattr(eval_obj, "tp"),
+                    getattr(eval_obj, "fp"),
+                    getattr(eval_obj, "tn"),
+                    getattr(eval_obj, "fn"),
+                    getattr(eval_obj, "precision"),
+                    getattr(eval_obj, "recall"),
+                    getattr(eval_obj, "fscore"),
+                ]
+                data_list.append(data)
 
-            table_res = np.array(res_list)  # Converti la lista in un array numpy
-
-            for row in table_res:
-                writer.writerow(row)
+            writer.writerows(data_list)  # Write all data rows at once
 
     except IOError:
         print("I/O error")
+
+    # Write to Excel
+    workbook = openpyxl.Workbook()
+    worksheet = workbook.active
+    worksheet.title = "Evaluation"
+
+    # Write headers
+    for col_idx, field in enumerate(fieldnames, start=1):
+        worksheet.cell(row=1, column=col_idx).value = field
+
+    # Write data
+    data_list = []  # Reuse the data list for Excel writing
+    for eval_obj in result_dict:
+        data = [
+            eval_obj.prefix_length,
+            eval_obj.num_cases,
+            getattr(eval_obj, "tp"),
+            getattr(eval_obj, "fp"),
+            getattr(eval_obj, "tn"),
+            getattr(eval_obj, "fn"),
+            getattr(eval_obj, "precision"),
+            getattr(eval_obj, "recall"),
+            getattr(eval_obj, "fscore"),
+        ]
+        data_list.append(data)
+
+    for row_idx, row in enumerate(data_list, start=2):
+        for col_idx, value in enumerate(row, start=1):
+            worksheet.cell(row=row_idx, column=col_idx).value = value
+
+    workbook.save(excel_file)

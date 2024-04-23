@@ -1,4 +1,5 @@
 from src.machine_learning import *
+from src.file_verifier import verify
 import argparse
 import multiprocessing
 import sys
@@ -17,7 +18,7 @@ os.environ['PATH'] = os.getenv('PATH')
 if __name__ == "__main__":
 
     # Verifica che i file di configurazione siano presenti
-    attributes_verifier("src/machine_learning/encoding/Settings")
+    verify.attributes_verifier("src/machine_learning/encoding/Settings")
 
     print_lock = multiprocessing.Lock()
     parser = argparse.ArgumentParser(
