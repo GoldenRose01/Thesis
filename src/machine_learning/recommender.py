@@ -225,14 +225,18 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeli
     ref = ref.tolist()
 
     ed = 0
-    if selected_evaluation_edit_distance == "edit": #todo aggiorna i nomi in base alle impostazioni
-        # Calcolo della distanza pura basata sulla libreria editdistance
+    #Override di sicurezza per simple encoding
+    if settings.type_encoding == "simple":
         ed = evaluateEditDistance.edit(ref, hyp)
-    elif selected_evaluation_edit_distance == "edit_separate":
-        # Calcolo della distanza pura basata su num e categoric
-        ed = evaluateEditDistance.edit_separate(ref, hyp, indices, max_variation)
-    elif selected_evaluation_edit_distance == "weighted_edit_distance":
-        ed = evaluateEditDistance.weighted_edit_distance(ref,hyp,indices, max_variation)
+    elif settings.type_encoding == "complex":
+        if selected_evaluation_edit_distance == "edit": #todo aggiorna i nomi in base alle impostazioni
+            # Calcolo della distanza pura basata sulla libreria editdistance
+            ed = evaluateEditDistance.edit(ref, hyp)
+        elif selected_evaluation_edit_distance == "edit_separate":
+            # Calcolo della distanza pura basata su num e categoric
+            ed = evaluateEditDistance.edit_separate(ref, hyp, indices, max_variation)
+        elif selected_evaluation_edit_distance == "weighted_edit_distance":
+            ed = evaluateEditDistance.weighted_edit_distance(ref,hyp,indices, max_variation)
 
     if (ed < sat_threshold):
         is_compliant = True

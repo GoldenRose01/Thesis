@@ -1,7 +1,9 @@
 import sys
 from PySide6.QtCore import Qt, QRect, QCoreApplication
 from PySide6.QtWidgets import *
-from gui_details_window import DetailsWindow
+from gui_details_simple_window import DetailsSimpleWindow
+from gui_details_complex_window import DetailsComplexWindow
+from gui_details_declarative_window import DetailsDeclarativeWindow
 from content import contents_main as contents
 from styles import *
 from function import save_type_encoding

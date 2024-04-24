@@ -6,7 +6,7 @@ from styles import *
 from content import contents_run_window
 import sys
 
-class RunWindow(QWidget):
+class DatasetWindow(QWidget):
     def __init__(self, switch_view_callback):
         super().__init__()
         self.switch_view_callback = switch_view_callback

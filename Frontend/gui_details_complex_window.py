@@ -2,21 +2,18 @@ from function import save_type_encoding
 from PySide6 import QtCore as Qt
 from PySide6.QtWidgets import *
 from styles import *
-from content import contents_details
+from content import contents_complex_details
 from function import *
 import subprocess
 import os
 
-class DetailsWindow(QWidget):
-    def __init__(self,switch_view_callback,encoding):
+class DetailsComplexWindow(QWidget):
+    def __init__(self,switch_view_callback):
         super().__init__()
-        self.encoding=encoding
+        self.encoding="complex"
         self.switch_view_callback = switch_view_callback
         self.options = self.load_options()
         self.initUI()
-
-    def set_encoding(self, encoding):
-        self.encoding = encoding
 
     def load_options(self):
         options = {}
@@ -30,7 +27,7 @@ class DetailsWindow(QWidget):
         color = color_map.get(self.encoding, color_map.get("default"))
         self.setStyleSheet(f"background-color: {color};")
 
-        self.title = QLabel(contents_details["window_title_details"].format(self.encoding))
+        self.title = QLabel(contents_complex_details["window_title_details"].format(self.encoding))
         self.title.setAlignment(Qt.Qt.AlignCenter)  # Corrected from previous feedback
         self.title.setStyleSheet(title_label_style)
         self.title.setFixedHeight(40)
@@ -44,7 +41,7 @@ class DetailsWindow(QWidget):
 
         self.setup_options()
 
-        self.back_button = QPushButton(contents_details["back_button"])
+        self.back_button = QPushButton(contents_complex_details["back_button"])
         self.back_button.setStyleSheet(button_style)
         self.back_button.clicked.connect(lambda: self.switch_view_callback("main"))
 
@@ -56,7 +53,7 @@ class DetailsWindow(QWidget):
         self.main_layout.addWidget(self.next_button)
 
         self.setLayout(self.main_layout)
-        self.setWindowTitle(contents_details["window_title_details"].format(self.encoding.capitalize()))
+        self.setWindowTitle(contents_complex_details["window_title_details"])
 
     def setup_options(self):
 
@@ -70,19 +67,10 @@ class DetailsWindow(QWidget):
         self.add_boolean_option("print_length")
         self.add_numeric_option("sat_threshold", 0, 1, 0.05)
         self.add_choice_option("fitness_type", ["mean", "wmean"])
+        self.add_table_option()
+        self.add_choice_option("selected_evaluation_edit_distance", ["edit_distance", "edit_distance_separate", "weighted_edit_distance"])
+        # self.add_{tipo_di_impostazione}("{nome_dell'impostazione}", ["parametro1" ,"parametro2"])
 
-        #Per ogni tipo di encoding aggiungi le caratteristiche specifiche
-        if self.encoding == "simple":
-            #self.add_{tipo_di_impostazione}("{nome_dell'impostazione}", ["parametro1" ,"parametro2"])
-            pass
-        elif self.encoding == "complex":
-            # self.add_{tipo_di_impostazione}("{nome_dell'impostazione}", ["parametro1" ,"parametro2"])
-            self.add_table_option()
-            self.add_choice_option("selected_evaluation_edit_distance", ["edit_distance", "edit_distance_separate", "weighted_edit_distance"])
-            pass
-        elif self.encoding == "declarative":
-            # self.add_{tipo_di_impostazione}("{nome_dell'impostazione}", ["parametro1" ,"parametro2"])
-            pass
 
     def add_boolean_option(self, option_name):
         checkbox = QCheckBox(option_name.replace('_', ' ').capitalize())
@@ -160,7 +148,7 @@ class DetailsWindow(QWidget):
         self.switch_view_callback('main')
 
     def on_next_clicked(self):
-        self.switch_view_callback('run')
+        self.switch_view_callback('dataset')
 
     def update_option(self, option_name, value):
         self.options[option_name] = value
