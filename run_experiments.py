@@ -122,15 +122,16 @@ def rec_sys_exp(dataset_name):
             hyperparams_evaluation_list.append((v1,) + v2)
 
     # Esegue la creazione dei percorsi di allenamento
-    tmp_paths, dt = rcm.train_path_recommender(data_log=data_log,
-                                           train_val_log=train_val_log,
-                                           val_log=val_log,
-                                           train_log=train_log,
-                                           labeling=labeling,
-                                           support_threshold=settings.support_threshold_dict,
-                                           dataset_name=dataset_name,
-                                           output_dir=settings.output_dir,
-                                           dt_input_trainval=dt_input_trainval_encoded)
+    tmp_paths, dt = rcm.train_path_recommender( data_log=data_log,
+                                                train_val_log=train_val_log,
+                                                val_log=val_log,
+                                                train_log=train_log,
+                                                labeling=labeling,
+                                                support_threshold=settings.support_threshold_dict,
+                                                dataset_name=dataset_name,
+                                                output_dir=settings.output_dir,
+                                                dt_input_trainval=dt_input_trainval_encoded,
+                                                )
     counter = 0
 
     # Scopre sul set di validazione con la migliore configurazione degli iperparametri di valutazione
@@ -153,19 +154,20 @@ def rec_sys_exp(dataset_name):
             print("Counter: ", counter)
             print("raccomandazione", prefix_len, "/", max_prefix_length_val)
             recommendations, evaluation = rcm.generate_recommendations_and_evaluation(test_log=val_log,
-                                                                                  train_log=train_log,
-                                                                                  labeling=labeling,
-                                                                                  prefixing=prefixing,
-                                                                                  rules=settings.rules,
-                                                                                  paths=tmp_paths,
-                                                                                  hyperparams_evaluation=hyperparams_evaluation,
-                                                                                  eval_res=eval_res,
-                                                                                  dt_input_trainval=dt_input_trainval,
-                                                                                  dt_input_trainval_encoded=dt_input_trainval_encoded,
-                                                                                  indices=indices,
-                                                                                  max_variations=max_variations,
-                                                                                  dataset_name=dataset_name
-                                                                                  )
+                                                                                      train_log=train_log,
+                                                                                      labeling=labeling,
+                                                                                      prefixing=prefixing,
+                                                                                      rules=settings.rules,
+                                                                                      paths=tmp_paths,
+                                                                                      hyperparams_evaluation=hyperparams_evaluation,
+                                                                                      eval_res=eval_res,
+                                                                                      dt_input_trainval=dt_input_trainval,
+                                                                                      dt_input_trainval_encoded=dt_input_trainval_encoded,
+                                                                                      indices=indices,
+                                                                                      max_variations=max_variations,
+                                                                                      dataset_name=dataset_name,
+                                                                                      prefix_max=prefix_length,
+                                                                                      )
             if settings.cumulative_res is True:
                 eval_res = copy.deepcopy(evaluation)
             res_val_list.append(evaluation.fscore)
@@ -206,7 +208,8 @@ def rec_sys_exp(dataset_name):
                                                                               max_variations=max_variations,
                                                                               dt_input_trainval=dt_input_trainval,
                                                                               dt_input_trainval_encoded=dt_input_trainval_encoded,
-                                                                              dataset_name=dataset_name
+                                                                              dataset_name=dataset_name,
+                                                                              prefix_max=prefix_length,
                                                                               )
         results.append(evaluation)
         if settings.cumulative_res is True:

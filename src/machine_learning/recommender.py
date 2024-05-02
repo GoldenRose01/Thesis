@@ -1,7 +1,7 @@
 #from src.machine_learning.utils import *
 #from src.machine_learning.apriori import *
 #from src.machine_learning.encoding import *
-from machine_learning.filter_attributes import get_attributes_by_dataset
+from machine_learning.filter_attributes import *
 from src.machine_learning.labeling import generate_label
 from src.machine_learning import evaluateEditDistance
 from run_experiments import *
@@ -139,12 +139,22 @@ def recommend(prefix, path, dt_input_trainval):
     return recommendation
 
 # Definisci una funzione per valutare la conformità di un trace rispetto a un percorso
-def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeling,indices,max_variation,dataset_name):
+def evaluate(trace, path, num_prefixes,dt_input_trainval, sat_threshold,
+             labeling,indices,max_variation,dataset_name,prefix_max):
+    # Inizializza variabili trace_attribute e resource_attribute
     trace_att_d, resource_att_d = get_attributes_by_dataset(dataset_name)
-
+    #Sistemazione indici
+    list_of_index=array_index(prefix_max,trace_att_d,resource_att_d)
+    list_of_index_ev = remove_n_prefixes(list_of_index, num_prefixes)
+    #creazione mappa di encoding
     encoding_map = {}
 
-    activities = []
+    lenght_t=len(trace_att_d)
+    lenght_p=lenght_t + prefix_max
+    lenght_r=lenght_p + (prefix_max*len(resource_att_d))
+
+    activities = []  # Definizione della lista che conterrà gli elementi da ritornare
+
     if settings.type_encoding == "complex":
         # Handle trace-level attributes
         if hasattr(trace, 'attributes'):
@@ -156,16 +166,17 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeli
                         value = int(value)
                     activities.append(encoding_map.get(attr, attr))  # Fallback to attribute name if not in map
 
-        # Handling events and resource attributes
-        if hasattr(trace, '__iter__'):  # Check if trace is iterable for events
-            for event in trace:
-                # Process event-specific attributes
-                for attr in event:
-                    if attr not in ['attributes', 'events'] and attr not in excluded_attributes:
-                        value = event[attr]
-                        if isinstance(value, str) and value.isdigit():
-                            value = int(value)
-                        activities.append(encoding_map.get(attr, attr))
+            # Handling events and resource attributes
+            if hasattr(trace, '__iter__'):  # Check if trace is iterable for events
+                for event in trace:
+                    # Process event-specific attributes
+                    while len(activities) < lenght_p:
+                        for attr in event:
+                            if attr not in ['attributes', 'events'] and attr not in excluded_attributes:
+                                value = event[attr]
+                                if isinstance(value, str) and value.isdigit():
+                                    value = int(value)
+                                activities.append(encoding_map.get(attr, attr))
 
                 # Extract and process resource attributes
                 resource_values = []
@@ -175,29 +186,32 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeli
                         # Process resource value, e.g., convert strings or apply mappings
                         if isinstance(value, str) and value.isdigit():
                             value = int(value)
-                        resource_values.append(value)
-                    else:
-                        # Use None or a default value if the resource attribute is not present
-                        resource_values.append(None)
-                activities.extend(resource_values)  # Append processed resource attributes
+                            resource_values.append(value)
+                        else:
+                            # Use None or a default value if the resource attribute is not present
+                            resource_values.append(0)
+                        activities.extend(resource_values)  # Append processed resource attributes
 
-        else:
-            print("Trace does not contain events or is not iterable.")
-            return False, None
+        # Aggiungi un controllo per assicurarti di non superare il numero atteso di elementi
+        if len(activities) > lenght_r:
+            activities = activities[:lenght_r]  # Tronca la lista se supera il numero di elementi attesi
     elif settings.type_encoding == "simple":
         for idx, event in enumerate(trace):
             for attribute_key, attribute_value in event.items():
                 if (attribute_key == 'concept:name'):
                     activities.append(attribute_value)
-    #elif settings.type_encoding == "frequency":
-        #todo implementa encoding per frequency
+    # elif settings.type_encoding == "frequency":
+    # todo implementa encoding per frequency
 
     # Continue with encoding and further processing...
     activities = dt_input_trainval.encode(activities)
 
     # Pre-elaborazione di hyp da dati codificati
-    hyp = [int(value) if isinstance(value, str) and value.isdigit() else value for value in activities]
-    hyp = hyp[num_prefixes:]  # Applica il numero di prefissi da ignorare
+    hyp_t = [int(value) if isinstance(value, str) and value.isdigit() else value for value in activities.iloc[0].values]
+    if settings.type_encoding == "complex":
+        hyp,new_index,new_indices=update_hyp_indices(hyp=hyp_t, list_of_index=list_of_index_ev, m=num_prefixes, indices=indices)
+    elif settings.type_encoding == "simple":
+        hyp = hyp_t[num_prefixes:]
 
     n_max = 0
     # Inizializza ref con il valore massimo derivato dalle regole
@@ -221,22 +235,27 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold, labeli
             if num1 > num_prefixes:
                 ref[num1 - 1] = int(num2)
 
-    ref = ref[num_prefixes:]
+    if settings.type_encoding == "complex":
+        ref,new_index_ref,new_indices = update_hyp_indices(hyp=ref, list_of_index=list_of_index_ev, m=num_prefixes, indices=indices)
+    elif settings.type_encoding == "simple":
+        ref = ref[num_prefixes:]
+
     ref = ref.tolist()
 
     ed = 0
     #Override di sicurezza per simple encoding
+    # todo aggiorna i nomi in base alle impostazioni
     if settings.type_encoding == "simple":
         ed = evaluateEditDistance.edit(ref, hyp)
     elif settings.type_encoding == "complex":
-        if selected_evaluation_edit_distance == "edit": #todo aggiorna i nomi in base alle impostazioni
+        if selected_evaluation_edit_distance == "edit":
             # Calcolo della distanza pura basata sulla libreria editdistance
             ed = evaluateEditDistance.edit(ref, hyp)
         elif selected_evaluation_edit_distance == "edit_separate":
             # Calcolo della distanza pura basata su num e categoric
-            ed = evaluateEditDistance.edit_separate(ref, hyp, indices, max_variation)
+            ed = evaluateEditDistance.edit_separate(ref, hyp, new_indices, max_variation,num_prefixes)
         elif selected_evaluation_edit_distance == "weighted_edit_distance":
-            ed = evaluateEditDistance.weighted_edit_distance(ref,hyp,indices, max_variation)
+            ed = evaluateEditDistance.weighted_edit_distance(ref,hyp,new_indices, max_variation,num_prefixes)
 
     if (ed < sat_threshold):
         is_compliant = True
@@ -392,6 +411,7 @@ def generate_recommendations_and_evaluation(test_log,
                                             indices,
                                             max_variations,
                                             dataset_name,
+                                            prefix_max,
                                             eval_res=None,
                                             debug=False):
 
@@ -443,7 +463,7 @@ def generate_recommendations_and_evaluation(test_log,
                 trace = test_log[prefix.trace_num]
                 path = reranked_paths[0]
                 label = generate_label(trace, labeling)
-                compliant, _ = evaluate(trace, path, rules, labeling, eval_type=settings.sat_type)
+                compliant, _ = evaluate(trace, path, rules, labeling, eval_type=settings.sat_type,prefix_max=prefix_max)
                 eval_res.comp += 1 if compliant else 0
                 eval_res.non_comp += 0 if compliant else 1
                 eval_res.pos_comp += 1 if compliant and label.value == TraceLabel.TRUE.value else 0
@@ -475,6 +495,7 @@ def generate_recommendations_and_evaluation(test_log,
                                                indices=indices,
                                                max_variation=max_variations,
                                                dataset_name=dataset_name,
+                                               prefix_max=prefix_max,
                                                )
                     if e is None:
                         e_name = "UnknownError"

@@ -52,16 +52,16 @@ def edit_separate(ref, hyp, indices, max_variation):
     ed_ratio = sum(distances) / len(distances) if distances else 0
     return ed_ratio
 
-def weighted_edit_distance(ref, hyp, indices, max_variation):
+def weighted_edit_distance(ref, hyp, indices, max_variation,num_prefixes):
     weighted_distances = []
     weights = {}
-
-    for i in indices['complex']:
-        weights[i - 1] = wtrace_att  # Aggiusta l'indice per i pesi
+#todo sistema in base alla posizione
+    for i in indices['trace_att']:
+        weights[i] = wtrace_att  # Aggiusta l'indice per i pesi
     for i in indices['prefix']:
-        weights[i - 1] = wsimple_encoding
+        weights[i] = wsimple_encoding
     for i in indices['resource']:
-        weights[i - 1] = wresource_att
+        weights[i] = wresource_att
 
     index_to_numeric = {abs_index - 1: rel_index for rel_index, abs_index in enumerate(indices['numeric'])}
 
