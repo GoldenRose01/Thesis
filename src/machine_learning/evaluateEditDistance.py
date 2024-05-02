@@ -52,11 +52,12 @@ def edit_separate(ref, hyp, indices, max_variation):
     ed_ratio = sum(distances) / len(distances) if distances else 0
     return ed_ratio
 
-def weighted_edit_distance(ref, hyp, indices, max_variation,num_prefixes):
+def weighted_edit_distance(ref, hyp, indices, max_variation,lenght_t):
     weighted_distances = []
     weights = {}
 #todo sistema in base alla posizione
-    for i in indices['trace_att']:
+    #loop i minore di lenght_t, incrementa i
+    for i in range(lenght_t):
         weights[i] = wtrace_att  # Aggiusta l'indice per i pesi
     for i in indices['prefix']:
         weights[i] = wsimple_encoding

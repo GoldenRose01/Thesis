@@ -28,15 +28,24 @@ def get_attributes_by_dataset(dataset_name):
 
 def array_index(n,trace_att_d,resource_att_d):
     # Calcolo della lunghezza dei blocchi
-    ta_len=len(trace_att_d)
-    p_len=ta_len+n
-    ra_len=p_len+(n*len(resource_att_d))
-    #dato lunghezza dei blocchi creazione indicizzazione
+    ta_len = len(trace_att_d)
+    p_len = ta_len + n
+    # Lunghezza iniziale del blocco risorsa
+    start_r_len = p_len
+    # Inizializzazione del dizionario degli indici
     list_of_index = {
-        'blocco_trace_att'  : list(range(0, ta_len)),
-        'blocco_prefix'     : list(range(ta_len, p_len)),
-        'blocco_risorsa'    : list(range(p_len, ra_len))
+        'blocco_trace_att': list(range(0, ta_len)),
+        'blocco_prefix': list(range(ta_len, p_len))
     }
+
+    # Generazione degli indici per i blocchi risorse
+    for i in range(len(resource_att_d)):
+        # Calcola l'indice di inizio e fine per ciascun blocco risorsa
+        end_r_len = start_r_len + n
+        block_name = f'blocco_risorsa_{i + 1}'
+        list_of_index[block_name] = list(range(start_r_len, end_r_len))
+        # Aggiorna l'inizio del prossimo blocco risorsa
+        start_r_len = end_r_len
 
     return list_of_index
 
@@ -46,60 +55,77 @@ def remove_n_prefixes(list_of_index, m):
         list_of_index['blocco_prefix'] = list_of_index['blocco_prefix'][m:]
     else:
         list_of_index['blocco_prefix'] = []
+    # Aggiorna il blocco delle risorse
+    keys_to_update = [key for key in list_of_index if key.startswith('blocco_risorsa_')]
+    for key in keys_to_update:
+        if isinstance(list_of_index[key], list) and len(list_of_index[key]) > m:
+            list_of_index[key] = list_of_index[key][m:]
+        else:
+            list_of_index[key] = []
 
-        # Aggiorna i blocchi delle risorse
-    if isinstance(list_of_index['blocco_risorsa'], list):
-        for i in range(len(list_of_index['blocco_risorsa'])):
-            if isinstance(list_of_index['blocco_risorsa'][i], list) and len(list_of_index['blocco_risorsa'][i]) > m:
-                list_of_index['blocco_risorsa'][i] = list_of_index['blocco_risorsa'][i][m:]
-            else:
-                list_of_index['blocco_risorsa'][i] = []
     return list_of_index
 
-def rm_vect_element(hyp, list_of_index, m):
+def rm_vect_element(hyp, list_of_index, m, resource_att_d):
     if not isinstance(hyp, np.ndarray):
         hyp = np.array(hyp)
 
-    # Determine indices to be removed
+    # Determina gli indici da rimuovere
     indici_da_rimuovere = []
-    if m <= len(list_of_index['blocco_prefix']):
+    if m <= len(list_of_index.get('blocco_prefix', [])):
         indici_da_rimuovere.extend(list_of_index['blocco_prefix'][:m])
     else:
-        indici_da_rimuovere.extend(list_of_index['blocco_prefix'])
+        indici_da_rimuovere.extend(list_of_index.get('blocco_prefix', []))
 
-    for risorsa_indici in list_of_index['blocco_risorsa']:
-        if m <= len(risorsa_indici):
-            indici_da_rimuovere.extend(risorsa_indici[:m])
-        else:
-            indici_da_rimuovere.extend(risorsa_indici)
+    # Itera su ciascun blocco risorsa dinamico
+    for i in range(len(resource_att_d)):
+        block_name = f'blocco_risorsa_{i + 1}'
+        if block_name in list_of_index:
+            risorsa_indici = list_of_index[block_name]
+            if m <= len(risorsa_indici):
+                indici_da_rimuovere.extend(risorsa_indici[:m])
+            else:
+                indici_da_rimuovere.extend(risorsa_indici)
 
-    # Filter indices that are within the bounds of hyp
+    # Filtra gli indici che sono entro i limiti di hyp
     indici_da_rimuovere = [i for i in indici_da_rimuovere if i < len(hyp)]
 
-    # Create a boolean mask to keep valid indices
+    # Crea una maschera booleana per mantenere gli indici validi
     mask = np.ones(len(hyp), dtype=bool)
     mask[indici_da_rimuovere] = False
 
-    # Apply the mask
+    # Applica la maschera
     nuovo_hyp = hyp[mask]
+
+    # Effettua check
+    new_len = len(nuovo_hyp)
+    expected_len = len(hyp) - m * (1 + len(resource_att_d))
+    if new_len != expected_len:
+        raise ValueError(f"Errore nella rimozione degli elementi: {len(hyp)} - {m} * (1 + {len(resource_att_d)}) = {new_len} invece di {expected_len}")
 
     return nuovo_hyp
 
-
-def update_hyp_indices(hyp, list_of_index, indices, m):
+def update_hyp_indices(hyp, list_of_index, indices, m, resource_att_d):
     # Rimuovi elementi dal vettore
-    nuovo_hyp = rm_vect_element(hyp, list_of_index, m)
+    nuovo_hyp = rm_vect_element(hyp, list_of_index, m, resource_att_d)
 
     # Aggiorna il dizionario degli indici del vettore
-    nuovo_dizionario = remove_n_prefixes(list_of_index, m)
+    new_list_of_index = remove_n_prefixes(list_of_index, m)
 
-    # Calcola il numero totale di elementi rimossi (assumendo che ogni risorsa segue la stessa struttura)
-    num_elements_to_remove = m * (1 + len(list_of_index['blocco_risorsa']))
+    # Calcola il numero totale di elementi rimossi
+    # Ogni blocco risorsa ha la lunghezza 'm'
+    num_elements_to_remove = m * (1 + len(resource_att_d))
 
     # Aggiorna il dizionario 'indices' traslando gli indici
     nuovo_indices = {'categoric': [], 'numeric': [], 'unknown': []}
-    for key, value in indices.items():
-        # Aggiorniamo solo gli indici che sono maggiori del numero di elementi rimossi per mantenere la validità
-        nuovo_indices[key] = [idx - num_elements_to_remove if idx >= num_elements_to_remove else idx for idx in value if idx >= num_elements_to_remove]
+    for key, values in indices.items():
+        updated_values = []
+        for idx in values:
+            # Calcola il nuovo indice se è maggiore del numero di elementi rimossi
+            if idx >= num_elements_to_remove:
+                updated_values.append(idx - num_elements_to_remove)
+            # Mantiene gli indici non influenzati dalla rimozione
+            elif idx < list_of_index['blocco_prefix'][0]:
+                updated_values.append(idx)
+        nuovo_indices[key] = updated_values
 
-    return nuovo_hyp, nuovo_dizionario, nuovo_indices
+    return nuovo_hyp, new_list_of_index, nuovo_indices

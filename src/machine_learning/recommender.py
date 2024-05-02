@@ -145,7 +145,6 @@ def evaluate(trace, path, num_prefixes,dt_input_trainval, sat_threshold,
     trace_att_d, resource_att_d = get_attributes_by_dataset(dataset_name)
     #Sistemazione indici
     list_of_index=array_index(prefix_max,trace_att_d,resource_att_d)
-    list_of_index_ev = remove_n_prefixes(list_of_index, num_prefixes)
     #creazione mappa di encoding
     encoding_map = {}
 
@@ -209,7 +208,8 @@ def evaluate(trace, path, num_prefixes,dt_input_trainval, sat_threshold,
     # Pre-elaborazione di hyp da dati codificati
     hyp_t = [int(value) if isinstance(value, str) and value.isdigit() else value for value in activities.iloc[0].values]
     if settings.type_encoding == "complex":
-        hyp,new_index,new_indices=update_hyp_indices(hyp=hyp_t, list_of_index=list_of_index_ev, m=num_prefixes, indices=indices)
+        hyp,new_index,new_indices=update_hyp_indices(hyp=hyp_t, list_of_index=list_of_index,
+                                                     m=num_prefixes, indices=indices,resource_att_d=resource_att_d)
     elif settings.type_encoding == "simple":
         hyp = hyp_t[num_prefixes:]
 
@@ -236,7 +236,8 @@ def evaluate(trace, path, num_prefixes,dt_input_trainval, sat_threshold,
                 ref[num1 - 1] = int(num2)
 
     if settings.type_encoding == "complex":
-        ref,new_index_ref,new_indices = update_hyp_indices(hyp=ref, list_of_index=list_of_index_ev, m=num_prefixes, indices=indices)
+        ref,new_index_ref,new_indices = update_hyp_indices(hyp=ref, list_of_index=list_of_index,
+                                                           m=num_prefixes, indices=indices,resource_att_d=resource_att_d)
     elif settings.type_encoding == "simple":
         ref = ref[num_prefixes:]
 
@@ -253,9 +254,9 @@ def evaluate(trace, path, num_prefixes,dt_input_trainval, sat_threshold,
             ed = evaluateEditDistance.edit(ref, hyp)
         elif selected_evaluation_edit_distance == "edit_separate":
             # Calcolo della distanza pura basata su num e categoric
-            ed = evaluateEditDistance.edit_separate(ref, hyp, new_indices, max_variation,num_prefixes)
+            ed = evaluateEditDistance.edit_separate(ref, hyp, new_indices, max_variation)
         elif selected_evaluation_edit_distance == "weighted_edit_distance":
-            ed = evaluateEditDistance.weighted_edit_distance(ref,hyp,new_indices, max_variation,num_prefixes)
+            ed = evaluateEditDistance.weighted_edit_distance(ref,hyp,new_indices, max_variation,lenght_t)
 
     if (ed < sat_threshold):
         is_compliant = True
