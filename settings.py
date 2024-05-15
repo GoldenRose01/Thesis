@@ -1,7 +1,5 @@
 import os
 from src.enums.ConstraintChecker import ConstraintChecker
-
-
 def read_options_from_dat(filepath):
     options = {}
     with open(filepath, 'r') as file:
@@ -19,7 +17,6 @@ def read_options_from_dat(filepath):
                     options[key] = value
     return options
 
-
 def read_datasets_from_dat(filepath):
     datasets_names = []
     with open(filepath, 'r') as file:
@@ -29,12 +26,10 @@ def read_datasets_from_dat(filepath):
                 datasets_names.append(dataset_name)
     return datasets_names
 
-
 #========================================paths===========================================================
 options_filepath = 'Option.dat'
 datasets_names_filepath = 'Datasets_names.dat'
 encoding_path = 'Encoding.dat'
-
 
 #========================================encoding_selection==============================================
 def read_type_encoding(filepath):
@@ -43,9 +38,8 @@ def read_type_encoding(filepath):
         print("Encoding type: ", type_encoding)
     return type_encoding
 
-
 #type_encoding = read_type_encoding(encoding_path)
-type_encoding = 'complex'
+type_encoding = 'simple'
 # simple, frequency, complex
 #================================================== datasets_names ===================================================
 datasets_names = read_datasets_from_dat(datasets_names_filepath)
@@ -53,31 +47,27 @@ datasets_names = read_datasets_from_dat(datasets_names_filepath)
 options = read_options_from_dat(options_filepath)
 # ================================================= thresholds ===============================================================================
 support_threshold_dict = {'min': 0.05, 'max': 1.75}
-sat_threshold = options['sat_threshold']
-top_K_paths = options['top_K_paths']
-reranking = options['reranking']
-sat_type = options['sat_type']
-fitness_type = options['fitness_type']
-cumulative_res = options['cumulative_res']
-optimize_dt = options['optimize_dt']
-print_dt = options['print_dt']
-compute_gain = options['compute_gain']
-smooth_factor = options['smooth_factor']
-num_classes = options['num_classes']
-train_prefix_log = options['train_prefix_log']
-one_hot_encoding = options['one_hot_encoding']
-use_score = options['use_score']
-compute_baseline = options['compute_baseline']
-Print_edit_distance = options['Print_edit_distance']
-print_log = options['print_log']
-print_length = options['print_length']
-excluded_attributes = options['excluded_attributes']
 
-if type_encoding != "simple":
-    selected_evaluation_edit_distance = options['selected_evaluation_edit_distance']
-else:
-    selected_evaluation_edit_distance = 'edit_distance_lib'
-
+sat_threshold       = options['sat_threshold']          if options['sat_threshold']         else 0.75
+top_K_paths         = options['top_K_paths']            if options['top_K_paths']           else 6
+reranking           = options['reranking']              if options['reranking']             else False
+sat_type            = options['sat_type']               if options['sat_type']              else 'count_occurrences'
+fitness_type        = options['fitness_type']           if options['fitness_type']          else 'mean' #wmean
+cumulative_res      = options['cumulative_res']         if options['cumulative_res']        else False
+optimize_dt         = options['optimize_dt']            if options['optimize_dt']           else True
+print_dt            = options['print_dt']               if options['print_dt']              else True
+compute_gain        = options['compute_gain']           if options['compute_gain']          else False
+smooth_factor       = options['smooth_factor']          if options['smooth_factor']         else 1
+num_classes         = options['num_classes']            if options['num_classes']           else 2
+train_prefix_log    = options['train_prefix_log']       if options['train_prefix_log']      else False
+one_hot_encoding    = options['one_hot_encoding']       if options['one_hot_encoding']      else False
+use_score           = options['use_score']              if options['use_score']             else True
+compute_baseline    = options['compute_baseline']       if options['compute_baseline']      else False
+Print_edit_distance = options['Print_edit_distance']    if options['Print_edit_distance']   else False
+print_log           = options['print_log']              if options['print_log']             else False
+print_length        = options['print_length']           if options['print_length']          else False
+excluded_attributes = options['excluded_attributes']    if options['excluded_attributes']   else 'concept:name,time:timestamp,label,Case ID'
+selected_evaluation_edit_distance = ('edit_distance_lib' if not options['selected_evaluation_edit_distance'] or type_encoding == "simple" else options['selected_evaluation_edit_distance'])
 #['edit_distance_lib', 'edit_distance_separate','weighted_edit_distance']
 
 # ================ weights ================

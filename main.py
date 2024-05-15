@@ -16,7 +16,7 @@ env_path = '.env'
 os.environ['PATH'] = os.getenv('PATH')
 
 if __name__ == "__main__":
-
+    print("Inizio simulazione",settings.type_encoding,settings.selected_evaluation_edit_distance)
     # Verifica che i file di configurazione siano presenti
     verify.attributes_verifier("src/machine_learning/encoding/Settings")
 
@@ -69,3 +69,8 @@ if __name__ == "__main__":
     time_m_finale = (time.time() - start_time) / 60
 
     print("Le simulazioni hanno richiesto " + str(time_h_finale) + " ore o " + str(time_m_finale) + " minuti")
+
+    """
+    verify.structurize_results("media/output/result")
+    verify.remove_tmp_files("media/output")
+    """
