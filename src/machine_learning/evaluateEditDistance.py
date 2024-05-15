@@ -2,10 +2,9 @@ import editdistance  # Importa la libreria per calcolare la distanza di edit
 import itertools
 from settings import Print_edit_distance, wtrace_att, wsimple_encoding, wresource_att
 
-def edit(ref, hyp):
-
-    ref2 = ref.copy()
-    hyp2 = hyp.copy()
+def edit(ref, hyp, special_value=-999):
+    ref2 = [x for x in ref if x != special_value]
+    hyp2 = [x for x in hyp if x != special_value]
 
     hyp2 = hyp2[:len(ref2)]  # Limita la lunghezza di hyp2 alla lunghezza di ref2
     hyp2 = [int(elemento) for elemento in hyp2]  # Converte gli elementi di hyp2 in interi
@@ -22,24 +21,27 @@ def edit(ref, hyp):
 
     # Calcola il rapporto totale della distanza di edit utilizzando solo le tue regole
     ed_ratio = ed_lib / maxi
-    if Print_edit_distance==True:
-        print("Ed tramite Libreria:"+ str(ed_ratio))
 
     return ed_ratio
 
-
-def edit_separate(ref, hyp, indices, max_variation):
+def edit_separate(ref, hyp, indices, max_variation, special_value=-999):
     # Inizializza la lista delle distanze
     distances = []
     # Mapping da indice in indices a indice in ref/hyp per le colonne numeriche
     index_to_numeric = {abs_index - 1: rel_index for rel_index, abs_index in enumerate(indices['numeric'])}
 
-    for i in range(len(ref)):
+    # Assicura che il loop non ecceda la lunghezza delle liste ref e hyp
+    min_length = min(len(ref), len(hyp))
+
+    for i in range(min_length):
+        if ref[i] == special_value or hyp[i] == special_value:
+            continue
+
         adjusted_index = i + 1  # Aggiusta l'indice per matchare con quello in indices
         if adjusted_index in indices['numeric']:
             # Usa l'indice aggiustato per ottenere la variazione massima corretta
-            rel_index = index_to_numeric[i]  # Usa l'indice originale di ref/hyp
-            if max_variation[rel_index] != 0:
+            rel_index = index_to_numeric.get(i, None)  # Usa l'indice originale di ref/hyp
+            if rel_index is not None and max_variation[rel_index] != 0:
                 distance = abs(ref[i] - hyp[i]) / max_variation[rel_index]
             else:
                 distance = 0
@@ -51,13 +53,12 @@ def edit_separate(ref, hyp, indices, max_variation):
 
     ed_ratio = sum(distances) / len(distances) if distances else 0
     return ed_ratio
-
-def weighted_edit_distance(ref, hyp, indices, max_variation,lenght_t):
+def weighted_edit_distance(ref, hyp, indices, max_variation, length_t, special_value=-999):
     weighted_distances = []
     weights = {}
-#todo sistema in base alla posizione
-    #loop i minore di lenght_t, incrementa i
-    for i in range(lenght_t):
+
+    # Loop per assegnare i pesi
+    for i in range(length_t):
         weights[i] = wtrace_att  # Aggiusta l'indice per i pesi
     for i in indices['prefix']:
         weights[i] = wsimple_encoding
@@ -66,11 +67,17 @@ def weighted_edit_distance(ref, hyp, indices, max_variation,lenght_t):
 
     index_to_numeric = {abs_index - 1: rel_index for rel_index, abs_index in enumerate(indices['numeric'])}
 
-    for i in range(len(ref)):
+    # Assicura che il loop non ecceda la lunghezza delle liste ref e hyp
+    min_length = min(len(ref), len(hyp))
+
+    for i in range(min_length):
+        if ref[i] == special_value or hyp[i] == special_value:
+            continue
+
         adjusted_index = i + 1
         if adjusted_index in indices['numeric']:
-            rel_index = index_to_numeric[i]
-            if max_variation[rel_index] != 0:
+            rel_index = index_to_numeric.get(i, None)
+            if rel_index is not None and max_variation[rel_index] != 0:
                 distance = abs(ref[i] - hyp[i]) / max_variation[rel_index]
             else:
                 distance = 0

@@ -70,7 +70,8 @@ class ParamsOptimizer:
 
                 evaluation = evaluate_recommendations(input_log=self.val_log,
                                                       labeling=self.labeling, prefixing=prefixing,
-                                                      rules=self.rules, paths=paths,log=self.train_log)
+                                                      rules=self.rules, paths=paths,log=self.train_log,
+                                                      dataset_name=dataset_name)
                 results.append(evaluation)
 
             model_dict['model'] = dtc
@@ -107,8 +108,9 @@ class ParamsOptimizer:
         return best_model_dict, dt_input_trainval.features
 
 # Definisci una funzione per generare raccomandazioni basate su un prefisso e un percorso
-def recommend(prefix, path, dt_input_trainval):
+def recommend(prefix, path, dt_input_trainval, dataset_name):
     recommendation = ""
+    trace_att_d, resource_att_d = get_attributes_by_dataset(dataset_name)
 
     prefixes = []
     for trace in prefix:
@@ -118,39 +120,44 @@ def recommend(prefix, path, dt_input_trainval):
     for rule in path.rules:
         feature, state, parent = rule
 
-        numbers = extract_numbers_from_string(feature,log,trace_attributes_for_numb,resource_attributes_for_numb)
-        for n1, n2 in numbers:
-            num1 = n1
-            num2 = n2
+        numbers = extract_numbers_from_string(feature, trace_att_d, resource_att_d)
+        for num_tuple in numbers:
+            if len(num_tuple) == 2:
+                num1, num2 = num_tuple
+            elif len(num_tuple) == 1:
+                num1 = num_tuple[0]
+                num2 = None
 
-        if (num1) > num_prefixes:
-            rec = np.zeros(num1, dtype=int)
-            rec[num1 - 1] = int(num2)
-            rec = rec.tolist()
+            if num1 > num_prefixes:
+                rec = np.zeros(num1, dtype=int)
+                if num2 is not None:
+                    rec[num1 - 1] = int(num2)
+                rec = rec.tolist()
 
-            rec_str = dt_input_trainval.decode(rec)
-            for column in rec_str.columns:
-                if (rec_str[column].iloc[0] != '0') and rec_str[column].notnull().any():
-                    if state == TraceState.VIOLATED:
-                        recommendation += "" + column + " should not be " + rec_str[column].iloc[0] + "; "
-                    if state == TraceState.SATISFIED:
-                        recommendation += "" + column + " should be " + rec_str[column].iloc[0] + "; "
+                rec_str = dt_input_trainval.decode(rec)
+                for column in rec_str.columns:
+                    if rec_str[column].iloc[0] != '0' and rec_str[column].notnull().any():
+                        if state == TraceState.VIOLATED:
+                            recommendation += f"{column} should not be {str(rec_str[column].iloc[0])}; "
+                        elif state == TraceState.SATISFIED:
+                            recommendation += f"{column} should be {str(rec_str[column].iloc[0])}; "
 
     return recommendation
 
+
 # Definisci una funzione per valutare la conformità di un trace rispetto a un percorso
-def evaluate(trace, path, num_prefixes,dt_input_trainval, sat_threshold,
-             labeling,indices,max_variation,dataset_name,prefix_max):
+def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold,
+             labeling, indices, max_variation, dataset_name, prefix_max):
     # Inizializza variabili trace_attribute e resource_attribute
     trace_att_d, resource_att_d = get_attributes_by_dataset(dataset_name)
-    #Sistemazione indici
-    list_of_index=array_index(prefix_max,trace_att_d,resource_att_d)
-    #creazione mappa di encoding
+    # Sistemazione indici
+    list_of_index = array_index(prefix_max, trace_att_d, resource_att_d)
+    # Creazione mappa di encoding
     encoding_map = {}
 
-    lenght_t=len(trace_att_d)
-    lenght_p=lenght_t + prefix_max
-    lenght_r=lenght_p + (prefix_max*len(resource_att_d))
+    length_t = len(trace_att_d)
+    length_p = length_t + prefix_max
+    length_r = length_p + (prefix_max * len(resource_att_d))
 
     activities = []  # Definizione della lista che conterrà gli elementi da ritornare
 
@@ -169,7 +176,7 @@ def evaluate(trace, path, num_prefixes,dt_input_trainval, sat_threshold,
             if hasattr(trace, '__iter__'):  # Check if trace is iterable for events
                 for event in trace:
                     # Process event-specific attributes
-                    while len(activities) < lenght_p:
+                    while len(activities) < length_p:
                         for attr in event:
                             if attr not in ['attributes', 'events'] and attr not in excluded_attributes:
                                 value = event[attr]
@@ -192,8 +199,8 @@ def evaluate(trace, path, num_prefixes,dt_input_trainval, sat_threshold,
                         activities.extend(resource_values)  # Append processed resource attributes
 
         # Aggiungi un controllo per assicurarti di non superare il numero atteso di elementi
-        if len(activities) > lenght_r:
-            activities = activities[:lenght_r]  # Tronca la lista se supera il numero di elementi attesi
+        if len(activities) > length_r:
+            activities = activities[:length_r]  # Tronca la lista se supera il numero di elementi attesi
     elif settings.type_encoding == "simple":
         for idx, event in enumerate(trace):
             for attribute_key, attribute_value in event.items():
@@ -208,8 +215,8 @@ def evaluate(trace, path, num_prefixes,dt_input_trainval, sat_threshold,
     # Pre-elaborazione di hyp da dati codificati
     hyp_t = [int(value) if isinstance(value, str) and value.isdigit() else value for value in activities.iloc[0].values]
     if settings.type_encoding == "complex":
-        hyp,new_index,new_indices=update_hyp_indices(hyp=hyp_t, list_of_index=list_of_index,
-                                                     m=num_prefixes, indices=indices,resource_att_d=resource_att_d)
+        hyp, new_index, new_indices = update_hyp_indices(hyp=hyp_t, list_of_index=list_of_index,
+                                                         m=num_prefixes, indices=indices, resource_att_d=resource_att_d)
     elif settings.type_encoding == "simple":
         hyp = hyp_t[num_prefixes:]
 
@@ -218,33 +225,40 @@ def evaluate(trace, path, num_prefixes,dt_input_trainval, sat_threshold,
     for rule in path.rules:
         feature, state, parent = rule
         # Supponiamo che extract_numbers_from_string sia una funzione definita altrove che estrae numeri dalla stringa della feature
-        numbers = extract_numbers_from_string(feature,log,trace_attributes_for_numb,resource_attributes_for_numb)
-        for n1, n2 in numbers:
-            num1 = n1
-            num2 = n2
+        numbers = extract_numbers_from_string(feature, trace_att_d, resource_att_d)
+        for num_tuple in numbers:
+            if len(num_tuple) == 2:
+                num1, num2 = num_tuple
+            elif len(num_tuple) == 1:
+                num1 = num_tuple[0]
+                num2 = None
             if num1 > n_max:
                 n_max = num1
 
     ref = np.zeros(n_max, dtype=int)
     for rule in path.rules:
         feature, state, parent = rule
-        numbers = extract_numbers_from_string(feature,log,trace_attributes_for_numb,resource_attributes_for_numb)
-        for n1, n2 in numbers:
-            num1 = n1
-            num2 = n2
+        numbers = extract_numbers_from_string(feature, trace_att_d, resource_att_d)
+        for num_tuple in numbers:
+            if len(num_tuple) == 2:
+                num1, num2 = num_tuple
+            elif len(num_tuple) == 1:
+                num1 = num_tuple[0]
+                num2 = None
             if num1 > num_prefixes:
-                ref[num1 - 1] = int(num2)
+                if num2 is not None:
+                    ref[num1 - 1] = int(num2)
 
     if settings.type_encoding == "complex":
-        ref,new_index_ref,new_indices = update_hyp_indices(hyp=ref, list_of_index=list_of_index,
-                                                           m=num_prefixes, indices=indices,resource_att_d=resource_att_d)
+        ref, new_index_ref, new_indices = update_hyp_indices(hyp=ref, list_of_index=list_of_index,
+                                                             m=num_prefixes, indices=indices, resource_att_d=resource_att_d)
     elif settings.type_encoding == "simple":
         ref = ref[num_prefixes:]
 
     ref = ref.tolist()
 
     ed = 0
-    #Override di sicurezza per simple encoding
+    # Override di sicurezza per simple encoding
     # todo aggiorna i nomi in base alle impostazioni
     if settings.type_encoding == "simple":
         ed = evaluateEditDistance.edit(ref, hyp)
@@ -256,9 +270,9 @@ def evaluate(trace, path, num_prefixes,dt_input_trainval, sat_threshold,
             # Calcolo della distanza pura basata su num e categoric
             ed = evaluateEditDistance.edit_separate(ref, hyp, new_indices, max_variation)
         elif selected_evaluation_edit_distance == "weighted_edit_distance":
-            ed = evaluateEditDistance.weighted_edit_distance(ref,hyp,new_indices, max_variation,lenght_t)
+            ed = evaluateEditDistance.weighted_edit_distance(ref, hyp, new_indices, max_variation, length_t)
 
-    if (ed < sat_threshold):
+    if ed < sat_threshold:
         is_compliant = True
     else:
         is_compliant = False
@@ -270,9 +284,7 @@ def evaluate(trace, path, num_prefixes,dt_input_trainval, sat_threshold,
     else:
         cm = ConfusionMatrix.FN if label == TraceLabel.TRUE else ConfusionMatrix.TN
 
-    #print(is_compliant)
     return is_compliant, cm
-
 
 # Definisci una funzione per testare il decision tree
 def test_dt(test_log, train_log, labeling, prefixing, support_threshold, checkers, rules):
@@ -325,7 +337,7 @@ def train_path_recommender(data_log, train_val_log, val_log, train_log, labeling
                            target_label=target_label)
     return paths, best_model_dict
 
-def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train_log):
+def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train_log,dataset_name):
     # if labeling["threshold_type"] == LabelThresholdType.LABEL_MEAN:
     #    labeling["custom_threshold"] = calc_mean_label_threshold(train_log, labeling)
 
@@ -353,7 +365,7 @@ def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train
                         path.fitness != selected_path.fitness or path.impurity != selected_path.impurity or path.num_samples != selected_path.num_samples):
                     break
 
-                recommendation = recommend(prefix.events, path, rules)
+                recommendation = recommend(prefix.events, path, rules,dataset_name)
                 # print(f"{prefix_length} {prefix.trace_num} {prefix.trace_id} {path_index}->{recommendation}")
                 trace = input_log[prefix.trace_num]
 
@@ -446,7 +458,7 @@ def generate_recommendations_and_evaluation(test_log,
             for path in paths:
                 pos_paths_total_samples += path.num_samples['node_samples']
             for path in paths:
-                path.fitness = calcPathFitnessOnPrefix(prefix.events, path, dt_input_trainval,train_log)
+                path.fitness = calcPathFitnessOnPrefix(prefix.events, path, dt_input_trainval,train_log,dataset_name)
                 path.score = calcScore(path, pos_paths_total_samples, weights=hyperparams_evaluation[1:])
             # paths = sorted(paths, key=lambda path: (- path.fitness, path.impurity, - path.num_samples["total"]), reverse=False)
             if settings.use_score:
@@ -476,7 +488,7 @@ def generate_recommendations_and_evaluation(test_log,
                                       or path.num_samples != selected_path.num_samples):
                     break
 
-                recommendation = recommend(prefix.events, path, dt_input_trainval)
+                recommendation = recommend(prefix.events, path, dt_input_trainval,dataset_name)
                 #print(recommendation)
                 #print(f"{prefix_length} {prefix.trace_num} {prefix.trace_id} {path_index}->{recommendation}")
 

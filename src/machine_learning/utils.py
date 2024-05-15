@@ -6,7 +6,7 @@ from src.machine_learning.encoding import *
 from src.machine_learning.apriori import generate_frequent_events_and_pairs
 #from src.machine_learning.decision_tree import generate_decision_tree, generate_paths, generate_boost_decision_tree
 from src.enums import PrefixType
-from src.machine_learning import fitnessEditDistance
+from src.machine_learning import fitnessEditDistance,filter_attributes
 from sklearn.model_selection import train_test_split
 import itertools
 from src.enums import TraceLabel
@@ -75,48 +75,48 @@ def calcPathFitnessOnPrefixGOOD(prefix, path, rules, fitness_type):
     return fitness
 
 # Definizione della funzione `extract_numbers_from_string` per l'estrazione dei numeri da una stringa
-def extract_numbers_from_string(input_string, log, trace_attributes_for_numb, resource_attributes_for_numb):
-    # Filtra trace_attributes per il log specifico, escludendo gli attributi non desiderati
-    for log, attributes_list in trace_attributes_for_numb.items():
-        trace_attributes_for_log = [
-            attribute for attribute in trace_attributes_for_numb.get(log, [])
-            if attribute not in settings.excluded_attributes
-        ]
+def extract_numbers_from_string(input_string, trace_att_d, resource_att_d):
+    # Define the patterns for different types of encodings
+    patterns = {
+        "prefix": r"prefix_(\d+)_(\d+)",
+        "trace_att": [f"{trace_name}_(\d+)" for trace_name in trace_att_d],
+        "resource_att": [f"{resource_name}_(\d+)_(\d+)" for resource_name in resource_att_d]
+    }
 
-    # Filtra resource_attributes per il log specifico, escludendo gli attributi non desiderati
-    resource_attributes_for_log = [
-        attribute for attribute in resource_attributes_for_numb.get(log, [])
-        if attribute not in settings.excluded_attributes
-    ]
+    result = {
+        "trace_att": [],
+        "prefix": [],
+        "resource_att": []
+    }
 
-    # Controlla il pattern "prefix"
-    prefix_pattern = r"prefix_(\d+)_(\d+)"
-    matches = re.findall(prefix_pattern, input_string)
+    # Extract trace attributes
+    for pattern in patterns["trace_att"]:
+        matches = re.findall(pattern, input_string)
+        if matches:
+            for match in matches:
+                result["trace_att"].append(int(match))
+
+    # Extract prefixes
+    matches = re.findall(patterns["prefix"], input_string)
     if matches:
-        numbers = [(int(match[0]), int(match[1])) for match in matches]
-        return numbers
+        for match in matches:
+            result["prefix"].append((int(match[0]), int(match[1])))
 
-    # Controlla i pattern in trace_attributes_for_log
-    for attribute in trace_attributes_for_log:
-        trace_pattern = rf"{attribute}_(\d+)"
-        matches = re.findall(trace_pattern, input_string)
+    # Extract resource attributes
+    for pattern in patterns["resource_att"]:
+        matches = re.findall(pattern, input_string)
         if matches:
-            numbers = [(int(match[0]), int(match[1])) for match in matches]
-            return numbers
+            for match in matches:
+                result["resource_att"].append((int(match[0]), int(match[1])))
 
-    # Controlla i pattern in resource_attributes_for_log
-    for attribute in resource_attributes_for_log:
-        resource_pattern = rf"{attribute}_(\d+)_(\d+)"
-        matches = re.findall(resource_pattern, input_string)
-        if matches:
-            numbers = [(int(match[0]), int(match[1])) for match in matches]
-            return numbers
-    # Nessuna corrispondenza trovata
-    return None
+    # Flatten the result into a single list of tuples
+    flattened_result = result["prefix"] + result["resource_att"] + [(num,) for num in result["trace_att"]]
 
+    return flattened_result if flattened_result else None
 
 # Definizione della funzione `calcPathFitnessOnPrefix` per il calcolo della fitness del percorso su un prefisso
-def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval,log):
+def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval,log,dataset_name):
+    trace_att_d, resource_att_d = filter_attributes.get_attributes_by_dataset(dataset_name)
 
     prefixes = []
     for trace in prefix:
@@ -138,21 +138,26 @@ def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval,log):
     for rule in path.rules:
         feature, state, parent = rule
 
-        numbers = extract_numbers_from_string(feature, log, trace_attributes_for_numb,resource_attributes_for_numb)
-        for n1, n2 in numbers:
-            num1 = n1
-            num2 = n2
+        numbers = extract_numbers_from_string(feature,trace_att_d,resource_att_d)
+        if numbers:
+            for num_tuple in numbers:
+                if len(num_tuple) == 2:
+                    num1, num2 = num_tuple
+                else:
+                    num1 = num_tuple[0]
+                    num2 = None
 
-        if num1 >= num_prefixes:
-            continue
+                if num1 >= num_prefixes or num1 <= 0:
+                    continue
 
-        if state == TraceState.VIOLATED:
-            if isinstance(ref[num1 - 1], list):
-                ref[num1 - 1].append(-num2)
-            else:
-                ref[num1 - 1] = [-num2]
-        else:
-            ref[num1 - 1] = int(num2)
+                if state == TraceState.VIOLATED:
+                    if isinstance(ref[num1 - 1], list):
+                        if num2 is not None:
+                            ref[num1 - 1].append(-num2)
+                    else:
+                        ref[num1 - 1] = [-num2] if num2 is not None else ref[num1 - 1]
+                else:
+                    ref[num1 - 1] = int(num2) if num2 is not None else ref[num1 - 1]
 
     return fitnessEditDistance.edit(ref, hyp)
 

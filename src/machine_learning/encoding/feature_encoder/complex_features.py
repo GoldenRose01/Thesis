@@ -88,7 +88,7 @@ def columns_complex(log, prefix_length: int, feature_list: list, trace_attribute
         Tuple containing the list of columns and additional columns dictionary.
     """
     additional_columns = compute_additional_columns(log, trace_attributes, resource_attributes, prefix_length)
-    complex_indices = []
+    traceatt_indices = []
     resource_indices = []
 
     # Inizializzazione delle colonne
@@ -98,7 +98,7 @@ def columns_complex(log, prefix_length: int, feature_list: list, trace_attribute
     for attrs in additional_columns['trace_attributes']:
         columns.append(attrs)
         # Aggiunge l'indice corrente dell'attributo delle tracce alla lista
-        complex_indices.append(columns.index(attrs))
+        traceatt_indices.append(columns.index(attrs))
 
     # Aggiunta delle colonne degli eventi e salvataggio degli indici dei prefissi
     prefix_indices = [len(columns) + i for i in range(prefix_length)]
@@ -115,7 +115,7 @@ def columns_complex(log, prefix_length: int, feature_list: list, trace_attribute
         assert (list(feature_list) == columns)
 
     index = {
-        'complex': complex_indices,
+        'trace_att': traceatt_indices,
         'prefix': prefix_indices,
         'resource': resource_indices
     }

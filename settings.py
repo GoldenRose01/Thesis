@@ -1,5 +1,7 @@
 import os
 from src.enums.ConstraintChecker import ConstraintChecker
+
+
 def read_options_from_dat(filepath):
     options = {}
     with open(filepath, 'r') as file:
@@ -17,6 +19,7 @@ def read_options_from_dat(filepath):
                     options[key] = value
     return options
 
+
 def read_datasets_from_dat(filepath):
     datasets_names = []
     with open(filepath, 'r') as file:
@@ -26,16 +29,20 @@ def read_datasets_from_dat(filepath):
                 datasets_names.append(dataset_name)
     return datasets_names
 
+
 #========================================paths===========================================================
 options_filepath = 'Option.dat'
 datasets_names_filepath = 'Datasets_names.dat'
 encoding_path = 'Encoding.dat'
+
+
 #========================================encoding_selection==============================================
 def read_type_encoding(filepath):
     with open(filepath, 'r') as file:
         type_encoding = file.readline().strip()
         print("Encoding type: ", type_encoding)
     return type_encoding
+
 
 #type_encoding = read_type_encoding(encoding_path)
 type_encoding = 'complex'
@@ -45,7 +52,7 @@ datasets_names = read_datasets_from_dat(datasets_names_filepath)
 #================================================== read_options_from_dat ==================================================
 options = read_options_from_dat(options_filepath)
 # ================================================= thresholds ===============================================================================
-support_threshold_dict= {'min': 0.05, 'max': 1.75}
+support_threshold_dict = {'min': 0.05, 'max': 1.75}
 sat_threshold = options['sat_threshold']
 top_K_paths = options['top_K_paths']
 reranking = options['reranking']
@@ -63,15 +70,20 @@ use_score = options['use_score']
 compute_baseline = options['compute_baseline']
 Print_edit_distance = options['Print_edit_distance']
 print_log = options['print_log']
-print_length= options['print_length']
+print_length = options['print_length']
 excluded_attributes = options['excluded_attributes']
-selected_evaluation_edit_distance = options['selected_evaluation_edit_distance']
+
+if type_encoding != "simple":
+    selected_evaluation_edit_distance = options['selected_evaluation_edit_distance']
+else:
+    selected_evaluation_edit_distance = 'edit_distance_lib'
+
 #['edit_distance_lib', 'edit_distance_separate','weighted_edit_distance']
 
 # ================ weights ================
-wtrace_att=1
-wsimple_encoding=1
-wresource_att=1
+wtrace_att = 1
+wsimple_encoding = 1
+wresource_att = 1
 #weights of the three components of the encoding
 
 # ================ folders ================
@@ -141,7 +153,6 @@ datasets_labels = {"bpic2011_f1": "bpic2011_1",
                    "xes_Road_Traffic_Fine_Management_Process": "xes_Road_Traffic_Fine",
                    "xes_Sepsis Cases - Event Log": "xes_Sepsis_cases"
                    }
-
 
 # ================ hyperparameters ================
 """

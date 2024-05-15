@@ -26,7 +26,7 @@ def get_attributes_by_dataset(dataset_name):
 
     return trace_dataset_attributes, resource_dataset_attributes
 
-def array_index(n,trace_att_d,resource_att_d):
+def array_index(n, trace_att_d, resource_att_d):
     # Calcolo della lunghezza dei blocchi
     ta_len = len(trace_att_d)
     p_len = ta_len + n
@@ -65,7 +65,7 @@ def remove_n_prefixes(list_of_index, m):
 
     return list_of_index
 
-def rm_vect_element(hyp, list_of_index, m, resource_att_d):
+def rm_vect_element(hyp, list_of_index, m, resource_att_d, special_value=-999):
     if not isinstance(hyp, np.ndarray):
         hyp = np.array(hyp)
 
@@ -89,30 +89,19 @@ def rm_vect_element(hyp, list_of_index, m, resource_att_d):
     # Filtra gli indici che sono entro i limiti di hyp
     indici_da_rimuovere = [i for i in indici_da_rimuovere if i < len(hyp)]
 
-    # Crea una maschera booleana per mantenere gli indici validi
-    mask = np.ones(len(hyp), dtype=bool)
-    mask[indici_da_rimuovere] = False
+    # Sostituisce gli indici specificati con il valore speciale
+    hyp[indici_da_rimuovere] = special_value
 
-    # Applica la maschera
-    nuovo_hyp = hyp[mask]
+    return hyp
 
-    # Effettua check
-    new_len = len(nuovo_hyp)
-    expected_len = len(hyp) - m * (1 + len(resource_att_d))
-    if new_len != expected_len:
-        raise ValueError(f"Errore nella rimozione degli elementi: {len(hyp)} - {m} * (1 + {len(resource_att_d)}) = {new_len} invece di {expected_len}")
-
-    return nuovo_hyp
-
-def update_hyp_indices(hyp, list_of_index, indices, m, resource_att_d):
+def update_hyp_indices(hyp, list_of_index, indices, m, resource_att_d, special_value=-999):
     # Rimuovi elementi dal vettore
-    nuovo_hyp = rm_vect_element(hyp, list_of_index, m, resource_att_d)
+    nuovo_hyp = rm_vect_element(hyp, list_of_index, m, resource_att_d, special_value=special_value)
 
     # Aggiorna il dizionario degli indici del vettore
     new_list_of_index = remove_n_prefixes(list_of_index, m)
 
     # Calcola il numero totale di elementi rimossi
-    # Ogni blocco risorsa ha la lunghezza 'm'
     num_elements_to_remove = m * (1 + len(resource_att_d))
 
     # Aggiorna il dizionario 'indices' traslando gli indici
@@ -124,7 +113,7 @@ def update_hyp_indices(hyp, list_of_index, indices, m, resource_att_d):
             if idx >= num_elements_to_remove:
                 updated_values.append(idx - num_elements_to_remove)
             # Mantiene gli indici non influenzati dalla rimozione
-            elif idx < list_of_index['blocco_prefix'][0]:
+            elif 'blocco_prefix' in list_of_index and len(list_of_index['blocco_prefix']) > 0 and idx < list_of_index['blocco_prefix'][0]:
                 updated_values.append(idx)
         nuovo_indices[key] = updated_values
 
