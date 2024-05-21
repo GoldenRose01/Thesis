@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4d3265eb-b5b4-4347-95ea-2befebde779f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Francesco.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/cody_project_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/csv-editor.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/franc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/webResources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datasets_names.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Datasets_names.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/Gui_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/Gui_runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/content.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/content.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/gui_dataset_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/gui_dataset_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/gui_details_complex_window.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/gui_details_declarative_window.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/gui_details_simple_window.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/gui_main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/gui_main_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/styles.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/styles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_1_complex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_1_complex.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_1_simple" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_1_simple.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_complex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_complex.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_simple" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_simple.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_complex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_complex.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_simple" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_simple.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/model_params.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_edit_distance_lib_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_edit_distance_separate_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_evaluation_edit_distance_lib.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_evaluation_edit_distance_lib.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_evaluation_edit_distance_separate.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_evaluation_edit_distance_separate.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_evaluation_weighted_edit_distance.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_evaluation_weighted_edit_distance.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_weighted_edit_distance_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_simple_edit_distance_lib_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_simple_evaluation_edit_distance_lib.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_simple_evaluation_edit_distance_lib.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_complex_edit_distance_lib_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_complex_edit_distance_separate_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_complex_evaluation_edit_distance_lib.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_complex_evaluation_edit_distance_lib.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_complex_evaluation_edit_distance_separate.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_complex_evaluation_edit_distance_separate.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_complex_evaluation_weighted_edit_distance.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_complex_evaluation_weighted_edit_distance.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_complex_weighted_edit_distance_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_simple_edit_distance_lib_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_simple_evaluation_edit_distance_lib.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_simple_evaluation_edit_distance_lib.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_edit_distance_lib_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_edit_distance_separate_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_evaluation_edit_distance_lib.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_evaluation_edit_distance_lib.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_evaluation_edit_distance_separate.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_evaluation_edit_distance_separate.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_evaluation_weighted_edit_distance.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_evaluation_weighted_edit_distance.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_weighted_edit_distance_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_simple_edit_distance_lib_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_simple_evaluation_edit_distance_lib.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_simple_evaluation_edit_distance_lib.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/results.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/file_verifier/verify.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/file_verifier/verify.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/machine_learning/recommender.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/machine_learning/recommender.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2glp9JJKpTEdEzw55jzpyKj3c9R" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.Main.executor": "Run",
+    "Python.fitnessEditDistance.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.run_experiments.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/franc/OneDrive/Documenti/GitHub/LLuca 2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Python.Main">
+    <configuration name="Gui" type="PythonConfigurationType" factoryName="Python">
+      <module name="Thesis" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.9 (Thesis)" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\franc\OneDrive\Documenti\GitHub\Thesis" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Frontend/Gui_runner.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Main" type="PythonConfigurationType" factoryName="Python">
+      <module name="Thesis" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.9 (Thesis)" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\franc\OneDrive\Documenti\GitHub\Thesis" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.Main" />
+      <item itemvalue="Python.Gui" />
+    </list>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-PY-241.15989.155" />
+        <option value="bundled-python-sdk-babbdf50b680-7c6932dee5e4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.15989.155" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4d3265eb-b5b4-4347-95ea-2befebde779f" name="Changes" comment="" />
+      <created>1716281865867</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1716281865867</updated>
+      <workItem from="1716281866963" duration="248000" />
+      <workItem from="1716282144446" duration="6257000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Thesis$fitnessEditDistance.coverage" NAME="fitnessEditDistance Coverage Results" MODIFIED="1716282656361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/machine_learning" />
+    <SUITE FILE_PATH="coverage/Thesis$main.coverage" NAME="main Coverage Results" MODIFIED="1716282763924" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Thesis$Main.coverage" NAME="Main Coverage Results" MODIFIED="1716288895116" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\franc\OneDrive\Documenti\GitHub\Thesis" />
+    <SUITE FILE_PATH="coverage/Thesis$run_experiments.coverage" NAME="run_experiments Coverage Results" MODIFIED="1716282756091" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>

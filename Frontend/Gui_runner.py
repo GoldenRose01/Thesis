@@ -1,22 +1,11 @@
 import sys
-from PySide6.QtWidgets              import *
-from gui_main_window                import MainWindow
-from gui_details_simple_window      import DetailsSimpleWindow
-from gui_details_complex_window     import DetailsComplexWindow
-from gui_details_declarative_window import DetailsDeclarativeWindow
-from gui_dataset_window             import DatasetWindow
-from gui_terminal_window            import TerminalWindow
-
-class DatasetWindow(QWidget):
-    def __init__(self, switch_view_callback):
-        super().__init__()
-        self.switch_view_callback = switch_view_callback
-        self.title_label = QLabel("Default Title", self)  # Aggiungi un QLabel per mostrare il titolo
-        self.layout = QVBoxLayout(self)
-        self.layout.addWidget(self.title_label)
-
-    def set_title(self, title):
-        self.title_label.setText(title)
+from PySide6.QtWidgets import *
+from gui_main_window import MainWindow
+from details_simple import DetailsSimpleWindow
+from details_complex import DetailsComplexWindow
+from details_declarative import DetailsDeclarativeWindow
+from gui_dataset_window import DatasetWindow
+from gui_terminal_window import TerminalWindow
 
 class AppRunner(QMainWindow):
     def __init__(self):
@@ -56,8 +45,6 @@ class AppRunner(QMainWindow):
         if view_method:
             view_method()
 
-        # View methods to switch to the respective widgets
-
     def show_main_window(self):
         self.stack.setCurrentWidget(self.main_window)
 
@@ -79,7 +66,6 @@ class AppRunner(QMainWindow):
 
     def show_terminal_window(self):
         self.stack.setCurrentWidget(self.terminal_window)
-
 
 if __name__ == "__main__":
     app = QApplication([])

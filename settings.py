@@ -38,8 +38,8 @@ def read_type_encoding(filepath):
         print("Encoding type: ", type_encoding)
     return type_encoding
 
-#type_encoding = read_type_encoding(encoding_path)
-type_encoding = 'complex'
+type_encoding = read_type_encoding(encoding_path)
+#type_encoding = 'simple'
 # simple, frequency, complex
 #================================================== datasets_names ===================================================
 datasets_names = read_datasets_from_dat(datasets_names_filepath)
@@ -160,11 +160,11 @@ dt_hyperparameters = {'criterion': ['entropy', 'gini'],
 
 num_feat_strategy = ['sqrt', 0.3, 0.5]
 # num_feat_strategy = [0.5]
-# sat_threshold_list = [0.55, 0.65, 0.75, 0.85]
-# sat_threshold_list = [0.35, 0.45, 0.55, 0.65]
-sat_threshold_list = [0.85]
-# weight_combination_list = [(0.2, 0.4, 0.4), (0.6, 0.2, 0.2), (0.4, 0.4, 0.2), (0.4, 0.2, 0.4), (0.8, 0.1, 0.1), (0.4, 0.3, 0.3), (0.1, 0.8, 0.1), (0.1, 0.1, 0.8)]
-weight_combination_list = [(0.4, 0.4, 0.2)]
+#sat_threshold_list = [0.55, 0.65, 0.75, 0.85]
+sat_threshold_list = [0.35, 0.45, 0.55, 0.65]
+#sat_threshold_list = [0.85]
+weight_combination_list = [(0.2, 0.4, 0.4), (0.6, 0.2, 0.2), (0.4, 0.4, 0.2), (0.4, 0.2, 0.4), (0.8, 0.1, 0.1), (0.4, 0.3, 0.3), (0.1, 0.8, 0.1), (0.1, 0.1, 0.8)]
+#weight_combination_list = [(0.4, 0.4, 0.2)]
 
 # ================ checkers satisfaction ================
 rules = {

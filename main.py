@@ -20,6 +20,7 @@ if __name__ == "__main__":
     # Verifica che i file di configurazione siano presenti
     verify.attributes_verifier("src/machine_learning/encoding/Settings")
 
+
     print_lock = multiprocessing.Lock()
     parser = argparse.ArgumentParser(
         description="Esperimenti per il monitoraggio dei processi prescrittivi basati sui risultati")

@@ -85,11 +85,29 @@ def rec_sys_exp(dataset_name):
     labeling = {
         "type": LabelType.TRACE_CATEGORICAL_ATTRIBUTES,
         "threshold_type": "",
-        "target": TraceLabel.TRUE,  # inferiore a una soglia considerata come True
+        "target": TraceLabel.TRUE,  # lower than a threshold considered as True
         "trace_lbl_attr": dataset_manager.label_col,
         "trace_label": dataset_manager.pos_label,
         "custom_threshold": 0.0
     }
+
+    labeling = {
+        "type": LabelType.TRACE_CATEGORICAL_ATTRIBUTES,
+        "threshold_type": "",
+        "target": TraceLabel.TRUE,  # lower than a threshold considered as True
+        "trace_lbl_attr": dataset_manager.label_col,
+        "trace_label": 'regular',
+        "custom_threshold": 0.0
+    }
+    """
+        labeling = {
+            "type": LabelType.TRACE_DURATION,
+            "threshold_type": LabelThresholdType.LABEL_MEAN,
+            "target": TraceLabel.TRUE,  # lower than a threshold considered as True
+            "trace_attribute": "",
+            "custom_threshold": 0.0
+        }
+        """
 
     # Creazione dell'oggetto Encoding
     dt_input_trainval = Encoding(train_val_log)
