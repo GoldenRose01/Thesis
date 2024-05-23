@@ -1,6 +1,6 @@
 import editdistance  # Importa la libreria per calcolare la distanza di edit
 import itertools
-from settings import Print_edit_distance, wtrace_att, wsimple_encoding, wresource_att
+from settings import Print_edit_distance, wtrace_att, wactivities, wresource_att
 
 def edit(ref, hyp, special_value=-999):
     ref2 = [x for x in ref if x != special_value]
@@ -61,7 +61,7 @@ def weighted_edit_distance(ref, hyp, indices, max_variation, length_t, special_v
     for i in range(length_t):
         weights[i] = wtrace_att  # Aggiusta l'indice per i pesi
     for i in indices['prefix']:
-        weights[i] = wsimple_encoding
+        weights[i] = wactivities
     for i in indices['resource']:
         weights[i] = wresource_att
 

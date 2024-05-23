@@ -16,10 +16,9 @@ env_path = '.env'
 os.environ['PATH'] = os.getenv('PATH')
 
 if __name__ == "__main__":
-    print("Inizio simulazione",settings.type_encoding,settings.selected_evaluation_edit_distance)
+    print("Inizio simulazione", settings.type_encoding, settings.selected_evaluation_edit_distance)
     # Verifica che i file di configurazione siano presenti
     verify.attributes_verifier("src/machine_learning/encoding/Settings")
-
 
     print_lock = multiprocessing.Lock()
     parser = argparse.ArgumentParser(
@@ -38,7 +37,7 @@ if __name__ == "__main__":
 
     final_results = {}
     start_time = time.time()
-    #Inizia la simulazione
+    # Inizia la simulazione
     if jobs is None or jobs == 1:
         for dataset in settings.datasets_names:
             _, res_obj, hyperparams, max_pref_length, min_pref_length, dt = rec_sys_exp(dataset)
@@ -58,19 +57,33 @@ if __name__ == "__main__":
     # Salva i risultati finali in un file CSV
     with open(os.path.join(settings.output_dir, "results.csv"), mode='a') as out_file:
         writer = csv.writer(out_file, delimiter=',')
-        writer.writerow(
-            ["Dataset", "Punteggio", "Migliore configurazione degli iperparametri", "Lunghezza minima del prefisso",
-             "Lunghezza massima del prefisso", "Parametri dell'albero decisionale"])
+        writer.writerow([
+            "Dataset",
+            "Punteggio",
+            "Migliore configurazione degli iperparametri",
+            "Lunghezza minima del prefisso",
+            "Lunghezza massima del prefisso",
+            "Parametri dell'albero decisionale"
+        ])
         for dataset in settings.datasets_names:
             writer.writerow([dataset] +
                             [round(100 * np.mean([getattr(res_obj, 'fscore') for res_obj in final_results[dataset]]),
                                    2)] +
                             [hyperparams] + [min_pref_length] + [max_pref_length] + [dt['parameters']])
+    # Timer per simulazioni
     time_h_finale = (time.time() - start_time) / 3600
     time_m_finale = (time.time() - start_time) / 60
 
     print("Le simulazioni hanno richiesto " + str(time_h_finale) + " ore o " + str(time_m_finale) + " minuti")
 
+    verify.timeprinter(settings.datasets_names,
+                       settings.type_encoding,
+                       settings.selected_evaluation_edit_distance,
+                       settings.wtrace_att,
+                       settings.wactivities,
+                       settings.wresource_att,
+                       time_m_finale,
+                       file_path='Prospetto.xlsx')
     """
     verify.structurize_results("media/output/result")
     verify.remove_tmp_files("media/output")

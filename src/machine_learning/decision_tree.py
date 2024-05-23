@@ -46,6 +46,7 @@ TRACE_TO_DF = {
     # EncodingType.DECLARE.value : declare_features
 }
 
+
 # Funzione per trovare il miglior albero decisionale
 def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input_trainval):
     print("DT params optimization ...")
@@ -66,14 +67,13 @@ def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input
             if len(trace) > 2:
                 data.append(trace)
 
-
     X_train = pd.DataFrame(dt_input_trainval.encoded_data, columns=dt_input_trainval.features)
     y_train = pd.Categorical(dt_input_trainval.labels, categories=categories)
 
     trace_attributes_for_log = []
     for log, attributes_list in trace_attributes.items():
         trace_attributes_for_log = [
-            attribute for attribute in trace_attributes.get(log,[])
+            attribute for attribute in trace_attributes.get(log, [])
             if attribute not in settings.excluded_attributes
         ]
     resource_attributes_for_log = []
@@ -216,7 +216,7 @@ def generate_paths(dtc, dt_input_features, target_label):
 
 def process_log_and_model(log, dt_params, support_threshold_dict, dataset_name, render_dt):
     # Encoding complesso
-    complex_data , index = complex_features(log, {})
+    complex_data, index = complex_features(log, {})
     X = complex_data.drop(columns=['label'])  # Rimuove la colonna della label
     y = complex_data['label']  # Assumi che la label sia presente in complex_data
 
@@ -224,7 +224,8 @@ def process_log_and_model(log, dt_params, support_threshold_dict, dataset_name, 
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=0)
 
     # Ottimizzazione dell'albero decisionale
-    model_dict, feature_names = find_best_dt(dataset_name, complex_data, support_threshold_dict, render_dt, (X_train, y_train))
+    model_dict, feature_names = find_best_dt(dataset_name, complex_data, support_threshold_dict, render_dt,
+                                             (X_train, y_train))
 
     # Calcolo dello score F1
     f1 = dt_score((X_val, y_val, feature_names))
@@ -232,4 +233,4 @@ def process_log_and_model(log, dt_params, support_threshold_dict, dataset_name, 
     # Generazione dei percorsi dell'albero decisionale
     paths = generate_paths(model_dict['model'], feature_names, LabelTypes.TRUE.value)
 
-    return  f1, paths
+    return f1, paths

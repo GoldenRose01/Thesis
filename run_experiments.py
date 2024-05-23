@@ -11,6 +11,7 @@ import argparse
 import multiprocessing
 import csv
 
+
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione
 def rec_sys_exp(dataset_name):
     # ================ inputs ================
@@ -25,7 +26,8 @@ def rec_sys_exp(dataset_name):
 
     # Crea un oggetto DatasetManager per il dataset specificato
     dataset_manager = DatasetManager(dataset_name.lower())
-    data,categoric_columns,numeric_columns = dataset_manager.read_dataset(os.path.join(os.getcwd(), settings.dataset_folder))
+    data, categoric_columns, numeric_columns = dataset_manager.read_dataset(
+        os.path.join(os.getcwd(), settings.dataset_folder))
 
     # Suddivide il dataset in training e test
     train_val_ratio = 0.8
@@ -49,9 +51,9 @@ def rec_sys_exp(dataset_name):
     # Rinomina le colonne del dataset
     data = data.rename(
         columns={dataset_manager.timestamp_col: 'time:timestamp',
-                dataset_manager.case_id_col: 'case:concept:name',
-                dataset_manager.activity_col: 'concept:name'
-                })
+                 dataset_manager.case_id_col: 'case:concept:name',
+                 dataset_manager.activity_col: 'concept:name'
+                 })
 
     train_df = train_df.rename(
         columns={dataset_manager.timestamp_col: 'time:timestamp',
@@ -112,8 +114,8 @@ def rec_sys_exp(dataset_name):
     # Creazione dell'oggetto Encoding
     dt_input_trainval = Encoding(train_val_log)
 
-    (dt_input_trainval_encoded , prefix_length,
-     ncu_data,indices,max_variations) = dt_input_trainval.encode_traces(numeric_columns, categoric_columns)
+    (dt_input_trainval_encoded, prefix_length,
+     ncu_data, indices, max_variations) = dt_input_trainval.encode_traces(numeric_columns, categoric_columns)
 
     # Lista dei risultati
     results = []
@@ -128,7 +130,7 @@ def rec_sys_exp(dataset_name):
     prefix_lenght_list_test = list(range(min_prefix_length, max_prefix_length_test + 1))
     prefix_lenght_list_val = list(range(min_prefix_length, max_prefix_length_val + 1))
 
-    # Lista delle combinazioni di iperparametri per l'evalutazione
+    # Lista delle combinazioni di iperparametri per l' evaluation
     hyperparams_evaluation_list = []
     results_hyperparams_evaluation = {}
     hyperparams_evaluation_list_baseline = []
@@ -140,16 +142,16 @@ def rec_sys_exp(dataset_name):
             hyperparams_evaluation_list.append((v1,) + v2)
 
     # Esegue la creazione dei percorsi di allenamento
-    tmp_paths, dt = rcm.train_path_recommender( data_log=data_log,
-                                                train_val_log=train_val_log,
-                                                val_log=val_log,
-                                                train_log=train_log,
-                                                labeling=labeling,
-                                                support_threshold=settings.support_threshold_dict,
-                                                dataset_name=dataset_name,
-                                                output_dir=settings.output_dir,
-                                                dt_input_trainval=dt_input_trainval_encoded,
-                                                )
+    tmp_paths, dt = rcm.train_path_recommender(data_log=data_log,
+                                               train_val_log=train_val_log,
+                                               val_log=val_log,
+                                               train_log=train_log,
+                                               labeling=labeling,
+                                               support_threshold=settings.support_threshold_dict,
+                                               dataset_name=dataset_name,
+                                               output_dir=settings.output_dir,
+                                               dt_input_trainval=dt_input_trainval_encoded,
+                                               )
     counter = 0
 
     # Scopre sul set di validazione con la migliore configurazione degli iperparametri di valutazione
@@ -215,20 +217,20 @@ def rec_sys_exp(dataset_name):
         }
         print("valutazione", prefix_len, "/", max_prefix_length_test)
         recommendations, evaluation = rcm.generate_recommendations_and_evaluation(test_log=test_log,
-                                                                              train_log=train_log,
-                                                                              labeling=labeling,
-                                                                              prefixing=prefixing,
-                                                                              rules=settings.rules,
-                                                                              paths=paths,
-                                                                              hyperparams_evaluation=best_hyperparams_combination,
-                                                                              eval_res=eval_res,
-                                                                              indices=indices,
-                                                                              max_variations=max_variations,
-                                                                              dt_input_trainval=dt_input_trainval,
-                                                                              dt_input_trainval_encoded=dt_input_trainval_encoded,
-                                                                              dataset_name=dataset_name,
-                                                                              prefix_max=prefix_length,
-                                                                              )
+                                                                                  train_log=train_log,
+                                                                                  labeling=labeling,
+                                                                                  prefixing=prefixing,
+                                                                                  rules=settings.rules,
+                                                                                  paths=paths,
+                                                                                  hyperparams_evaluation=best_hyperparams_combination,
+                                                                                  eval_res=eval_res,
+                                                                                  indices=indices,
+                                                                                  max_variations=max_variations,
+                                                                                  dt_input_trainval=dt_input_trainval,
+                                                                                  dt_input_trainval_encoded=dt_input_trainval_encoded,
+                                                                                  dataset_name=dataset_name,
+                                                                                  prefix_max=prefix_length,
+                                                                                  )
         results.append(evaluation)
         if settings.cumulative_res is True:
             eval_res = copy.deepcopy(evaluation)
@@ -239,7 +241,8 @@ def rec_sys_exp(dataset_name):
     plot = PlotResult(results, prefix_lenght_list_test, settings.results_dir)
 
     for metric in ["fscore"]:
-        plot.toPng(metric, f"{dataset_name}_{settings.type_encoding}_{settings.selected_evaluation_edit_distance}_{metric}")
+        plot.toPng(metric,
+                   f"{dataset_name}_{settings.type_encoding}_{settings.selected_evaluation_edit_distance}_{metric}")
 
     # Salva i risultati della valutazione dei prefissi in un file CSV
     rcm.prefix_evaluation_to_csv(results, dataset_name)

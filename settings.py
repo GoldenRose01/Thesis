@@ -1,5 +1,7 @@
 import os
 from src.enums.ConstraintChecker import ConstraintChecker
+
+
 def read_options_from_dat(filepath):
     options = {}
     with open(filepath, 'r') as file:
@@ -9,6 +11,8 @@ def read_options_from_dat(filepath):
                 key, value = line.split('=', 1)
                 if value.lower() in ['true', 'false']:
                     options[key] = value.lower() == 'true'
+                elif value.endswith('%') and value[:-1].replace('.', '', 1).isdigit():
+                    options[key] = float(value[:-1]) / 100
                 elif value.replace('.', '', 1).isdigit():
                     options[key] = float(value) if '.' in value else int(value)
                 elif key == 'excluded_attributes':
@@ -16,6 +20,7 @@ def read_options_from_dat(filepath):
                 else:
                     options[key] = value
     return options
+
 
 def read_datasets_from_dat(filepath):
     datasets_names = []
@@ -26,75 +31,97 @@ def read_datasets_from_dat(filepath):
                 datasets_names.append(dataset_name)
     return datasets_names
 
-#========================================paths===========================================================
+
+# ========================================paths===========================================================
+
 options_filepath = 'Option.dat'
 datasets_names_filepath = 'Datasets_names.dat'
+dataset_debug = 'Dataset_name.txt'
 encoding_path = 'Encoding.dat'
 
-#========================================encoding_selection==============================================
+
+# ========================================encoding_selection=============================================================
 def read_type_encoding(filepath):
     with open(filepath, 'r') as file:
         type_encoding = file.readline().strip()
         print("Encoding type: ", type_encoding)
     return type_encoding
 
-type_encoding = read_type_encoding(encoding_path)
-#type_encoding = 'simple'
+
+type_encoding = read_type_encoding(encoding_path) if read_type_encoding(encoding_path) else 'simple'
 # simple, frequency, complex
-#================================================== datasets_names ===================================================
-datasets_names = read_datasets_from_dat(datasets_names_filepath)
-#================================================== read_options_from_dat ==================================================
+
+# ================================================== datasets_names =====================================================
+
+datasets_names = read_datasets_from_dat(datasets_names_filepath) if read_datasets_from_dat(
+    datasets_names_filepath) else read_datasets_from_dat(dataset_debug)
 options = read_options_from_dat(options_filepath)
-# ================================================= thresholds ===============================================================================
+
+# ================================================= thresholds =========================================================
 support_threshold_dict = {'min': 0.05, 'max': 1.75}
 
-sat_threshold       = options['sat_threshold']          if options['sat_threshold']         else 0.75
-top_K_paths         = options['top_K_paths']            if options['top_K_paths']           else 6
-reranking           = options['reranking']              if options['reranking']             else False
-sat_type            = options['sat_type']               if options['sat_type']              else 'count_occurrences'
-fitness_type        = options['fitness_type']           if options['fitness_type']          else 'mean' #wmean
-cumulative_res      = options['cumulative_res']         if options['cumulative_res']        else False
-optimize_dt         = options['optimize_dt']            if options['optimize_dt']           else True
-print_dt            = options['print_dt']               if options['print_dt']              else True
-compute_gain        = options['compute_gain']           if options['compute_gain']          else False
-smooth_factor       = options['smooth_factor']          if options['smooth_factor']         else 1
-num_classes         = options['num_classes']            if options['num_classes']           else 2
-train_prefix_log    = options['train_prefix_log']       if options['train_prefix_log']      else False
-one_hot_encoding    = options['one_hot_encoding']       if options['one_hot_encoding']      else False
-use_score           = options['use_score']              if options['use_score']             else True
-compute_baseline    = options['compute_baseline']       if options['compute_baseline']      else False
-Print_edit_distance = options['Print_edit_distance']    if options['Print_edit_distance']   else False
-print_log           = options['print_log']              if options['print_log']             else False
-print_length        = options['print_length']           if options['print_length']          else False
-excluded_attributes = options['excluded_attributes']    if options['excluded_attributes']   else 'concept:name,time:timestamp,label,Case ID'
-selected_evaluation_edit_distance = ('edit_distance_lib' if not options['selected_evaluation_edit_distance'] or type_encoding == "simple" else options['selected_evaluation_edit_distance'])
-#['edit_distance_lib', 'edit_distance_separate','weighted_edit_distance']
+sat_threshold = options['sat_threshold'] if options['sat_threshold'] else 0.75
+top_K_paths = options['top_K_paths'] if options['top_K_paths'] else 6
+reranking = options['reranking'] if options['reranking'] else False
+sat_type = options['sat_type'] if options['sat_type'] else 'count_occurrences'
+fitness_type = options['fitness_type'] if options['fitness_type'] else 'mean'  # wmean
+cumulative_res = options['cumulative_res'] if options['cumulative_res'] else False
+optimize_dt = options['optimize_dt'] if options['optimize_dt'] else True
+print_dt = options['print_dt'] if options['print_dt'] else True
+compute_gain = options['compute_gain'] if options['compute_gain'] else False
+smooth_factor = options['smooth_factor'] if options['smooth_factor'] else 1
+num_classes = options['num_classes'] if options['num_classes'] else 2
+train_prefix_log = options['train_prefix_log'] if options['train_prefix_log'] else False
+one_hot_encoding = options['one_hot_encoding'] if options['one_hot_encoding'] else False
+use_score = options['use_score'] if options['use_score'] else True
+compute_baseline = options['compute_baseline'] if options['compute_baseline'] else False
+Print_edit_distance = options['Print_edit_distance'] if options['Print_edit_distance'] else False
+print_log = options['print_log'] if options['print_log'] else False
+print_length = options['print_length'] if options['print_length'] else False
+excluded_attributes = options['excluded_attributes'] if options[
+    'excluded_attributes'] else 'concept:name,time:timestamp,label,Case ID'
+selected_evaluation_edit_distance = (
+    'edit_distance_lib' if not options['selected_evaluation_edit_distance'] or type_encoding == "simple" else options[
+        'selected_evaluation_edit_distance'])
+# ['edit_distance_lib', 'edit_distance_separate','weighted_edit_distance']
 
 # ================ weights ================
-wtrace_att = 1
-wsimple_encoding = 1
-wresource_att = 1
-#weights of the three components of the encoding
+
+wtrace_att = options['wtrace_att'] if options['wtrace_att'] else 1
+wactivities = options['wactivities'] if options['wactivities'] else 1
+wresource_att = options['wresource_att'] if options['wresource_att'] else 1
+# weights of the three components of the encoding
 
 # ================ folders ================
+
 output_dir = "media/output"
 results_dir = os.path.join(output_dir, "result")
-#dataset_folder = "media/input/processed_benchmark_event_logs"
+# dataset_folder = "media/input/processed_benchmark_event_logs"
 dataset_folder = "media/input"
 
 # ================ checkers ================
-existence_family = [ConstraintChecker.EXISTENCE, ConstraintChecker.ABSENCE, ConstraintChecker.INIT,
+
+existence_family = [ConstraintChecker.EXISTENCE,
+                    ConstraintChecker.ABSENCE,
+                    ConstraintChecker.INIT,
                     ConstraintChecker.EXACTLY]
 
-choice_family = [ConstraintChecker.CHOICE, ConstraintChecker.EXCLUSIVE_CHOICE]
+choice_family = [ConstraintChecker.CHOICE,
+                 ConstraintChecker.EXCLUSIVE_CHOICE]
 
-positive_rel_family = [ConstraintChecker.RESPONDED_EXISTENCE, ConstraintChecker.RESPONSE,
-                       ConstraintChecker.ALTERNATE_RESPONSE, ConstraintChecker.CHAIN_RESPONSE,
-                       ConstraintChecker.PRECEDENCE, ConstraintChecker.ALTERNATE_PRECEDENCE,
-                       ConstraintChecker.CHAIN_PRECEDENCE]
+positive_rel_family = [ConstraintChecker.RESPONDED_EXISTENCE,
+                       ConstraintChecker.RESPONSE,
+                       ConstraintChecker.ALTERNATE_RESPONSE,
+                       ConstraintChecker.CHAIN_RESPONSE,
+                       ConstraintChecker.PRECEDENCE,
+                       ConstraintChecker.ALTERNATE_PRECEDENCE,
+                       ConstraintChecker.CHAIN_PRECEDENCE
+                       ]
 
-negative_rel_family = [ConstraintChecker.NOT_RESPONDED_EXISTENCE, ConstraintChecker.NOT_RESPONSE,
-                       ConstraintChecker.NOT_CHAIN_RESPONSE, ConstraintChecker.NOT_PRECEDENCE,
+negative_rel_family = [ConstraintChecker.NOT_RESPONDED_EXISTENCE,
+                       ConstraintChecker.NOT_RESPONSE,
+                       ConstraintChecker.NOT_CHAIN_RESPONSE,
+                       ConstraintChecker.NOT_PRECEDENCE,
                        ConstraintChecker.NOT_CHAIN_PRECEDENCE]
 
 checkers_cumulative = {"existence": existence_family}
@@ -111,6 +138,7 @@ checkers = {"existence": existence_family,
 constr_family_list = checkers.keys()
 
 # ================ datasets ================
+
 datasets_labels = {"bpic2011_f1": "bpic2011_1",
                    "bpic2011_f2": "bpic2011_2",
                    "bpic2011_f3": "bpic2011_3",
@@ -146,25 +174,29 @@ datasets_labels = {"bpic2011_f1": "bpic2011_1",
 
 # ================ hyperparameters ================
 """
-hyperparameters = {'support_threshold': [support_threshold_dict['min']-0.2, support_threshold_dict['min']-0.1,
+hyperparameters = {'support_threshold': [support_threshold_dict['min']-0.2,
+                                         support_threshold_dict['min']-0.1,
                                          support_threshold_dict['min'],
                                          support_threshold_dict['min']+0.1],
                    'class_weight': [None, 'balanced'],
-                   'min_samples_split': [2]}
+                   'min_samples_split': [2]
+                   }
 """
 dt_hyperparameters = {'criterion': ['entropy', 'gini'],
                       'class_weight': ['balanced', None],
                       'max_depth': [4, 6, 8, 10, None],
                       'min_samples_split': [0.1, 2, 0.2, 0.3],
-                      'min_samples_leaf': [10, 1, 16]}
+                      'min_samples_leaf': [10, 1, 16]
+                      }
 
 num_feat_strategy = ['sqrt', 0.3, 0.5]
 # num_feat_strategy = [0.5]
-#sat_threshold_list = [0.55, 0.65, 0.75, 0.85]
+# sat_threshold_list = [0.55, 0.65, 0.75, 0.85]
 sat_threshold_list = [0.35, 0.45, 0.55, 0.65]
-#sat_threshold_list = [0.85]
-weight_combination_list = [(0.2, 0.4, 0.4), (0.6, 0.2, 0.2), (0.4, 0.4, 0.2), (0.4, 0.2, 0.4), (0.8, 0.1, 0.1), (0.4, 0.3, 0.3), (0.1, 0.8, 0.1), (0.1, 0.1, 0.8)]
-#weight_combination_list = [(0.4, 0.4, 0.2)]
+# sat_threshold_list = [0.85]
+weight_combination_list = [(0.2, 0.4, 0.4), (0.6, 0.2, 0.2), (0.4, 0.4, 0.2), (0.4, 0.2, 0.4), (0.8, 0.1, 0.1),
+                           (0.4, 0.3, 0.3), (0.1, 0.8, 0.1), (0.1, 0.1, 0.8)]
+# weight_combination_list = [(0.4, 0.4, 0.2)]
 
 # ================ checkers satisfaction ================
 rules = {
@@ -179,12 +211,24 @@ rules = {
 }
 
 # ================ plots ================
-method_label = {'existence': r'$\mathcal{E}$', 'choice': r'$\mathcal{\widehat{C}}$',
-                'positive relations': r'$\mathcal{\widehat{PR}}$', 'negative relations': r'$\mathcal{\widehat{NR}}$',
-                'all': r'$\mathcal{A}$'}
-method_marker = {'existence': 'x', 'choice': '1', 'positive relations': '.', 'negative relations': '', 'all': '+'}
+method_label = {'existence': r'$\mathcal{E}$',
+                'choice': r'$\mathcal{\widehat{C}}$',
+                'positive relations': r'$\mathcal{\widehat{PR}}$',
+                'negative relations': r'$\mathcal{\widehat{NR}}$',
+                'all': r'$\mathcal{A}$'
+                }
+method_marker = {'existence': 'x',
+                 'choice': '1',
+                 'positive relations': '.',
+                 'negative relations': '',
+                 'all': '+'
+                 }
 # method_color = {'existence': 'mediumpurple', 'choice': 'deepskyblue', 'positive relations': 'orange',
 #                'negative relations': 'crimson', 'all': 'forestgreen'}
 method_color = 'orange'
-method_style = {'existence': 'solid', 'choice': (0, (1, 1)), 'positive relations': 'dashdot',
-                'negative relations': (0, (5, 10)), 'all': 'dashdot'}
+method_style = {'existence': 'solid',
+                'choice': (0, (1, 1)),
+                'positive relations': 'dashdot',
+                'negative relations': (0, (5, 10)),
+                'all': 'dashdot'
+                }

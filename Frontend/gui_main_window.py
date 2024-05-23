@@ -1,50 +1,53 @@
 import sys
-from PySide6.QtCore import Qt, QRect, QCoreApplication
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
-from details_simple import DetailsSimpleWindow
-from details_complex import DetailsComplexWindow
-from details_declarative import DetailsDeclarativeWindow
-from content import contents_main as contents
+from content import contents_main
 from styles import *
-from function import save_type_encoding
+
 
 class MainWindow(QWidget):
-    options_dat_path = "../Option.dat"
+    options_dat_path = "Option.dat"
 
-    def __init__(self,encoding,switch_view_callback):
+    def __init__(self, switch_view_callback, color_map):
         super().__init__()
         self.switch_view_callback = switch_view_callback
+        self.color_map = color_map
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle(contents["window_title"])
-        self.setStyleSheet(f"background-color: {color_map['default']}; {main_window_style}")
+        color = self.color_map['default']
+        text_color = get_contrasting_text_color(color)
+        self.setWindowTitle(contents_main["window_title"])
+        self.setStyleSheet(f"background-color: {color}; {main_window_style % color}")
         self.setMinimumSize(800, 600)
 
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignCenter)
 
-        description = QLabel(contents["description"])
+        description = QLabel(contents_main["description"])
         description.setAlignment(Qt.AlignCenter)
         description.setMinimumHeight(200)
         layout.addWidget(description)
 
-        simple_button = QPushButton(contents["simple_encoding"])
-        complex_button = QPushButton(contents["complex_encoding"])
-        declarative_button = QPushButton(contents["declarative_encoding"])
+        simple_button = QPushButton(contents_main["simple_encoding"])
+        complex_button = QPushButton(contents_main["complex_encoding"])
+        declarative_button = QPushButton(contents_main["declarative_encoding"])
 
         # Set specific colors for buttons based on the type
-        simple_button.setStyleSheet(f"background-color: {color_map['simple']}; {button_style}")
-        complex_button.setStyleSheet(f"background-color: {color_map['complex']}; {button_style}")
-        declarative_button.setStyleSheet(f"background-color: {color_map['declarative']}; {button_style}")
+        simple_button.setStyleSheet(
+            f"background-color: {self.color_map['simple']}; {button_style % (text_color, text_color)}")
+        complex_button.setStyleSheet(
+            f"background-color: {self.color_map['complex']}; {button_style % (text_color, text_color)}")
+        declarative_button.setStyleSheet(
+            f"background-color: {self.color_map['declarative']}; {button_style % (text_color, text_color)}")
 
-        # Impostare la politica di dimensionamento per espansione
+        # Set the size policy to expanding
         policy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         simple_button.setSizePolicy(policy)
         complex_button.setSizePolicy(policy)
         declarative_button.setSizePolicy(policy)
 
-        # Impostazione di dimensioni minime
+        # Set minimum height for buttons
         simple_button.setMinimumHeight(100)
         complex_button.setMinimumHeight(100)
         declarative_button.setMinimumHeight(100)
@@ -68,7 +71,10 @@ class MainWindow(QWidget):
 
     def on_button_clicked(self, encoding):
         try:
-            self.selected_encoding = encoding
             self.switch_view_callback(encoding)
         except Exception as e:
             print(f"Error: {e}")
+
+    def update_color_map(self, new_color_map):
+        self.color_map = new_color_map
+        self.update_styles()
