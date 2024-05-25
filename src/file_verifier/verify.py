@@ -81,60 +81,63 @@ def structurize_results(directory):
                 os.rename(source_path, full_dest_path)
 
 
-def timeprinter(datasets_names,
+def timeprinter(dataset_name,
                 type_encoding,
                 selected_evaluation_edit_distance,
                 wtrace_att,
                 wactivities,
                 wresource_att,
                 time_m_finale,
-                file_path='Prospetto.xlsx'):
+                file_path='Prospetto.txt'):
     # Definizione della leggenda base
     legend = ['Dataset_name', 'Simple', 'Complex edit_distance_lib', 'Complex edit_distance_separate',
-              'Complex weighted_edit_distance(100,100,100)', 'Declarative']
+              'Complex weighted_edit_distance(33,33,33)', 'Declarative']
 
     # Calcolo di a, b, c
     a = wtrace_att * 100
     b = wactivities * 100
     c = wresource_att * 100
-    weighted_col_name = f"Complex weighted_edit_distance({a},{b},{c})"
+    weighted_col_name = f"Complex weighted_edit_distance({a}%,{b}%,{c}%)"
 
     # Controllo se il file esiste
     if os.path.exists(file_path):
-        df = pd.read_excel(file_path)
+        df = pd.read_csv(file_path, sep='\t')
     else:
         df = pd.DataFrame(columns=legend)
+
+    # Ensure the 'Dataset_name' column exists
+    if 'Dataset_name' not in df.columns:
+        df['Dataset_name'] = ''
 
     # Aggiungi la nuova colonna alla legenda se non esiste già
     if weighted_col_name not in df.columns:
         df[weighted_col_name] = ''
 
     # Costruzione della riga da aggiungere/aggiornare
-    for dataset_name in datasets_names:
-        new_row = {'Dataset_name': dataset_name, 'Simple': '', 'Complex edit_distance_lib': '',
-                   'Complex edit_distance_separate': '', 'Complex weighted_edit_distance(100,100,100)': '',
-                   'Declarative': ''}
+    new_row = {'Dataset_name': dataset_name, 'Simple': '', 'Complex edit_distance_lib': '',
+        'Complex edit_distance_separate': '', 'Complex weighted_edit_distance(33,33,33)': '',
+        'Declarative': ''}
 
-        # Aggiunta valori basati sul tipo di encoding
-        if type_encoding == 'simple':
-            new_row['Simple'] = f"{time_m_finale}m"
-        elif type_encoding == 'complex':
-            if selected_evaluation_edit_distance == 'edit_distance_lib':
-                new_row['Complex edit_distance_lib'] = f"{time_m_finale}m"
-            elif selected_evaluation_edit_distance == 'edit_distance_separate':
-                new_row['Complex edit_distance_separate'] = f"{time_m_finale}m"
-            elif selected_evaluation_edit_distance == 'weighted_edit_distance':
-                new_row[weighted_col_name] = f"{time_m_finale}m"
+    # Aggiunta valori basati sul tipo di encoding
+    if type_encoding == 'simple':
+        new_row['Simple'] = f"{time_m_finale}m"
+    elif type_encoding == 'complex':
+        if selected_evaluation_edit_distance == 'edit_distance_lib':
+            new_row['Complex edit_distance_lib'] = f"{time_m_finale}m"
+        elif selected_evaluation_edit_distance == 'edit_distance_separate':
+            new_row['Complex edit_distance_separate'] = f"{time_m_finale}m"
+        elif selected_evaluation_edit_distance == 'weighted_edit_distance':
+            new_row[weighted_col_name] = f"{time_m_finale}m"
 
-        # Controllo se il dataset esiste già nel DataFrame
-        if dataset_name in df['Dataset_name'].values:
-            # Aggiornamento della riga esistente
-            for column in new_row:
-                if new_row[column]:
-                    df.loc[df['Dataset_name'] == dataset_name, column] = new_row[column]
-        else:
-            # Aggiunta di una nuova riga
-            df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
+    # Controllo se il dataset esiste già nel DataFrame
+    if dataset_name in df['Dataset_name'].values:
+        # Aggiornamento della riga esistente
+        for column in new_row:
+            if new_row[column]:
+                df.loc[df['Dataset_name'] == dataset_name, column] = new_row[column]
+    else:
+        # Aggiunta di una nuova riga
+        df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
 
-    # Salvataggio del DataFrame aggiornato nel file Excel
-    df.to_excel(file_path, index=False)
+    # Salvataggio del DataFrame aggiornato nel file di testo
+    df.to_csv(file_path, sep='\t', index=False)

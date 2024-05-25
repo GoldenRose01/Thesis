@@ -1,32 +1,35 @@
-import os
-from PySide6 import QtCore as Qt
-from PySide6.QtWidgets import *
-from PySide6.QtGui import QIcon
+import sys
+
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QCheckBox, QGridLayout
+from PyQt6.QtGui import QIcon
+
 from function import *
 from styles import *
 from content import contents_dataset_window
-import sys
 
 input_folder = os.path.join(os.getcwd(), '../media/input')
 
+
 class DatasetWindow(QWidget):
-    def __init__(self, switch_view_callback):
+    def __init__(self, switch_view_callback, color_map):
         super().__init__()
         self.switch_view_callback = switch_view_callback
         self.selected_files = set()
+        self.color_map = color_map
         self.initUI()
 
     def initUI(self):
-        self.setStyleSheet(f"background-color: {color_map['default']};")
+        self.setStyleSheet(f"background-color: {self.color_map['default']};")
         self.layout = QVBoxLayout()
 
         self.title_label = QLabel("Run Encoding Process")
-        self.title_label.setAlignment(Qt.Qt.AlignCenter)
+        self.title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.layout.addWidget(self.title_label)
 
         # Descrizione della pagina
         self.description_label = QLabel(contents_dataset_window["dataset_page_description"])
-        self.description_label.setAlignment(Qt.Qt.AlignCenter)
+        self.description_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.layout.addWidget(self.description_label)
 
         # Collegamento per aprire la cartella
@@ -44,7 +47,7 @@ class DatasetWindow(QWidget):
         reload_button = QPushButton('↻')  # Pulsante di ricarica
         reload_button.setStyleSheet(button_style)
         reload_button.clicked.connect(self.load_files)
-        self.layout.addWidget(reload_button, alignment=Qt.Qt.AlignRight)
+        self.layout.addWidget(reload_button, alignment=Qt.AlignmentFlag.AlignRight)
 
         run_button = QPushButton(contents_dataset_window["run_button_text"])
         run_button.setStyleSheet(button_style)
@@ -85,10 +88,12 @@ class DatasetWindow(QWidget):
 
     def update_title_color(self, checkbox, is_checked):
         if is_checked:
-            checkbox.setStyleSheet(f"QCheckBox {{ font-size: 14px; padding: 5px; spacing: 10px; color: {color_map['title_selected']}; }}")
+            checkbox.setStyleSheet(
+                f"QCheckBox {{ font-size: 14px; padding: 5px; spacing: 10px; color: {self.color_map['title_selected']}; }}")
             self.selected_files.add(checkbox.text() + '.csv')
         else:
-            checkbox.setStyleSheet(f"QCheckBox {{ font-size: 14px; padding: 5px; spacing: 10px; color: {color_map['title_unselected']}; }}")
+            checkbox.setStyleSheet(
+                f"QCheckBox {{ font-size: 14px; padding: 5px; spacing: 10px; color: {self.color_map['title_unselected']}; }}")
             self.selected_files.discard(checkbox.text() + '.csv')
 
     def on_run_clicked(self):
@@ -112,3 +117,6 @@ class DatasetWindow(QWidget):
 
     def set_title(self, title):
         self.title_label.setText(title)
+
+    def update_color_map(self, color_map):
+        self.color_map = color_map

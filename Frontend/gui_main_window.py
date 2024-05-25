@@ -1,9 +1,7 @@
-import sys
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import *
-from content import contents_main
+from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QSizePolicy
+from PyQt6.QtCore import Qt
 from styles import *
-
+from content import contents_main
 
 class MainWindow(QWidget):
     options_dat_path = "Option.dat"
@@ -22,10 +20,10 @@ class MainWindow(QWidget):
         self.setMinimumSize(800, 600)
 
         layout = QVBoxLayout()
-        layout.setAlignment(Qt.AlignCenter)
+        layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         description = QLabel(contents_main["description"])
-        description.setAlignment(Qt.AlignCenter)
+        description.setAlignment(Qt.AlignmentFlag.AlignCenter)
         description.setMinimumHeight(200)
         layout.addWidget(description)
 
@@ -42,7 +40,7 @@ class MainWindow(QWidget):
             f"background-color: {self.color_map['declarative']}; {button_style % (text_color, text_color)}")
 
         # Set the size policy to expanding
-        policy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        policy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         simple_button.setSizePolicy(policy)
         complex_button.setSizePolicy(policy)
         declarative_button.setSizePolicy(policy)
@@ -56,16 +54,23 @@ class MainWindow(QWidget):
         complex_button.clicked.connect(lambda: self.on_button_clicked("complex"))
         declarative_button.clicked.connect(lambda: self.on_button_clicked("declarative"))
 
-        layout.addWidget(simple_button, 1)
-        layout.addWidget(complex_button, 1)
-        layout.addWidget(declarative_button, 1)
+        layout.addWidget(simple_button, 1, Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(complex_button, 1, Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(declarative_button, 1, Qt.AlignmentFlag.AlignCenter)
+
+        self.theme_button = QPushButton('Switch Theme')
+        self.theme_button.setStyleSheet(button_style % (text_color, text_color))
+        self.theme_button.setMinimumHeight(50)
+        self.theme_button.clicked.connect(self.toggle_theme)
+
+        layout.addWidget(self.theme_button, 1, Qt.AlignmentFlag.AlignCenter)
 
         self.setLayout(layout)
         self.center_window()
 
     def center_window(self):
         qr = self.frameGeometry()
-        cp = QApplication.primaryScreen().geometry().center()
+        cp = QWidget.screen(self).geometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
@@ -75,6 +80,14 @@ class MainWindow(QWidget):
         except Exception as e:
             print(f"Error: {e}")
 
+    def toggle_theme(self):
+        if self.color_map == color_map_light:
+            self.color_map = color_map_dark
+        else:
+            self.color_map = color_map_light
+        self.update_color_map(self.color_map)
+        self.switch_view_callback('update_theme')
+
     def update_color_map(self, new_color_map):
         self.color_map = new_color_map
-        self.update_styles()
+        self.initUI()

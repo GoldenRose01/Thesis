@@ -59,7 +59,7 @@ def weighted_edit_distance(ref, hyp, indices, max_variation, length_t, special_v
 
     # Loop per assegnare i pesi
     for i in range(length_t):
-        weights[i] = wtrace_att  # Aggiusta l'indice per i pesi
+        weights[i] = wtrace_att
     for i in indices['prefix']:
         weights[i] = wactivities
     for i in indices['resource']:
@@ -75,14 +75,23 @@ def weighted_edit_distance(ref, hyp, indices, max_variation, length_t, special_v
             continue
 
         adjusted_index = i + 1
+
+        # Converti ref[i] e hyp[i] a numerici se non lo sono già
+        try:
+            numeric_ref = float(ref[i])
+            numeric_hyp = float(hyp[i])
+        except ValueError:
+            print(f"Skipping non-numeric data at index {i}: ref[i]={ref[i]}, hyp[i]={hyp[i]}")
+            continue
+
         if adjusted_index in indices['numeric']:
             rel_index = index_to_numeric.get(i, None)
             if rel_index is not None and max_variation[rel_index] != 0:
-                distance = abs(ref[i] - hyp[i]) / max_variation[rel_index]
+                distance = abs(numeric_ref - numeric_hyp) / max_variation[rel_index]
             else:
                 distance = 0
         elif adjusted_index in indices['categoric'] or adjusted_index in indices['unknown']:
-            distance = 0 if ref[i] == hyp[i] else 1
+            distance = 0 if numeric_ref == numeric_hyp else 1
         else:
             distance = 0
 
@@ -92,3 +101,4 @@ def weighted_edit_distance(ref, hyp, indices, max_variation, length_t, special_v
     weighted_ed_ratio = sum(weighted_distances) / len(weighted_distances) if weighted_distances else 0
 
     return weighted_ed_ratio
+

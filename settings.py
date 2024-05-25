@@ -44,7 +44,6 @@ encoding_path = 'Encoding.dat'
 def read_type_encoding(filepath):
     with open(filepath, 'r') as file:
         type_encoding = file.readline().strip()
-        print("Encoding type: ", type_encoding)
     return type_encoding
 
 
@@ -96,7 +95,6 @@ wresource_att = options['wresource_att'] if options['wresource_att'] else 1
 
 output_dir = "media/output"
 results_dir = os.path.join(output_dir, "result")
-# dataset_folder = "media/input/processed_benchmark_event_logs"
 dataset_folder = "media/input"
 
 # ================ checkers ================
@@ -151,9 +149,9 @@ datasets_labels = {"bpic2011_f1": "bpic2011_1",
                    "bpic2015_3_f2": "bpic2015_3",
                    "bpic2015_4_f2": "bpic2015_4",
                    "bpic2015_5_f2": "bpic2015_5",
-                   "bpic2017_accepted": "bpic2017_accepted",
-                   "bpic2017_cancelled": "bpic2017_cancelled",
-                   "bpic2017_refused": "bpic2017_rejected",
+                   # "bpic2017_accepted": "bpic2017_accepted",
+                   # "bpic2017_cancelled": "bpic2017_cancelled",
+                   # "bpic2017_refused": "bpic2017_rejected",
                    "hospital_billing_2": "hospital_billing_1",
                    "hospital_billing_3": "hospital_billing_2",
                    "Production": "production",
@@ -161,15 +159,6 @@ datasets_labels = {"bpic2011_f1": "bpic2011_1",
                    "sepsis_cases_2": "sepsis_cases_2",
                    "sepsis_cases_4": "sepsis_cases_3",
                    "traffic_fines_1": "traffic_fines",
-                   "xes_BPIC15_1": "xes_BPIC15_1",
-                   "xes_BPIC15_2": "xes_BPIC15_2",
-                   "xes_BPIC15_3": "xes_BPIC15_3",
-                   "xes_BPIC15_4": "xes_BPIC15_4",
-                   "xes_BPIC15_5": "xes_BPIC15_5",
-                   "xes_BPI_Challenge_2012": "xes_BPI_Challenge_2012",
-                   "xes_Hospital Billing - Event Log": "xes_Hospital_Billing",
-                   "xes_Road_Traffic_Fine_Management_Process": "xes_Road_Traffic_Fine",
-                   "xes_Sepsis Cases - Event Log": "xes_Sepsis_cases"
                    }
 
 # ================ hyperparameters ================
@@ -178,24 +167,40 @@ hyperparameters = {'support_threshold': [support_threshold_dict['min']-0.2,
                                          support_threshold_dict['min']-0.1,
                                          support_threshold_dict['min'],
                                          support_threshold_dict['min']+0.1],
-                   'class_weight': [None, 'balanced'],
+                   'class_weight': [None,
+                                    'balanced'],
                    'min_samples_split': [2]
                    }
 """
-dt_hyperparameters = {'criterion': ['entropy', 'gini'],
-                      'class_weight': ['balanced', None],
-                      'max_depth': [4, 6, 8, 10, None],
-                      'min_samples_split': [0.1, 2, 0.2, 0.3],
-                      'min_samples_leaf': [10, 1, 16]
+dt_hyperparameters = {'criterion': ['entropy',
+                                    'gini'],
+                      'class_weight': ['balanced',
+                                       None],
+                      'max_depth': [4, 6, 8, 10,
+                                    None],
+                      'min_samples_split': [0.1, 2,
+                                            0.2, 0.3],
+                      'min_samples_leaf': [10,
+                                           1,
+                                           16]
                       }
 
 num_feat_strategy = ['sqrt', 0.3, 0.5]
 # num_feat_strategy = [0.5]
+
 # sat_threshold_list = [0.55, 0.65, 0.75, 0.85]
 sat_threshold_list = [0.35, 0.45, 0.55, 0.65]
 # sat_threshold_list = [0.85]
-weight_combination_list = [(0.2, 0.4, 0.4), (0.6, 0.2, 0.2), (0.4, 0.4, 0.2), (0.4, 0.2, 0.4), (0.8, 0.1, 0.1),
-                           (0.4, 0.3, 0.3), (0.1, 0.8, 0.1), (0.1, 0.1, 0.8)]
+
+weight_combination_list = [(0.2, 0.4, 0.4),
+                           (0.6, 0.2, 0.2),
+                           (0.4, 0.4, 0.2),
+                           (0.4, 0.2, 0.4),
+                           (0.8, 0.1, 0.1),
+                           (0.4, 0.3, 0.3),
+                           (0.1, 0.8, 0.1),
+                           (0.1, 0.1, 0.8)
+                           ]
 # weight_combination_list = [(0.4, 0.4, 0.2)]
 
 # ================ checkers satisfaction ================

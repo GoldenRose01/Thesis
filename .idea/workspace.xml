@@ -5,37 +5,100 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4d3265eb-b5b4-4347-95ea-2befebde779f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Frontend/theme_selection_widget.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_complex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_complex.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_complex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_complex.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_evaluation_weighted_edit_distance.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_evaluation_weighted_edit_distance.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_weighted_edit_distance_fscore.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_complex_evaluation_weighted_edit_distance.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_complex_evaluation_weighted_edit_distance.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_complex_weighted_edit_distance_fscore.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_evaluation_weighted_edit_distance.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_evaluation_weighted_edit_distance.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_weighted_edit_distance_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Frontend/svg/Sigillo_Università_di_Trento.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_Production_simple.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f2_simple" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f2_simple.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_hospital_billing_2_simple.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_hospital_billing_3_simple.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_simple.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_simple.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_traffic_fines_1_simple.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/postprocessing/Summary.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/postprocessing/Weighted_Summary.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/Production_simple_edit_distance_lib_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/Production_simple_evaluation_edit_distance_lib.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/Production_simple_evaluation_edit_distance_lib.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f1_simple_edit_distance_lib_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f1_simple_evaluation_edit_distance_lib.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f1_simple_evaluation_edit_distance_lib.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f2_simple_edit_distance_lib_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f2_simple_evaluation_edit_distance_lib.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f2_simple_evaluation_edit_distance_lib.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_2_simple_edit_distance_lib_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_2_simple_evaluation_edit_distance_lib.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_2_simple_evaluation_edit_distance_lib.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_3_simple_edit_distance_lib_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_3_simple_evaluation_edit_distance_lib.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_3_simple_evaluation_edit_distance_lib.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_simple_edit_distance_lib_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_simple_evaluation_edit_distance_lib.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_simple_evaluation_edit_distance_lib.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_simple_edit_distance_lib_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_simple_evaluation_edit_distance_lib.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_simple_evaluation_edit_distance_lib.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/traffic_fines_1_simple_edit_distance_lib_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/traffic_fines_1_simple_evaluation_edit_distance_lib.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/traffic_fines_1_simple_evaluation_edit_distance_lib.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/file_verifier/Postprocessing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Datasets_names.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Datasets_names.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Encoding.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Encoding.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/Gui_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/Gui_runner.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/base_details_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/base_details_window.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/details_complex.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/details_complex.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/details_declarative.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/details_declarative.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/details_simple.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/details_simple.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/gui_dataset_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/gui_dataset_window.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/gui_main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/gui_main_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/styles.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/styles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/gui_terminal_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/gui_terminal_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/theme_selection_widget.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/theme_selection_widget.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mediamanager/csvreader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/file_verifier/csvreader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Option.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Option.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Prospetto.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Prospetto.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasetnames.txt" beforeDir="false" afterPath="$PROJECT_DIR$/datasetnames.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/input/processed_benchmark_event_logs/BPIC11_f4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/input/processed_benchmark_event_logs/bpic2012_O_ACCEPTED-COMPLETE.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/input/processed_benchmark_event_logs/sepsis_cases_1.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/input/processed_benchmark_event_logs/sepsis_cases_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/input/processed_benchmark_event_logs/sepsis_cases_4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_bpic2011_f1_simple" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_1_complex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_1_complex.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_1_simple" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_complex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_complex.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_complex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_complex.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/model_params.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/model_params.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_edit_distance_lib_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_edit_distance_separate_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_evaluation_edit_distance_lib.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_evaluation_edit_distance_lib.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_evaluation_edit_distance_separate.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_evaluation_edit_distance_separate.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_evaluation_weighted_edit_distance.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_evaluation_weighted_edit_distance.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_complex_weighted_edit_distance_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_simple_edit_distance_lib_fscore.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_simple_edit_distance_lib_fscore.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_simple_evaluation_edit_distance_lib.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_simple_evaluation_edit_distance_lib.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_complex_evaluation_weighted_edit_distance.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_complex_evaluation_weighted_edit_distance.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_complex_weighted_edit_distance_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_edit_distance_separate_fscore.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_evaluation_edit_distance_separate.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_evaluation_edit_distance_separate.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_evaluation_weighted_edit_distance.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_evaluation_weighted_edit_distance.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_complex_weighted_edit_distance_fscore.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/results.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run_experiments.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_experiments.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/file_verifier/verify.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/file_verifier/verify.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/machine_learning/decision_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/machine_learning/decision_tree.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/machine_learning/evaluateEditDistance.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/machine_learning/evaluateEditDistance.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.csv" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,9 +134,11 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "Python.Gui.executor": "Run",
     "Python.Main.executor": "Run",
+    "Python.Postprocessing.executor": "Run",
     "Python.fitnessEditDistance.executor": "Run",
     "Python.main.executor": "Run",
     "Python.run_experiments.executor": "Run",
+    "Python.script.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
@@ -88,6 +153,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\franc\OneDrive\Documenti\GitHub\Thesis\src\file_verifier" />
+    </key>
+  </component>
   <component name="RunManager" selected="Python.Gui">
     <configuration name="Gui" type="PythonConfigurationType" factoryName="Python">
       <module name="Thesis" />
@@ -137,10 +207,39 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Postprocessing" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Thesis" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/file_verifier" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/file_verifier/Postprocessing.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.Main" />
       <item itemvalue="Python.Gui" />
+      <item itemvalue="Python.Postprocessing" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.Postprocessing" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -161,7 +260,10 @@
       <workItem from="1716281866963" duration="248000" />
       <workItem from="1716282144446" duration="14581000" />
       <workItem from="1716301022930" duration="641000" />
-      <workItem from="1716454246394" duration="8856000" />
+      <workItem from="1716454246394" duration="12388000" />
+      <workItem from="1716476539637" duration="3366000" />
+      <workItem from="1716553622632" duration="16633000" />
+      <workItem from="1716619661951" duration="15483000" />
     </task>
     <servers />
   </component>
@@ -172,10 +274,12 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Thesis$Gui.coverage" NAME="Gui Coverage Results" MODIFIED="1716466853948" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\franc\OneDrive\Documenti\GitHub\Thesis" />
+    <SUITE FILE_PATH="coverage/Thesis$Gui.coverage" NAME="Gui Coverage Results" MODIFIED="1716651766545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\franc\OneDrive\Documenti\GitHub\Thesis" />
     <SUITE FILE_PATH="coverage/Thesis$fitnessEditDistance.coverage" NAME="fitnessEditDistance Coverage Results" MODIFIED="1716282656361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/machine_learning" />
     <SUITE FILE_PATH="coverage/Thesis$main.coverage" NAME="main Coverage Results" MODIFIED="1716282763924" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Thesis$Main.coverage" NAME="Main Coverage Results" MODIFIED="1716298735827" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\franc\OneDrive\Documenti\GitHub\Thesis" />
+    <SUITE FILE_PATH="coverage/Thesis$Postprocessing.coverage" NAME="Postprocessing Coverage Results" MODIFIED="1716631544213" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/file_verifier" />
+    <SUITE FILE_PATH="coverage/Thesis$Main.coverage" NAME="Main Coverage Results" MODIFIED="1716619670312" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\franc\OneDrive\Documenti\GitHub\Thesis" />
     <SUITE FILE_PATH="coverage/Thesis$run_experiments.coverage" NAME="run_experiments Coverage Results" MODIFIED="1716282756091" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Thesis$script.coverage" NAME="script Coverage Results" MODIFIED="1716467965121" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Frontend" />
   </component>
 </project>

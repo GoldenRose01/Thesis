@@ -1,11 +1,13 @@
 from src.machine_learning import *
 from src.machine_learning import recommender as rcm
 from src.dataset_manager.datasetManager import *
+import src.file_verifier.verify as verify
 import numpy as np
 import settings
 import time
 import copy
 import os
+
 import platform
 import argparse
 import multiprocessing
@@ -14,6 +16,8 @@ import csv
 
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione
 def rec_sys_exp(dataset_name):
+    start_time_exp = time.time()
+
     # ================ inputs ================
 
     # Ricrea la cartella di output
@@ -246,4 +250,19 @@ def rec_sys_exp(dataset_name):
 
     # Salva i risultati della valutazione dei prefissi in un file CSV
     rcm.prefix_evaluation_to_csv(results, dataset_name)
+
+    # Timer per simulazioni
+    time_h_exp = (time.time() - start_time_exp) / 3600
+    time_m_exp = (time.time() - start_time_exp) / 60
+
+    print("La simulazione del dataset " + str(dataset_name) + " hanno richiesto " + str(time_h_exp) + " ore o " + str(time_m_exp) + " minuti")
+
+    verify.timeprinter(dataset_name,
+                       settings.type_encoding,
+                       settings.selected_evaluation_edit_distance,
+                       settings.wtrace_att,
+                       settings.wactivities,
+                       settings.wresource_att,
+                       time_m_exp,
+                       file_path='Prospetto.xlsx')
     return dataset_name, results, best_hyperparams_combination, max_prefix_length_test, min_prefix_length, dt

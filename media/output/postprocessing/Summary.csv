@@ -1,0 +1,9 @@
+name_file;fscore(average);recall(average);precision(average)
+bpic2011_f1_simple_evaluation_edit_distance_lib.csv;0,274;0,404;0,214
+hospital_billing_2_simple_evaluation_edit_distance_lib.csv;0,663;0,529;0,954
+hospital_billing_3_simple_evaluation_edit_distance_lib.csv;0,125;0,067;0,941
+Production_simple_evaluation_edit_distance_lib.csv;0,279;0,277;0,347
+sepsis_cases_1_simple_evaluation_edit_distance_lib.csv;0,534;0,529;0,594
+sepsis_cases_2_simple_evaluation_edit_distance_lib.csv;0,821;0,822;0,846
+sepsis_cases_4_simple_evaluation_edit_distance_lib.csv;0,257;0,598;0,196
+traffic_fines_1_simple_evaluation_edit_distance_lib.csv;0,431;0,367;0,994

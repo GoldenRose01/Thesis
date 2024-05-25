@@ -1,14 +1,8 @@
 Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima del prefisso,Lunghezza massima del prefisso,Parametri dell'albero decisionale
-sepsis_cases_1,53.37,"(0.65, 0.1, 0.1, 0.8)",1,15,"(None, 'entropy', 4, 10, 0.1)"
-Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima del prefisso,Lunghezza massima del prefisso,Parametri dell'albero decisionale
-sepsis_cases_1,94.52,"(0.65, 0.1, 0.1, 0.8)",1,15,"(None, 'entropy', 4, 10, 0.3)"
-Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima del prefisso,Lunghezza massima del prefisso,Parametri dell'albero decisionale
-sepsis_cases_1,94.52,"(0.65, 0.1, 0.1, 0.8)",1,15,"(None, 'entropy', 4, 10, 0.3)"
-Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima del prefisso,Lunghezza massima del prefisso,Parametri dell'albero decisionale
-sepsis_cases_1,18.98,"(0.65, 0.1, 0.1, 0.8)",1,15,"(None, 'entropy', 4, 10, 0.3)"
-Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima del prefisso,Lunghezza massima del prefisso,Parametri dell'albero decisionale
-sepsis_cases_2,56.02,"(0.65, 0.1, 0.1, 0.8)",1,12,"('balanced', 'entropy', 10, 1, 2)"
-Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima del prefisso,Lunghezza massima del prefisso,Parametri dell'albero decisionale
-sepsis_cases_4,8.15,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', None, 1, 0.1)"
-Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima del prefisso,Lunghezza massima del prefisso,Parametri dell'albero decisionale
-sepsis_cases_4,29.51,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', None, 1, 0.1)"
+hospital_billing_2,66.26,"(0.65, 0.1, 0.8, 0.1)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"
+hospital_billing_3,12.48,"(0.65, 0.1, 0.8, 0.1)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"
+Production,27.85,"(0.65, 0.1, 0.8, 0.1)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"
+sepsis_cases_1,53.37,"(0.65, 0.1, 0.8, 0.1)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"
+sepsis_cases_2,82.09,"(0.65, 0.1, 0.8, 0.1)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"
+sepsis_cases_4,25.66,"(0.65, 0.1, 0.8, 0.1)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"
+traffic_fines_1,43.06,"(0.65, 0.1, 0.8, 0.1)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"

@@ -8,9 +8,6 @@ bpic2012_declined
 bpic2015_3_f2
 bpic2015_4_f2
 bpic2015_5_f2
-bpic2017_accepted
-bpic2017_cancelled
-bpic2017_refused
 hospital_billing_2
 hospital_billing_3
 Production

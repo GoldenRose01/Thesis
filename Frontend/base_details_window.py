@@ -1,6 +1,5 @@
-#base_details_window.py
-from PySide6 import QtCore as Qt
-from PySide6.QtWidgets import *
+from PyQt6 import QtCore as Qt
+from PyQt6.QtWidgets import *
 from styles import *
 from function import *
 import os
@@ -33,7 +32,7 @@ class BaseDetailsWindow(QWidget):
         self.setStyleSheet(f"background-color: {color};")
 
         self.title = QLabel(self.content_details["window_title_details"])
-        self.title.setAlignment(Qt.Qt.AlignCenter)
+        self.title.setAlignment(Qt.Qt.AlignmentFlag.AlignCenter)
         self.title.setStyleSheet(title_label_style % text_color)
         self.title.setFixedHeight(40)
 
@@ -44,7 +43,7 @@ class BaseDetailsWindow(QWidget):
         self.main_layout = QVBoxLayout()
         self.main_layout.setSpacing(10)
         self.main_layout.setContentsMargins(10, 10, 10, 10)
-        self.main_layout.setAlignment(Qt.Qt.AlignTop)
+        self.main_layout.setAlignment(Qt.Qt.AlignmentFlag.AlignTop)
 
         self.main_layout.addWidget(self.title)
         self.main_layout.addWidget(self.description)

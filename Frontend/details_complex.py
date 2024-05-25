@@ -1,7 +1,6 @@
-#details_complex
 from base_details_window import BaseDetailsWindow
 from content import contents_complex_details
-from PySide6.QtWidgets import QTableWidget, QTableWidgetItem, QPushButton, QHBoxLayout, QInputDialog
+from PyQt6.QtWidgets import *
 from function import *
 from styles import *
 
