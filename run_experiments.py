@@ -12,6 +12,7 @@ import platform
 import argparse
 import multiprocessing
 import csv
+
 # Definire i codici di escape ANSI
 BLUE = '\033[94m'
 GREEN = '\033[92m'

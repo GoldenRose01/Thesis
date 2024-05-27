@@ -1,4 +1,0 @@
-Dataset_name	Simple	Complex edit_distance_lib   Complex edit_distance_separate  Declarative Complex weighted_edit_distance(33.0%,33.0%,33.0%)	Complex weighted_edit_distance(33.0%,33.0%,33.0%)	Complex edit_distance_lib	Complex edit_distance_separate	Complex weighted_edit_distance(33,33,33)	Declarative
-bpic2011_f1	127.19350433746973m
-bpic2011_f2	221.83349008957546m
-bpic2011_f3	35.96406986713409m
