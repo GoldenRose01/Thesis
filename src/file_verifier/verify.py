@@ -81,6 +81,7 @@ def structurize_results(directory):
                 os.rename(source_path, full_dest_path)
 
 
+
 def timeprinter(dataset_name,
                 type_encoding,
                 selected_evaluation_edit_distance,
@@ -89,7 +90,7 @@ def timeprinter(dataset_name,
                 wresource_att,
                 time_m_finale,
                 ):
-    file_path = 'Prospetto.txt'
+    file_path = 'Prospetto.csv'
     # Definizione della leggenda base
     legend = ['Dataset_name',
               'Simple',
@@ -108,7 +109,7 @@ def timeprinter(dataset_name,
         encodings = ['utf-8', 'latin1', 'iso-8859-1']
         for encoding in encodings:
             try:
-                df = pd.read_csv(file_path, sep='\t', encoding=encoding, on_bad_lines='skip')
+                df = pd.read_csv(file_path, sep=',', encoding=encoding, on_bad_lines='skip')
                 break
             except UnicodeDecodeError:
                 print(f"Error reading {file_path} with encoding {encoding}. Trying next encoding...")
@@ -131,8 +132,7 @@ def timeprinter(dataset_name,
 
     # Costruzione della riga da aggiungere/aggiornare
     new_row = {'Dataset_name': dataset_name, 'Simple': '', 'Complex edit_distance_lib': '',
-        'Complex edit_distance_separate': '', 'Complex weighted_edit_distance(33,33,33)': '',
-        'Declarative': ''}
+        'Complex edit_distance_separate': '', weighted_col_name: '', 'Declarative': ''}
 
     # Aggiunta valori basati sul tipo di encoding
     if type_encoding == 'simple':
@@ -155,6 +155,6 @@ def timeprinter(dataset_name,
         # Aggiunta di una nuova riga
         df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
 
-    # Salvataggio del DataFrame aggiornato nel file di testo
-    df.to_csv(file_path, sep='\t', index=False)
+    # Salvataggio del DataFrame aggiornato nel file CSV
+    df.to_csv(file_path, sep=',', index=False)
     print(f"File {file_path} aggiornato con successo con dati del {dataset_name}.")

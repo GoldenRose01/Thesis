@@ -5,25 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4d3265eb-b5b4-4347-95ea-2befebde779f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f3_simple" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f3_simple.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f4_simple" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f4_simple.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f3_simple_edit_distance_lib_fscore.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f3_simple_evaluation_edit_distance_lib.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f3_simple_evaluation_edit_distance_lib.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f4_simple_edit_distance_lib_fscore.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f4_simple_evaluation_edit_distance_lib.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f4_simple_evaluation_edit_distance_lib.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datasets_names.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Datasets_names.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/gui_main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/gui_main_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/theme_selection_widget.py" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/theme_selection_widget.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Prospetto.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Prospetto.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Prospetto.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/model_params.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/model_params.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/result/bpic2011_f2_simple_edit_distance_lib_fscore.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f2_simple_edit_distance_lib_fscore.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/result/bpic2011_f2_simple_evaluation_edit_distance_lib.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f2_simple_evaluation_edit_distance_lib.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/output/results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/results.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/bpic2011_f3_simple_edit_distance_lib_fscore.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f3_simple_edit_distance_lib_fscore.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/bpic2011_f3_simple_evaluation_edit_distance_lib.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f3_simple_evaluation_edit_distance_lib.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/file_verifier/verify.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/file_verifier/verify.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -191,6 +179,7 @@
       <workItem from="1716553622632" duration="16633000" />
       <workItem from="1716619661951" duration="16056000" />
       <workItem from="1716712079941" duration="14593000" />
+      <workItem from="1716747646600" duration="15869000" />
     </task>
     <servers />
   </component>
@@ -205,7 +194,7 @@
     <SUITE FILE_PATH="coverage/Thesis$fitnessEditDistance.coverage" NAME="fitnessEditDistance Coverage Results" MODIFIED="1716282656361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/machine_learning" />
     <SUITE FILE_PATH="coverage/Thesis$main.coverage" NAME="main Coverage Results" MODIFIED="1716282763924" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Thesis$Postprocessing.coverage" NAME="Postprocessing Coverage Results" MODIFIED="1716631544213" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/file_verifier" />
-    <SUITE FILE_PATH="coverage/Thesis$Main.coverage" NAME="Main Coverage Results" MODIFIED="1716738197051" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\franc\OneDrive\Documenti\GitHub\Thesis" />
+    <SUITE FILE_PATH="coverage/Thesis$Main.coverage" NAME="Main Coverage Results" MODIFIED="1716804586246" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\franc\OneDrive\Documenti\GitHub\Thesis" />
     <SUITE FILE_PATH="coverage/Thesis$run_experiments.coverage" NAME="run_experiments Coverage Results" MODIFIED="1716282756091" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Thesis$script.coverage" NAME="script Coverage Results" MODIFIED="1716467965121" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Frontend" />
   </component>
