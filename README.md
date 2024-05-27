@@ -4,13 +4,20 @@ This repository contains the source code of a prescriptive process monitoring sy
 # Instruction for running the experiments
 Clone this repo,then follow the instructions below.
 ## Requirements
-Run req.bat to install all the libraries needed for the project.
-Secondly add the input logs in the folder <code>media/input</code>. The logs used in this experiments are available [here](https://drive.google.com/file/d/1DDP7OKQhD8cno2tbSpLlIPZ-Mh5y-XUC/view). The <code>settings.py</code> file contains the configuration parameters for the experiments.
+Verify if the :venv is present if not the libraries needed will be displayed on a .dat folder.
+Secondly add the input logs in the folder <code>media/input</code>. The logs used in this experiments are available [here](https://drive.google.com/file/d/1DDP7OKQhD8cno2tbSpLlIPZ-Mh5y-XUC/view). The <code>option.dat</code> file contains the configuration parameters for the experiments and the <code>Encoding.dat</code> let you choose the encoding type.
 To run the experiment type:
 ```
-$ python run_experiments.py
+$ python main.py
 ```
 The result are available in the folder <code>media/output</code>.
 
+## Frontend Block
+The frontend block is available in the folder <code>frontend</code>.It let you have a more User-friendly interface for running the experiment. Please note that not all the option of the frontend are 100% functioning(Declarative button and presetting of it are present but not implemented).
+```
+$ cd Fontend
+$ python Gui_runner.py 
+
+```
 # Project based on work of Luca Boschiero
 The repository of his work can be found there [here](https://github.com/lucaboschiero/tesi)
