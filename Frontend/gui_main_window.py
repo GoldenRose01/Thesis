@@ -1,7 +1,8 @@
-from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QSizePolicy
+from PyQt6.QtWidgets import *
 from PyQt6.QtCore import Qt
 from styles import *
 from content import contents_main
+from theme_selection_widget import CustomSwitch
 
 class MainWindow(QWidget):
     options_dat_path = "Option.dat"
@@ -58,12 +59,14 @@ class MainWindow(QWidget):
         layout.addWidget(complex_button, 1, Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(declarative_button, 1, Qt.AlignmentFlag.AlignCenter)
 
-        self.theme_button = QPushButton('Switch Theme')
-        self.theme_button.setStyleSheet(button_style % (text_color, text_color))
-        self.theme_button.setMinimumHeight(50)
-        self.theme_button.clicked.connect(self.toggle_theme)
+        self.switch_layout = QHBoxLayout()
+        self.switch_layout.setAlignment(Qt.AlignmentFlag.AlignRight)
 
-        layout.addWidget(self.theme_button, 1, Qt.AlignmentFlag.AlignCenter)
+        self.theme_switch = CustomSwitch('Switch Theme')
+        self.theme_switch.checkbox.stateChanged.connect(self.toggle_theme)
+
+        self.switch_layout.addWidget(self.theme_switch)
+        layout.addLayout(self.switch_layout)
 
         self.setLayout(layout)
         self.center_window()

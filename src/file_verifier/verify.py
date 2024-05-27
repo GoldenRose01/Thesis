@@ -88,10 +88,14 @@ def timeprinter(dataset_name,
                 wactivities,
                 wresource_att,
                 time_m_finale,
-                file_path='Prospetto.txt'):
+                ):
+    file_path = 'Prospetto.txt'
     # Definizione della leggenda base
-    legend = ['Dataset_name', 'Simple', 'Complex edit_distance_lib', 'Complex edit_distance_separate',
-              'Complex weighted_edit_distance(33,33,33)', 'Declarative']
+    legend = ['Dataset_name',
+              'Simple',
+              'Complex edit_distance_lib',
+              'Complex edit_distance_separate',
+              'Declarative']
 
     # Calcolo di a, b, c
     a = wtrace_att * 100
@@ -101,7 +105,19 @@ def timeprinter(dataset_name,
 
     # Controllo se il file esiste
     if os.path.exists(file_path):
-        df = pd.read_csv(file_path, sep='\t')
+        encodings = ['utf-8', 'latin1', 'iso-8859-1']
+        for encoding in encodings:
+            try:
+                df = pd.read_csv(file_path, sep='\t', encoding=encoding, on_bad_lines='skip')
+                break
+            except UnicodeDecodeError:
+                print(f"Error reading {file_path} with encoding {encoding}. Trying next encoding...")
+            except pd.errors.ParserError as e:
+                print(f"Parser error reading {file_path} with encoding {encoding}: {e}")
+                return
+        else:
+            print(f"Failed to read {file_path} with available encodings.")
+            return
     else:
         df = pd.DataFrame(columns=legend)
 
@@ -141,3 +157,4 @@ def timeprinter(dataset_name,
 
     # Salvataggio del DataFrame aggiornato nel file di testo
     df.to_csv(file_path, sep='\t', index=False)
+    print(f"File {file_path} aggiornato con successo con dati del {dataset_name}.")

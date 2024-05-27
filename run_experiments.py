@@ -12,12 +12,15 @@ import platform
 import argparse
 import multiprocessing
 import csv
-
+# Definire i codici di escape ANSI
+BLUE = '\033[94m'
+GREEN = '\033[92m'
+RESET = '\033[0m'
 
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione
 def rec_sys_exp(dataset_name):
     start_time_exp = time.time()
-
+    print(BLUE + f"Inizio simulazione con {dataset_name}" + RESET)
     # ================ inputs ================
 
     # Ricrea la cartella di output
@@ -255,7 +258,7 @@ def rec_sys_exp(dataset_name):
     time_h_exp = (time.time() - start_time_exp) / 3600
     time_m_exp = (time.time() - start_time_exp) / 60
 
-    print("La simulazione del dataset " + str(dataset_name) + " hanno richiesto " + str(time_h_exp) + " ore o " + str(time_m_exp) + " minuti")
+    print(GREEN + f"La simulazione del dataset {dataset_name} hanno richiesto {time_h_exp} ore o {time_m_exp} minuti" + RESET)
 
     verify.timeprinter(dataset_name,
                        settings.type_encoding,
@@ -263,6 +266,5 @@ def rec_sys_exp(dataset_name):
                        settings.wtrace_att,
                        settings.wactivities,
                        settings.wresource_att,
-                       time_m_exp,
-                       file_path='Prospetto.xlsx')
+                       time_m_exp)
     return dataset_name, results, best_hyperparams_combination, max_prefix_length_test, min_prefix_length, dt
