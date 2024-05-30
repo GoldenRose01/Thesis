@@ -68,16 +68,19 @@ def rec_sys_exp(dataset_name):
                  dataset_manager.case_id_col: 'case:concept:name',
                  dataset_manager.activity_col: 'concept:name'
                  })
+
     test_df = test_df.rename(
         columns={dataset_manager.timestamp_col: 'time:timestamp',
                  dataset_manager.case_id_col: 'case:concept:name',
                  dataset_manager.activity_col: 'concept:name'
                  })
+
     val_df = val_df.rename(
         columns={dataset_manager.timestamp_col: 'time:timestamp',
                  dataset_manager.case_id_col: 'case:concept:name',
                  dataset_manager.activity_col: 'concept:name'
                  })
+
     train_val_df = train_val_df.rename(
         columns={dataset_manager.timestamp_col: 'time:timestamp',
                  dataset_manager.case_id_col: 'case:concept:name',

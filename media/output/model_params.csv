@@ -17,3 +17,7 @@ bpic2011_f2	(None, 'entropy', None, 10, 0.1)	72.03	83.01	-1	46
 bpic2011_f3	(None, 'entropy', 4, 10, 2)	89.49	90.75	-1	4
 bpic2011_f4	(None, 'entropy', 6, 1, 2)	75.66	80.33	-1	6
 bpic2012_accepted	('balanced', 'entropy', 10, 1, 2)	69.97	70.3	-1	10
+bpic2011_f4	(None, 'entropy', 6, 1, 2)	75.66	80.33	-1	6
+bpic2012_accepted	('balanced', 'entropy', 10, 1, 2)	69.97	70.3	-1	10
+bpic2012_cancelled	(None, 'gini', 10, 16, 2)	79.59	79.74	-1	10
+bpic2012_cancelled	(None, 'gini', 10, 16, 2)	79.59	79.74	-1	10
