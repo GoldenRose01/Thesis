@@ -11,7 +11,7 @@ def attributes_verifier(directory):
     trace_att_path = directory + "/" + trace_filename
     if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
         print("File non trovati. Esecuzione dello script script csvreader.")
-        subprocess.run(["python", "Mediamanager/csvreader.py"])
+        subprocess.run(["python", "src/file_verifier/csvreader.py"])
     else:
         print("File trovati,inizio esperimento")
 

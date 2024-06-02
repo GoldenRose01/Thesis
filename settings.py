@@ -83,6 +83,9 @@ selected_evaluation_edit_distance = (
     'edit_distance_lib' if not options['selected_evaluation_edit_distance'] or type_encoding == "simple" else options[
         'selected_evaluation_edit_distance'])
 # ['edit_distance_lib', 'edit_distance_separate','weighted_edit_distance']
+eval_stamp = options['eval_stamp'] if options['eval_stamp'] else False
+recc_stamp = options['recc_stamp'] if options['recc_stamp'] else False
+
 
 # ================ weights ================
 

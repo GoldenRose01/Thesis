@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import *
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
 from styles import *
 from content import contents_main
 from theme_selection_widget import CustomSwitch
@@ -25,7 +26,7 @@ class MainWindow(QWidget):
 
         description = QLabel(contents_main["description"])
         description.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        description.setMinimumHeight(200)
+        description.setMinimumHeight(100)
         layout.addWidget(description)
 
         simple_button = QPushButton(contents_main["simple_encoding"])
@@ -55,17 +56,19 @@ class MainWindow(QWidget):
         complex_button.clicked.connect(lambda: self.on_button_clicked("complex"))
         declarative_button.clicked.connect(lambda: self.on_button_clicked("declarative"))
 
-        layout.addWidget(simple_button, 1, Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(complex_button, 1, Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(declarative_button, 1, Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(simple_button, 1)
+        layout.addWidget(complex_button, 1)
+        layout.addWidget(declarative_button, 1)
 
         self.switch_layout = QHBoxLayout()
         self.switch_layout.setAlignment(Qt.AlignmentFlag.AlignRight)
 
-        self.theme_switch = CustomSwitch('Switch Theme')
-        self.theme_switch.checkbox.stateChanged.connect(self.toggle_theme)
+        self.theme_switch_button = QPushButton()
+        self.update_theme_icon()
+        self.theme_switch_button.setFixedSize(40, 40)
+        self.theme_switch_button.clicked.connect(self.toggle_theme)
 
-        self.switch_layout.addWidget(self.theme_switch)
+        self.switch_layout.addWidget(self.theme_switch_button)
         layout.addLayout(self.switch_layout)
 
         self.setLayout(layout)
@@ -73,7 +76,7 @@ class MainWindow(QWidget):
 
     def center_window(self):
         qr = self.frameGeometry()
-        cp = QWidget.screen(self).geometry().center()
+        cp = QScreen.availableGeometry(QApplication.primaryScreen()).center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
@@ -90,7 +93,16 @@ class MainWindow(QWidget):
             self.color_map = color_map_light
         self.update_color_map(self.color_map)
         self.switch_view_callback('update_theme')
+        self.update_theme_icon()
 
     def update_color_map(self, new_color_map):
         self.color_map = new_color_map
         self.initUI()
+
+    def update_theme_icon(self):
+        if self.color_map == color_map_light:
+            icon = QIcon("svg/sun.svg")
+        else:
+            icon = QIcon("svg/moon.svg")
+        self.theme_switch_button.setIcon(icon)
+        self.theme_switch_button.setIconSize(QSize(30, 30))

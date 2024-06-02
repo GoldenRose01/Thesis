@@ -1,0 +1,33 @@
+digraph Tree {
+node [shape=box, style="filled", color="black", fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label="node #0\nDiagnosticArtAstrup_15_1 <= 0.5\nentropy = 0.608\nsamples = 603\nvalue = [90.0, 513.0]", fillcolor="#5caeea"] ;
+1 [label="node #1\nprefix_9_7 <= 0.5\nentropy = 0.494\nsamples = 361\nvalue = [39, 322]", fillcolor="#51a9e8"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="node #2\nprefix_10_8 <= 0.5\nentropy = 0.511\nsamples = 343\nvalue = [39, 304]", fillcolor="#52aae8"] ;
+1 -> 2 ;
+3 [label="node #3\nprefix_11_7 <= 0.5\nentropy = 0.478\nsamples = 311\nvalue = [32, 279]", fillcolor="#50a8e8"] ;
+2 -> 3 ;
+4 [label="node #4\nentropy = 0.454\nsamples = 294\nvalue = [28, 266]", fillcolor="#4ea7e8"] ;
+3 -> 4 ;
+5 [label="node #5\nentropy = 0.787\nsamples = 17\nvalue = [4, 13]", fillcolor="#76bbed"] ;
+3 -> 5 ;
+6 [label="node #6\nentropy = 0.758\nsamples = 32\nvalue = [7, 25]", fillcolor="#70b8ec"] ;
+2 -> 6 ;
+7 [label="node #7\nentropy = 0.0\nsamples = 18\nvalue = [0, 18]", fillcolor="#399de5"] ;
+1 -> 7 ;
+8 [label="node #8\nprefix_6_3 <= 0.5\nentropy = 0.743\nsamples = 242\nvalue = [51, 191]", fillcolor="#6eb7ec"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="node #9\nprefix_13_5 <= 0.5\nentropy = 0.785\nsamples = 205\nvalue = [48, 157]", fillcolor="#76bbed"] ;
+8 -> 9 ;
+10 [label="node #10\nprefix_12_2 <= 0.5\nentropy = 0.811\nsamples = 192\nvalue = [48, 144]", fillcolor="#7bbeee"] ;
+9 -> 10 ;
+11 [label="node #11\nentropy = 0.849\nsamples = 167\nvalue = [46.0, 121.0]", fillcolor="#84c2ef"] ;
+10 -> 11 ;
+12 [label="node #12\nentropy = 0.402\nsamples = 25\nvalue = [2, 23]", fillcolor="#4aa6e7"] ;
+10 -> 12 ;
+13 [label="node #13\nentropy = 0.0\nsamples = 13\nvalue = [0, 13]", fillcolor="#399de5"] ;
+9 -> 13 ;
+14 [label="node #14\nentropy = 0.406\nsamples = 37\nvalue = [3, 34]", fillcolor="#4aa6e7"] ;
+8 -> 14 ;
+}

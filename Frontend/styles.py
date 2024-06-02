@@ -1,4 +1,5 @@
 # styles.py
+
 # Mappa dei colori
 color_map_light = {
     "default": "#ffffff",
@@ -32,7 +33,6 @@ color_map_dark = {
     'title_unselected': '#808080',
 }
 
-
 def get_contrasting_text_color(background_color):
     # Convert hex to RGB
     background_color = background_color.lstrip('#')
@@ -43,7 +43,6 @@ def get_contrasting_text_color(background_color):
     # Calculate brightness (YIQ)
     brightness = (bg_r * 299 + bg_g * 587 + bg_b * 114) / 1000
     return '#000000' if brightness > 128 else '#ffffff'
-
 
 # Stile per i pulsanti trasparenti
 button_style = """

@@ -142,3 +142,5 @@ cython_debug/
 media/input/*
 src/machine_learning/encoding/Settings/Resource_att.txt
 src/machine_learning/encoding/Settings/Trace_att.txt
+/.idea
+/.idea

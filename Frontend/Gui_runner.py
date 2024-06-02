@@ -44,26 +44,24 @@ class AppRunner(QMainWindow):
             self.color_map = color_map_dark
 
         # Update all windows with the new theme
-        self.main_window.update_color_map(self.color_map)
-        self.details_simple_window.update_color_map(self.color_map)
-        self.details_complex_window.update_color_map(self.color_map)
-        self.details_declarative_window.update_color_map(self.color_map)
-        self.dataset_window.update_color_map(self.color_map)
-        self.terminal_window.update_color_map(self.color_map)
+        self.update_theme_for_all_windows()
 
     def switch_view_callback(self, view_name):
-        view_methods = {
-            'main': self.show_main_window,
-            'simple': lambda: self.show_simple_details_window("Details - Simple"),
-            'complex': lambda: self.show_complex_details_window("Details - Complex"),
-            'declarative': lambda: self.show_declarative_details_window("Details - Declarative"),
-            'dataset': lambda: self.show_dataset_window(self.current_title),
-            'terminal': self.show_terminal_window,
-            'update_theme': self.update_theme_for_all_windows
-        }
-        view_method = view_methods.get(view_name)
-        if view_method:
-            view_method()
+        try:
+            view_methods = {
+                'main': self.show_main_window,
+                'simple': lambda: self.show_simple_details_window("Details - Simple"),
+                'complex': lambda: self.show_complex_details_window("Details - Complex"),
+                'declarative': lambda: self.show_declarative_details_window("Details - Declarative"),
+                'dataset': lambda: self.show_dataset_window(self.current_title),
+                'terminal': self.show_terminal_window,
+                'update_theme': self.update_theme_for_all_windows
+            }
+            view_method = view_methods.get(view_name)
+            if view_method:
+                view_method()
+        except Exception as e:
+            print(f"An error occurred while switching view: {e}")
 
     def show_main_window(self):
         self.stack.setCurrentWidget(self.main_window)
@@ -96,7 +94,10 @@ class AppRunner(QMainWindow):
         self.terminal_window.update_color_map(self.color_map)
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    runner = AppRunner()
-    runner.show()
-    sys.exit(app.exec())
+    try:
+        app = QApplication(sys.argv)
+        runner = AppRunner()
+        runner.show()
+        sys.exit(app.exec())
+    except Exception as e:
+        print(f"An error occurred: {e}")

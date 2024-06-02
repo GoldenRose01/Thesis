@@ -121,6 +121,9 @@ def recommend(prefix, path, dt_input_trainval, dataset_name):
         feature, state, parent = rule
 
         numbers = extract_numbers_from_string(feature, trace_att_d, resource_att_d)
+        if numbers is None:
+            continue  # Salta questo ciclo se numbers è None
+
         for num_tuple in numbers:
             if len(num_tuple) == 2:
                 num1, num2 = num_tuple
@@ -226,6 +229,8 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold,
         feature, state, parent = rule
         # Supponiamo che extract_numbers_from_string sia una funzione definita altrove che estrae numeri dalla stringa della feature
         numbers = extract_numbers_from_string(feature, trace_att_d, resource_att_d)
+        if numbers is None:
+            continue
         for num_tuple in numbers:
             if len(num_tuple) == 2:
                 num1, num2 = num_tuple
@@ -239,6 +244,8 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold,
     for rule in path.rules:
         feature, state, parent = rule
         numbers = extract_numbers_from_string(feature, trace_att_d, resource_att_d)
+        if numbers is None:
+            continue
         for num_tuple in numbers:
             if len(num_tuple) == 2:
                 num1, num2 = num_tuple
@@ -598,11 +605,13 @@ def generate_recommendations_and_evaluation(test_log,
     if settings.compute_gain:
         eval_res.gain = gain(eval_res.comp, eval_res.non_comp, eval_res.pos_comp, eval_res.pos_non_comp)
 
-    print("Writing evaluation result into csv file ...")
-    #write_evaluation_to_csv(eval_res, dataset_name)
+    if settings.eval_stamp is True:
+        print("Writing evaluation result into csv file ...")
+        write_evaluation_to_csv(eval_res, dataset_name)
 
-    print("Writing recommendations into csv file ...")
-    #write_recommendations_to_csv(recommendations, dataset_name)
+    if settings.recc_stamp is True:
+        print("Writing recommendations into csv file ...")
+        write_recommendations_to_csv(recommendations, dataset_name)
 
     return recommendations, eval_res
 

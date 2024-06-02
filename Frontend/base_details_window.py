@@ -1,5 +1,6 @@
 from PyQt6 import QtCore as Qt
 from PyQt6.QtWidgets import *
+from PyQt6.QtGui import *
 from styles import *
 from function import *
 import os
@@ -27,18 +28,14 @@ class BaseDetailsWindow(QWidget):
         return options
 
     def initUI(self):
-        color = self.color_map.get(self.encoding, self.color_map.get("default"))
-        text_color = get_contrasting_text_color(color)
-        self.setStyleSheet(f"background-color: {color};")
+        self.apply_background_color()
 
         self.title = QLabel(self.content_details["window_title_details"])
         self.title.setAlignment(Qt.Qt.AlignmentFlag.AlignCenter)
-        self.title.setStyleSheet(title_label_style % text_color)
         self.title.setFixedHeight(40)
 
         self.description = QLabel(f"Impostazioni dettagliate per il {self.encoding} encoding")
         self.description.setMinimumHeight(40)
-        self.description.setStyleSheet(description_label_style % text_color)
 
         self.main_layout = QVBoxLayout()
         self.main_layout.setSpacing(10)
@@ -51,11 +48,9 @@ class BaseDetailsWindow(QWidget):
         self.setup_options()
 
         self.back_button = QPushButton(self.content_details["back_button"])
-        self.back_button.setStyleSheet(button_style % (text_color, text_color))
-        self.back_button.clicked.connect(lambda: self.switch_view_callback("main"))
+        self.back_button.clicked.connect(self.go_to_main)
 
         self.next_button = QPushButton("Avanti")
-        self.next_button.setStyleSheet(button_style % (text_color, text_color))
         self.next_button.clicked.connect(self.on_next_clicked)
 
         button_layout = QHBoxLayout()
@@ -66,16 +61,38 @@ class BaseDetailsWindow(QWidget):
 
         self.setLayout(self.main_layout)
         self.setWindowTitle(self.content_details["window_title_details"])
+        self.update_styles()
+
+    def apply_background_color(self):
+        color = self.color_map.get(self.encoding, self.color_map.get("default"))
+        self.setAutoFillBackground(True)
+        palette = self.palette()
+        palette.setColor(self.backgroundRole(), QColor(color))
+        self.setPalette(palette)
+
+    def update_styles(self):
+        color = self.color_map.get(self.encoding, self.color_map.get("default"))
+        text_color = get_contrasting_text_color(color)
+        self.setStyleSheet(f"""
+            background-color: {color};
+            color: {text_color};
+        """)
+        self.title.setStyleSheet(title_label_style % text_color)
+        self.description.setStyleSheet(description_label_style % text_color)
+        self.back_button.setStyleSheet(button_style % (text_color, text_color))
+        self.next_button.setStyleSheet(button_style % (text_color, text_color))
 
     def setup_options(self):
-        self.add_boolean_option("optimize_dt" )
+        self.add_boolean_option("optimize_dt")
         self.add_boolean_option("print_dt")
-        self.add_boolean_option("Print_edit_distance")
+        self.add_boolean_option("print_edit_distance")
         self.add_boolean_option("train_prefix_log")
         self.add_boolean_option("one_hot_encoding")
         self.add_boolean_option("use_score")
         self.add_boolean_option("print_log")
         self.add_boolean_option("print_length")
+        self.add_boolean_option("eval_stamp")
+        self.add_boolean_option("recc_stamp")
         self.add_numeric_option("sat_threshold", 0, 1, 0.05)
         self.add_choice_option("fitness_type", ["mean", "wmean"])
 
@@ -116,3 +133,6 @@ class BaseDetailsWindow(QWidget):
 
     def update_option(self, option_name, value):
         self.options[option_name] = value
+
+    def go_to_main(self):
+        self.switch_view_callback("main")
