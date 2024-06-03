@@ -81,3 +81,18 @@ Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima d
 "traffic_fines_1,43.06,""(0.65, 0.1, 0.8, 0.1)"",1,2,""('balanced', 'entropy', 6, 1, 0.1)""";;;;;;;;;;
 "traffic_fines_1,43.06,""(0.65, 0.1, 0.8, 0.1)"",1,2,""('balanced', 'entropy', 6, 1, 0.1)""";;;;;;;;;;
 "traffic_fines_1,75.12,""(0.65, 0.1, 0.1, 0.8)"",1,2,""('balanced', 'entropy', 6, 1, 0.1)""";;;;;;;;;;
+Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima del prefisso,Lunghezza massima del prefisso,Parametri dell'albero decisionale
+Production,70.27,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', 10, 1, 2)"
+sepsis_cases_1,37.85,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', 10, 1, 2)"
+sepsis_cases_2,86.87,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', 10, 1, 2)"
+sepsis_cases_4,15.86,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', 10, 1, 2)"
+Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima del prefisso,Lunghezza massima del prefisso,Parametri dell'albero decisionale
+Production,78.07,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', 10, 1, 2)"
+sepsis_cases_1,81.9,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', 10, 1, 2)"
+sepsis_cases_2,94.57,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', 10, 1, 2)"
+sepsis_cases_4,29.65,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', 10, 1, 2)"
+Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima del prefisso,Lunghezza massima del prefisso,Parametri dell'albero decisionale
+Production,70.27,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', 10, 1, 2)"
+sepsis_cases_1,81.9,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', 10, 1, 2)"
+sepsis_cases_2,94.57,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', 10, 1, 2)"
+sepsis_cases_4,27.75,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', 10, 1, 2)"

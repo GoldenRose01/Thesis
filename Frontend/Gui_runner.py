@@ -1,5 +1,7 @@
 import sys
 
+from PyQt6.QtCore import *
+from PyQt6.QtSvgWidgets import *
 from PyQt6.QtWidgets import *
 
 from details_complex import DetailsComplexWindow
@@ -9,9 +11,9 @@ from gui_dataset_window import DatasetWindow
 from gui_main_window import MainWindow
 from gui_terminal_window import TerminalWindow
 from theme_selection_widget import ThemeSelectionWidget
+from loading_window import LoadingWindow
 
 from styles import *
-
 
 class AppRunner(QMainWindow):
     def __init__(self):
@@ -96,8 +98,17 @@ class AppRunner(QMainWindow):
 if __name__ == "__main__":
     try:
         app = QApplication(sys.argv)
-        runner = AppRunner()
-        runner.show()
+        """
+        # Create and display the loading window
+        loading_window = LoadingWindow()
+        loading_window.show()
+        """
+        # Create and display the main application window after the loading window is closed
+        def show_main_app():
+            runner = AppRunner()
+            runner.show()
+
+        QTimer.singleShot(5000, show_main_app)  # Show the main application window after 5 seconds
         sys.exit(app.exec())
     except Exception as e:
         print(f"An error occurred: {e}")

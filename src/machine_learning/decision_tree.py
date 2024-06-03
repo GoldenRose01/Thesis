@@ -21,7 +21,6 @@ from imblearn.over_sampling import SMOTE
 from collections import Counter
 from imblearn.over_sampling import ADASYN
 from imblearn.combine import SMOTEENN
-import settings
 from sklearn.model_selection import GridSearchCV
 from src.machine_learning.apriori import *
 from src.machine_learning.encoding.encoding import *
@@ -107,7 +106,10 @@ def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input
         dot_data = tree.export_graphviz(search.best_estimator_, out_file=None, impurity=True,
                                         feature_names=new_feature_names, node_ids=True, filled=True)
         graph = graphviz.Source(dot_data, format="pdf")
-        graph.render(os.path.join(settings.output_dir, f'DT_{dataset_name}_{settings.type_encoding}'))
+        if settings.type_encoding != "complex":
+            graph.render(os.path.join(settings.output_dir, f'DT_{dataset_name}_{settings.type_encoding}'))
+        else:
+            graph.render(os.path.join(settings.output_dir, f"DT_{dataset_name}_{settings.type_encoding}_{settings.selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}"))
         print("PDF generated")
 
     return model_dict, new_feature_names

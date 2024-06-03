@@ -11,6 +11,8 @@ def read_options_from_dat(filepath):
                 key, value = line.split('=', 1)
                 if value.lower() in ['true', 'false']:
                     options[key] = value.lower() == 'true'
+                elif value == '0%':
+                    options[key] = 0.0
                 elif value.endswith('%') and value[:-1].replace('.', '', 1).isdigit():
                     options[key] = float(value[:-1]) / 100
                 elif value.replace('.', '', 1).isdigit():
@@ -88,11 +90,28 @@ recc_stamp = options['recc_stamp'] if options['recc_stamp'] else False
 
 
 # ================ weights ================
-
-wtrace_att = options['wtrace_att'] if options['wtrace_att'] else 1
-wactivities = options['wactivities'] if options['wactivities'] else 1
-wresource_att = options['wresource_att'] if options['wresource_att'] else 1
 # weights of the three components of the encoding
+temp_wtrace_att = options['wtrace_att'] if options['wtrace_att'] else 0.0
+temp_wactivities = options['wactivities'] if options['wactivities'] else 0.0
+temp_wresource_att = options['wresource_att'] if options['wresource_att'] else 0.0
+
+# Calcola la somma dei valori temporanei
+total = temp_wtrace_att + temp_wactivities + temp_wresource_att
+
+# Se la somma è inferiore a 1.0, arrotonda il valore più grande per ottenere 1.0
+if total < 1.0:
+    max_value = max(temp_wtrace_att, temp_wactivities, temp_wresource_att)
+    if max_value == temp_wtrace_att:
+        temp_wtrace_att += (1.0 - total)
+    elif max_value == temp_wactivities:
+        temp_wactivities += (1.0 - total)
+    else:
+        temp_wresource_att += (1.0 - total)
+
+# Aggiorna le opzioni con i nuovi valori
+wtrace_att = temp_wtrace_att
+wactivities = temp_wactivities
+wresource_att = temp_wresource_att
 
 # ================ folders ================
 
