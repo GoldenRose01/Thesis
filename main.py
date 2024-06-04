@@ -17,6 +17,7 @@ os.environ['PATH'] = os.getenv('PATH')
 
 if __name__ == "__main__":
     print(f"Inizio simulazione con {settings.type_encoding} encoding e {settings.selected_evaluation_edit_distance}")
+
     # Verifica che i file di configurazione siano presenti
     verify.attributes_verifier("src/machine_learning/encoding/Settings")
 
