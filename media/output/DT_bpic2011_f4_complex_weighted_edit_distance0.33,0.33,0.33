@@ -1,0 +1,25 @@
+digraph Tree {
+node [shape=box, style="filled", color="black", fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label="node #0\nDiagnosticArtAstrup_37_1 <= 0.5\nentropy = 0.815\nsamples = 912\nvalue = [230, 682]", fillcolor="#7cbeee"] ;
+1 [label="node #1\nDiagnosticArtAstrup_14_1 <= 0.5\nentropy = 0.302\nsamples = 484\nvalue = [26, 458]", fillcolor="#44a3e6"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="node #2\nprefix_5_65 <= 0.5\nentropy = 0.137\nsamples = 366\nvalue = [7, 359]", fillcolor="#3d9fe6"] ;
+1 -> 2 ;
+3 [label="node #3\nDiagnosticArtAstrup_6_1 <= 0.5\nentropy = 0.096\nsamples = 325\nvalue = [4, 321]", fillcolor="#3b9ee5"] ;
+2 -> 3 ;
+4 [label="node #4\nentropy = 0.133\nsamples = 217\nvalue = [4, 213]", fillcolor="#3d9fe5"] ;
+3 -> 4 ;
+5 [label="node #5\nentropy = 0.0\nsamples = 108\nvalue = [0, 108]", fillcolor="#399de5"] ;
+3 -> 5 ;
+6 [label="node #6\nentropy = 0.378\nsamples = 41\nvalue = [3, 38]", fillcolor="#49a5e7"] ;
+2 -> 6 ;
+7 [label="node #7\nentropy = 0.637\nsamples = 118\nvalue = [19, 99]", fillcolor="#5fb0ea"] ;
+1 -> 7 ;
+8 [label="node #8\nDiagnosticArtAstrup_70_1 <= 0.5\nentropy = 0.998\nsamples = 428\nvalue = [204.0, 224.0]", fillcolor="#edf6fd"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="node #9\nentropy = 0.893\nsamples = 213\nvalue = [147, 66]", fillcolor="#f1ba92"] ;
+8 -> 9 ;
+10 [label="node #10\nentropy = 0.834\nsamples = 215\nvalue = [57.0, 158.0]", fillcolor="#80c0ee"] ;
+8 -> 10 ;
+}

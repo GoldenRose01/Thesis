@@ -281,3 +281,17 @@ sepsis_cases_1	(None, 'entropy', 4, 10, 0.2)	91.94	91.94	-1	4
 sepsis_cases_2	(None, 'gini', 8, 1, 2)	97.25	99.03	-1	8
 sepsis_cases_4	('balanced', 'gini', None, 1, 2)	43.04	100.0	-1	19
 traffic_fines_1	('balanced', 'entropy', 6, 1, 0.1)	82.16	82.17	-1	6
+bpic2011_f1	(None, 'entropy', None, 1, 2)	91.19	99.91	-1	21
+bpic2011_f2	(None, 'entropy', 10, 1, 0.3)	68.92	76.76	-1	10
+bpic2011_f3	(None, 'gini', 6, 1, 2)	94.74	97.46	-1	6
+bpic2011_f1	(None, 'entropy', None, 1, 2)	91.19	99.91	-1	21
+bpic2011_f2	(None, 'entropy', 10, 1, 0.3)	68.92	76.76	-1	10
+bpic2011_f3	(None, 'gini', 6, 1, 2)	94.74	97.46	-1	6
+bpic2011_f4	(None, 'entropy', 4, 10, 0.3)	88.88	89.44	-1	4
+bpic2012_accepted	(None, 'entropy', None, 1, 0.1)	83.91	83.85	-1	29
+bpic2012_cancelled	(None, 'gini', 10, 10, 2)	87.78	89.88	-1	10
+bpic2012_declined	(None, 'gini', None, 1, 0.3)	95.44	95.62	-1	33
+bpic2015_3_f2	(None, 'entropy', None, 1, 0.1)	97.3	99.53	-1	25
+bpic2015_4_f2	('balanced', 'gini', 8, 1, 0.1)	97.87	99.09	-1	8
+bpic2015_5_f2	(None, 'entropy', 10, 1, 2)	89.08	96.24	-1	10
+hospital_billing_2	(None, 'entropy', 10, 1, 2)	98.85	98.85	-1	10

@@ -97,16 +97,54 @@ temp_wresource_att = options['wresource_att'] if options['wresource_att'] else 0
 
 # Calcola la somma dei valori temporanei
 total = temp_wtrace_att + temp_wactivities + temp_wresource_att
+try:
+    if total > 1.0:
+        raise ValueError("Total percentage must be less than or equal to 100%")
+except ValueError as e:
+    print(e)
 
-# Se la somma è inferiore a 1.0, arrotonda il valore più grande per ottenere 1.0
-if total < 1.0:
-    max_value = max(temp_wtrace_att, temp_wactivities, temp_wresource_att)
-    if max_value == temp_wtrace_att:
-        temp_wtrace_att += (1.0 - total)
-    elif max_value == temp_wactivities:
-        temp_wactivities += (1.0 - total)
-    else:
-        temp_wresource_att += (1.0 - total)
+# Se la somma è inferiore a 1.0 o diverso da 33%, arrotonda il valore più grande per ottenere 1.0
+if not (temp_wresource_att==temp_wtrace_att==temp_wactivities==0.33):
+    if total < 1.0:
+        max_value = max(temp_wtrace_att, temp_wactivities, temp_wresource_att)
+        increment_remaining = (1.0 - total)
+
+        if temp_wtrace_att == temp_wactivities == temp_wresource_att:
+            increment = increment_remaining / 3.0
+            temp_wtrace_att += increment
+            temp_wactivities += increment
+            temp_wresource_att += increment
+
+            if temp_wtrace_att + temp_wactivities + temp_wresource_att < 1.0:
+                temp_wtrace_att += 0.01
+        elif temp_wtrace_att == temp_wactivities and temp_wtrace_att > temp_wresource_att:
+            increment = increment_remaining / 2.0
+            temp_wtrace_att += increment
+            temp_wactivities += increment
+
+            if temp_wtrace_att + temp_wactivities + temp_wresource_att < 1.0:
+                temp_wresource_att += 0.01
+        elif temp_wtrace_att == temp_wresource_att and temp_wtrace_att > temp_wactivities:
+            increment = increment_remaining / 2.0
+            temp_wtrace_att += increment
+            temp_wresource_att += increment
+
+            if temp_wtrace_att + temp_wactivities + temp_wresource_att < 1.0:
+                temp_wactivities += 0.01
+        elif temp_wactivities == temp_wresource_att and temp_wactivities > temp_wtrace_att:
+            increment = increment_remaining / 2.0
+            temp_wactivities += increment
+            temp_wresource_att += increment
+
+            if temp_wtrace_att + temp_wactivities + temp_wresource_att < 1.0:
+                temp_wtrace_att += 0.01
+        else:
+            if max_value == temp_wtrace_att:
+                temp_wtrace_att += increment_remaining
+            elif max_value == temp_wactivities:
+                temp_wactivities += increment_remaining
+            else:
+                temp_wresource_att += increment_remaining
 
 # Aggiorna le opzioni con i nuovi valori
 wtrace_att = temp_wtrace_att
