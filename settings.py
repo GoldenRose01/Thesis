@@ -34,7 +34,8 @@ def read_datasets_from_dat(filepath):
     return datasets_names
 
 
-# ========================================paths===========================================================
+# ========================================paths=========================================================================
+
 
 options_filepath = 'Option.dat'
 datasets_names_filepath = 'Datasets_names.dat'
@@ -42,23 +43,28 @@ dataset_debug = 'Dataset_name.txt'
 encoding_path = 'Encoding.dat'
 
 
-# ========================================encoding_selection=============================================================
+# ========================================encoding_selection============================================================
+
 def read_type_encoding(filepath):
     with open(filepath, 'r') as file:
         type_encoding = file.readline().strip()
     return type_encoding
 
-
 type_encoding = read_type_encoding(encoding_path) if read_type_encoding(encoding_path) else 'simple'
 # simple, frequency, complex
 
-# ================================================== datasets_names =====================================================
+
+# ================================================== datasets_names ====================================================
+
 
 datasets_names = read_datasets_from_dat(datasets_names_filepath) if read_datasets_from_dat(
     datasets_names_filepath) else read_datasets_from_dat(dataset_debug)
 options = read_options_from_dat(options_filepath)
 
+
 # ================================================= thresholds =========================================================
+
+
 support_threshold_dict = {'min': 0.05, 'max': 1.75}
 
 sat_threshold = options['sat_threshold'] if options['sat_threshold'] else 0.75
@@ -89,7 +95,8 @@ eval_stamp = options['eval_stamp'] if options['eval_stamp'] else False
 recc_stamp = options['recc_stamp'] if options['recc_stamp'] else False
 
 
-# ================ weights ================
+# ======================================== weights =====================================================================
+
 # weights of the three components of the encoding
 temp_wtrace_att = options['wtrace_att'] if options['wtrace_att'] else 0.0
 temp_wactivities = options['wactivities'] if options['wactivities'] else 0.0
@@ -151,21 +158,27 @@ wtrace_att = temp_wtrace_att
 wactivities = temp_wactivities
 wresource_att = temp_wresource_att
 
-# ================ folders ================
+
+# ========================================= folders ====================================================================
+
 
 output_dir = "media/output"
 results_dir = os.path.join(output_dir, "result")
 dataset_folder = "media/input"
 
+
 # ================ checkers ================
+
 
 existence_family = [ConstraintChecker.EXISTENCE,
                     ConstraintChecker.ABSENCE,
                     ConstraintChecker.INIT,
                     ConstraintChecker.EXACTLY]
 
+
 choice_family = [ConstraintChecker.CHOICE,
                  ConstraintChecker.EXCLUSIVE_CHOICE]
+
 
 positive_rel_family = [ConstraintChecker.RESPONDED_EXISTENCE,
                        ConstraintChecker.RESPONSE,
@@ -176,16 +189,19 @@ positive_rel_family = [ConstraintChecker.RESPONDED_EXISTENCE,
                        ConstraintChecker.CHAIN_PRECEDENCE
                        ]
 
+
 negative_rel_family = [ConstraintChecker.NOT_RESPONDED_EXISTENCE,
                        ConstraintChecker.NOT_RESPONSE,
                        ConstraintChecker.NOT_CHAIN_RESPONSE,
                        ConstraintChecker.NOT_PRECEDENCE,
                        ConstraintChecker.NOT_CHAIN_PRECEDENCE]
 
+
 checkers_cumulative = {"existence": existence_family}
 checkers_cumulative["choice"] = checkers_cumulative["existence"] + choice_family
 checkers_cumulative["positive relations"] = checkers_cumulative["choice"] + positive_rel_family
 checkers_cumulative["negative relations"] = checkers_cumulative["positive relations"] + negative_rel_family
+
 
 checkers = {"existence": existence_family,
             "choice": existence_family + choice_family,
@@ -193,9 +209,12 @@ checkers = {"existence": existence_family,
             "negative relations": existence_family + negative_rel_family,
             "all": checkers_cumulative['negative relations']}
 
+
 constr_family_list = checkers.keys()
 
+
 # ================ datasets ================
+
 
 datasets_labels = {"bpic2011_f1": "bpic2011_1",
                    "bpic2011_f2": "bpic2011_2",
@@ -221,7 +240,10 @@ datasets_labels = {"bpic2011_f1": "bpic2011_1",
                    "traffic_fines_1": "traffic_fines",
                    }
 
+
 # ================ hyperparameters ================
+
+
 """
 hyperparameters = {'support_threshold': [support_threshold_dict['min']-0.2,
                                          support_threshold_dict['min']-0.1,
@@ -232,6 +254,8 @@ hyperparameters = {'support_threshold': [support_threshold_dict['min']-0.2,
                    'min_samples_split': [2]
                    }
 """
+
+
 dt_hyperparameters = {'criterion': ['entropy',
                                     'gini'],
                       'class_weight': ['balanced',
@@ -245,11 +269,15 @@ dt_hyperparameters = {'criterion': ['entropy',
                                            16]
                       }
 
+
 num_feat_strategy = ['sqrt', 0.3, 0.5]
+
 # num_feat_strategy = [0.5]
 
 # sat_threshold_list = [0.55, 0.65, 0.75, 0.85]
+
 sat_threshold_list = [0.35, 0.45, 0.55, 0.65]
+
 # sat_threshold_list = [0.85]
 
 weight_combination_list = [(0.2, 0.4, 0.4),
@@ -261,9 +289,13 @@ weight_combination_list = [(0.2, 0.4, 0.4),
                            (0.1, 0.8, 0.1),
                            (0.1, 0.1, 0.8)
                            ]
+
 # weight_combination_list = [(0.4, 0.4, 0.2)]
 
+
 # ================ checkers satisfaction ================
+
+
 rules = {
     "vacuous_satisfaction": True,
     "activation": "",  # e.g. A.attr > 6
@@ -275,25 +307,35 @@ rules = {
     }
 }
 
+
 # ================ plots ================
+
+
 method_label = {'existence': r'$\mathcal{E}$',
                 'choice': r'$\mathcal{\widehat{C}}$',
                 'positive relations': r'$\mathcal{\widehat{PR}}$',
                 'negative relations': r'$\mathcal{\widehat{NR}}$',
                 'all': r'$\mathcal{A}$'
                 }
+
 method_marker = {'existence': 'x',
                  'choice': '1',
                  'positive relations': '.',
                  'negative relations': '',
                  'all': '+'
                  }
+
 # method_color = {'existence': 'mediumpurple', 'choice': 'deepskyblue', 'positive relations': 'orange',
 #                'negative relations': 'crimson', 'all': 'forestgreen'}
+
 method_color = 'orange'
+
 method_style = {'existence': 'solid',
                 'choice': (0, (1, 1)),
                 'positive relations': 'dashdot',
                 'negative relations': (0, (5, 10)),
                 'all': 'dashdot'
                 }
+
+
+#=======================================================================================================================

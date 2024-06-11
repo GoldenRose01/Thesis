@@ -10,13 +10,20 @@ import os
 import platform
 import settings
 
+COLOR = '\033[99m'
+RESET = '\033[0m'
 # Percorso al file .env per graphviz
 env_path = '.env'
 # Imposta la variabile d'ambiente PATH
 os.environ['PATH'] = os.getenv('PATH')
 
 if __name__ == "__main__":
-    print(f"Inizio simulazione con {settings.type_encoding} encoding e {settings.selected_evaluation_edit_distance}")
+
+    if settings.selected_evaluation_edit_distance != "weighted_edit_distance":
+        print(COLOR + f"Inizio simulazione con {settings.type_encoding} encoding e {settings.selected_evaluation_edit_distance}" + RESET)
+    else:
+        print(COLOR + f"Inizio simulazione con {settings.type_encoding} encoding e {settings.selected_evaluation_edit_distance} al {settings.wtrace_att},{settings.wactivities},{settings.wresource_att}" + RESET)
+
 
     # Verifica che i file di configurazione siano presenti
     verify.attributes_verifier("src/machine_learning/encoding/Settings")

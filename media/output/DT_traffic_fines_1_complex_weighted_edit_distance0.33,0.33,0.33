@@ -1,0 +1,37 @@
+digraph Tree {
+node [shape=box, style="filled", color="black", fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label="node #0\nprefix_2_3 <= 0.5\nentropy = 1.0\nsamples = 103652\nvalue = [51826.0, 51826.0]", fillcolor="#ffffff"] ;
+1 [label="node #1\nprefix_3_4 <= 0.5\nentropy = 0.833\nsamples = 68377\nvalue = [51786.598, 18613.099]", fillcolor="#eeae80"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="node #2\nprefix_3_2 <= 0.5\nentropy = 0.784\nsamples = 65356\nvalue = [51774.883, 15776.081]", fillcolor="#eda775"] ;
+1 -> 2 ;
+3 [label="node #3\nDiagnosticArtAstrup_2_1 <= 0.5\nentropy = 0.782\nsamples = 65236\nvalue = [51768.494, 15668.632]", fillcolor="#eda775"] ;
+2 -> 3 ;
+4 [label="node #4\nentropy = 0.901\nsamples = 2013\nvalue = [1405.711, 653.174]", fillcolor="#f1bc95"] ;
+3 -> 4 ;
+5 [label="node #5\nprefix_2_1 <= 0.5\nentropy = 0.777\nsamples = 63223\nvalue = [50362.783, 15015.459]", fillcolor="#eda774"] ;
+3 -> 5 ;
+6 [label="node #6\nprefix_3_1 <= 0.5\nentropy = 0.777\nsamples = 63209\nvalue = [50361.718, 15003.206]", fillcolor="#eda774"] ;
+5 -> 6 ;
+7 [label="node #7\nentropy = 0.777\nsamples = 63199\nvalue = [50361.718, 14993.78]", fillcolor="#eda774"] ;
+6 -> 7 ;
+8 [label="node #8\nentropy = -0.0\nsamples = 10\nvalue = [0.0, 9.425]", fillcolor="#399de5"] ;
+6 -> 8 ;
+9 [label="node #9\nentropy = 0.402\nsamples = 14\nvalue = [1.065, 12.253]", fillcolor="#4aa6e7"] ;
+5 -> 9 ;
+10 [label="node #10\nentropy = 0.312\nsamples = 120\nvalue = [6.39, 107.449]", fillcolor="#45a3e7"] ;
+2 -> 10 ;
+11 [label="node #11\nentropy = 0.039\nsamples = 3021\nvalue = [11.714, 2837.018]", fillcolor="#3a9de5"] ;
+1 -> 11 ;
+12 [label="node #12\nprefix_3_6 <= 0.5\nentropy = 0.013\nsamples = 35275\nvalue = [39.402, 33212.901]", fillcolor="#399de5"] ;
+0 -> 12 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+13 [label="node #13\nprefix_3_4 <= 0.5\nentropy = 0.001\nsamples = 35097\nvalue = [1.065, 33079.062]", fillcolor="#399de5"] ;
+12 -> 13 ;
+14 [label="node #14\nentropy = 0.001\nsamples = 35085\nvalue = [1.065, 33067.752]", fillcolor="#399de5"] ;
+13 -> 14 ;
+15 [label="node #15\nentropy = 0.0\nsamples = 12\nvalue = [0.0, 11.31]", fillcolor="#399de5"] ;
+13 -> 15 ;
+16 [label="node #16\nentropy = 0.765\nsamples = 178\nvalue = [38.338, 133.839]", fillcolor="#72b9ec"] ;
+12 -> 16 ;
+}
