@@ -10,3 +10,7 @@ sepsis_cases_1_simple_evaluation_edit_distance_lib.csv;0,534;0,529;0,594
 sepsis_cases_2_simple_evaluation_edit_distance_lib.csv;0,821;0,822;0,846
 sepsis_cases_4_simple_evaluation_edit_distance_lib.csv;0,257;0,598;0,196
 traffic_fines_1_simple_evaluation_edit_distance_lib.csv;0,431;0,367;0,994
+Production_complex_evaluation_weighted_edit_distance.csv;0,781;1,000;0,641
+sepsis_cases_1_complex_evaluation_weighted_edit_distance.csv;0,819;0,867;0,776
+sepsis_cases_2_complex_evaluation_weighted_edit_distance.csv;0,946;1,000;0,898
+sepsis_cases_4_complex_evaluation_weighted_edit_distance.csv;0,296;1,000;0,175
