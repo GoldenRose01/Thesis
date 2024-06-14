@@ -531,4 +531,14 @@ sepsis_cases_1,81.9,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', 10, 1, 2)"
 
 sepsis_cases_2,94.57,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', 10, 1, 2)"
 
-sepsis_cases_4,29.65,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', 10, 1, 2)"
+sepsis_cases_4,29.65,"(0.65, 0.1, 0.1, 0.8)",1,14,"(None, 'gini', 10, 1, 2)"Dataset,Punteggio,Migliore configurazione degli iperparametri,Lunghezza minima del prefisso,Lunghezza massima del prefisso,Parametri dell'albero decisionale
+bpic2012_accepted,61.57,"(0.65, 0.1, 0.1, 0.8)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"
+bpic2012_cancelled,85.36,"(0.65, 0.1, 0.1, 0.8)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"
+bpic2012_declined,89.35,"(0.65, 0.1, 0.1, 0.8)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"
+bpic2015_3_f2,83.18,"(0.65, 0.1, 0.1, 0.8)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"
+bpic2015_4_f2,50.6,"(0.65, 0.1, 0.1, 0.8)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"
+bpic2015_5_f2,71.74,"(0.65, 0.1, 0.1, 0.8)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"
+hospital_billing_2,94.74,"(0.65, 0.1, 0.1, 0.8)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"
+hospital_billing_3,97.66,"(0.65, 0.1, 0.1, 0.8)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"
+Production,78.01,"(0.65, 0.1, 0.1, 0.8)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"
+traffic_fines_1,75.12,"(0.65, 0.1, 0.1, 0.8)",1,2,"('balanced', 'entropy', 6, 1, 0.1)"

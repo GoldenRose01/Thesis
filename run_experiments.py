@@ -182,8 +182,9 @@ def rec_sys_exp(dataset_name):
                 "type": PrefixType.ONLY,
                 "length": prefix_len
             }
-            print("Counter: ", counter)
-            print("raccomandazione", prefix_len, "/", max_prefix_length_val)
+            if settings.Allprint==True:
+                print("Counter: ", counter)
+                print("raccomandazione", prefix_len, "/", max_prefix_length_val)
             recommendations, evaluation = rcm.generate_recommendations_and_evaluation(test_log=val_log,
                                                                                       train_log=train_log,
                                                                                       labeling=labeling,

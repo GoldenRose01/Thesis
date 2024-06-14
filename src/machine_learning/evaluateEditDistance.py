@@ -1,5 +1,7 @@
 import editdistance  # Importa la libreria per calcolare la distanza di edit
 import itertools
+
+import settings
 from settings import Print_edit_distance, wtrace_att, wactivities, wresource_att
 
 def edit(ref, hyp, special_value=-999):
@@ -81,7 +83,8 @@ def weighted_edit_distance(ref, hyp, indices, max_variation, length_t, special_v
             numeric_ref = float(ref[i])
             numeric_hyp = float(hyp[i])
         except ValueError:
-            print(f"Skipping non-numeric data at index {i}: ref[i]={ref[i]}, hyp[i]={hyp[i]}")
+            if settings.Allprint is True:
+                print(f"Skipping non-numeric data at index {i}: ref[i]={ref[i]}, hyp[i]={hyp[i]}")
             continue
 
         if adjusted_index in indices['numeric']:
