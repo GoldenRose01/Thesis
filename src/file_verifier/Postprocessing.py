@@ -42,12 +42,6 @@ def calculate_metrics(input_directory, summary_file, dataset_names_file):
                 avg_recall = df['recall'].mean()
                 avg_fscore = df['fscore'].mean()
 
-                # Calculate the weighted average metrics
-                total_cases = df['num_cases'].sum()
-                w_avg_precision = (df['precision'] * df['num_cases']).sum() / total_cases
-                w_avg_recall = (df['recall'] * df['num_cases']).sum() / total_cases
-                w_avg_fscore = (df['fscore'] * df['num_cases']).sum() / total_cases
-
                 # Determine the database name
                 database_name = get_database_name(file_name, dataset_names)
 
@@ -74,10 +68,7 @@ def calculate_metrics(input_directory, summary_file, dataset_names_file):
                         summary_data[database_name].update({
                             f'fscore(average)weighted_edit_distance_{weight_str}': f'{avg_fscore:.3f}'.replace('.', ','),
                             f'recall(average)weighted_edit_distance_{weight_str}': f'{avg_recall:.3f}'.replace('.', ','),
-                            f'precision(average)weighted_edit_distance_{weight_str}': f'{avg_precision:.3f}'.replace('.', ','),
-                            f'fscore(waverage)_{weight_str}': f'{w_avg_fscore:.3f}'.replace('.', ','),
-                            f'recall(waverage)_{weight_str}': f'{w_avg_recall:.3f}'.replace('.', ','),
-                            f'precision(waverage)_{weight_str}': f'{w_avg_precision:.3f}'.replace('.', ',')
+                            f'precision(average)weighted_edit_distance_{weight_str}': f'{avg_precision:.3f}'.replace('.', ',')
                         })
 
     # Convert summary data to DataFrames

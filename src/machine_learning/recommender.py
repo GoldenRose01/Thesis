@@ -71,7 +71,7 @@ class ParamsOptimizer:
                 evaluation = evaluate_recommendations(input_log=self.val_log,
                                                       labeling=self.labeling, prefixing=prefixing,
                                                       rules=self.rules, paths=paths,log=self.train_log,
-                                                      dataset_name=dataset_name)
+                                                      dataset_name=dataset_name,features=dt_input_train.features)
                 results.append(evaluation)
 
             model_dict['model'] = dtc
@@ -108,7 +108,7 @@ class ParamsOptimizer:
         return best_model_dict, dt_input_trainval.features
 
 # Definisci una funzione per generare raccomandazioni basate su un prefisso e un percorso
-def recommend(prefix, path, dt_input_trainval, dataset_name):
+def recommend(prefix, path, dt_input_trainval, dataset_name, features):
     recommendation = ""
     trace_att_d, resource_att_d = get_attributes_by_dataset(dataset_name)
 
@@ -119,6 +119,14 @@ def recommend(prefix, path, dt_input_trainval, dataset_name):
 
     for rule in path.rules:
         feature, state, parent = rule
+
+        # Trova la posizione della caratteristica nel vettore features
+        feature_base = feature.split('_')[
+            0]  # Estrae la parte iniziale della caratteristica, ad es. "org:group_14" da "org:group_14_1"
+        if feature_base in features:
+            feature_index = features.index(feature_base)
+        else:
+            continue
 
         numbers = extract_numbers_from_string(feature, trace_att_d, resource_att_d)
         if numbers is None:
@@ -137,7 +145,7 @@ def recommend(prefix, path, dt_input_trainval, dataset_name):
                     rec[num1 - 1] = int(num2)
                 rec = rec.tolist()
 
-                rec_str = dt_input_trainval.decode(rec)
+                rec_str = dt_input_trainval.decode(rec,feature_base)
                 for column in rec_str.columns:
                     if rec_str[column].iloc[0] != '0' and rec_str[column].notnull().any():
                         if state == TraceState.VIOLATED:
@@ -150,7 +158,7 @@ def recommend(prefix, path, dt_input_trainval, dataset_name):
 
 # Definisci una funzione per valutare la conformità di un trace rispetto a un percorso
 def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold,
-             labeling, indices, max_variation, dataset_name, prefix_max):
+             labeling, indices, max_variation, dataset_name, prefix_max,features):
     # Inizializza variabili trace_attribute e resource_attribute
     trace_att_d, resource_att_d = get_attributes_by_dataset(dataset_name)
     # Sistemazione indici
@@ -214,7 +222,6 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold,
 
     # Continue with encoding and further processing...
     activities = dt_input_trainval.encode(activities)
-
     # Pre-elaborazione di hyp da dati codificati
     hyp_t = [int(value) if isinstance(value, str) and value.isdigit() else value for value in activities.iloc[0].values]
     if settings.type_encoding == "complex":
@@ -227,7 +234,7 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold,
     # Inizializza ref con il valore massimo derivato dalle regole
     for rule in path.rules:
         feature, state, parent = rule
-        # Supponiamo che extract_numbers_from_string sia una funzione definita altrove che estrae numeri dalla stringa della feature
+
         numbers = extract_numbers_from_string(feature, trace_att_d, resource_att_d)
         if numbers is None:
             continue
@@ -266,7 +273,6 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold,
 
     ed = 0
     # Override di sicurezza per simple encoding
-    # todo aggiorna i nomi in base alle impostazioni
     if settings.type_encoding == "simple":
         ed = evaluateEditDistance.edit(ref, hyp)
     elif settings.type_encoding == "complex":
@@ -344,7 +350,7 @@ def train_path_recommender(data_log, train_val_log, val_log, train_log, labeling
                            target_label=target_label)
     return paths, best_model_dict
 
-def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train_log,dataset_name):
+def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train_log,dataset_name,features):
     # if labeling["threshold_type"] == LabelThresholdType.LABEL_MEAN:
     #    labeling["custom_threshold"] = calc_mean_label_threshold(train_log, labeling)
 
@@ -359,7 +365,7 @@ def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train
         # for id, pref in enumerate(prefixes[prefix_length]): print(id, input_log[pref.trace_num][0]['label'])
         for prefix in prefixes[prefix_length]:
             for path in paths:
-                path.fitness = calcPathFitnessOnPrefix(prefix.events, path, rules, settings.fitness_type,train_log)
+                path.fitness = calcPathFitnessOnPrefix(prefix.events, path, rules, settings.fitness_type,train_log,features)
 
             paths = sorted(paths, key=lambda path: (- path.fitness, path.impurity, - path.num_samples["total"]),
                            reverse=False)
@@ -372,7 +378,7 @@ def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train
                         path.fitness != selected_path.fitness or path.impurity != selected_path.impurity or path.num_samples != selected_path.num_samples):
                     break
 
-                recommendation = recommend(prefix.events, path, rules,dataset_name)
+                recommendation = recommend(prefix.events, path, rules,dataset_name,features)
                 # print(f"{prefix_length} {prefix.trace_num} {prefix.trace_id} {path_index}->{recommendation}")
                 trace = input_log[prefix.trace_num]
 
@@ -380,7 +386,7 @@ def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train
                     # if recommendation != "":
                     selected_path = path
                     trace = input_log[prefix.trace_num]
-                    is_compliant, e = evaluate(trace, path, rules, labeling)
+                    is_compliant, e = evaluate(trace, path, rules, labeling,features)
 
                     """
                     if prefix_length > 2:
@@ -432,6 +438,7 @@ def generate_recommendations_and_evaluation(test_log,
                                             max_variations,
                                             dataset_name,
                                             prefix_max,
+                                            features,
                                             eval_res=None,
                                             debug=False):
 
@@ -466,7 +473,7 @@ def generate_recommendations_and_evaluation(test_log,
             for path in paths:
                 pos_paths_total_samples += path.num_samples['node_samples']
             for path in paths:
-                path.fitness = calcPathFitnessOnPrefix(prefix.events, path, dt_input_trainval,train_log,dataset_name)
+                path.fitness = calcPathFitnessOnPrefix(prefix.events, path, dt_input_trainval,train_log,dataset_name,features)
                 path.score = calcScore(path, pos_paths_total_samples, weights=hyperparams_evaluation[1:])
             # paths = sorted(paths, key=lambda path: (- path.fitness, path.impurity, - path.num_samples["total"]), reverse=False)
             if settings.use_score:
@@ -484,7 +491,7 @@ def generate_recommendations_and_evaluation(test_log,
                 trace = test_log[prefix.trace_num]
                 path = reranked_paths[0]
                 label = generate_label(trace, labeling)
-                compliant, _ = evaluate(trace, path, rules, labeling, eval_type=settings.sat_type,prefix_max=prefix_max)
+                compliant, _ = evaluate(trace, path, rules, labeling,features, eval_type=settings.sat_type,prefix_max=prefix_max)
                 eval_res.comp += 1 if compliant else 0
                 eval_res.non_comp += 0 if compliant else 1
                 eval_res.pos_comp += 1 if compliant and label.value == TraceLabel.TRUE.value else 0
@@ -496,8 +503,8 @@ def generate_recommendations_and_evaluation(test_log,
                                       or path.num_samples != selected_path.num_samples):
                     break
 
-                recommendation = recommend(prefix.events, path, dt_input_trainval,dataset_name)
-                #print(recommendation)
+                recommendation = recommend(prefix.events, path, dt_input_trainval,dataset_name,features)
+                print(recommendation)
                 #print(f"{prefix_length} {prefix.trace_num} {prefix.trace_id} {path_index}->{recommendation}")
 
                 if recommendation != "Contradiction" and recommendation != "":
@@ -517,6 +524,7 @@ def generate_recommendations_and_evaluation(test_log,
                                                max_variation=max_variations,
                                                dataset_name=dataset_name,
                                                prefix_max=prefix_max,
+                                               features=features,
                                                )
                     if e is None:
                         e_name = "UnknownError"
@@ -608,21 +616,21 @@ def generate_recommendations_and_evaluation(test_log,
 
     if settings.eval_stamp is True:
         print("Writing evaluation result into csv file ...")
-        write_evaluation_to_csv(eval_res, dataset_name)
+    write_evaluation_to_csv(eval_res, dataset_name)
 
     if settings.recc_stamp is True:
         print("Writing recommendations into csv file ...")
-        write_recommendations_to_csv(recommendations, dataset_name)
+    write_recommendations_to_csv(recommendations, dataset_name)
 
     return recommendations, eval_res
 
 
 def write_evaluation_to_csv(e, dataset):
-    if type_encoding != "weighted_edit_distance":
-        csv_file = os.path.join(settings.results_dir, f"{dataset}__{type_encoding}_evaluation_{selected_evaluation_edit_distance}.csv")
+    if selected_evaluation_edit_distance != "weighted_edit_distance":
+        csv_file = os.path.join(settings.results_dir, f"{dataset}_{type_encoding}_evaluation_{selected_evaluation_edit_distance}.csv")
     else:
         csv_file = os.path.join(settings.results_dir,
-                                f"{dataset}__{type_encoding}_evaluation_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.csv")
+                                f"{dataset}_{type_encoding}_evaluation_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.csv")
     fieldnames = ["tp", "fp", "tn", "fn", "precision", "recall", "accuracy", "fscore", "auc"]
     values = {
         "tp": e.tp,
@@ -645,7 +653,7 @@ def write_evaluation_to_csv(e, dataset):
 
 
 def write_recommendations_to_csv(recommendations, dataset):
-    if type_encoding != "weighted_edit_distance":
+    if selected_evaluation_edit_distance != "weighted_edit_distance":
         csv_file = os.path.join(settings.results_dir,
                                 f"{dataset}_{type_encoding}_recommendations_{selected_evaluation_edit_distance}.csv")
     else:
@@ -684,7 +692,7 @@ def write_recommendations_to_csv(recommendations, dataset):
         print("I/O error")
 
     # Write to Excel
-    if type_encoding != "weighted_edit_distance":
+    if selected_evaluation_edit_distance != "weighted_edit_distance":
         excel_file = os.path.join(settings.results_dir,
                                   f"{dataset}_{type_encoding}_recommendations_{selected_evaluation_edit_distance}.xlsx")
     else:
@@ -707,7 +715,7 @@ def write_recommendations_to_csv(recommendations, dataset):
 
 
 def prefix_evaluation_to_csv(result_dict, dataset):
-    if type_encoding != "weighted_edit_distance":
+    if selected_evaluation_edit_distance != "weighted_edit_distance":
         csv_file = os.path.join(settings.results_dir,
                                 f"{dataset}_{type_encoding}_evaluation_{selected_evaluation_edit_distance}.csv")
         excel_file = os.path.join(settings.results_dir,

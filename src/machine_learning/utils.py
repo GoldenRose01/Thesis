@@ -115,7 +115,7 @@ def extract_numbers_from_string(input_string, trace_att_d, resource_att_d):
     return flattened_result if flattened_result else None
 
 # Definizione della funzione `calcPathFitnessOnPrefix` per il calcolo della fitness del percorso su un prefisso
-def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval,log,dataset_name):
+def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval,log,dataset_name,features):
     trace_att_d, resource_att_d = filter_attributes.get_attributes_by_dataset(dataset_name)
 
     prefixes = []
@@ -124,7 +124,7 @@ def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval,log,dataset_name):
 
     num_prefixes = len(prefixes)
 
-    prefixes = dt_input_trainval.encode(prefixes)
+    prefixes = dt_input_trainval.encode(prefixes,features)
 
     hyp = []
     for column in prefixes.columns:

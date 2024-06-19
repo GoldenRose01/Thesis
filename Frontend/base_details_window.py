@@ -21,10 +21,19 @@ class BaseDetailsWindow(QWidget):
 
     def load_options(self):
         options = {}
-        with open('Option.dat', 'r') as file:
-            for line in file.readlines():
-                key, value = line.strip().split('=')
-                options[key.strip()] = value.strip()
+        try:
+            with open('Option.dat', 'r') as file:
+                for line in file.readlines():
+                    line = line.strip()
+                    if '=' in line:
+                        key, value = line.split('=', 1)  # Split only on the first '='
+                        options[key.strip()] = value.strip()
+                    else:
+                        print(f"Skipping invalid line in options file: {line}")
+        except FileNotFoundError:
+            print("Options file not found. Using default options.")
+        except Exception as e:
+            print(f"An error occurred while loading options: {e}")
         return options
 
     def initUI(self):
@@ -99,7 +108,7 @@ class BaseDetailsWindow(QWidget):
     def add_boolean_option(self, option_name):
         checkbox = QCheckBox(option_name.replace('_', ' ').capitalize())
         checkbox.setChecked(self.options.get(option_name) == 'True')
-        checkbox.stateChanged.connect(lambda state, name=option_name: self.update_option(name, state))
+        checkbox.stateChanged.connect(lambda state, name=option_name: self.update_option(name, state == Qt.Qt.CheckState.Checked))
         self.main_layout.addWidget(checkbox)
 
     def add_numeric_option(self, option_name, min_value, max_value, step):
@@ -127,6 +136,7 @@ class BaseDetailsWindow(QWidget):
         layout.addWidget(label)
         layout.addWidget(combobox)
         self.main_layout.addLayout(layout)
+        return combobox
 
     def on_next_clicked(self):
         self.switch_view_callback('dataset')

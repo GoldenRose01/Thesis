@@ -45,6 +45,7 @@ def rec_sys_exp(dataset_name):
     train_val_df, test_df = dataset_manager.split_data_strict(data, train_val_ratio)
     train_df, val_df = dataset_manager.split_data(train_val_df, train_ratio, split="random")
 
+
     # Determina le lunghezze minime e massime dei prefissi (troncate)
     min_prefix_length = 1
     if "traffic_fines" in dataset_name:
@@ -55,6 +56,7 @@ def rec_sys_exp(dataset_name):
     else:
         max_prefix_length_test = min(40, dataset_manager.get_pos_case_length_quantile(test_df, 0.90))
         max_prefix_length_val = min(40, dataset_manager.get_pos_case_length_quantile(val_df, 0.90))
+
 
     # Rinomina le colonne del dataset
     data = data.rename(
@@ -126,7 +128,7 @@ def rec_sys_exp(dataset_name):
     dt_input_trainval = Encoding(train_val_log)
 
     (dt_input_trainval_encoded, prefix_length,
-     ncu_data, indices, max_variations) = dt_input_trainval.encode_traces(numeric_columns, categoric_columns)
+     ncu_data, indices, max_variations, features) = dt_input_trainval.encode_traces(numeric_columns, categoric_columns)
 
     # Lista dei risultati
     results = []
@@ -199,6 +201,7 @@ def rec_sys_exp(dataset_name):
                                                                                       max_variations=max_variations,
                                                                                       dataset_name=dataset_name,
                                                                                       prefix_max=prefix_length,
+                                                                                      features=features
                                                                                       )
             if settings.cumulative_res is True:
                 eval_res = copy.deepcopy(evaluation)
@@ -242,6 +245,7 @@ def rec_sys_exp(dataset_name):
                                                                                   dt_input_trainval_encoded=dt_input_trainval_encoded,
                                                                                   dataset_name=dataset_name,
                                                                                   prefix_max=prefix_length,
+                                                                                  features=features
                                                                                   )
         results.append(evaluation)
         if settings.cumulative_res is True:
@@ -249,7 +253,8 @@ def rec_sys_exp(dataset_name):
 
         for metric in ["fscore"]:  # ["accuracy", "fscore", "auc", "gain"]:
             value = getattr(results[pref_id], metric)
-            print(f"{metric}:{value}".format(metric=metric, value=value))
+            if settings.Allprint is True:
+                print(f"{metric}:{value}".format(metric=metric, value=value))
     plot = PlotResult(results, prefix_lenght_list_test, settings.results_dir)
 
     for metric in ["fscore"]:

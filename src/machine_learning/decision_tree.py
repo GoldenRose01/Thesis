@@ -107,9 +107,14 @@ def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input
                                         feature_names=new_feature_names, node_ids=True, filled=True)
         graph = graphviz.Source(dot_data, format="pdf")
         if settings.type_encoding != "complex":
-            graph.render(os.path.join(settings.output_dir, f'DT_{dataset_name}_{settings.type_encoding}'))
+            graph.render(os.path.join(settings.output_dir,
+                                      f'DT_{dataset_name}_{settings.type_encoding}'))
+        elif settings.selected_evaluation_edit_distance != "weighted_edit_distance":
+            graph.render(os.path.join(settings.output_dir,
+                                      f"DT_{dataset_name}_{settings.type_encoding}_{settings.selected_evaluation_edit_distance}"))
         else:
-            graph.render(os.path.join(settings.output_dir, f"DT_{dataset_name}_{settings.type_encoding}_{settings.selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}"))
+            graph.render(os.path.join(settings.output_dir,
+                                      f"DT_{dataset_name}_{settings.type_encoding}_{settings.selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}"))
         print("PDF generated")
 
     return model_dict, new_feature_names

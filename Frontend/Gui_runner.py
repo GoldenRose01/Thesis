@@ -1,5 +1,5 @@
 import sys
-
+import traceback
 from PyQt6.QtCore import *
 from PyQt6.QtSvgWidgets import *
 from PyQt6.QtWidgets import *
@@ -15,6 +15,7 @@ from loading_window import LoadingWindow
 
 from styles import *
 
+
 class AppRunner(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -23,12 +24,16 @@ class AppRunner(QMainWindow):
         self.color_map = color_map_light  # Default theme
 
         # Initialize all window components
-        self.main_window = MainWindow(self.switch_view_callback, self.color_map)
-        self.details_simple_window = DetailsSimpleWindow(self.switch_view_callback, self.color_map)
-        self.details_complex_window = DetailsComplexWindow(self.switch_view_callback, self.color_map)
-        self.details_declarative_window = DetailsDeclarativeWindow(self.switch_view_callback, self.color_map)
-        self.dataset_window = DatasetWindow(self.switch_view_callback, self.color_map)
-        self.terminal_window = TerminalWindow(self.switch_view_callback, self.color_map)
+        try:
+            self.main_window = MainWindow(self.switch_view_callback, self.color_map)
+            self.details_simple_window = DetailsSimpleWindow(self.switch_view_callback, self.color_map)
+            self.details_complex_window = DetailsComplexWindow(self.switch_view_callback, self.color_map)
+            self.details_declarative_window = DetailsDeclarativeWindow(self.switch_view_callback, self.color_map)
+            self.dataset_window = DatasetWindow(self.switch_view_callback, self.color_map)
+            self.terminal_window = TerminalWindow(self.switch_view_callback, self.color_map)
+        except Exception as e:
+            print(f"An error occurred during window initialization: {e}")
+            traceback.print_exc()
 
         # Add all windows to the stack
         self.stack.addWidget(self.main_window)
@@ -62,8 +67,11 @@ class AppRunner(QMainWindow):
             view_method = view_methods.get(view_name)
             if view_method:
                 view_method()
+            else:
+                raise ValueError(f"Unknown view name: {view_name}")
         except Exception as e:
             print(f"An error occurred while switching view: {e}")
+            traceback.print_exc()
 
     def show_main_window(self):
         self.stack.setCurrentWidget(self.main_window)
@@ -95,6 +103,7 @@ class AppRunner(QMainWindow):
         self.dataset_window.update_color_map(self.color_map)
         self.terminal_window.update_color_map(self.color_map)
 
+
 if __name__ == "__main__":
     try:
         app = QApplication(sys.argv)
@@ -112,3 +121,4 @@ if __name__ == "__main__":
         sys.exit(app.exec())
     except Exception as e:
         print(f"An error occurred: {e}")
+        traceback.print_exc()

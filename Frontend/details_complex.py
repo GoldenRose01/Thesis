@@ -16,7 +16,10 @@ class DetailsComplexWindow(BaseDetailsWindow):
         self.add_table_option()
         self.choice_option = self.add_choice_option("selected_evaluation_edit_distance",
                                                    ["edit_distance", "edit_distance_separate", "weighted_edit_distance"])
-        self.choice_option.currentTextChanged.connect(self.on_evaluation_change)
+        if self.choice_option:
+            self.choice_option.currentTextChanged.connect(self.on_evaluation_change)
+        else:
+            print("Failed to create choice option for evaluation_edit_distance.")
 
     def add_table_option(self):
         self.table = QTableWidget()

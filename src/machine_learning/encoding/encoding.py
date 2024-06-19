@@ -1,12 +1,12 @@
-from src.machine_learning.encoding.feature_encoder.frequency_features   import frequency_features
-from src.machine_learning.encoding.feature_encoder.simple_features      import simple_features
-from src.machine_learning.encoding.feature_encoder.complex_features     import complex_features
-from src.machine_learning.encoding.data_encoder                         import *
-from src.machine_learning.encoding.constants                            import EncodingType
-from src.machine_learning.label.common                                  import LabelTypes
-from src.machine_learning.utils                                         import *
-from src.models.DTInput                                                 import *
-from pandas                                                             import DataFrame
+from src.machine_learning.encoding.feature_encoder.frequency_features import frequency_features
+from src.machine_learning.encoding.feature_encoder.simple_features import simple_features
+from src.machine_learning.encoding.feature_encoder.complex_features import complex_features
+from src.machine_learning.encoding.data_encoder import *
+from src.machine_learning.encoding.constants import EncodingType
+from src.machine_learning.label.common import LabelTypes
+from src.machine_learning.utils import *
+from src.models.DTInput import *
+from pandas import DataFrame
 import settings
 
 TRACE_TO_DF = {
@@ -81,10 +81,8 @@ class Encoding:
                 target_event=None
             )
 
-
         self.encoder = Encoder(df=self.df, attribute_encoding=self.CONF['attribute_encoding'])
         self.encoded = 0
-
 
     # Metodo per codificare le tracce
     def encode_traces(self, numeric_columns, categoric_columns):
@@ -96,7 +94,7 @@ class Encoding:
         column_names = list(self.df.columns[0:len(self.df.columns) - 1])
         for index, row in self.df.iterrows():
             labels.append(int(row['label']) - 1)
-            trace_data = list(row[0:len(self.df.columns)-1])
+            trace_data = list(row[0:len(self.df.columns) - 1])
 
             # Converti eventuali liste in tuple
             trace_data = [tuple(data) if isinstance(data, list) else data for data in trace_data]
@@ -105,7 +103,8 @@ class Encoding:
         if not features:
             features = list(column_names)
 
-        (ncu_data,indices,max_variations) = self.separate_and_encode(encoded_data,features,numeric_columns, categoric_columns)
+        (ncu_data, indices, max_variations) = self.separate_and_encode(encoded_data, features, numeric_columns,
+                                                                       categoric_columns)
 
         if self.CONF['feature_selection'] == 'complex':
             for key, values in self.index.items():
@@ -116,10 +115,10 @@ class Encoding:
                     # Altrimenti, aggiungiamo direttamente la lista a indices sotto la nuova chiave
                     indices[key] = values
 
-        return DTInput(features, encoded_data, labels), self.prefix, ncu_data,indices,max_variations
+        return DTInput(features, encoded_data, labels), self.prefix, ncu_data, indices, max_variations, features
 
     # Funzione per separare e codificare i dati in vettori categorici e numerici
-    def separate_and_encode(self,encoded_data, features, numeric_columns, categoric_columns):
+    def separate_and_encode(self, encoded_data, features, numeric_columns, categoric_columns):
         # Inizializzazione delle liste per dati numerici, categorici e sconosciuti
         numeric_data = []
         categoric_data = []
@@ -163,7 +162,6 @@ class Encoding:
 
         return ncu_data, indices, max_variations
 
-
     # Metodo per decodificare un log codificato
     # Funzione per convertire dati in tuple se sono liste
     def convert_data_to_hashable(data):
@@ -171,9 +169,12 @@ class Encoding:
             return tuple(data)
         return data
 
+
+
     # Modifica la funzione Encoding.decode
-    def decode(self, log):
+    def decode(self, log, feature_base):
         prefix_columns = {}
+
         for i, prefix in enumerate(log):
             column_name = f'prefix_{i + 1}'
             prefix_columns[column_name] = [prefix]
@@ -181,12 +182,13 @@ class Encoding:
         self.encoder.decode(df=df_input)
         return df_input
 
-    # Modifica la funzione Encoding.encode
-    def encode(self, log):
+    def encode(self, log, feature_base):
         prefix_columns = {}
+        feature_base[1:]
         for i, prefix in enumerate(log):
             column_name = f'prefix_{i + 1}'
             prefix_columns[column_name] = [prefix]
         df_input = pd.DataFrame(prefix_columns)
         self.encoder.encode(df=df_input)
+
         return df_input
