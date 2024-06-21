@@ -74,13 +74,44 @@ def calcPathFitnessOnPrefixGOOD(prefix, path, rules, fitness_type):
 
     return fitness
 
+
+def extract_index_from_feature(feature, features, resource_atts, trace_atts):
+    # Assicurati che resource_atts e trace_atts siano liste
+    if isinstance(resource_atts, str):
+        resource_atts = [resource_atts]
+    if isinstance(trace_atts, str):
+        trace_atts = [trace_atts]
+
+    # Pattern per prefix e resource_atts
+    pattern_prefix_resource = fr'^(prefix|{"|".join(map(re.escape, resource_atts))})_(\d+)_\d+'
+    # Pattern per trace_atts
+    pattern_trace = fr'^({"|".join(map(re.escape, trace_atts))})_(\d+)'
+
+    match_prefix_resource = re.search(pattern_prefix_resource, feature)
+    match_trace = re.search(pattern_trace, feature)
+
+    if match_prefix_resource:
+        key = match_prefix_resource.group(0).rsplit('_', 1)[0]  # Ottieni prefix_num1 o resource_att_num1
+        for i, feat in enumerate(features):
+            if feat.startswith(key):
+                return i + 1  # +1 per allineare all'indicizzazione a base 1
+
+    if match_trace:
+        key_prefix = match_trace.group(1)  # Ottieni il prefisso trace_att
+        key_number = match_trace.group(2)  # Ottieni solo il numero
+        for i, feat in enumerate(features):
+            if feat.startswith(key_prefix) and feat.endswith(f'_{key_number}'):
+                return i + 1  # +1 per allineare all'indicizzazione a base 1
+
+    return None
+
 # Definizione della funzione `extract_numbers_from_string` per l'estrazione dei numeri da una stringa
 def extract_numbers_from_string(input_string, trace_att_d, resource_att_d):
     # Define the patterns for different types of encodings
     patterns = {
-        "prefix": r"prefix_(\d+)_(\d+)",
-        "trace_att": [f"{trace_name}_(\d+)" for trace_name in trace_att_d],
-        "resource_att": [f"{resource_name}_(\d+)_(\d+)" for resource_name in resource_att_d]
+        "prefix": "prefix_(\\d+)_(\\d+)",
+        "trace_att": [f"{trace_name}_(\\d+)" for trace_name in trace_att_d],
+        "resource_att": [f"{resource_name}_(\\d+)_(\\d+)" for resource_name in resource_att_d]
     }
 
     result = {
@@ -115,9 +146,9 @@ def extract_numbers_from_string(input_string, trace_att_d, resource_att_d):
     return flattened_result if flattened_result else None
 
 # Definizione della funzione `calcPathFitnessOnPrefix` per il calcolo della fitness del percorso su un prefisso
-def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval,log,dataset_name,features):
+def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval, log, dataset_name, features):
     trace_att_d, resource_att_d = filter_attributes.get_attributes_by_dataset(dataset_name)
-
+    features = features[1:]
     prefixes = []
     for trace in prefix:
         prefixes.append(trace['concept:name'])
@@ -126,10 +157,18 @@ def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval,log,dataset_name,fea
 
     prefixes = dt_input_trainval.encode(prefixes,features)
 
-    hyp = []
+    hyp = [None] * len(features)
     for column in prefixes.columns:
-        hyp.extend(prefixes[column].values)
-    hyp = np.array(hyp)
+        # Troviamo l'indice della colonna in 'features'
+        if column in features:
+            index = features.index(column)
+            values = prefixes[column].values
+            for i, value in enumerate(values):
+                if hyp[index] is None:
+                    hyp[index] = [None] * len(values)
+                hyp[index][i] = value
+    hyp = [item for sublist in hyp for item in (sublist if isinstance(sublist, list) else [sublist])]
+    hyp = np.array(hyp, dtype=object)
     hyp = hyp.tolist()
 
     rec = np.zeros(len(hyp), dtype=int)
@@ -150,14 +189,16 @@ def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval,log,dataset_name,fea
                 if num1 >= num_prefixes or num1 <= 0:
                     continue
 
+                feature_index = extract_index_from_feature(feature, features,trace_att_d,resource_att_d)
+
                 if state == TraceState.VIOLATED:
-                    if isinstance(ref[num1 - 1], list):
+                    if isinstance(ref[feature_index], list):
                         if num2 is not None:
-                            ref[num1 - 1].append(-num2)
+                            ref[feature_index].append(-num2)
                     else:
-                        ref[num1 - 1] = [-num2] if num2 is not None else ref[num1 - 1]
+                        ref[feature_index] = [-num2] if num2 is not None else ref[feature_index]
                 else:
-                    ref[num1 - 1] = int(num2) if num2 is not None else ref[num1 - 1]
+                    ref[feature_index] = int(num2) if num2 is not None else ref[feature_index]
 
     return fitnessEditDistance.edit(ref, hyp)
 
@@ -247,3 +288,13 @@ def rename_and_convert_to_log(df, dataset_manager):
         }
     )
     return log_converter.apply(renamed_df)
+
+
+def find_feature_position(feature, features):
+    # Split the feature by underscores and take the first two parts
+    feature_base = '_'.join(feature.split('_')[:2])
+
+    # Check if the base feature is in the features list
+    if feature_base in features:
+        # Return the position (index) of the found feature
+        return features.index(feature_base)

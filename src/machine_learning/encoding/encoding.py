@@ -169,26 +169,23 @@ class Encoding:
             return tuple(data)
         return data
 
-
-
     # Modifica la funzione Encoding.decode
-    def decode(self, log, feature_base):
+    def decode(self, log, features):
         prefix_columns = {}
 
         for i, prefix in enumerate(log):
-            column_name = f'prefix_{i + 1}'
+            column_name = features[i]
             prefix_columns[column_name] = [prefix]
         df_input = pd.DataFrame(prefix_columns)
         self.encoder.decode(df=df_input)
         return df_input
 
-    def encode(self, log, feature_base):
+    # Modifica la funzione Encoding.encode
+    def encode(self, log,features):
         prefix_columns = {}
-        feature_base[1:]
         for i, prefix in enumerate(log):
-            column_name = f'prefix_{i + 1}'
+            column_name = features[i]
             prefix_columns[column_name] = [prefix]
         df_input = pd.DataFrame(prefix_columns)
         self.encoder.encode(df=df_input)
-
         return df_input

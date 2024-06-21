@@ -30,6 +30,6 @@ class PlotResult:
             if metric == "gain":
                 # Aggiunge una linea tratteggiata orizzontale a y=1 se la metrica è "gain"
                 plt.axhline(y=1, color='k', linestyle='--')
-        plt.legend(fontsize=14)  # Aggiunge la legenda al grafico
+        plt.legend(fontsize=14)
         plt.tight_layout()  # Imposta il layout del grafico
         plt.savefig(os.path.join(self.folder, f'{title}.pdf'))  # Salva il grafico come file PDF
