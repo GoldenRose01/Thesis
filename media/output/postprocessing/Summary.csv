@@ -1,18 +1,100 @@
-database_name;fscore(average)distance_separate;recall(average)distance_separate;precision(average)distance_separate;fscore(average)simple;recall(average)simple;precision(average)simple
-bpic2011_f1;0,678;1,000;0,521;0,274;0,404;0,214
-bpic2011_f2;0,320;0,575;0,222;0,273;0,438;0,215
-bpic2011_f3;0,756;1,000;0,613;0,372;0,454;0,325
-bpic2011_f4;0,075;0,100;0,060;0,505;0,689;0,409
-bpic2012_accepted;0,616;1,000;0,446;0,474;0,685;0,416
-bpic2012_cancelled;0,854;1,000;0,746;0,715;0,784;0,707
-bpic2012_declined;0,894;1,000;0,808;0,719;0,736;0,710
-bpic2015_3_f2;0,832;0,975;0,725;0,294;0,304;0,326
-bpic2015_4_f2;0,506;0,550;0,469;0,384;0,404;0,441
-bpic2015_5_f2;0,717;0,850;0,621;0,500;0,586;0,437
-hospital_billing_2;0,947;1,000;0,901;0,663;0,529;0,954
-hospital_billing_3;0,977;1,000;0,954;0,125;0,067;0,941
-Production;0,780;1,000;0,640;0,279;0,277;0,347
-sepsis_cases_1;0,882;0,933;0,837;0,534;0,529;0,594
-sepsis_cases_2;0,947;1,000;0,900;0,821;0,822;0,846
-sepsis_cases_4;0,294;1,000;0,173;0,257;0,598;0,196
-traffic_fines_1;0,751;1,000;0,601;0,431;0,367;0,994
+dataset_name;letter;complexity_type;encoding_type;weighted_values;average_fscore;average_precision;;weighted_average_fscore;weighted_average_precision
+Production;N;complex;unknown;;0,780;0,640;;0,784;0,645
+Production;N;complex;unknown;;0,780;0,640;;0,784;0,645
+Production;N;complex;weighted_edit_distance;0% 0% 100%;0,000;0,000;;0,000;0,000
+Production;N;complex;weighted_edit_distance;0% 50% 50%;0,778;0,638;;0,784;0,645
+Production;N;complex;weighted_edit_distance;0% 50% 50%;0,778;0,638;;0,784;0,645
+Production;N;complex;weighted_edit_distance;25% 50% 25%;0,778;0,638;;0,784;0,645
+Production;N;complex;weighted_edit_distance;25% 50% 25%;0,778;0,638;;0,784;0,645
+Production;N;complex;weighted_edit_distance;33% 33% 33%;0,752;0,606;;0,776;0,636
+Production;N;complex;weighted_edit_distance;33% 33% 33%;0,778;0,638;;0,784;0,645
+Production;N;complex;weighted_edit_distance;50% 0% 50%;0,000;0,000;;0,000;0,000
+Production;N;complex;weighted_edit_distance;50% 50% 0%;0,781;0,641;;0,785;0,646
+Production;N;simple;unknown;;0,279;0,347;;0,393;0,450
+bpic2011_f1;N;complex;unknown;;0,678;0,521;;0,662;0,500
+bpic2011_f1;N;complex;unknown;;0,678;0,521;;0,662;0,500
+bpic2011_f1;N;simple;unknown;;0,274;0,214;;0,310;0,242
+bpic2011_f2;N;complex;unknown;;0,320;0,222;;0,337;0,234
+bpic2011_f2;N;complex;unknown;;0,320;0,222;;0,337;0,234
+bpic2011_f2;N;simple;unknown;;0,273;0,215;;0,291;0,229
+bpic2011_f3;N;complex;unknown;;0,756;0,613;;0,748;0,601
+bpic2011_f3;N;complex;unknown;;0,756;0,613;;0,748;0,601
+bpic2011_f3;N;simple;unknown;;0,372;0,325;;0,407;0,356
+bpic2011_f4;N;complex;unknown;;0,075;0,060;;0,089;0,071
+bpic2011_f4;N;complex;unknown;;0,075;0,060;;0,089;0,071
+bpic2011_f4;N;complex;weighted_edit_distance;0% 50% 50%;0,075;0,060;;0,089;0,071
+bpic2011_f4;N;complex;weighted_edit_distance;50% 0% 50%;0,000;0,000;;0,000;0,000
+bpic2011_f4;N;complex;weighted_edit_distance;50% 50% 0%;0,699;0,537;;0,701;0,540
+bpic2011_f4;N;simple;unknown;;0,505;0,409;;0,528;0,427
+bpic2012_accepted;N;complex;unknown;;0,616;0,446;;0,624;0,455
+bpic2012_accepted;N;complex;unknown;;0,616;0,446;;0,624;0,455
+bpic2012_accepted;N;simple;unknown;;0,474;0,416;;0,504;0,436
+bpic2012_cancelled;N;complex;unknown;;0,854;0,746;;0,849;0,738
+bpic2012_cancelled;N;complex;unknown;;0,854;0,746;;0,849;0,738
+bpic2012_cancelled;N;simple;unknown;;0,715;0,707;;0,753;0,730
+bpic2012_declined;N;complex;unknown;;0,894;0,808;;0,893;0,806
+bpic2012_declined;N;complex;unknown;;0,894;0,808;;0,893;0,806
+bpic2012_declined;N;simple;unknown;;0,719;0,710;;0,756;0,744
+bpic2015_3_f2;N;complex;unknown;;0,832;0,725;;0,834;0,727
+bpic2015_3_f2;N;complex;unknown;;0,832;0,725;;0,834;0,727
+bpic2015_3_f2;N;simple;unknown;;0,294;0,326;;0,301;0,335
+bpic2015_4_f2;N;complex;unknown;;0,506;0,469;;0,582;0,540
+bpic2015_4_f2;N;complex;unknown;;0,506;0,469;;0,582;0,540
+bpic2015_4_f2;N;complex;weighted_edit_distance;0% 50% 50%;0,506;0,469;;0,582;0,540
+bpic2015_4_f2;N;complex;weighted_edit_distance;0% 50% 50%;0,506;0,469;;0,582;0,540
+bpic2015_4_f2;N;complex;weighted_edit_distance;25% 50% 25%;0,506;0,469;;0,582;0,540
+bpic2015_4_f2;N;complex;weighted_edit_distance;25% 50% 25%;0,506;0,469;;0,582;0,540
+bpic2015_4_f2;N;complex;weighted_edit_distance;33% 33% 33%;0,506;0,469;;0,582;0,540
+bpic2015_4_f2;N;complex;weighted_edit_distance;50% 0% 50%;0,000;0,000;;0,000;0,000
+bpic2015_4_f2;N;complex;weighted_edit_distance;50% 50% 0%;0,708;0,652;;0,757;0,698
+bpic2015_4_f2;N;simple;unknown;;0,384;0,441;;0,454;0,509
+bpic2015_5_f2;N;complex;unknown;;0,717;0,621;;0,725;0,627
+bpic2015_5_f2;N;complex;unknown;;0,717;0,621;;0,725;0,627
+bpic2015_5_f2;N;simple;unknown;;0,500;0,437;;0,515;0,449
+hospital_billing_2;N;complex;unknown;;0,947;0,901;;0,945;0,897
+hospital_billing_2;N;complex;unknown;;0,947;0,901;;0,945;0,897
+hospital_billing_2;N;simple;unknown;;0,663;0,954;;0,674;0,952
+hospital_billing_3;N;complex;unknown;;0,977;0,954;;0,977;0,955
+hospital_billing_3;N;complex;unknown;;0,977;0,954;;0,977;0,955
+hospital_billing_3;N;simple;unknown;;0,125;0,941;;0,127;0,945
+sepsis_cases_1;N;complex;unknown;;0,882;0,837;;0,911;0,863
+sepsis_cases_1;N;complex;unknown;;0,882;0,837;;0,911;0,863
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;0,757;0,719;;0,903;0,856
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;0,882;0,837;;0,911;0,863
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;0,882;0,837;;0,911;0,863
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;0,882;0,837;;0,911;0,863
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;0,882;0,837;;0,911;0,863
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;0,882;0,837;;0,911;0,863
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;0,529;0,502;;0,794;0,752
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;0,882;0,837;;0,911;0,863
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;0,945;0,896;;0,945;0,895
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;0,629;0,596;;0,702;0,665
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;0,629;0,596;;0,702;0,665
+sepsis_cases_1;N;simple;unknown;;0,534;0,594;;0,597;0,662
+sepsis_cases_2;N;complex;unknown;;0,947;0,900;;0,945;0,896
+sepsis_cases_2;N;complex;unknown;;0,946;0,898;;0,943;0,894
+sepsis_cases_2;N;complex;weighted_edit_distance;0% 0% 100%;0,881;0,839;;0,908;0,862
+sepsis_cases_2;N;complex;weighted_edit_distance;0% 50% 50%;0,946;0,898;;0,943;0,894
+sepsis_cases_2;N;complex;weighted_edit_distance;0% 50% 50%;0,946;0,898;;0,943;0,894
+sepsis_cases_2;N;complex;weighted_edit_distance;25% 50% 25%;0,946;0,898;;0,943;0,894
+sepsis_cases_2;N;complex;weighted_edit_distance;25% 50% 25%;0,946;0,898;;0,943;0,894
+sepsis_cases_2;N;complex;weighted_edit_distance;33% 33% 33%;0,951;0,908;;0,947;0,900
+sepsis_cases_2;N;complex;weighted_edit_distance;33% 33% 33%;0,946;0,898;;0,943;0,894
+sepsis_cases_2;N;complex;weighted_edit_distance;50% 0% 50%;0,946;0,898;;0,943;0,894
+sepsis_cases_2;N;complex;weighted_edit_distance;50% 50% 0%;0,946;0,898;;0,943;0,894
+sepsis_cases_2;N;simple;unknown;;0,821;0,846;;0,844;0,862
+sepsis_cases_4;N;complex;unknown;;0,294;0,173;;0,285;0,167
+sepsis_cases_4;N;complex;unknown;;0,296;0,175;;0,287;0,168
+sepsis_cases_4;N;complex;weighted_edit_distance;0% 0% 100%;0,363;0,227;;0,312;0,188
+sepsis_cases_4;N;complex;weighted_edit_distance;0% 50% 50%;0,296;0,175;;0,287;0,168
+sepsis_cases_4;N;complex;weighted_edit_distance;0% 50% 50%;0,296;0,175;;0,287;0,168
+sepsis_cases_4;N;complex;weighted_edit_distance;25% 50% 25%;0,296;0,175;;0,287;0,168
+sepsis_cases_4;N;complex;weighted_edit_distance;25% 50% 25%;0,296;0,175;;0,287;0,168
+sepsis_cases_4;N;complex;weighted_edit_distance;33% 33% 33%;0,363;0,227;;0,312;0,188
+sepsis_cases_4;N;complex;weighted_edit_distance;33% 33% 33%;0,296;0,175;;0,287;0,168
+sepsis_cases_4;N;complex;weighted_edit_distance;50% 0% 50%;0,296;0,175;;0,287;0,168
+sepsis_cases_4;N;complex;weighted_edit_distance;50% 50% 0%;0,296;0,175;;0,287;0,168
+sepsis_cases_4;N;simple;unknown;;0,257;0,196;;0,266;0,197
+traffic_fines_1;N;complex;unknown;;0,751;0,601;;0,751;0,601
+traffic_fines_1;N;complex;unknown;;0,751;0,601;;0,751;0,601
+traffic_fines_1;N;simple;unknown;;0,431;0,994;;0,431;0,994

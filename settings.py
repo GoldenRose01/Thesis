@@ -50,6 +50,7 @@ def read_type_encoding(filepath):
         type_encoding = file.readline().strip()
     return type_encoding
 
+
 type_encoding = read_type_encoding(encoding_path) if read_type_encoding(encoding_path) else 'simple'
 # simple, frequency, complex
 
@@ -60,7 +61,6 @@ type_encoding = read_type_encoding(encoding_path) if read_type_encoding(encoding
 datasets_names = read_datasets_from_dat(datasets_names_filepath) if read_datasets_from_dat(
     datasets_names_filepath) else read_datasets_from_dat(dataset_debug)
 options = read_options_from_dat(options_filepath)
-
 
 # ================================================= thresholds =========================================================
 
@@ -95,6 +95,14 @@ eval_stamp = options['eval_stamp'] if options['eval_stamp'] else False
 recc_stamp = options['recc_stamp'] if options['recc_stamp'] else False
 Allprint = options['Allprint'] if options['Allprint'] else False
 
+# ======================================== Rule_of_prefix ==============================================================
+weighted_prefix_generation = options['weighted_prefix_generation'] if options['weighted_prefix_generation'] else False
+
+if weighted_prefix_generation:
+    ruleprefix = "W"
+else:
+    ruleprefix = "N"
+
 # ======================================== weights =====================================================================
 
 # weights of the three components of the encoding
@@ -111,7 +119,7 @@ except ValueError as e:
     print(e)
 
 # Se la somma è inferiore a 1.0 o diverso da 33%, arrotonda il valore più grande per ottenere 1.0
-if not (temp_wresource_att==temp_wtrace_att==temp_wactivities==0.33):
+if not (temp_wresource_att == temp_wtrace_att == temp_wactivities == 0.33):
     if total < 1.0:
         max_value = max(temp_wtrace_att, temp_wactivities, temp_wresource_att)
         increment_remaining = (1.0 - total)
@@ -158,14 +166,13 @@ wtrace_att = temp_wtrace_att
 wactivities = temp_wactivities
 wresource_att = temp_wresource_att
 
-
 # ========================================= folders ====================================================================
 
 
 output_dir = "media/output"
+csv_dir = "media/output/results.csv"
 results_dir = os.path.join(output_dir, "result")
 dataset_folder = "media/input"
-
 
 # ================ checkers ================
 
@@ -175,10 +182,8 @@ existence_family = [ConstraintChecker.EXISTENCE,
                     ConstraintChecker.INIT,
                     ConstraintChecker.EXACTLY]
 
-
 choice_family = [ConstraintChecker.CHOICE,
                  ConstraintChecker.EXCLUSIVE_CHOICE]
-
 
 positive_rel_family = [ConstraintChecker.RESPONDED_EXISTENCE,
                        ConstraintChecker.RESPONSE,
@@ -189,19 +194,16 @@ positive_rel_family = [ConstraintChecker.RESPONDED_EXISTENCE,
                        ConstraintChecker.CHAIN_PRECEDENCE
                        ]
 
-
 negative_rel_family = [ConstraintChecker.NOT_RESPONDED_EXISTENCE,
                        ConstraintChecker.NOT_RESPONSE,
                        ConstraintChecker.NOT_CHAIN_RESPONSE,
                        ConstraintChecker.NOT_PRECEDENCE,
                        ConstraintChecker.NOT_CHAIN_PRECEDENCE]
 
-
 checkers_cumulative = {"existence": existence_family}
 checkers_cumulative["choice"] = checkers_cumulative["existence"] + choice_family
 checkers_cumulative["positive relations"] = checkers_cumulative["choice"] + positive_rel_family
 checkers_cumulative["negative relations"] = checkers_cumulative["positive relations"] + negative_rel_family
-
 
 checkers = {"existence": existence_family,
             "choice": existence_family + choice_family,
@@ -209,9 +211,7 @@ checkers = {"existence": existence_family,
             "negative relations": existence_family + negative_rel_family,
             "all": checkers_cumulative['negative relations']}
 
-
 constr_family_list = checkers.keys()
-
 
 # ================ datasets ================
 
@@ -240,7 +240,6 @@ datasets_labels = {"bpic2011_f1": "bpic2011_1",
                    "traffic_fines_1": "traffic_fines",
                    }
 
-
 # ================ hyperparameters ================
 
 
@@ -255,7 +254,6 @@ hyperparameters = {'support_threshold': [support_threshold_dict['min']-0.2,
                    }
 """
 
-
 dt_hyperparameters = {'criterion': ['entropy',
                                     'gini'],
                       'class_weight': ['balanced',
@@ -268,7 +266,6 @@ dt_hyperparameters = {'criterion': ['entropy',
                                            1,
                                            16]
                       }
-
 
 num_feat_strategy = ['sqrt', 0.3, 0.5]
 
@@ -292,7 +289,6 @@ sat_threshold_list = [0.85]
 
 weight_combination_list = [(0.4, 0.4, 0.2)]
 
-
 # ================ checkers satisfaction ================
 
 
@@ -306,7 +302,6 @@ rules = {
         ConstraintChecker.EXACTLY: 1,
     }
 }
-
 
 # ================ plots ================
 
@@ -337,5 +332,4 @@ method_style = {'existence': 'solid',
                 'all': 'dashdot'
                 }
 
-
-#=======================================================================================================================
+# =======================================================================================================================

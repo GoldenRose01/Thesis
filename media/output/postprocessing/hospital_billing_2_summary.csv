@@ -1,0 +1,10 @@
+dataset_name;letter;complexity_type;encoding_type;weighted_values;prefix_length;precision;fscore
+hospital_billing_2;N;complex;unknown;;1.0;0.8772653982586263;0.9346205380149104
+hospital_billing_2;N;complex;unknown;;2.0;0.8772653982586263;0.9346205380149104
+hospital_billing_2;N;complex;unknown;;3.0;0.9471627452576732;0.9728644896935236
+hospital_billing_2;N;complex;unknown;;1.0;0.8772653982586263;0.9346205380149104
+hospital_billing_2;N;complex;unknown;;2.0;0.8772653982586263;0.9346205380149104
+hospital_billing_2;N;complex;unknown;;3.0;0.9471627452576732;0.9728644896935236
+hospital_billing_2;N;simple;unknown;;1.0;0.9341875364006988;0.6268685881778211
+hospital_billing_2;N;simple;unknown;;2.0;0.9505713767458734;0.8511450381679391
+hospital_billing_2;N;simple;unknown;;3.0;0.9773447015834348;0.5098163796937544

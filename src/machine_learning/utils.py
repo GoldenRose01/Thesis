@@ -6,7 +6,7 @@ from src.machine_learning.encoding import *
 from src.machine_learning.apriori import generate_frequent_events_and_pairs
 #from src.machine_learning.decision_tree import generate_decision_tree, generate_paths, generate_boost_decision_tree
 from src.enums import PrefixType
-from src.machine_learning import fitnessEditDistance,filter_attributes
+from src.machine_learning import fitnessEditDistance, filter_attributes
 from sklearn.model_selection import train_test_split
 import itertools
 from src.enums import TraceLabel
@@ -18,14 +18,17 @@ import pandas as pd
 import numpy as np
 import re
 
-trace_attributes_for_numb=trace_attributes
-resource_attributes_for_numb=resource_attributes
+trace_attributes_for_numb = trace_attributes
+resource_attributes_for_numb = resource_attributes
+
+
 # Definizione della funzione `gain` per il calcolo del guadagno
 def gain(c, nc, pc, pnc):
     prob_pos_comp = (pc + settings.smooth_factor) / (c + settings.smooth_factor * settings.num_classes)
     prob_pos_non_comp = (pnc + settings.smooth_factor) / (nc + settings.smooth_factor * settings.num_classes)
     _gain = prob_pos_comp / prob_pos_non_comp
     return _gain
+
 
 # Definizione della funzione `matthews_corrcoef` per il calcolo del coefficiente di correlazione di Matthews
 def matthews_corrcoef(tp, fp, fn, tn):
@@ -35,6 +38,7 @@ def matthews_corrcoef(tp, fp, fn, tn):
         return 0
     else:
         return num / denom
+
 
 # Definizione della funzione `calcScore` per il calcolo dello score
 def calcScore(path, pos_paths_total_samples_, weights):
@@ -48,6 +52,7 @@ def calcScore(path, pos_paths_total_samples_, weights):
 
     return np.mean(w * np.array([path.fitness, purity, pos_probability]))
 
+
 # Definizione della funzione `calcPathFitnessOnPrefixGOOD` per il calcolo della fitness del percorso su un prefisso
 def calcPathFitnessOnPrefixGOOD(prefix, path, rules, fitness_type):
     path_weights = []
@@ -58,10 +63,12 @@ def calcPathFitnessOnPrefixGOOD(prefix, path, rules, fitness_type):
         template_name, template_params = parse_method(template)
 
         result = None
-        if template_name in [ConstraintChecker.EXISTENCE.value, ConstraintChecker.ABSENCE.value, ConstraintChecker.INIT.value, ConstraintChecker.EXACTLY.value]:
+        if template_name in [ConstraintChecker.EXISTENCE.value, ConstraintChecker.ABSENCE.value,
+                             ConstraintChecker.INIT.value, ConstraintChecker.EXACTLY.value]:
             result = CONSTRAINT_CHECKER_FUNCTIONS[template_name](prefix, True, template_params[0], rules)
         else:
-            result = CONSTRAINT_CHECKER_FUNCTIONS[template_name](prefix, True, template_params[0], template_params[1], rules)
+            result = CONSTRAINT_CHECKER_FUNCTIONS[template_name](prefix, True, template_params[0], template_params[1],
+                                                                 rules)
 
         if rule_state == result.state:
             path_activated_rules[rule_idx] = 1
@@ -75,7 +82,10 @@ def calcPathFitnessOnPrefixGOOD(prefix, path, rules, fitness_type):
     return fitness
 
 
-def extract_index_from_feature(feature, features, resource_atts, trace_atts):
+def extract_index_from_feature(feature,
+                               features,
+                               resource_atts,
+                               trace_atts):
     # Assicurati che resource_atts e trace_atts siano liste
     if isinstance(resource_atts, str):
         resource_atts = [resource_atts]
@@ -94,16 +104,17 @@ def extract_index_from_feature(feature, features, resource_atts, trace_atts):
         key = match_prefix_resource.group(0).rsplit('_', 1)[0]  # Ottieni prefix_num1 o resource_att_num1
         for i, feat in enumerate(features):
             if feat.startswith(key):
-                return i + 1  # +1 per allineare all'indicizzazione a base 1
+                return i
 
     if match_trace:
         key_prefix = match_trace.group(1)  # Ottieni il prefisso trace_att
         key_number = match_trace.group(2)  # Ottieni solo il numero
         for i, feat in enumerate(features):
-            if feat.startswith(key_prefix) and feat.endswith(f'_{key_number}'):
-                return i + 1  # +1 per allineare all'indicizzazione a base 1
+            if feat.startswith(key_prefix):
+                return i
 
     return None
+
 
 # Definizione della funzione `extract_numbers_from_string` per l'estrazione dei numeri da una stringa
 def extract_numbers_from_string(input_string, trace_att_d, resource_att_d):
@@ -141,21 +152,21 @@ def extract_numbers_from_string(input_string, trace_att_d, resource_att_d):
                 result["resource_att"].append((int(match[0]), int(match[1])))
 
     # Flatten the result into a single list of tuples
-    flattened_result = result["prefix"] + result["resource_att"] + [(num,) for num in result["trace_att"]]
+    flattened_result = result["prefix"] + result["resource_att"] + [('Skip', num) for num in result["trace_att"]]
 
     return flattened_result if flattened_result else None
+
 
 # Definizione della funzione `calcPathFitnessOnPrefix` per il calcolo della fitness del percorso su un prefisso
 def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval, log, dataset_name, features):
     trace_att_d, resource_att_d = filter_attributes.get_attributes_by_dataset(dataset_name)
-    features = features[1:]
     prefixes = []
     for trace in prefix:
         prefixes.append(trace['concept:name'])
 
     num_prefixes = len(prefixes)
 
-    prefixes = dt_input_trainval.encode(prefixes,features)
+    prefixes = dt_input_trainval.encode(prefixes, features)
 
     hyp = [None] * len(features)
     for column in prefixes.columns:
@@ -175,9 +186,11 @@ def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval, log, dataset_name, 
     ref = rec.tolist()
 
     for rule in path.rules:
-        feature, state, parent = rule
+        (feature,
+         state,
+         parent) = rule
 
-        numbers = extract_numbers_from_string(feature,trace_att_d,resource_att_d)
+        numbers = extract_numbers_from_string(feature, trace_att_d, resource_att_d)
         if numbers:
             for num_tuple in numbers:
                 if len(num_tuple) == 2:
@@ -186,11 +199,14 @@ def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval, log, dataset_name, 
                     num1 = num_tuple[0]
                     num2 = None
 
-                if num1 >= num_prefixes or num1 <= 0:
+                if num1 != 'Skip':
+                    if num1 >= num_prefixes or num1 <= 0:
+                        continue
+
+                feature_index = extract_index_from_feature(feature, features, resource_att_d, trace_att_d)
+                if feature_index is None:
+                    print("null")
                     continue
-
-                feature_index = extract_index_from_feature(feature, features,trace_att_d,resource_att_d)
-
                 if state == TraceState.VIOLATED:
                     if isinstance(ref[feature_index], list):
                         if num2 is not None:
@@ -201,6 +217,7 @@ def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval, log, dataset_name, 
                     ref[feature_index] = int(num2) if num2 is not None else ref[feature_index]
 
     return fitnessEditDistance.edit(ref, hyp)
+
 
 # Definizione della funzione `generate_prefixes` per la generazione dei prefissi
 def generate_prefixes(log, prefixing):
@@ -236,6 +253,7 @@ def generate_prefixes(log, prefixing):
     else:
         return up_to(n)
 
+
 # Definizione della funzione `parse_method` per il parsing di un metodo
 def parse_method(method):
     method_name = method.split("[")[0]
@@ -246,6 +264,7 @@ def parse_method(method):
         method_params = [rest]
     return method_name, method_params
 
+
 # Definizione della funzione `generate_prefix_path` per la generazione del percorso del prefisso
 def generate_prefix_path(prefix):
     current_prefix = ""
@@ -253,6 +272,7 @@ def generate_prefix_path(prefix):
         current_prefix += event["concept:name"] + ", "
     current_prefix = current_prefix[:-2]
     return current_prefix
+
 
 # Definizione della funzione `generate_rules` per la generazione delle regole
 def generate_rules(rules):
@@ -273,11 +293,12 @@ def generate_rules(rules):
                 words[index + 2] = "\"" + words[index + 2] + "\""
         elif word == "same":
             words[index] = "A[\"" + words[index + 1] + \
-                "\"] == T[\"" + words[index + 1] + "\"]"
+                           "\"] == T[\"" + words[index + 1] + "\"]"
             words[index + 1] = ""
     words = list(filter(lambda word: word != "", words))
     rules = " ".join(words)
     return rules
+
 
 def rename_and_convert_to_log(df, dataset_manager):
     renamed_df = df.rename(

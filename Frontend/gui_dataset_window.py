@@ -101,7 +101,7 @@ class DatasetWindow(QWidget):
         with open('Datasets_names.dat', 'w') as f:
             for file in self.selected_files:
                 f.write(file + '\n')
-        print("Run process started...")
+        print("Run process started")
 
     def on_back_clicked(self):
         # Signal to switch back to the main view or another appropriate view

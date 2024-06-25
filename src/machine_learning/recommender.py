@@ -134,7 +134,7 @@ def recommend(prefix, path, dt_input_trainval, dataset_name, features):
 
             feature_index = find_feature_position(feature, features)
 
-            if num1 > num_prefixes:
+            if num1 == "Skip" or num1 > num_prefixes:
                 rec = np.zeros(len(features), dtype=int)
                 if num2 is not None:
                     rec[feature_index] = int(num2)
@@ -241,8 +241,7 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold,
                 num1 = num_tuple[0]
                 num2 = None
 
-            if num1 > n_max:
-                n_max = len(features)
+            n_max = len(features)
 
     ref = np.zeros(n_max, dtype=int)
 
@@ -260,7 +259,7 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold,
 
             feature_index = find_feature_position(feature, features)
 
-            if num1 > num_prefixes:
+            if num1 == "Skip" or num1 > num_prefixes:
                 if num2 is not None:
                     ref[feature_index] = int(num2)
 
@@ -332,7 +331,9 @@ def train_path_recommender(data_log, train_val_log, val_log, train_log, labeling
 
     target_label = labeling["target"]
 
-    print("Generating decision tree with params optimization ...")
+    at_gendt=f"Generating decision tree with params optimization"
+    print(f"{JUNGLE_GREEN}{at_gendt.center(main.infoconsole())}{RESET}")
+
     if settings.optimize_dt:
         best_model_dict, feature_names = find_best_dt(dataset_name, train_val_log,
                                                       support_threshold, settings.print_dt, dt_input_trainval)
@@ -341,12 +342,23 @@ def train_path_recommender(data_log, train_val_log, val_log, train_log, labeling
     #                            checkers, rules, min_prefix_length, max_prefix_length)
     # best_model_dict, feature_names = param_opt.params_grid_search(dataset_name, constr_family)
 
-    with open(os.path.join(output_dir, 'model_params.csv'), 'a') as f:
+    encoding = f"{settings.type_encoding} with {settings.selected_evaluation_edit_distance}"
+    if settings.selected_evaluation_edit_distance == "weighted_edit_distance":
+        proportion = f"{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}"
+    else:
+        proportion = "Null"
+
+    with open(os.path.join(output_dir, 'model_params.csv'), 'a', newline='') as f:
         w = csv.writer(f, delimiter='\t')
         row = list(best_model_dict.values())
-        w.writerow(row[:-1])  # do not print the model
+        row.insert(0, encoding)  # Aggiungi Encoding all'inizio della riga
+        row.insert(1, proportion)  # Aggiungi Proportion dopo Encoding
+        w.writerow(row[:-1])
 
-    print("Generating decision tree paths ...")
+    if settings.Allprint:
+        at_tp= f"Generating decision tree paths"
+        print(at_tp.center(main.infoconsole()))
+
     paths = generate_paths(dtc=best_model_dict['model'], dt_input_features=feature_names,
                            target_label=target_label)
     return paths, best_model_dict
@@ -357,7 +369,8 @@ def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train
     features = features[1:]
     target_label = labeling["target"]
     if settings.allprint==True:
-        print("Generating test prefixes ...")
+        at_gentest=f"Generating test prefixes"
+        print(at_gentest.center(main.infoconsole()))
     prefixes = generate_prefixes(input_log, prefixing)
 
     eval_res = EvaluationResult()
@@ -629,10 +642,10 @@ def generate_recommendations_and_evaluation(test_log,
 
 def write_evaluation_to_csv(e, dataset):
     if selected_evaluation_edit_distance != "weighted_edit_distance":
-        csv_file = os.path.join(settings.results_dir, f"{dataset}_{type_encoding}_evaluation_{selected_evaluation_edit_distance}.csv")
+        csv_file = os.path.join(settings.results_dir, f"{dataset}_{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}.csv")
     else:
         csv_file = os.path.join(settings.results_dir,
-                                f"{dataset}_{type_encoding}_evaluation_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.csv")
+                                f"{dataset}_{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.csv")
     fieldnames = ["tp", "fp", "tn", "fn", "precision", "recall", "accuracy", "fscore", "auc"]
     values = {
         "tp": e.tp,
@@ -657,10 +670,10 @@ def write_evaluation_to_csv(e, dataset):
 def write_recommendations_to_csv(recommendations, dataset):
     if selected_evaluation_edit_distance != "weighted_edit_distance":
         csv_file = os.path.join(settings.results_dir,
-                                f"{dataset}_{type_encoding}_recommendations_{selected_evaluation_edit_distance}.csv")
+                                f"{dataset}_{ruleprefix}{type_encoding}_recommendations_{selected_evaluation_edit_distance}.csv")
     else:
         csv_file = os.path.join(settings.results_dir,
-                                f"{dataset}_{type_encoding}_recommendations_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.csv")
+                                f"{dataset}_{ruleprefix}{type_encoding}_recommendations_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.csv")
     fieldnames = ["Trace id", "Prefix len", "Complete trace", "Current prefix", "Recommendation", "Actual label",
                   "Target label", "Compliant", "Confusion matrix", "Impurity", "Fitness", "Num samples"]
 
@@ -696,10 +709,10 @@ def write_recommendations_to_csv(recommendations, dataset):
     # Write to Excel
     if selected_evaluation_edit_distance != "weighted_edit_distance":
         excel_file = os.path.join(settings.results_dir,
-                                  f"{dataset}_{type_encoding}_recommendations_{selected_evaluation_edit_distance}.xlsx")
+                                  f"{dataset}_{ruleprefix}{type_encoding}_recommendations_{selected_evaluation_edit_distance}.xlsx")
     else:
         excel_file = os.path.join(settings.results_dir,
-                                  f"{dataset}_{type_encoding}_recommendations_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.xlsx")
+                                  f"{dataset}_{ruleprefix}{type_encoding}_recommendations_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.xlsx")
     workbook = openpyxl.Workbook()
     worksheet = workbook.active
     worksheet.title = "Recommendations"
@@ -719,14 +732,14 @@ def write_recommendations_to_csv(recommendations, dataset):
 def prefix_evaluation_to_csv(result_dict, dataset):
     if selected_evaluation_edit_distance != "weighted_edit_distance":
         csv_file = os.path.join(settings.results_dir,
-                                f"{dataset}_{type_encoding}_evaluation_{selected_evaluation_edit_distance}.csv")
+                                f"{dataset}_{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}.csv")
         excel_file = os.path.join(settings.results_dir,
-                                  f"{dataset}_{type_encoding}_evaluation_{selected_evaluation_edit_distance}.xlsx")
+                                  f"{dataset}_{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}.xlsx")
     else:
         csv_file = os.path.join(settings.results_dir,
-                                f"{dataset}_{type_encoding}_evaluation_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.csv")
+                                f"{dataset}_{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.csv")
         excel_file = os.path.join(settings.results_dir,
-                                  f"{dataset}_{type_encoding}_evaluation_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.xlsx")
+                                  f"{dataset}_{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.xlsx")
 
 
     fieldnames = ["prefix_length", "num_cases", "tp", "fp", "tn", "fn", "precision", "recall", "fscore"]

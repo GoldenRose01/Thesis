@@ -1,0 +1,231 @@
+dataset_name;letter;complexity_type;encoding_type;weighted_values;prefix_length;precision;fscore
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;1.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;2.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;3.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;4.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;5.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;6.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;7.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;8.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;9.0;0.8918918918918919;0.9428571428571428
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;10.0;0.8904109589041096;0.9420289855072465
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;11.0;0.8962962962962963;0.9453125
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;12.0;0.9008264462809916;0.9478260869565218
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;13.0;0.9117647058823528;0.953846153846154
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;14.0;0.9069767441860463;0.951219512195122
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;15.0;0.8904109589041096;0.9420289855072465
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;16.0;0.9056603773584906;0.9504950495049505
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;17.0;0.9069767441860463;0.951219512195122
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;18.0;0.9117647058823528;0.953846153846154
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;19.0;0.9090909090909092;0.9523809523809524
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;20.0;0.9;0.9473684210526316
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;21.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;22.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;23.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;24.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;25.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;1.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;2.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;3.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;4.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;5.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;6.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;7.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;8.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;9.0;0.8918918918918919;0.9428571428571428
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;10.0;0.8904109589041096;0.9420289855072465
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;11.0;0.8962962962962963;0.9453125
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;12.0;0.9008264462809916;0.9478260869565218
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;13.0;0.9117647058823528;0.953846153846154
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;14.0;0.9069767441860463;0.951219512195122
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;15.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;1.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;2.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;3.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;4.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;5.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;6.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;7.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;8.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;9.0;0.8918918918918919;0.9428571428571428
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;10.0;0.8904109589041096;0.9420289855072465
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;11.0;0.8962962962962963;0.9453125
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;12.0;0.9008264462809916;0.9478260869565218
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;13.0;0.9117647058823528;0.953846153846154
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;14.0;0.9069767441860463;0.951219512195122
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;15.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;1.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;2.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;3.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;4.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;5.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;6.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;7.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;8.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;9.0;0.8918918918918919;0.9428571428571428
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;10.0;0.8904109589041096;0.9420289855072465
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;11.0;0.8962962962962963;0.9453125
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;12.0;0.9008264462809916;0.9478260869565218
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;13.0;0.9117647058823528;0.953846153846154
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;14.0;0.9069767441860463;0.951219512195122
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;15.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;1.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;2.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;3.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;4.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;5.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;6.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;7.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;8.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;9.0;0.8918918918918919;0.9428571428571428
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;10.0;0.8904109589041096;0.9420289855072465
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;11.0;0.8962962962962963;0.9453125
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;12.0;0.9008264462809916;0.9478260869565218
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;13.0;0.9117647058823528;0.953846153846154
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;14.0;0.9069767441860463;0.951219512195122
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;15.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;16.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;17.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;18.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;19.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;20.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;21.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;22.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;23.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;24.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;25.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;1.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;2.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;3.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;4.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;5.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;6.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;7.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;8.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;9.0;0.8918918918918919;0.9428571428571428
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;10.0;0.8904109589041096;0.9420289855072465
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;11.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;12.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;13.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;14.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;15.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;1.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;2.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;3.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;4.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;5.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;6.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;7.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;8.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;9.0;0.8918918918918919;0.9428571428571428
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;10.0;0.8904109589041096;0.9420289855072465
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;11.0;0.8962962962962963;0.9453125
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;12.0;0.9008264462809916;0.9478260869565218
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;13.0;0.9117647058823528;0.953846153846154
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;14.0;0.9069767441860463;0.951219512195122
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;15.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;1.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;2.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;3.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;4.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;5.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;6.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;7.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;8.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;9.0;0.8918918918918919;0.9428571428571428
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;10.0;0.8904109589041096;0.9420289855072465
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;11.0;0.8962962962962963;0.9453125
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;12.0;0.9008264462809916;0.9478260869565218
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;13.0;0.9117647058823528;0.953846153846154
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;14.0;0.9069767441860463;0.951219512195122
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;15.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;1.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;2.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;3.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;4.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;5.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;6.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;7.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;8.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;9.0;0.8918918918918919;0.9428571428571428
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;10.0;0.8904109589041096;0.9420289855072465
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;11.0;0.8962962962962963;0.9453125
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;12.0;0.9008264462809916;0.9478260869565218
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;13.0;0.9117647058823528;0.953846153846154
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;14.0;0.9069767441860463;0.951219512195122
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;15.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;1.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;2.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;3.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;4.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;5.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;6.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;7.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;8.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;9.0;0.8918918918918919;0.9428571428571428
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;10.0;0.8904109589041096;0.9420289855072465
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;11.0;0.8962962962962963;0.9453125
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;12.0;0.9008264462809916;0.9478260869565218
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;13.0;0.9117647058823528;0.953846153846154
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;14.0;0.9069767441860463;0.951219512195122
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;15.0;0.8904109589041096;0.9420289855072465
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;1.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;2.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;3.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;4.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;5.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;6.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;7.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;8.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;9.0;0.8918918918918919;0.9428571428571428
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;10.0;0.8904109589041096;0.9420289855072465
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;11.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;12.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;13.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;14.0;0.0;0.0
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;15.0;0.0;0.0
+sepsis_cases_1;N;complex;unknown;;1.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;unknown;;2.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;unknown;;3.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;unknown;;4.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;unknown;;5.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;unknown;;6.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;unknown;;7.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;unknown;;8.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;unknown;;9.0;0.8918918918918919;0.9428571428571428
+sepsis_cases_1;N;complex;unknown;;10.0;0.8904109589041096;0.9420289855072465
+sepsis_cases_1;N;complex;unknown;;11.0;0.8962962962962963;0.9453125
+sepsis_cases_1;N;complex;unknown;;12.0;0.9008264462809916;0.9478260869565218
+sepsis_cases_1;N;complex;unknown;;13.0;0.9117647058823528;0.953846153846154
+sepsis_cases_1;N;complex;unknown;;14.0;0.9069767441860463;0.951219512195122
+sepsis_cases_1;N;complex;unknown;;15.0;0.0;0.0
+sepsis_cases_1;N;complex;unknown;;1.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;unknown;;2.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;unknown;;3.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;unknown;;4.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;unknown;;5.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;unknown;;6.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;unknown;;7.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;unknown;;8.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;complex;unknown;;9.0;0.8918918918918919;0.9428571428571428
+sepsis_cases_1;N;complex;unknown;;10.0;0.8904109589041096;0.9420289855072465
+sepsis_cases_1;N;complex;unknown;;11.0;0.8962962962962963;0.9453125
+sepsis_cases_1;N;complex;unknown;;12.0;0.9008264462809916;0.9478260869565218
+sepsis_cases_1;N;complex;unknown;;13.0;0.9117647058823528;0.953846153846154
+sepsis_cases_1;N;complex;unknown;;14.0;0.9069767441860463;0.951219512195122
+sepsis_cases_1;N;complex;unknown;;15.0;0.0;0.0
+sepsis_cases_1;N;simple;unknown;;1.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;simple;unknown;;2.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;simple;unknown;;3.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;simple;unknown;;4.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;simple;unknown;;5.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;simple;unknown;;6.0;0.8940397350993378;0.9440559440559442
+sepsis_cases_1;N;simple;unknown;;7.0;0.8918918918918919;0.9328621908127208
+sepsis_cases_1;N;simple;unknown;;8.0;0.8775510204081632;0.467391304347826
+sepsis_cases_1;N;simple;unknown;;9.0;0.8775510204081632;0.4751381215469612
+sepsis_cases_1;N;simple;unknown;;10.0;0.8913043478260869;0.4659090909090909
+sepsis_cases_1;N;simple;unknown;;11.0;0.0;0.0
+sepsis_cases_1;N;simple;unknown;;12.0;0.0;0.0
+sepsis_cases_1;N;simple;unknown;;13.0;0.0;0.0
+sepsis_cases_1;N;simple;unknown;;14.0;0.0;0.0
+sepsis_cases_1;N;simple;unknown;;15.0;0.0;0.0

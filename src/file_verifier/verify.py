@@ -1,6 +1,9 @@
-import subprocess
-import os
+from PrivateLib.Colors import *
 import pandas as pd
+import subprocess
+import settings
+import main
+import os
 
 
 # ___Verifica se i file Resource_att.txt e Trace_att.txt esistono nella cartella desiderata___#
@@ -10,10 +13,11 @@ def attributes_verifier(directory):
     resource_att_path = directory + "/" + resource_filename
     trace_att_path = directory + "/" + trace_filename
     if not os.path.exists(resource_att_path) or not os.path.exists(trace_att_path):
-        print("File non trovati. Esecuzione dello script script csvreader.")
+        at_file_ver = f"{RED}File not found. Need to exe script csvreader.{RESET}"
         subprocess.run(["python", "src/file_verifier/csvreader.py"])
     else:
-        print("File trovati,inizio esperimento")
+        at_file_ver = f"File found,no more extra things to do."
+    print(f"{CREAM}{at_file_ver.center(main.infoconsole())}{RESET}\n\n")
 
 
 def remove_files(directory):
@@ -81,15 +85,13 @@ def structurize_results(directory):
                 os.rename(source_path, full_dest_path)
 
 
-
 def timeprinter(dataset_name,
                 type_encoding,
                 selected_evaluation_edit_distance,
                 wtrace_att,
                 wactivities,
                 wresource_att,
-                time_m_finale,
-                ):
+                time_m_finale):
     file_path = 'Prospetto.csv'
     # Definizione della leggenda base
     legend = ['Dataset_name',
@@ -112,7 +114,7 @@ def timeprinter(dataset_name,
                 df = pd.read_csv(file_path, sep=',', encoding=encoding, on_bad_lines='skip')
                 break
             except UnicodeDecodeError:
-                print(f"Error reading {file_path} with encoding {encoding}. Trying next encoding...")
+                print(f"Error reading {file_path} with encoding {encoding}. Trying next encoding")
             except pd.errors.ParserError as e:
                 print(f"Parser error reading {file_path} with encoding {encoding}: {e}")
                 return
@@ -130,9 +132,12 @@ def timeprinter(dataset_name,
     if weighted_col_name not in df.columns:
         df[weighted_col_name] = ''
 
+    # Troncatura del tempo a due cifre decimali
+    time_m_finale = f"{float(time_m_finale):.2f}"
+
     # Costruzione della riga da aggiungere/aggiornare
     new_row = {'Dataset_name': dataset_name, 'Simple': '', 'Complex edit_distance_lib': '',
-        'Complex edit_distance_separate': '', weighted_col_name: '', 'Declarative': ''}
+               'Complex edit_distance_separate': '', weighted_col_name: '', 'Declarative': ''}
 
     # Aggiunta valori basati sul tipo di encoding
     if type_encoding == 'simple':
@@ -145,16 +150,32 @@ def timeprinter(dataset_name,
         elif selected_evaluation_edit_distance == 'weighted_edit_distance':
             new_row[weighted_col_name] = f"{time_m_finale}m"
 
+    # Determina il nome del dataset basato su settings.weighted_prefix_generation
+    if settings.weighted_prefix_generation:
+        dataset_row_name = f"{settings.ruleprefix}-{dataset_name}"
+    else:
+        dataset_row_name = dataset_name
+
+    new_row['Dataset_name'] = dataset_row_name
+
     # Controllo se il dataset esiste già nel DataFrame
-    if dataset_name in df['Dataset_name'].values:
+    if dataset_row_name in df['Dataset_name'].values:
         # Aggiornamento della riga esistente
         for column in new_row:
             if new_row[column]:
-                df.loc[df['Dataset_name'] == dataset_name, column] = new_row[column]
+                df.loc[df['Dataset_name'] == dataset_row_name, column] = new_row[column]
     else:
         # Aggiunta di una nuova riga
         df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
 
     # Salvataggio del DataFrame aggiornato nel file CSV
     df.to_csv(file_path, sep=',', index=False)
-    print(f"File {file_path} aggiornato con successo con dati del {dataset_name}.")
+    if settings.selected_evaluation_edit_distance != "weighted_edit_distance":
+        at_timeprint = f"File {file_path} successfully updated with"
+        at_tp2 = f"{dataset_name} con {settings.selected_evaluation_edit_distance}"
+    else:
+        at_timeprint = f"File {file_path} successfully updated with"
+        at_tp2 = f"{dataset_name} con {settings.selected_evaluation_edit_distance} al {wtrace_att},{wactivities},{wresource_att}."
+
+    print(f"\n{AQUA_GREEN}{at_timeprint.center(main.infoconsole())}{RESET}")
+    print(f"{AQUA_GREEN}{at_tp2.center(main.infoconsole())}{RESET}")

@@ -1,7 +1,8 @@
+from PrivateLib.Colors import *
+from settings import *
 import editdistance
-import itertools
-import settings
-from settings import wtrace_att, wactivities, wresource_att
+import main
+
 
 def edit(ref, hyp, special_value=-999):
     ref2 = [x if x is not None else special_value for x in ref if x != special_value]
@@ -12,7 +13,7 @@ def edit(ref, hyp, special_value=-999):
 
     maxi = max(len(ref2), len(hyp2))
 
-    for i in range(len(ref2)-1, -1, -1):
+    for i in range(len(ref2) - 1, -1, -1):
         if (ref2[i] == "" or ref2[i] == 0) and i < len(hyp2):
             ref2.pop(i)
             hyp2.pop(i)
@@ -24,6 +25,7 @@ def edit(ref, hyp, special_value=-999):
     ed_ratio = ed_lib / maxi
 
     return ed_ratio
+
 
 def edit_separate(ref, hyp, indices, max_variation, special_value=-999):
     # Inizializza la lista delle distanze
@@ -42,6 +44,7 @@ def edit_separate(ref, hyp, indices, max_variation, special_value=-999):
             continue
 
         adjusted_index = i + 1  # Aggiusta l'indice per matchare con quello in indices
+
         if adjusted_index in indices['numeric']:
             # Usa l'indice aggiustato per ottenere la variazione massima corretta
             rel_index = index_to_numeric.get(i, None)  # Usa l'indice originale di ref/hyp
@@ -57,6 +60,7 @@ def edit_separate(ref, hyp, indices, max_variation, special_value=-999):
 
     ed_ratio = sum(distances) / len(distances) if distances else 0
     return ed_ratio
+
 
 def weighted_edit_distance(ref, hyp, indices, max_variation, length_t, special_value=-999):
     weighted_distances = []
@@ -89,8 +93,9 @@ def weighted_edit_distance(ref, hyp, indices, max_variation, length_t, special_v
             numeric_ref = float(ref_value)
             numeric_hyp = float(hyp_value)
         except ValueError:
-            if settings.Allprint is True:
-                print(f"Skipping non-numeric data at index {i}: ref[i]={ref_value}, hyp[i]={hyp_value}")
+            if Allprint is True:
+                at_skip_n = f"Skipping non-numeric data at index {i}: ref[i]={ref_value}, hyp[i]={hyp_value}"
+                print(f"{RUBY}{at_skip_n.center(main.infoconsole())}{RESET}")
             continue
 
         if adjusted_index in indices['numeric']:
