@@ -1,0 +1,23 @@
+BPIC11_f1: Treatment code;Diagnosis code;Specialism code;Activity code;Producer code;Section;Specialism code.1;group
+BPIC11_f2: Treatment code;Diagnosis code;Specialism code;Activity code;Producer code;Section;Specialism code.1;group
+BPIC11_f3: Treatment code;Diagnosis code;Specialism code;Activity code;Producer code;Section;Specialism code.1;group
+BPIC11_f4: Treatment code;Diagnosis code;Specialism code;Activity code;Producer code;Section;Specialism code.1;group
+BPIC15_1_f2: Responsible_actor;Activity;monitoringResource;question;org:resource
+BPIC15_2_f2: Activity;question;org:resource
+BPIC15_3_f2: Responsible_actor;Activity;monitoringResource;question;org:resource
+BPIC15_4_f2: Activity;monitoringResource;question;org:resource
+BPIC15_5_f2: Activity;monitoringResource;question;org:resource
+BPIC17_O_Accepted: ApplicationType;LoanGoal;Activity;org:resource;Action;EventOrigin;lifecycle:transition;Accepted;Selected
+BPIC17_O_Cancelled: ApplicationType;LoanGoal;Activity;org:resource;Action;EventOrigin;lifecycle:transition;Accepted;Selected
+BPIC17_O_Refused: ApplicationType;LoanGoal;Activity;org:resource;Action;EventOrigin;lifecycle:transition;Accepted;Selected
+bpic2012_O_ACCEPTED-COMPLETE: Activity;Resource;lifecycle:transition
+bpic2012_O_CANCELLED-COMPLETE: Activity;Resource;lifecycle:transition
+bpic2012_O_DECLINED-COMPLETE: Activity;Resource;lifecycle:transition
+github_data: cleaned_text;comment_text;created_at;combined_text
+hospital_billing_2: speciality;Activity;Resource;actOrange;actRed;caseType;flagC;msgCode;msgType;state;version;closeCode
+hospital_billing_3: speciality;Activity;Resource;actOrange;actRed;caseType;flagC;msgCode;msgType;state;version;closeCode
+Production: Part_Desc_;Rework;Activity;Resource;Report_Type;Resource.1
+sepsis_cases_1: DisfuncOrg;Hypotensie;Hypoxie;InfectionSuspected;Infusion;org:group
+sepsis_cases_2: DisfuncOrg;Hypotensie;Hypoxie;InfectionSuspected;Infusion;org:group
+sepsis_cases_4: DisfuncOrg;Hypotensie;Hypoxie;InfectionSuspected;Infusion;org:group
+traffic_fines_1: article;vehicleClass;Activity;Resource;lastSent;notificationType;dismissal

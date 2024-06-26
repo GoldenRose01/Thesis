@@ -1,4 +1,4 @@
-from PrivateLib.Colors import *
+from Colorlib.Colors import *
 import pandas as pd
 import subprocess
 import settings

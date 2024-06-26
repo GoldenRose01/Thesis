@@ -3,7 +3,7 @@ import graphviz
 from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
 from src.models import *
-from PrivateLib.Colors import *
+from Colorlib.Colors import *
 from src.enums import *
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score

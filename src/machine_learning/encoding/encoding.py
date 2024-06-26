@@ -6,7 +6,7 @@ from src.machine_learning.encoding.data_encoder import *
 from src.machine_learning.label.common import LabelTypes
 from src.machine_learning.utils import *
 from src.models.DTInput import *
-from PrivateLib.Colors import *
+from Colorlib.Colors import *
 from pandas import DataFrame
 import settings
 import main

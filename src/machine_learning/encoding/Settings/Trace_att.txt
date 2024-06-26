@@ -1,0 +1,23 @@
+BPIC11_f1: Diagnosis
+BPIC11_f2: Diagnosis
+BPIC11_f3: Diagnosis
+BPIC11_f4: Diagnosis
+BPIC15_1_f2: 
+BPIC15_2_f2: 
+BPIC15_3_f2: 
+BPIC15_4_f2: 
+BPIC15_5_f2: 
+BPIC17_O_Accepted: 
+BPIC17_O_Cancelled: 
+BPIC17_O_Refused: 
+bpic2012_O_ACCEPTED-COMPLETE: 
+bpic2012_O_CANCELLED-COMPLETE: 
+bpic2012_O_DECLINED-COMPLETE: 
+github_data: 
+hospital_billing_2: diagnosis
+hospital_billing_3: diagnosis
+Production: 
+sepsis_cases_1: Diagnose
+sepsis_cases_2: Diagnose
+sepsis_cases_4: Diagnose
+traffic_fines_1: 

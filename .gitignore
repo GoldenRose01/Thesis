@@ -19,7 +19,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-PrivateLib/
 lib64/
 parts/
 sdist/
@@ -140,8 +139,6 @@ cython_debug/
 
 # End of https://www.toptal.com/developers/gitignore/api/python
 media/input/*
-src/machine_learning/encoding/Settings/Resource_att.txt
-src/machine_learning/encoding/Settings/Trace_att.txt
 /.idea
 .idea
 .history

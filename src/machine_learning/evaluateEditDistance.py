@@ -1,4 +1,4 @@
-from PrivateLib.Colors import *
+from Colorlib.Colors import *
 from settings import *
 import editdistance
 import main

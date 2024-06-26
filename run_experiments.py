@@ -3,7 +3,7 @@ from src.machine_learning import *
 from src.machine_learning import recommender as rcm
 from src.dataset_manager.datasetManager import *
 import src.file_verifier.verify as verify
-from PrivateLib.Colors import *
+from Colorlib.Colors import *
 import numpy as np
 import settings
 import time
