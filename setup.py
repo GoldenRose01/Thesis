@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-def load_requirements(filename='requirements.dat'):
+def load_requirements(filename='requirements.txt'):
     with open(filename, 'r') as file:
         return file.read().splitlines()
 
