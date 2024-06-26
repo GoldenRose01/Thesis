@@ -1,48 +1,68 @@
 from src.machine_learning.encoding.feature_encoder.frequency_features import frequency_features
-from src.machine_learning.encoding.feature_encoder.simple_features import simple_features
 from src.machine_learning.encoding.feature_encoder.complex_features import complex_features
-from src.machine_learning.encoding.data_encoder import *
+from src.machine_learning.encoding.feature_encoder.simple_features import simple_features
 from src.machine_learning.encoding.constants import EncodingType
+from src.machine_learning.encoding.data_encoder import *
 from src.machine_learning.label.common import LabelTypes
 from src.machine_learning.utils import *
 from src.models.DTInput import *
+from PrivateLib.Colors import *
 from pandas import DataFrame
 import settings
+import main
+
 
 TRACE_TO_DF = {
     EncodingType.SIMPLE.value: simple_features,
     EncodingType.FREQUENCY.value: frequency_features,
     EncodingType.COMPLEX.value: complex_features,
-    #todo EncodingType.DECLARE.value : declare_features
+    # todo EncodingType.DECLARE.value : declare_features
 }
 
 
 # Definisce una classe chiamata 'Encoding'
 class Encoding:
     def __init__(self, log: DataFrame = None):
-
         case_counts = {}
 
-        # Itera attraverso le tracce e conta il numero di tracce per ogni caso
+        # Iterate through the traces and count the number of traces for each case
         for trace in log:
             case_id = trace.attributes['concept:name']
-            for idx, event in enumerate(trace):
-                if case_id in case_counts:
-                    case_counts[case_id] += 1
-                else:
-                    case_counts[case_id] = 1
+            if case_id in case_counts:
+                case_counts[case_id] += len(trace)
+            else:
+                case_counts[case_id] = len(trace)
 
         total_cases = len(case_counts)
         total_counts = sum(case_counts.values())
 
-        # Calcola la media
-        if total_cases > 0:
-            average = total_counts / total_cases
+        # Calculate the average
+        if settings.weighted_prefix_generation:
+            total_weighted_counts = 0
+            total_weights = 0
+
+            for trace in log:
+                case_id = trace.attributes['concept:name']
+                weight = len(trace)  # Assume the weight is the length of the trace
+                total_weighted_counts += case_counts[case_id] * weight
+                total_weights += weight
+
+            if total_weights > 0:
+                average = total_weighted_counts / total_weights
+            else:
+                average = 0
         else:
-            average = 0
+            if total_cases > 0:
+                average = total_counts / total_cases
+            else:
+                average = 0
 
         self.prefix = int(average)  # Calcola il prefisso basato sulla media
-        print(self.prefix)
+        if settings.weighted_prefix_generation:
+            at_prfx = f"Weighted prefix Lenght: {self.prefix}"
+        else:
+            at_prfx = f"Prefix Lenght: {self.prefix}"
+        print(f"{EMERALD}{at_prfx.center(main.infoconsole())}{RESET}")
 
         self.CONF = {
             'data': log,
@@ -118,7 +138,8 @@ class Encoding:
         return DTInput(features, encoded_data, labels), self.prefix, ncu_data, indices, max_variations, features
 
     # Funzione per separare e codificare i dati in vettori categorici e numerici
-    def separate_and_encode(self, encoded_data, features, numeric_columns, categoric_columns):
+    @staticmethod
+    def separate_and_encode(encoded_data, features, numeric_columns, categoric_columns):
         # Inizializzazione delle liste per dati numerici, categorici e sconosciuti
         numeric_data = []
         categoric_data = []
@@ -169,26 +190,23 @@ class Encoding:
             return tuple(data)
         return data
 
-
-
     # Modifica la funzione Encoding.decode
-    def decode(self, log, feature_base):
+    def decode(self, log, features):
         prefix_columns = {}
 
         for i, prefix in enumerate(log):
-            column_name = f'prefix_{i + 1}'
+            column_name = features[i]
             prefix_columns[column_name] = [prefix]
         df_input = pd.DataFrame(prefix_columns)
         self.encoder.decode(df=df_input)
         return df_input
 
-    def encode(self, log, feature_base):
+    # Modifica la funzione Encoding.encode
+    def encode(self, log, features):
         prefix_columns = {}
-        feature_base[1:]
         for i, prefix in enumerate(log):
-            column_name = f'prefix_{i + 1}'
+            column_name = features[i]
             prefix_columns[column_name] = [prefix]
         df_input = pd.DataFrame(prefix_columns)
         self.encoder.encode(df=df_input)
-
         return df_input

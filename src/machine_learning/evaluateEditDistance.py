@@ -1,19 +1,19 @@
-import editdistance  # Importa la libreria per calcolare la distanza di edit
-import itertools
+from PrivateLib.Colors import *
+from settings import *
+import editdistance
+import main
 
-import settings
-from settings import Print_edit_distance, wtrace_att, wactivities, wresource_att
 
 def edit(ref, hyp, special_value=-999):
-    ref2 = [x for x in ref if x != special_value]
-    hyp2 = [x for x in hyp if x != special_value]
+    ref2 = [x if x is not None else special_value for x in ref if x != special_value]
+    hyp2 = [x if x is not None else special_value for x in hyp if x != special_value]
 
     hyp2 = hyp2[:len(ref2)]  # Limita la lunghezza di hyp2 alla lunghezza di ref2
     hyp2 = [int(elemento) for elemento in hyp2]  # Converte gli elementi di hyp2 in interi
 
     maxi = max(len(ref2), len(hyp2))
 
-    for i in range(len(ref2)-1, -1, -1):
+    for i in range(len(ref2) - 1, -1, -1):
         if (ref2[i] == "" or ref2[i] == 0) and i < len(hyp2):
             ref2.pop(i)
             hyp2.pop(i)
@@ -26,6 +26,7 @@ def edit(ref, hyp, special_value=-999):
 
     return ed_ratio
 
+
 def edit_separate(ref, hyp, indices, max_variation, special_value=-999):
     # Inizializza la lista delle distanze
     distances = []
@@ -36,25 +37,31 @@ def edit_separate(ref, hyp, indices, max_variation, special_value=-999):
     min_length = min(len(ref), len(hyp))
 
     for i in range(min_length):
-        if ref[i] == special_value or hyp[i] == special_value:
+        ref_value = ref[i] if ref[i] is not None else special_value
+        hyp_value = hyp[i] if hyp[i] is not None else special_value
+
+        if ref_value == special_value or hyp_value == special_value:
             continue
 
         adjusted_index = i + 1  # Aggiusta l'indice per matchare con quello in indices
+
         if adjusted_index in indices['numeric']:
             # Usa l'indice aggiustato per ottenere la variazione massima corretta
             rel_index = index_to_numeric.get(i, None)  # Usa l'indice originale di ref/hyp
             if rel_index is not None and max_variation[rel_index] != 0:
-                distance = abs(ref[i] - hyp[i]) / max_variation[rel_index]
+                distance = abs(ref_value - hyp_value) / max_variation[rel_index]
             else:
                 distance = 0
         elif adjusted_index in indices['categoric'] or adjusted_index in indices['unknown']:
-            distance = 0 if ref[i] == hyp[i] else 1
+            distance = 0 if ref_value == hyp_value else 1
         else:
             distance = 0
         distances.append(distance)
 
     ed_ratio = sum(distances) / len(distances) if distances else 0
     return ed_ratio
+
+
 def weighted_edit_distance(ref, hyp, indices, max_variation, length_t, special_value=-999):
     weighted_distances = []
     weights = {}
@@ -73,18 +80,22 @@ def weighted_edit_distance(ref, hyp, indices, max_variation, length_t, special_v
     min_length = min(len(ref), len(hyp))
 
     for i in range(min_length):
-        if ref[i] == special_value or hyp[i] == special_value:
+        ref_value = ref[i] if ref[i] is not None else special_value
+        hyp_value = hyp[i] if hyp[i] is not None else special_value
+
+        if ref_value == special_value or hyp_value == special_value:
             continue
 
         adjusted_index = i + 1
 
-        # Converti ref[i] e hyp[i] a numerici se non lo sono già
+        # Converti ref_value e hyp_value a numerici se non lo sono già
         try:
-            numeric_ref = float(ref[i])
-            numeric_hyp = float(hyp[i])
+            numeric_ref = float(ref_value)
+            numeric_hyp = float(hyp_value)
         except ValueError:
-            if settings.Allprint is True:
-                print(f"Skipping non-numeric data at index {i}: ref[i]={ref[i]}, hyp[i]={hyp[i]}")
+            if Allprint is True:
+                at_skip_n = f"Skipping non-numeric data at index {i}: ref[i]={ref_value}, hyp[i]={hyp_value}"
+                print(f"{RUBY}{at_skip_n.center(main.infoconsole())}{RESET}")
             continue
 
         if adjusted_index in indices['numeric']:
@@ -104,4 +115,3 @@ def weighted_edit_distance(ref, hyp, indices, max_variation, length_t, special_v
     weighted_ed_ratio = sum(weighted_distances) / len(weighted_distances) if weighted_distances else 0
 
     return weighted_ed_ratio
-

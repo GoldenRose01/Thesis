@@ -1,17 +1,9 @@
-import numpy as np
-import pandas as pd
-import pdb
-import settings
+import main
 import graphviz
-from sklearn.svm import SVC
-from sklearn.neural_network import MLPClassifier
 from sklearn import tree
-from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import chi2
-from sklearn.feature_selection import mutual_info_classif
-import math
 from sklearn.tree import DecisionTreeClassifier
 from src.models import *
+from PrivateLib.Colors import *
 from src.enums import *
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score
@@ -48,10 +40,16 @@ TRACE_TO_DF = {
 
 # Funzione per trovare il miglior albero decisionale
 def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input_trainval):
-    print("DT params optimization ...")
+    at_DT_par = f"DT params optimization"
+    print(f"{PISTACHIO}{at_DT_par.center(main.infoconsole())}{RESET}")
+
     categories = [TraceLabel.FALSE.value, TraceLabel.TRUE.value]
-    model_dict = {'dataset_name': dataset_name, 'parameters': (),
-                  'f1_score_val': None, 'f1_score_train': None, 'f1_prefix_val': None, 'max_depth': 0,
+    model_dict = {'dataset_name': dataset_name,
+                  'parameters': (),
+                  'f1_score_val': None,
+                  'f1_score_train': None,
+                  'f1_prefix_val': None,
+                  'max_depth': 0,
                   'model': None}
 
     # Generazione degli eventi e delle coppie di eventi frequenti
@@ -79,18 +77,37 @@ def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input
     for attribute in resource_attributes.get(log, []):
         if attribute not in settings.excluded_attributes + trace_attributes_for_log:
             resource_attributes_for_log.append(attribute + "_")
-    Prefixcolumns = ["prefix_"] + trace_attributes_for_log + resource_attributes_for_log
+
+    if settings.selected_evaluation_edit_distance == "weighted_edit_distance":
+        if settings.wtrace_att == 0 and settings.wresource_att == 0 and settings.wactivities != 0:
+            prefixcolumns = ["prefix_"]
+        elif settings.wtrace_att == 0 and settings.wactivities == 0 and settings.wresource_att != 0:
+            prefixcolumns = resource_attributes_for_log
+        elif settings.wresource_att == 0 and settings.wactivities == 0 and settings.wtrace_att != 0:
+            prefixcolumns = trace_attributes_for_log
+        elif settings.wtrace_att == 0 and settings.wactivities != 0 and settings.wresource_att != 0:
+            prefixcolumns = ["prefix_"] + resource_attributes_for_log
+        elif settings.wresource_att == 0 and settings.wactivities != 0 and settings.wtrace_att != 0:
+            prefixcolumns = ["prefix_"] + trace_attributes_for_log
+        elif settings.wactivities == 0 and settings.wresource_att != 0 and settings.wtrace_att != 0:
+            prefixcolumns = trace_attributes_for_log + resource_attributes_for_log
+        else:
+            prefixcolumns = ["prefix_"] + trace_attributes_for_log + resource_attributes_for_log
+    else:
+        prefixcolumns = ["prefix_"] + trace_attributes_for_log + resource_attributes_for_log
 
     X_train = X_train.astype(str)
 
     prefix_columns = []
-    for attr in Prefixcolumns:
+    for attr in prefixcolumns:
         prefix_columns.extend([col for col in X_train.columns if col.startswith(attr)])
 
     one_hot_data = pd.get_dummies(X_train[prefix_columns], drop_first=True)
     new_feature_names = np.array(one_hot_data.columns)
 
-    print("Grid search ...")
+    at_grid ="Grid search"
+    print(f"{PEACHPUFF}{at_grid.center(main.infoconsole())}{RESET}")
+
     search = GridSearchCV(estimator=DecisionTreeClassifier(random_state=0), param_grid=settings.dt_hyperparameters,
                           scoring="f1", return_train_score=True, cv=5)
     search.fit(one_hot_data, y_train)
@@ -108,14 +125,15 @@ def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input
         graph = graphviz.Source(dot_data, format="pdf")
         if settings.type_encoding != "complex":
             graph.render(os.path.join(settings.output_dir,
-                                      f'DT_{dataset_name}_{settings.type_encoding}'))
+                                      f'DT_{dataset_name}_{settings.ruleprefix}{settings.type_encoding}'))
         elif settings.selected_evaluation_edit_distance != "weighted_edit_distance":
             graph.render(os.path.join(settings.output_dir,
-                                      f"DT_{dataset_name}_{settings.type_encoding}_{settings.selected_evaluation_edit_distance}"))
+                                      f"DT_{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_{settings.selected_evaluation_edit_distance}"))
         else:
             graph.render(os.path.join(settings.output_dir,
-                                      f"DT_{dataset_name}_{settings.type_encoding}_{settings.selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}"))
-        print("PDF generated")
+                                      f"DT_{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_{settings.selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}"))
+        at_pdf = "PDF generated"
+        print(f"{LILAC}{at_pdf.center(main.infoconsole())}{RESET}")
 
     return model_dict, new_feature_names
 
@@ -134,7 +152,7 @@ def dt_score(dt_input):
 
 
 # Funzione per generare un albero decisionale basato su Boosting
-def generate_boost_decision_tree(X_train, X_val, y_train, y_val, class_weight, min_samples_split):
+def generate_boost_decision_tree(X_train, X_val, y_train, y_val):
     dtc = GradientBoostingClassifier(n_estimators=100, learning_rate=0.1, random_state=0).fit(X_train, y_train)
     dtc.fit(X_train, y_train)
     y_pred = dtc.predict(X_val)

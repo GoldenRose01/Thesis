@@ -1,27 +1,22 @@
+import main
 from src.machine_learning import *
 from src.machine_learning import recommender as rcm
 from src.dataset_manager.datasetManager import *
 import src.file_verifier.verify as verify
+from PrivateLib.Colors import *
 import numpy as np
 import settings
 import time
 import copy
 import os
 
-import platform
-import argparse
-import multiprocessing
-import csv
-
-# Definire i codici di escape ANSI
-BLUE = '\033[94m'
-GREEN = '\033[92m'
-RESET = '\033[0m'
-
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione
 def rec_sys_exp(dataset_name):
+    # Simulation Timer start
     start_time_exp = time.time()
-    print(BLUE + f"Inizio simulazione con {dataset_name}" + RESET)
+    at_startexp = f"Starting the simulation on {dataset_name}"
+    print(f"{BLUE}{at_startexp.center(main.infoconsole())}{RESET}")
+
     # ================ inputs ================
 
     # Ricrea la cartella di output
@@ -45,7 +40,6 @@ def rec_sys_exp(dataset_name):
     train_val_df, test_df = dataset_manager.split_data_strict(data, train_val_ratio)
     train_df, val_df = dataset_manager.split_data(train_val_df, train_ratio, split="random")
 
-
     # Determina le lunghezze minime e massime dei prefissi (troncate)
     min_prefix_length = 1
     if "traffic_fines" in dataset_name:
@@ -56,7 +50,6 @@ def rec_sys_exp(dataset_name):
     else:
         max_prefix_length_test = min(40, dataset_manager.get_pos_case_length_quantile(test_df, 0.90))
         max_prefix_length_val = min(40, dataset_manager.get_pos_case_length_quantile(val_df, 0.90))
-
 
     # Rinomina le colonne del dataset
     data = data.rename(
@@ -97,6 +90,17 @@ def rec_sys_exp(dataset_name):
     data_log = log_converter.apply(data)
 
     # Definizione delle etichette
+
+    labeling = {
+        "type": LabelType.TRACE_CATEGORICAL_ATTRIBUTES,
+        "threshold_type": "",
+        "target": TraceLabel.TRUE,
+        "trace_lbl_attr": dataset_manager.label_col,
+        "trace_label": 'regular',
+        "custom_threshold": 0.0
+    }
+
+    """
     labeling = {
         "type": LabelType.TRACE_CATEGORICAL_ATTRIBUTES,
         "threshold_type": "",
@@ -105,30 +109,27 @@ def rec_sys_exp(dataset_name):
         "trace_label": dataset_manager.pos_label,
         "custom_threshold": 0.0
     }
-
-    labeling = {
-        "type": LabelType.TRACE_CATEGORICAL_ATTRIBUTES,
-        "threshold_type": "",
-        "target": TraceLabel.TRUE,  # lower than a threshold considered as True
-        "trace_lbl_attr": dataset_manager.label_col,
-        "trace_label": 'regular',
-        "custom_threshold": 0.0
-    }
     """
-        labeling = {
-            "type": LabelType.TRACE_DURATION,
-            "threshold_type": LabelThresholdType.LABEL_MEAN,
-            "target": TraceLabel.TRUE,  # lower than a threshold considered as True
-            "trace_attribute": "",
-            "custom_threshold": 0.0
+
+    """
+    labeling = {
+        "type": LabelType.TRACE_DURATION,
+        "threshold_type": LabelThresholdType.LABEL_MEAN,
+        "target": TraceLabel.TRUE,
+        "trace_attribute": "",
+        "custom_threshold": 0.0
         }
-        """
+    """
 
     # Creazione dell'oggetto Encoding
     dt_input_trainval = Encoding(train_val_log)
 
-    (dt_input_trainval_encoded, prefix_length,
-     ncu_data, indices, max_variations, features) = dt_input_trainval.encode_traces(numeric_columns, categoric_columns)
+    (dt_input_trainval_encoded,
+     prefix_length,
+     ncu_data,
+     indices,
+     max_variations,
+     features) = dt_input_trainval.encode_traces(numeric_columns, categoric_columns)
 
     # Lista dei risultati
     results = []
@@ -168,7 +169,10 @@ def rec_sys_exp(dataset_name):
     counter = 0
 
     # Scopre sul set di validazione con la migliore configurazione degli iperparametri di valutazione
-    print(f"Hyperparametri per la valutazione per {dataset_name} ...")
+    if settings.Allprint:
+        at_hypval = f"Hyperparametri per la valutazione per {dataset_name}"
+        print(f"{LILAC}{at_hypval.center(main.infoconsole())}{RESET}")
+
     if settings.compute_baseline:
         hyperparams_evaluation_list = hyperparams_evaluation_list_baseline
 
@@ -184,9 +188,11 @@ def rec_sys_exp(dataset_name):
                 "type": PrefixType.ONLY,
                 "length": prefix_len
             }
-            if settings.Allprint==True:
-                print("Counter: ", counter)
-                print("raccomandazione", prefix_len, "/", max_prefix_length_val)
+            if settings.Allprint:
+                at_counter = f"Counter:{counter}"
+                at_rec = f"raccomandazione{prefix_len}/{max_prefix_length_val}"
+                print(f"{AMETHYST_PURPLE}{at_counter.center(main.infoconsole())}{RESET}")
+                print(f"{LAVENDER_GRAY}{at_rec.center(main.infoconsole())}{RESET}")
             recommendations, evaluation = rcm.generate_recommendations_and_evaluation(test_log=val_log,
                                                                                       train_log=train_log,
                                                                                       labeling=labeling,
@@ -209,14 +215,17 @@ def rec_sys_exp(dataset_name):
         results_hyperparams_evaluation[hyperparams_evaluation] = np.mean(res_val_list)
         time_f = (time.time() - time_i) / 60.
         time_h = (time.time() - time_i) / 3600
-        print("Simulazione: ", counter, ", tempo: ", time_f, "minuti o ", time_h, "ore")
+        at_simulation = f"Simulation: {counter} Time: {time_f:.2f} minuti o {time_h:.2f} ore\n"
+        print(f"{ORANGE}{at_simulation.center(main.infoconsole())}{RESET}")
 
     results_hyperparams_evaluation = dict(sorted(results_hyperparams_evaluation.items(), key=lambda item: item[1]))
     best_hyperparams_combination = list(results_hyperparams_evaluation.keys())[-1]
     paths = tmp_paths
-    best_hyperparams_combination = best_hyperparams_combination
-    print(f"MIGLIORE COMBINAZIONE DI IPERPARAMETRI {best_hyperparams_combination}")
-    print(f"LUNGHEZZA MINIMA E MASSIMA DEI PREFISSI {min_prefix_length} {max_prefix_length_test}")
+    at_hypcombo = f"Best hyperparams combo {best_hyperparams_combination}"
+    print(f"{PINK}{at_hypcombo.center(main.infoconsole())}{RESET}")
+
+    at_maxmin = f"{MUSTARD}MIN ({SALMON}{min_prefix_length}{MUSTARD}) & MAX ({SALMON}{max_prefix_length_test}{MUSTARD}) Prefix Length {RESET}"
+    print(f"{at_maxmin.center(main.infoconsole())}\n")
 
     # Test sul set di test con la migliore configurazione degli iperparametri di valutazione
     eval_res = None
@@ -224,13 +233,15 @@ def rec_sys_exp(dataset_name):
         eval_res = EvaluationResult()
 
     for pref_id, prefix_len in enumerate(prefix_lenght_list_test):
-        print(
-            f"<--- DATASET: {dataset_name}, LUNGHEZZA PREFISSO: {prefix_len}/{max_prefix_length_test} --->")
+        at_prefix = f"<--- DATASET: {dataset_name}, Lenght of the prefix: {prefix_len}/{max_prefix_length_test} --->\n"
+        print(f"{GRAY_DARK}{at_prefix.center(main.infoconsole())}{RESET}")
+
         prefixing = {
             "type": PrefixType.ONLY,
             "length": prefix_len
         }
-        print("valutazione", prefix_len, "/", max_prefix_length_test)
+        at_eval = f"Evaluation{prefix_len}/{max_prefix_length_test}"
+        print(f"{GRAY_LIGHT}{at_eval.center(main.infoconsole())}{RESET}\n")
         recommendations, evaluation = rcm.generate_recommendations_and_evaluation(test_log=test_log,
                                                                                   train_log=train_log,
                                                                                   labeling=labeling,
@@ -260,10 +271,10 @@ def rec_sys_exp(dataset_name):
     for metric in ["fscore"]:
         if settings.selected_evaluation_edit_distance != "weighted_edit_distance":
             plot.toPng(metric,
-                       f"{dataset_name}_{settings.type_encoding}_{settings.selected_evaluation_edit_distance}_{metric}")
+                       f"{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_{settings.selected_evaluation_edit_distance}_{metric}")
         else:
             plot.toPng(metric,
-                       f"{dataset_name}_{settings.type_encoding}_{settings.selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}_{metric}")
+                       f"{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_{settings.selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}_{metric}")
     # Salva i risultati della valutazione dei prefissi in un file CSV
     rcm.prefix_evaluation_to_csv(results, dataset_name)
 
@@ -271,13 +282,13 @@ def rec_sys_exp(dataset_name):
     time_h_exp = (time.time() - start_time_exp) / 3600
     time_m_exp = (time.time() - start_time_exp) / 60
 
-    print(GREEN + f"La simulazione del dataset {dataset_name} hanno richiesto {time_h_exp} ore o {time_m_exp} minuti" + RESET)
+    verify.timeprinter(dataset_name, settings.type_encoding, settings.selected_evaluation_edit_distance,
+                       settings.wtrace_att, settings.wactivities, settings.wresource_att, time_m_exp)
 
-    verify.timeprinter(dataset_name,
-                       settings.type_encoding,
-                       settings.selected_evaluation_edit_distance,
-                       settings.wtrace_att,
-                       settings.wactivities,
-                       settings.wresource_att,
-                       time_m_exp)
+    at_endexp = f"{dataset_name} simulation required {time_h_exp:.2f}H or {time_m_exp:.2f}min"
+    print(f"\n{GREEN}{at_endexp.center(main.infoconsole())}{RESET}\n\n")
+
+    symbol = "="
+    print(f"{IVORY}{symbol*main.infoconsole()}{RESET}\n\n")
+
     return dataset_name, results, best_hyperparams_combination, max_prefix_length_test, min_prefix_length, dt

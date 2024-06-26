@@ -59,13 +59,13 @@ def get_frequent_pairs(log, pairs, support_threshold):
 
 # Funzione per generare eventi e coppie di eventi frequenti
 def generate_frequent_events_and_pairs(log, support_threshold):
-    print("Ricerca eventi frequenti ...")
+    print("Ricerca eventi frequenti")
     frequent_events = get_frequent_events(log, support_threshold)
 
-    print("Creazione coppie di eventi ...")
+    print("Creazione coppie di eventi")
     pairs = list(combinations(frequent_events, 2))
 
-    print("Ricerca coppie di eventi frequenti ...")
+    print("Ricerca coppie di eventi frequenti")
     frequent_pairs = get_frequent_pairs(log, pairs, support_threshold)
 
     # Creazione di coppie inverse per ciascuna coppia frequente
