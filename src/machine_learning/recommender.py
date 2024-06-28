@@ -72,7 +72,9 @@ class ParamsOptimizer:
                 evaluation = evaluate_recommendations(input_log=self.val_log,
                                                       labeling=self.labeling, prefixing=prefixing,
                                                       rules=self.rules, paths=paths,log=self.train_log,
-                                                      dataset_name=dataset_name,features=dt_input_train.features)
+                                                      dataset_name=dataset_name,features=features,
+                                                      resource_attributes=resource_attributes,
+                                                      trace_attributes=trace_attributes)
                 results.append(evaluation)
 
             model_dict['model'] = dtc
@@ -109,9 +111,9 @@ class ParamsOptimizer:
         return best_model_dict, dt_input_trainval.features
 
 # Definisci una funzione per generare raccomandazioni basate su un prefisso e un percorso
-def recommend(prefix, path, dt_input_trainval, dataset_name, features):
+def recommend(prefix, path, dt_input_trainval, dataset_name, features, resource_attributes, trace_attributes):
     recommendation = ""
-    trace_att_d, resource_att_d = get_attributes_by_dataset(dataset_name)
+
 
     prefixes = []
     for trace in prefix:
@@ -121,7 +123,7 @@ def recommend(prefix, path, dt_input_trainval, dataset_name, features):
     for rule in path.rules:
         feature, state, parent = rule
 
-        numbers = extract_numbers_from_string(feature, trace_att_d, resource_att_d)
+        numbers = extract_numbers_from_string(feature, trace_attributes, resource_attributes)
         if numbers is None:
             continue  # Salta questo ciclo se numbers è None
 
@@ -195,22 +197,21 @@ def complex_extraction(trace, trace_att_d, resource_att_d, prefix_max):
 
 # Definisci una funzione per valutare la conformità di un trace rispetto a un percorso
 def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold,
-             labeling, indices, max_variation, dataset_name, prefix_max,features):
-    # Inizializza variabili trace_attribute e resource_attribute
-    trace_att_d, resource_att_d = get_attributes_by_dataset(dataset_name)
+             labeling, indices, max_variation, dataset_name, prefix_max,
+             features, resource_attributes, trace_attributes):
     # Sistemazione indici
-    list_of_index = array_index(prefix_max, trace_att_d, resource_att_d)
+    list_of_index = array_index(prefix_max, trace_attributes, resource_attributes)
     # Creazione mappa di encoding
     encoding_map = {}
 
-    length_t = len(trace_att_d)
+    length_t = len(trace_attributes)
     length_p = length_t + prefix_max
-    length_r = length_p + (prefix_max * len(resource_att_d))
+    length_r = length_p + (prefix_max * len(resource_attributes))
 
     activities = []  # Definizione della lista che conterrà gli elementi da ritornare
 
     if settings.type_encoding == "complex":
-        activities = complex_extraction(trace, trace_att_d, resource_att_d, prefix_max)
+        activities = complex_extraction(trace, trace_attributes, resource_attributes, prefix_max)
     elif settings.type_encoding == "simple":
         activities = simple_extraction(trace)
     # elif settings.type_encoding == "frequency":
@@ -221,8 +222,10 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold,
     # Pre-elaborazione di hyp da dati codificati
     hyp_t = [int(value) if isinstance(value, str) and value.isdigit() else value for value in activities.iloc[0].values]
     if settings.type_encoding == "complex":
-        hyp = rm_vect_element(hyp=hyp_t, list_of_index=list_of_index,
-                                                         m=num_prefixes, resource_att_d=resource_att_d)
+        hyp = rm_vect_element(hyp=hyp_t,
+                              list_of_index=list_of_index,
+                              m=num_prefixes,
+                              resource_att_d=resource_attributes)
     elif settings.type_encoding == "simple":
         hyp = hyp_t[num_prefixes:]
 
@@ -231,7 +234,7 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold,
     for rule in path.rules:
         feature, state, parent = rule
 
-        numbers = extract_numbers_from_string(feature, trace_att_d, resource_att_d)
+        numbers = extract_numbers_from_string(feature, trace_attributes, resource_attributes)
         if numbers is None:
             continue
         for num_tuple in numbers:
@@ -247,7 +250,7 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold,
 
     for rule in path.rules:
         feature, state, parent = rule
-        numbers = extract_numbers_from_string(feature, trace_att_d, resource_att_d)
+        numbers = extract_numbers_from_string(feature,  trace_attributes, resource_attributes)
         if numbers is None:
             continue
         for num_tuple in numbers:
@@ -265,7 +268,7 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold,
 
     if settings.type_encoding == "complex":
         ref = rm_vect_element(hyp=ref, list_of_index=list_of_index,
-                              m=num_prefixes, resource_att_d=resource_att_d)
+                              m=num_prefixes, resource_att_d=resource_attributes)
     elif settings.type_encoding == "simple":
         ref = ref[num_prefixes:]
 
@@ -324,7 +327,7 @@ def test_dt(test_log, train_log, labeling, prefixing, support_threshold, checker
 
 
 def train_path_recommender(data_log, train_val_log, val_log, train_log, labeling, support_threshold,
-                           dataset_name, output_dir, dt_input_trainval):
+                           dataset_name, output_dir, dt_input_trainval, resource_attributes, trace_attributes):
 
     if labeling["threshold_type"] == LabelThresholdType.LABEL_MEAN:
         labeling["custom_threshold"] = calc_mean_label_threshold(train_log, labeling)
@@ -336,7 +339,8 @@ def train_path_recommender(data_log, train_val_log, val_log, train_log, labeling
 
     if settings.optimize_dt:
         best_model_dict, feature_names = find_best_dt(dataset_name, train_val_log,
-                                                      support_threshold, settings.print_dt, dt_input_trainval)
+                                                      support_threshold, settings.print_dt, dt_input_trainval,
+                                                      resource_attributes, trace_attributes)
     # else:
     # param_opt = ParamsOptimizer(data_log, train_val_log, val_log, train_log, settings.hyperparameters, labeling,
     #                            checkers, rules, min_prefix_length, max_prefix_length)
@@ -363,7 +367,7 @@ def train_path_recommender(data_log, train_val_log, val_log, train_log, labeling
                            target_label=target_label)
     return paths, best_model_dict
 
-def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train_log,dataset_name,features):
+def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train_log,dataset_name,features, resource_attributes, trace_attributes):
     # if labeling["threshold_type"] == LabelThresholdType.LABEL_MEAN:
     #    labeling["custom_threshold"] = calc_mean_label_threshold(train_log, labeling)
     features = features[1:]
@@ -379,7 +383,8 @@ def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train
         # for id, pref in enumerate(prefixes[prefix_length]): print(id, input_log[pref.trace_num][0]['label'])
         for prefix in prefixes[prefix_length]:
             for path in paths:
-                path.fitness = calcPathFitnessOnPrefix(prefix.events, path, rules, settings.fitness_type,train_log,features)
+                path.fitness = calcPathFitnessOnPrefix(prefix.events, path, rules, settings.fitness_type,train_log,
+                                                       features, resource_attributes, trace_attributes)
 
             paths = sorted(paths, key=lambda path: (- path.fitness, path.impurity, - path.num_samples["total"]),
                            reverse=False)
@@ -392,7 +397,7 @@ def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train
                         path.fitness != selected_path.fitness or path.impurity != selected_path.impurity or path.num_samples != selected_path.num_samples):
                     break
 
-                recommendation = recommend(prefix.events, path, rules,dataset_name,features)
+                recommendation = recommend(prefix.events, path, rules,dataset_name,features, resource_attributes, trace_attributes)
                 # print(f"{prefix_length} {prefix.trace_num} {prefix.trace_id} {path_index}->{recommendation}")
                 trace = input_log[prefix.trace_num]
 
@@ -400,7 +405,7 @@ def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train
                     # if recommendation != "":
                     selected_path = path
                     trace = input_log[prefix.trace_num]
-                    is_compliant, e = evaluate(trace, path, rules, labeling,features)
+                    is_compliant, e = evaluate(trace, path, rules, labeling,features, resource_attributes, trace_attributes)
 
                     """
                     if prefix_length > 2:
@@ -453,6 +458,8 @@ def generate_recommendations_and_evaluation(test_log,
                                             dataset_name,
                                             prefix_max,
                                             features,
+                                            resource_attributes,
+                                            trace_attributes,
                                             eval_res=None,
                                             debug=False):
     features = features[1:]
@@ -487,7 +494,9 @@ def generate_recommendations_and_evaluation(test_log,
             for path in paths:
                 pos_paths_total_samples += path.num_samples['node_samples']
             for path in paths:
-                path.fitness = calcPathFitnessOnPrefix(prefix.events, path, dt_input_trainval,train_log,dataset_name,features)
+                path.fitness = calcPathFitnessOnPrefix(prefix.events, path, dt_input_trainval,
+                                                       train_log,dataset_name,features,
+                                                       resource_attributes, trace_attributes)
                 path.score = calcScore(path, pos_paths_total_samples, weights=hyperparams_evaluation[1:])
             # paths = sorted(paths, key=lambda path: (- path.fitness, path.impurity, - path.num_samples["total"]), reverse=False)
             if settings.use_score:
@@ -505,7 +514,9 @@ def generate_recommendations_and_evaluation(test_log,
                 trace = test_log[prefix.trace_num]
                 path = reranked_paths[0]
                 label = generate_label(trace, labeling)
-                compliant, _ = evaluate(trace, path, rules, labeling, eval_type=settings.sat_type,prefix_max=prefix_max)
+                compliant, _ = evaluate(trace, path, rules, labeling,
+                                        eval_type=settings.sat_type,prefix_max=prefix_max,
+                                        resource_attributes=resource_attributes, trace_attributes=trace_attributes)
                 eval_res.comp += 1 if compliant else 0
                 eval_res.non_comp += 0 if compliant else 1
                 eval_res.pos_comp += 1 if compliant and label.value == TraceLabel.TRUE.value else 0
@@ -517,7 +528,7 @@ def generate_recommendations_and_evaluation(test_log,
                                       or path.num_samples != selected_path.num_samples):
                     break
 
-                recommendation = recommend(prefix.events, path, dt_input_trainval, dataset_name , features)
+                recommendation = recommend(prefix.events, path, dt_input_trainval, dataset_name , features, resource_attributes, trace_attributes)
                 if settings.Allprint is True:
                     print(recommendation)
                     print(f"Prefix Lenght:{prefix_length}, {prefix.trace_num} {prefix.trace_id} {path_index}->{recommendation}")
@@ -540,6 +551,8 @@ def generate_recommendations_and_evaluation(test_log,
                                                dataset_name=dataset_name,
                                                prefix_max=prefix_max,
                                                features=features,
+                                               resource_attributes=resource_attributes,
+                                               trace_attributes=trace_attributes
                                                )
                     if e is None:
                         e_name = "UnknownError"

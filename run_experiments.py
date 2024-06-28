@@ -10,6 +10,7 @@ import time
 import copy
 import os
 
+
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione
 def rec_sys_exp(dataset_name):
     # Simulation Timer start
@@ -120,9 +121,14 @@ def rec_sys_exp(dataset_name):
         "custom_threshold": 0.0
         }
     """
+    # Percorsi dei file da cui leggere gli attributi
+    trace_attributes_path = 'src/machine_learning/encoding/Settings/Trace_att.txt'
+    resource_attributes_path = 'src/machine_learning/encoding/Settings/Resource_att.txt'
+    trace_attributes = read_attributes_from_file(trace_attributes_path, dataset_name)
+    resource_attributes = read_attributes_from_file(resource_attributes_path, dataset_name)
 
     # Creazione dell'oggetto Encoding
-    dt_input_trainval = Encoding(train_val_log)
+    dt_input_trainval = Encoding(train_val_log, resource_attributes, trace_attributes)
 
     (dt_input_trainval_encoded,
      prefix_length,
@@ -165,6 +171,8 @@ def rec_sys_exp(dataset_name):
                                                dataset_name=dataset_name,
                                                output_dir=settings.output_dir,
                                                dt_input_trainval=dt_input_trainval_encoded,
+                                               resource_attributes=resource_attributes,
+                                               trace_attributes=trace_attributes,
                                                )
     counter = 0
 
@@ -207,7 +215,9 @@ def rec_sys_exp(dataset_name):
                                                                                       max_variations=max_variations,
                                                                                       dataset_name=dataset_name,
                                                                                       prefix_max=prefix_length,
-                                                                                      features=features
+                                                                                      features=features,
+                                                                                      resource_attributes=resource_attributes,
+                                                                                      trace_attributes=trace_attributes,
                                                                                       )
             if settings.cumulative_res is True:
                 eval_res = copy.deepcopy(evaluation)
@@ -256,7 +266,9 @@ def rec_sys_exp(dataset_name):
                                                                                   dt_input_trainval_encoded=dt_input_trainval_encoded,
                                                                                   dataset_name=dataset_name,
                                                                                   prefix_max=prefix_length,
-                                                                                  features=features
+                                                                                  features=features,
+                                                                                  resource_attributes=resource_attributes,
+                                                                                  trace_attributes=trace_attributes,
                                                                                   )
         results.append(evaluation)
         if settings.cumulative_res is True:
@@ -289,6 +301,6 @@ def rec_sys_exp(dataset_name):
     print(f"\n{GREEN}{at_endexp.center(main.infoconsole())}{RESET}\n\n")
 
     symbol = "="
-    print(f"{IVORY}{symbol*main.infoconsole()}{RESET}\n\n")
+    print(f"{IVORY}{symbol * main.infoconsole()}{RESET}\n\n")
 
     return dataset_name, results, best_hyperparams_combination, max_prefix_length_test, min_prefix_length, dt

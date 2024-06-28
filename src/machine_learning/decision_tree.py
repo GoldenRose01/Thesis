@@ -22,7 +22,7 @@ from pm4py.objects.log.util.get_prefixes import get_log_with_log_prefixes
 from src.machine_learning.encoding.feature_encoder.frequency_features import frequency_features
 from src.machine_learning.encoding.feature_encoder.simple_features import simple_features
 from src.machine_learning.encoding.feature_encoder.complex_features import complex_features
-from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
+from src.machine_learning.encoding.Encoding_setting import read_attributes_from_file
 from src.machine_learning.encoding.constants import EncodingType
 from pandas import DataFrame
 from src.machine_learning.encoding.data_encoder import *
@@ -39,7 +39,7 @@ TRACE_TO_DF = {
 
 
 # Funzione per trovare il miglior albero decisionale
-def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input_trainval):
+def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input_trainval, resource_attributes, trace_attributes ):
     at_DT_par = f"DT params optimization"
     print(f"{PISTACHIO}{at_DT_par.center(main.infoconsole())}{RESET}")
 
@@ -67,15 +67,10 @@ def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input
     X_train = pd.DataFrame(dt_input_trainval.encoded_data, columns=dt_input_trainval.features)
     y_train = pd.Categorical(dt_input_trainval.labels, categories=categories)
 
-    trace_attributes_for_log = []
-    for log, attributes_list in trace_attributes.items():
-        trace_attributes_for_log = [
-            attribute for attribute in trace_attributes.get(log, [])
-            if attribute not in settings.excluded_attributes
-        ]
+
     resource_attributes_for_log = []
-    for attribute in resource_attributes.get(log, []):
-        if attribute not in settings.excluded_attributes + trace_attributes_for_log:
+    for attribute in resource_attributes:
+        if attribute not in settings.excluded_attributes + trace_attributes:
             resource_attributes_for_log.append(attribute + "_")
 
     if settings.selected_evaluation_edit_distance == "weighted_edit_distance":
@@ -84,17 +79,17 @@ def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input
         elif settings.wtrace_att == 0 and settings.wactivities == 0 and settings.wresource_att != 0:
             prefixcolumns = resource_attributes_for_log
         elif settings.wresource_att == 0 and settings.wactivities == 0 and settings.wtrace_att != 0:
-            prefixcolumns = trace_attributes_for_log
+            prefixcolumns = trace_attributes
         elif settings.wtrace_att == 0 and settings.wactivities != 0 and settings.wresource_att != 0:
             prefixcolumns = ["prefix_"] + resource_attributes_for_log
         elif settings.wresource_att == 0 and settings.wactivities != 0 and settings.wtrace_att != 0:
-            prefixcolumns = ["prefix_"] + trace_attributes_for_log
+            prefixcolumns = trace_attributes + ["prefix_"]
         elif settings.wactivities == 0 and settings.wresource_att != 0 and settings.wtrace_att != 0:
-            prefixcolumns = trace_attributes_for_log + resource_attributes_for_log
+            prefixcolumns = trace_attributes + resource_attributes_for_log
         else:
-            prefixcolumns = ["prefix_"] + trace_attributes_for_log + resource_attributes_for_log
+            prefixcolumns = trace_attributes + ["prefix_"] + resource_attributes_for_log
     else:
-        prefixcolumns = ["prefix_"] + trace_attributes_for_log + resource_attributes_for_log
+        prefixcolumns = trace_attributes + ["prefix_"] + resource_attributes_for_log
 
     X_train = X_train.astype(str)
 
@@ -239,7 +234,7 @@ def generate_paths(dtc, dt_input_features, target_label):
     return paths
 
 
-def process_log_and_model(log, dt_params, support_threshold_dict, dataset_name, render_dt):
+def process_log_and_model(log, dt_params, support_threshold_dict, dataset_name, render_dt, resource_attributes, trace_attributes):
     # Encoding complesso
     complex_data, index = complex_features(log, {})
     X = complex_data.drop(columns=['label'])  # Rimuove la colonna della label
@@ -250,7 +245,7 @@ def process_log_and_model(log, dt_params, support_threshold_dict, dataset_name, 
 
     # Ottimizzazione dell'albero decisionale
     model_dict, feature_names = find_best_dt(dataset_name, complex_data, support_threshold_dict, render_dt,
-                                             (X_train, y_train))
+                                             (X_train, y_train), resource_attributes, trace_attributes)
 
     # Calcolo dello score F1
     f1 = dt_score((X_val, y_val, feature_names))

@@ -22,8 +22,12 @@ TRACE_TO_DF = {
 
 # Definisce una classe chiamata 'Encoding'
 class Encoding:
-    def __init__(self, log: DataFrame = None):
+    def __init__(self, log: DataFrame = None, resource_attributes : list = None, trace_attributes :list = None):
+
         case_counts = {}
+        self.resource_attributes = resource_attributes
+        self.trace_attributes = trace_attributes
+
 
         # Iterate through the traces and count the number of traces for each case
         for trace in log:
@@ -62,6 +66,7 @@ class Encoding:
             at_prfx = f"Weighted prefix Lenght: {self.prefix}"
         else:
             at_prfx = f"Prefix Lenght: {self.prefix}"
+
         print(f"{EMERALD}{at_prfx.center(main.infoconsole())}{RESET}")
 
         self.CONF = {
@@ -81,6 +86,8 @@ class Encoding:
         if self.CONF['feature_selection'] == 'complex':
             self.df, self.index = TRACE_TO_DF[self.CONF['feature_selection']](
                 log,
+                resource_attributes=self.resource_attributes,
+                trace_attributes=self.trace_attributes,
                 prefix_length=self.CONF['prefix_length'],
                 padding=self.CONF['padding'],
                 prefix_length_strategy=self.CONF['prefix_length_strategy'],

@@ -10,7 +10,6 @@ from src.machine_learning import fitnessEditDistance, filter_attributes
 from sklearn.model_selection import train_test_split
 import itertools
 from src.enums import TraceLabel
-from src.machine_learning.encoding.Encoding_setting import trace_attributes, resource_attributes
 from pm4py.objects.conversion.log import converter as log_converter
 import settings
 import math
@@ -18,8 +17,6 @@ import pandas as pd
 import numpy as np
 import re
 
-trace_attributes_for_numb = trace_attributes
-resource_attributes_for_numb = resource_attributes
 
 
 # Definizione della funzione `gain` per il calcolo del guadagno
@@ -158,8 +155,7 @@ def extract_numbers_from_string(input_string, trace_att_d, resource_att_d):
 
 
 # Definizione della funzione `calcPathFitnessOnPrefix` per il calcolo della fitness del percorso su un prefisso
-def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval, log, dataset_name, features):
-    trace_att_d, resource_att_d = filter_attributes.get_attributes_by_dataset(dataset_name)
+def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval, log, dataset_name, features, resource_attributes, trace_attributes):
     prefixes = []
     for trace in prefix:
         prefixes.append(trace['concept:name'])
@@ -190,7 +186,7 @@ def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval, log, dataset_name, 
          state,
          parent) = rule
 
-        numbers = extract_numbers_from_string(feature, trace_att_d, resource_att_d)
+        numbers = extract_numbers_from_string(feature, trace_attributes, resource_attributes)
         if numbers:
             for num_tuple in numbers:
                 if len(num_tuple) == 2:
@@ -203,7 +199,7 @@ def calcPathFitnessOnPrefix(prefix, path, dt_input_trainval, log, dataset_name, 
                     if num1 >= num_prefixes or num1 <= 0:
                         continue
 
-                feature_index = extract_index_from_feature(feature, features, resource_att_d, trace_att_d)
+                feature_index = extract_index_from_feature(feature, features, resource_attributes, trace_attributes)
                 if feature_index is None:
                     print("null")
                     continue
