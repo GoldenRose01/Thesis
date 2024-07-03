@@ -5,122 +5,104 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4d3265eb-b5b4-4347-95ea-2befebde779f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/media/output/DT_Production_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_Production_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f1_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f1_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f1_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f1_Ncomplex_weighted_edit_distance0.33,0.33,0.33.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f2_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f2_Ncomplex_weighted_edit_distance0.33,0.33,0.33.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f3_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f3_Ncomplex_weighted_edit_distance0.33,0.33,0.33.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f4_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f4_Ncomplex_weighted_edit_distance0.33,0.33,0.33.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2012_accepted_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2012_accepted_Ncomplex_weighted_edit_distance0.33,0.33,0.33.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2012_cancelled_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2012_cancelled_Ncomplex_weighted_edit_distance0.33,0.33,0.33.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2012_declined_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2012_declined_Ncomplex_weighted_edit_distance0.33,0.33,0.33.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2015_3_f2_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2015_3_f2_Ncomplex_weighted_edit_distance0.33,0.33,0.33.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2015_4_f2_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2015_5_f2_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2015_5_f2_Ncomplex_weighted_edit_distance0.33,0.33,0.33.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_hospital_billing_2_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_hospital_billing_2_Ncomplex_weighted_edit_distance0.33,0.33,0.33.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_hospital_billing_3_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_hospital_billing_3_Ncomplex_weighted_edit_distance0.33,0.33,0.33.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_1_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_1_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_traffic_fines_1_Ncomplex_weighted_edit_distance0.33,0.33,0.33" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/DT_traffic_fines_1_Ncomplex_weighted_edit_distance0.33,0.33,0.33.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f1_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f1_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f1_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f2_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f2_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f2_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f3_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f3_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f3_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f4_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f4_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f4_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_accepted_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_accepted_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_accepted_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_cancelled_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_cancelled_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_cancelled_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_declined_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_declined_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_declined_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_3_f2_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_3_f2_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_3_f2_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_5_f2_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_5_f2_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_5_f2_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_2_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_2_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_2_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_3_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_3_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_3_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/traffic_fines_1_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/traffic_fines_1_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/output/result/traffic_fines_1_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Thesis.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Thesis.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f3_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f3_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f4_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f4_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2012_accepted_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2012_accepted_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2012_cancelled_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2012_cancelled_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2012_declined_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2012_declined_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2015_1_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2015_1_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2015_2_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2015_2_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2015_3_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2015_3_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2015_4_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2015_5_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_bpic2015_5_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_hospital_billing_2_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_hospital_billing_2_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_hospital_billing_3_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_hospital_billing_3_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_traffic_fines_1_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/DT_traffic_fines_1_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f1_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f1_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f1_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f3_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f3_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f3_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f4_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f4_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2011_f4_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_accepted_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_accepted_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_accepted_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_cancelled_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_cancelled_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_cancelled_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_declined_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_declined_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2012_declined_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_1_f2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_1_f2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_1_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_2_f2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_2_f2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_2_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_3_f2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_3_f2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_3_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_5_f2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_5_f2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/bpic2015_5_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_2_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_3_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_3_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/hospital_billing_3_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/traffic_fines_1_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/traffic_fines_1_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/output/result/traffic_fines_1_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datasets_names.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Datasets_names.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Option.dat" beforeDir="false" afterPath="$PROJECT_DIR$/Option.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Prospetto.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Prospetto.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasetnames.txt" beforeDir="false" afterPath="$PROJECT_DIR$/datasetnames.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_Production_Ncomplex_weighted_edit_distance0.25,0.5,0.25" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/DT_Production_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/DT_Production_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/DT_Production_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_bpic2011_f1_Ncomplex_weighted_edit_distance0.25,0.5,0.25" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f1_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_bpic2011_f1_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/DT_bpic2011_f1_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_bpic2015_4_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/DT_bpic2015_4_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_1_Ncomplex_weighted_edit_distance0.25,0.5,0.25" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_1_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_1_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_1_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_Ncomplex_weighted_edit_distance0.25,0.5,0.25" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_Ncomplex_weighted_edit_distance0.33,0.33,0.33.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_2_Ncomplex_weighted_edit_distance0.33,0.33,0.33.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_Ncomplex_weighted_edit_distance0.25,0.5,0.25" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_Ncomplex_weighted_edit_distance0.25,0.5,0.25" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_Ncomplex_weighted_edit_distance0.25,0.5,0.25.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_Ncomplex_weighted_edit_distance0.33,0.33,0.33.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/DT_sepsis_cases_4_Ncomplex_weighted_edit_distance0.33,0.33,0.33.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/model_params.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/model_params.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/result/Production_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/Production_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/result/Production_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/Production_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/output/result/Production_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/Production_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/result/Production_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/Production_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/output/result/Production_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/Production_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/output/result/bpic2015_4_f2_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/bpic2015_4_f2_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/output/result/bpic2015_4_f2_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/bpic2015_4_f2_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/bpic2015_4_f2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/bpic2015_4_f2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/bpic2015_4_f2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/bpic2015_4_f2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/output/result/bpic2015_4_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/bpic2015_4_f2_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_1_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_2_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_Ncomplex_evaluation_weighted_edit_distance0.25,0.5,0.25.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_Ncomplex_evaluation_weighted_edit_distance0.33,0.33,0.33.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_Ncomplex_weighted_edit_distance0.25,0.5,0.25_fscore.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/result/sepsis_cases_4_Ncomplex_weighted_edit_distance0.33,0.33,0.33_fscore.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/media/output/results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/media/output/results.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run_experiments.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_experiments.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/file_verifier/csvreader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/file_verifier/csvreader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/machine_learning/decision_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/machine_learning/decision_tree.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/machine_learning/encoding/Encoding_setting.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/machine_learning/encoding/Encoding_setting.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/machine_learning/encoding/Settings/Resource_att.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/machine_learning/encoding/Settings/Resource_att.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/machine_learning/encoding/Settings/Trace_att.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/machine_learning/encoding/Settings/Trace_att.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/machine_learning/encoding/encoding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/machine_learning/encoding/encoding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/machine_learning/encoding/feature_encoder/complex_features.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/machine_learning/encoding/feature_encoder/complex_features.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/machine_learning/filter_attributes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/machine_learning/filter_attributes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/machine_learning/recommender.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/machine_learning/recommender.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/machine_learning/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/machine_learning/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/file_verifier/verify.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/file_verifier/verify.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -348,7 +330,7 @@
       <workItem from="1719129827594" duration="29810000" />
       <workItem from="1719391896561" duration="86000" />
       <workItem from="1719392335175" duration="295000" />
-      <workItem from="1719390075706" duration="33814000" />
+      <workItem from="1719390075706" duration="60718000" />
     </task>
     <servers />
   </component>
@@ -400,7 +382,7 @@
     <SUITE FILE_PATH="coverage/recommender_py$Postprocessing.coverage" NAME="Postprocessing Coverage Results" MODIFIED="1719244518789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/recommender_py$data_summary.coverage" NAME="data_summary Coverage Results" MODIFIED="1719318051876" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
     <SUITE FILE_PATH="coverage/Thesis$main.coverage" NAME="main Coverage Results" MODIFIED="1716282763924" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Thesis$Main.coverage" NAME="Main Coverage Results" MODIFIED="1719565540209" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="R:\Github\Thesis" />
+    <SUITE FILE_PATH="coverage/Thesis$Main.coverage" NAME="Main Coverage Results" MODIFIED="1719659271532" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="R:\Github\Thesis" />
     <SUITE FILE_PATH="coverage/Thesis$setup.coverage" NAME="setup Coverage Results" MODIFIED="1719385238958" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/recommender_py$Main.coverage" NAME="Main Coverage Results" MODIFIED="1719158548018" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\franc\OneDrive\Documenti\GitHub\Thesis" />
     <SUITE FILE_PATH="coverage/recommender_py$plotterfinal.coverage" NAME="plotterfinal Coverage Results" MODIFIED="1719253544839" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />

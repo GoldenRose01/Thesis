@@ -271,13 +271,13 @@ num_feat_strategy = ['sqrt', 0.3, 0.5]
 
 # num_feat_strategy = [0.5]
 
-# sat_threshold_list = [0.55, 0.65, 0.75, 0.85]
+sat_threshold_list = [0.55, 0.65, 0.75, 0.85]
 
 # sat_threshold_list = [0.35, 0.45, 0.55, 0.65]
 
-sat_threshold_list = [0.85]
+# sat_threshold_list = [0.85]
 
-"""weight_combination_list = [(0.2, 0.4, 0.4),
+weight_combination_list = [(0.2, 0.4, 0.4),
                            (0.6, 0.2, 0.2),
                            (0.4, 0.4, 0.2),
                            (0.4, 0.2, 0.4),
@@ -285,9 +285,9 @@ sat_threshold_list = [0.85]
                            (0.4, 0.3, 0.3),
                            (0.1, 0.8, 0.1),
                            (0.1, 0.1, 0.8)
-                           ]"""
+                           ]
 
-weight_combination_list = [(0.4, 0.4, 0.2)]
+# weight_combination_list = [(0.4, 0.4, 0.2)]
 
 # ================ checkers satisfaction ================
 

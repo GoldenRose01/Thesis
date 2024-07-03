@@ -92,19 +92,21 @@ def timeprinter(dataset_name,
                 wactivities,
                 wresource_att,
                 time_m_finale):
+
     file_path = 'Prospetto.csv'
+
     # Definizione della leggenda base
     legend = ['Dataset_name',
               'Simple',
-              'Complex edit_distance_lib',
-              'Complex edit_distance_separate',
+              'Complex lib',
+              'Complex code',
               'Declarative']
 
     # Calcolo di a, b, c
     a = wtrace_att * 100
     b = wactivities * 100
     c = wresource_att * 100
-    weighted_col_name = f"Complex weighted_edit_distance({a}%,{b}%,{c}%)"
+    weighted_col_name = f"Complex ({a}%,{b}%,{c}%)"
 
     # Controllo se il file esiste
     if os.path.exists(file_path):
@@ -136,17 +138,17 @@ def timeprinter(dataset_name,
     time_m_finale = f"{float(time_m_finale):.2f}"
 
     # Costruzione della riga da aggiungere/aggiornare
-    new_row = {'Dataset_name': dataset_name, 'Simple': '', 'Complex edit_distance_lib': '',
-               'Complex edit_distance_separate': '', weighted_col_name: '', 'Declarative': ''}
+    new_row = {'Dataset_name': dataset_name, 'Simple': '', 'Complex lib': '',
+               'Complex code': '', weighted_col_name: '', 'Declarative': ''}
 
     # Aggiunta valori basati sul tipo di encoding
     if type_encoding == 'simple':
         new_row['Simple'] = f"{time_m_finale}m"
     elif type_encoding == 'complex':
         if selected_evaluation_edit_distance == 'edit_distance_lib':
-            new_row['Complex edit_distance_lib'] = f"{time_m_finale}m"
+            new_row['Complex lib'] = f"{time_m_finale}m"
         elif selected_evaluation_edit_distance == 'edit_distance_separate':
-            new_row['Complex edit_distance_separate'] = f"{time_m_finale}m"
+            new_row['Complex code'] = f"{time_m_finale}m"
         elif selected_evaluation_edit_distance == 'weighted_edit_distance':
             new_row[weighted_col_name] = f"{time_m_finale}m"
 
