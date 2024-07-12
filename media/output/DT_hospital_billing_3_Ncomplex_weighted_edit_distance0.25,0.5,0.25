@@ -4,7 +4,7 @@ edge [fontname="helvetica"] ;
 0 [label="node #0\nprefix_2_5 <= 0.5\nentropy = 0.308\nsamples = 62020\nvalue = [3422, 58598]", fillcolor="#45a3e7"] ;
 1 [label="node #1\nprefix_4_5 <= 0.5\nentropy = 0.321\nsamples = 58699\nvalue = [3422, 55277]", fillcolor="#45a3e7"] ;
 0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
-2 [label="node #2\nspeciality_2_3 <= 0.5\nentropy = 0.309\nsamples = 57239\nvalue = [3176, 54063]", fillcolor="#45a3e7"] ;
+2 [label="node #2\nspeciality_2_4 <= 0.5\nentropy = 0.309\nsamples = 57239\nvalue = [3176, 54063]", fillcolor="#45a3e7"] ;
 1 -> 2 ;
 3 [label="node #3\ndiagnosis_102 <= 0.5\nentropy = 0.166\nsamples = 6464\nvalue = [158, 6306]", fillcolor="#3e9fe6"] ;
 2 -> 3 ;
