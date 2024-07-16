@@ -202,8 +202,11 @@ class Encoding:
         prefix_columns = {}
 
         for i, prefix in enumerate(log):
-            column_name = features[i]
-            prefix_columns[column_name] = [prefix]
+            if i < len(features):
+                column_name = features[i]
+                prefix_columns[column_name] = [prefix]
+            else:
+                break
         df_input = pd.DataFrame(prefix_columns)
         self.encoder.decode(df=df_input)
         return df_input
@@ -211,9 +214,13 @@ class Encoding:
     # Modifica la funzione Encoding.encode
     def encode(self, log, features):
         prefix_columns = {}
+
         for i, prefix in enumerate(log):
-            column_name = features[i]
-            prefix_columns[column_name] = [prefix]
+            if i< len(features):
+                column_name = features[i]
+                prefix_columns[column_name] = [prefix]
+            else:
+                break
         df_input = pd.DataFrame(prefix_columns)
         self.encoder.encode(df=df_input)
         return df_input
