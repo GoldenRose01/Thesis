@@ -1,5 +1,5 @@
-import os
 from src.enums.ConstraintChecker import ConstraintChecker
+import os
 
 
 def read_options_from_dat(filepath):
@@ -67,33 +67,39 @@ options = read_options_from_dat(options_filepath)
 
 support_threshold_dict = {'min': 0.05, 'max': 1.75}
 
-sat_threshold = options['sat_threshold'] if options['sat_threshold'] else 0.75
-top_K_paths = options['top_K_paths'] if options['top_K_paths'] else 6
-reranking = options['reranking'] if options['reranking'] else False
-sat_type = options['sat_type'] if options['sat_type'] else 'count_occurrences'
-fitness_type = options['fitness_type'] if options['fitness_type'] else 'mean'  # wmean
-cumulative_res = options['cumulative_res'] if options['cumulative_res'] else False
-optimize_dt = options['optimize_dt'] if options['optimize_dt'] else True
-print_dt = options['print_dt'] if options['print_dt'] else True
-compute_gain = options['compute_gain'] if options['compute_gain'] else False
-smooth_factor = options['smooth_factor'] if options['smooth_factor'] else 1
-num_classes = options['num_classes'] if options['num_classes'] else 2
-train_prefix_log = options['train_prefix_log'] if options['train_prefix_log'] else False
-one_hot_encoding = options['one_hot_encoding'] if options['one_hot_encoding'] else False
-use_score = options['use_score'] if options['use_score'] else True
-compute_baseline = options['compute_baseline'] if options['compute_baseline'] else False
-Print_edit_distance = options['Print_edit_distance'] if options['Print_edit_distance'] else False
-print_log = options['print_log'] if options['print_log'] else False
-print_length = options['print_length'] if options['print_length'] else False
+smooth_factor = options['smooth_factor']    if options['smooth_factor'] else 1
+num_classes =   options['num_classes']      if options['num_classes']   else 2
+sat_threshold = options['sat_threshold']    if options['sat_threshold'] else 0.75
+top_K_paths =   options['top_K_paths']      if options['top_K_paths']   else 6
+
+reranking =         options['reranking']        if options['reranking']         else False
+cumulative_res =    options['cumulative_res']   if options['cumulative_res']    else False
+optimize_dt =       options['optimize_dt']      if options['optimize_dt']       else True
+compute_gain =      options['compute_gain']     if options['compute_gain']      else False
+train_prefix_log =  options['train_prefix_log'] if options['train_prefix_log']  else False
+one_hot_encoding =  options['one_hot_encoding'] if options['one_hot_encoding']  else False
+use_score =         options['use_score']        if options['use_score']         else True
+compute_baseline =  options['compute_baseline'] if options['compute_baseline']  else False
+
+fitness_type =  options['fitness_type'] if options['fitness_type']  else 'mean'  # wmean
+sat_type =      options['sat_type']     if options['sat_type']      else 'count_occurrences'
+
 excluded_attributes = options['excluded_attributes'] if options[
     'excluded_attributes'] else 'concept:name,time:timestamp,label,Case ID'
+
 selected_evaluation_edit_distance = (
     'edit_distance_lib' if not options['selected_evaluation_edit_distance'] or type_encoding == "simple" else options[
         'selected_evaluation_edit_distance'])
 # ['edit_distance_lib', 'edit_distance_separate','weighted_edit_distance']
-eval_stamp = options['eval_stamp'] if options['eval_stamp'] else False
-recc_stamp = options['recc_stamp'] if options['recc_stamp'] else False
-Allprint = options['Allprint'] if options['Allprint'] else False
+
+print_dt =              options['print_dt']             if options['print_dt']              else True
+Print_edit_distance =   options['Print_edit_distance']  if options['Print_edit_distance']   else False
+print_log =             options['print_log']            if options['print_log']             else False
+print_length =          options['print_length']         if options['print_length']          else False
+eval_stamp =            options['eval_stamp']           if options['eval_stamp']            else False
+recc_stamp =            options['recc_stamp']           if options['recc_stamp']            else False
+Allprint =              options['Allprint']             if options['Allprint']              else False
+enable_log =            options['enable_log']           if options['enable_log']            else False
 
 
 # ======================================== Rule_of_prefix ==============================================================
@@ -107,9 +113,9 @@ else:
 # ======================================== weights =====================================================================
 
 # weights of the three components of the encoding
-temp_wtrace_att = options['wtrace_att'] if options['wtrace_att'] else 0.0
-temp_wactivities = options['wactivities'] if options['wactivities'] else 0.0
-temp_wresource_att = options['wresource_att'] if options['wresource_att'] else 0.0
+temp_wtrace_att =       options['wtrace_att']       if options['wtrace_att']    else 0.0
+temp_wactivities =      options['wactivities']      if options['wactivities']   else 0.0
+temp_wresource_att =    options['wresource_att']    if options['wresource_att'] else 0.0
 
 # Calcola la somma dei valori temporanei
 total = temp_wtrace_att + temp_wactivities + temp_wresource_att
