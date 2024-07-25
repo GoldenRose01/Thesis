@@ -92,6 +92,10 @@ selected_evaluation_edit_distance = (
         'selected_evaluation_edit_distance'])
 # ['edit_distance_lib', 'edit_distance_separate','weighted_edit_distance']
 
+
+# ========================================= Debugging rules ============================================================
+
+
 print_dt =              options['print_dt']             if options['print_dt']              else True
 Print_edit_distance =   options['Print_edit_distance']  if options['Print_edit_distance']   else False
 print_log =             options['print_log']            if options['print_log']             else False
@@ -101,14 +105,21 @@ recc_stamp =            options['recc_stamp']           if options['recc_stamp']
 Allprint =              options['Allprint']             if options['Allprint']              else False
 enable_log =            options['enable_log']           if options['enable_log']            else False
 
+quick = options['quick'] if options['quick'] else False
+
 
 # ======================================== Rule_of_prefix ==============================================================
 weighted_prefix_generation = options['weighted_prefix_generation'] if options['weighted_prefix_generation'] else False
-
-if weighted_prefix_generation:
-    ruleprefix = "W"
+if quick:
+    if weighted_prefix_generation:
+        ruleprefix = "QW"
+    else:
+        ruleprefix = "QN"
 else:
-    ruleprefix = "N"
+    if weighted_prefix_generation:
+        ruleprefix = "W"
+    else:
+        ruleprefix = "N"
 
 # ======================================== weights =====================================================================
 
@@ -181,7 +192,7 @@ csv_dir = "media/output/results.csv"
 results_dir = os.path.join(output_dir, "result")
 dataset_folder = "media/input"
 
-# ================ checkers ================
+# ========================================= checkers ===================================================================
 
 
 existence_family = [ConstraintChecker.EXISTENCE,
@@ -278,23 +289,26 @@ num_feat_strategy = ['sqrt', 0.3, 0.5]
 
 # num_feat_strategy = [0.5]
 
-sat_threshold_list = [0.55, 0.65, 0.75, 0.85]
+if quick:
+    sat_threshold_list = [0.85]
+else:
+    sat_threshold_list = [0.55, 0.65, 0.75, 0.85]
 
-# sat_threshold_list = [0.35, 0.45, 0.55, 0.65]
+    # sat_threshold_list = [0.35, 0.45, 0.55, 0.65]
 
-# sat_threshold_list = [0.85]
+if quick:
+    weight_combination_list = [(0.4, 0.4, 0.2)]
+else:
+    weight_combination_list = [(0.2, 0.4, 0.4),
+                               (0.6, 0.2, 0.2),
+                               (0.4, 0.4, 0.2),
+                               (0.4, 0.2, 0.4),
+                               (0.8, 0.1, 0.1),
+                               (0.4, 0.3, 0.3),
+                               (0.1, 0.8, 0.1),
+                               (0.1, 0.1, 0.8)
+                               ]
 
-weight_combination_list = [(0.2, 0.4, 0.4),
-                           (0.6, 0.2, 0.2),
-                           (0.4, 0.4, 0.2),
-                           (0.4, 0.2, 0.4),
-                           (0.8, 0.1, 0.1),
-                           (0.4, 0.3, 0.3),
-                           (0.1, 0.8, 0.1),
-                           (0.1, 0.1, 0.8)
-                           ]
-
-# weight_combination_list = [(0.4, 0.4, 0.2)]
 
 # ================ checkers satisfaction ================
 
