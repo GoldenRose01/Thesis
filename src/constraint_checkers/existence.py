@@ -134,5 +134,8 @@ def mp_exactly(trace, done, a, rules):
         state = TraceState.SATISFIED
 
     # Restituzione di un oggetto CheckerResult con conteggi a None e stato calcolato
-    return CheckerResult(num_fulfillments=None, num_violations=None, num_pendings=None, num_activations=None,
+    return CheckerResult(num_fulfillments=None,
+                         num_violations=None,
+                         num_pendings=None,
+                         num_activations=None,
                          state=state)

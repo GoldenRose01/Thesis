@@ -38,9 +38,12 @@ def infoconsole():
 if __name__ == "__main__":
 
     if settings.selected_evaluation_edit_distance != "weighted_edit_distance":
-        at_mainstart = f"{FUCSIA}Starting simulation with {settings.type_encoding} encoding & {settings.selected_evaluation_edit_distance}{RESET}"
+        at_mainstart = (f"{FUCSIA}Starting simulation with {settings.type_encoding} "
+                        f"encoding & {settings.selected_evaluation_edit_distance}{RESET}")
     else:
-        at_mainstart = f"{FUCSIA}Starting simulation with {settings.type_encoding} encoding & {settings.selected_evaluation_edit_distance} at {settings.wtrace_att},{settings.wactivities},{settings.wresource_att}{RESET}"
+        at_mainstart = (f"{FUCSIA}Starting simulation with {settings.type_encoding} "
+                        f"encoding & {settings.selected_evaluation_edit_distance} "
+                        f"at {settings.wtrace_att},{settings.wactivities},{settings.wresource_att}{RESET}")
 
     print(at_mainstart.center(infoconsole()))
 
@@ -51,7 +54,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Esperimenti per il monitoraggio dei processi prescrittivi basati sui risultati")
     parser.add_argument("-j", "--jobs", type=int,
-                        help="Numero di lavori da eseguire in parallelo. Se -1 vengono utilizzate tutte le CPU disponibili.")
+                        help="Numero di lavori da eseguire in parallelo."
+                             " Se -1 vengono utilizzate tutte le CPU disponibili.")
     args = parser.parse_args()
 
     jobs = None

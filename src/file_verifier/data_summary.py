@@ -42,7 +42,9 @@ def parse_file_name(file_name, dataset_names):
     if encoding_type == 'weighted_edit_distance':
         weights = extract_weighted_values(file_name)
         if weights:
-            weighted_values = f'{float(weights[0]) * 100:.0f}% {float(weights[1]) * 100:.0f}% {float(weights[2]) * 100:.0f}%'
+            weighted_values = (f'{float(weights[0]) * 100:.0f}% '
+                               f'{float(weights[1]) * 100:.0f}% '
+                               f'{float(weights[2]) * 100:.0f}%')
 
     return dataset_name, letter, complexity_type, encoding_type, weighted_values
 

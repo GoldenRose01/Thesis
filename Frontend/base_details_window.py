@@ -108,7 +108,9 @@ class BaseDetailsWindow(QWidget):
     def add_boolean_option(self, option_name):
         checkbox = QCheckBox(option_name.replace('_', ' ').capitalize())
         checkbox.setChecked(self.options.get(option_name) == 'True')
-        checkbox.stateChanged.connect(lambda state, name=option_name: self.update_option(name, state == Qt.Qt.CheckState.Checked))
+        checkbox.stateChanged.connect(lambda state,
+                                      name=option_name: self.update_option(name,
+                                                                           state == Qt.Qt.CheckState.Checked))
         self.main_layout.addWidget(checkbox)
 
     def add_numeric_option(self, option_name, min_value, max_value, step):

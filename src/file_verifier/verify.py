@@ -152,8 +152,8 @@ def timeprinter(dataset_name,
         elif selected_evaluation_edit_distance == 'weighted_edit_distance':
             new_row[weighted_col_name] = f"{time_m_finale}m"
 
-    # Determina il nome del dataset basato su settings.weighted_prefix_generation
-    if settings.weighted_prefix_generation:
+    # Determina il nome del dataset basato su settings.weighted_prefix_generation e quick
+    if settings.ruleprefix != 'N':
         dataset_row_name = f"{settings.ruleprefix}-{dataset_name}"
     else:
         dataset_row_name = dataset_name
@@ -177,7 +177,8 @@ def timeprinter(dataset_name,
         at_tp2 = f"{dataset_name} con {settings.selected_evaluation_edit_distance}"
     else:
         at_timeprint = f"File {file_path} successfully updated with"
-        at_tp2 = f"{dataset_name} con {settings.selected_evaluation_edit_distance} al {wtrace_att},{wactivities},{wresource_att}."
+        at_tp2 = (f"{dataset_name} con {settings.selected_evaluation_edit_distance} al"
+                  f" {wtrace_att},{wactivities},{wresource_att}.")
 
     print(f"\n{AQUA_GREEN}{at_timeprint.center(main.infoconsole())}{RESET}")
     print(f"{AQUA_GREEN}{at_tp2.center(main.infoconsole())}{RESET}")
@@ -227,4 +228,5 @@ def printprefixlength(dataset_name, prefix_length):
 
     # Salvataggio del DataFrame aggiornato nel file CSV
     df.to_csv(file_path, sep=',', index=False)
-    print(f"File {file_path} successfully updated with dataset {dataset_name} and prefix length {prefix_length}.")
+    print(f"File {file_path} successfully updated with dataset {dataset_name} and prefix length {prefix_length}"
+          f" with the {settings.ruleprefix} method.")

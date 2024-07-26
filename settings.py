@@ -105,7 +105,7 @@ recc_stamp =            options['recc_stamp']           if options['recc_stamp']
 Allprint =              options['Allprint']             if options['Allprint']              else False
 enable_log =            options['enable_log']           if options['enable_log']            else False
 
-quick = options['quick'] if options['quick'] else False
+quick = options['Quick'] if options['Quick'] else False
 
 
 # ======================================== Rule_of_prefix ==============================================================
@@ -353,4 +353,4 @@ method_style = {'existence': 'solid',
                 'all': 'dashdot'
                 }
 
-# =======================================================================================================================
+# ======================================================================================================================

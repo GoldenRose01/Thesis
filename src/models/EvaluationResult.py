@@ -1,5 +1,6 @@
 class EvaluationResult:
-    def __init__(self, tp=0, fp=0, tn=0, fn=0, c=0, nc=0, pc=0, pnc=0, precision=0, recall=0, accuracy=0, fscore=0, auc=0, mcc=0, gain=0):
+    def __init__(self, tp=0, fp=0, tn=0, fn=0, c=0, nc=0, pc=0, pnc=0,
+                 precision=0, recall=0, accuracy=0, fscore=0, auc=0, mcc=0, gain=0):
         self.num_cases = None
         self.prefix_length = None
 

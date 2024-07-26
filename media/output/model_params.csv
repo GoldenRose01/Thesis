@@ -295,3 +295,10 @@ complex with weighted_edit_distance	0.0,0.0,1.0	Production	('balanced', 'gini', 
 complex with weighted_edit_distance	0.0,0.0,1.0	sepsis_cases_1	(None, 'entropy', 4, 10, 0.1)	91.94	91.94	-1	4
 complex with weighted_edit_distance	0.0,0.0,1.0	sepsis_cases_2	(None, 'entropy', 6, 16, 2)	94.25	94.77	-1	5
 complex with weighted_edit_distance	0.0,0.0,1.0	sepsis_cases_4	('balanced', 'entropy', 4, 10, 0.1)	31.34	31.83	-1	4
+complex with weighted_edit_distance	0.0,0.0,1.0	bpic2011_f1	('balanced', 'gini', None, 1, 2)	87.69	100.0	-1	23
+complex with weighted_edit_distance	0.0,0.0,1.0	bpic2011_f2	(None, 'gini', 4, 1, 2)	71.74	79.98	-1	4
+complex with weighted_edit_distance	0.0,0.0,1.0	Production	('balanced', 'gini', None, 1, 0.2)	57.73	76.08	-1	22
+complex with weighted_edit_distance	0.0,0.0,1.0	sepsis_cases_1	(None, 'entropy', 4, 10, 0.3)	91.94	91.94	-1	4
+complex with weighted_edit_distance	0.0,0.0,1.0	sepsis_cases_2	(None, 'entropy', None, 1, 2)	96.76	99.47	-1	15
+complex with weighted_edit_distance	0.0,0.0,1.0	sepsis_cases_4	(None, 'gini', 8, 1, 0.1)	61.39	65.9	-1	8
+complex with weighted_edit_distance	0.0,0.0,1.0	bpic2011_f1	('balanced', 'gini', 8, 1, 2)	89.94	97.42	-1	8

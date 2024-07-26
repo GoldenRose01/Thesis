@@ -45,7 +45,9 @@ def parse_file_name(file_name, dataset_names):
     if encoding_type == 'weighted_edit_distance':
         weights = extract_weighted_values(file_name)
         if weights:
-            weighted_values = f'{float(weights[0])*100:.0f}% {float(weights[1])*100:.0f}% {float(weights[2])*100:.0f}%'
+            weighted_values = (f'{float(weights[0])*100:.0f}% '
+                               f'{float(weights[1])*100:.0f}% '
+                               f'{float(weights[2])*100:.0f}%')
 
     return dataset_name, letter, complexity_type, encoding_type, weighted_values
 
@@ -109,7 +111,11 @@ def calculate_metrics(input_directory, summary_file, dataset_names_file):
     ])
 
     # Sort the DataFrame by dataset_name and other relevant columns to maintain uniqueness
-    summary_df = summary_df.sort_values(by=['dataset_name', 'letter', 'complexity_type', 'encoding_type', 'weighted_values'])
+    summary_df = summary_df.sort_values(by=['dataset_name',
+                                            'letter',
+                                            'complexity_type',
+                                            'encoding_type',
+                                            'weighted_values'])
 
     # Save the updated DataFrame to a CSV file
     summary_df.to_csv(summary_file, index=False, sep=';')
