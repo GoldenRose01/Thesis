@@ -26,4 +26,4 @@ recc_stamp=False
 Allprint=False
 weighted_prefix_generation=False
 enable_log=False
-Quick=True
+Quick=False

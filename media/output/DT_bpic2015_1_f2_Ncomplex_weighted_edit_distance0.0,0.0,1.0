@@ -1,0 +1,21 @@
+digraph Tree {
+node [shape=box, style="filled", color="black", fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label="node #0\nResponsible_actor_14_9 <= 0.5\ngini = 0.347\nsamples = 555\nvalue = [124, 431]", fillcolor="#72b9ec"] ;
+1 [label="node #1\nResponsible_actor_37_12 <= 0.5\ngini = 0.324\nsamples = 530\nvalue = [108, 422]", fillcolor="#6cb6ec"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="node #2\nResponsible_actor_36_2 <= 0.5\ngini = 0.366\nsamples = 439\nvalue = [106, 333]", fillcolor="#78bced"] ;
+1 -> 2 ;
+3 [label="node #3\nResponsible_actor_20_16 <= 0.5\ngini = 0.335\nsamples = 386\nvalue = [82, 304]", fillcolor="#6eb7ec"] ;
+2 -> 3 ;
+4 [label="node #4\ngini = 0.301\nsamples = 342\nvalue = [63, 279]", fillcolor="#66b3eb"] ;
+3 -> 4 ;
+5 [label="node #5\ngini = 0.491\nsamples = 44\nvalue = [19, 25]", fillcolor="#cfe7f9"] ;
+3 -> 5 ;
+6 [label="node #6\ngini = 0.496\nsamples = 53\nvalue = [24, 29]", fillcolor="#ddeefb"] ;
+2 -> 6 ;
+7 [label="node #7\ngini = 0.043\nsamples = 91\nvalue = [2, 89]", fillcolor="#3d9fe6"] ;
+1 -> 7 ;
+8 [label="node #8\ngini = 0.461\nsamples = 25\nvalue = [16, 9]", fillcolor="#f4c8a8"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+}
