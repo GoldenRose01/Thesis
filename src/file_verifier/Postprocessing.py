@@ -24,24 +24,29 @@ def parse_file_name(file_name, dataset_names):
         return None
 
     # Extract letter (N or W)
-    letter = 'N'
+    letter = '/'
+    if '_N' in file_name:
+        letter = 'N'
     if '_W' in file_name:
         letter = 'W'
+    elif '_QN' in file_name:
+        letter = 'QN'
+    elif '_QW' in file_name:
+        letter = 'QW'
 
     # Extract complexity type (simple or complex)
     complexity_type = 'simple' if 'simple' in file_name else 'complex'
 
     # Extract encoding type
-    encoding_type = 'unknown'
-    if 'edit_distance_lib_' in file_name:
-        encoding_type = 'edit_distance_lib_'
-    elif 'edit_distance_separate_' in file_name:
-        encoding_type = 'edit_distance_separate_'
-    elif 'weighted_edit_distance' in file_name:
-        encoding_type = 'weighted_edit_distance'
+    encoding_type = 'edit_distance_lib_'
+    if complexity_type == 'complex':
+        if 'edit_distance_separate_' in file_name:
+            encoding_type = 'edit_distance_separate_'
+        elif 'weighted_edit_distance' in file_name:
+            encoding_type = 'weighted_edit_distance'
 
     # Extract weighted values if applicable
-    weighted_values = ''
+    weighted_values = '/'
     if encoding_type == 'weighted_edit_distance':
         weights = extract_weighted_values(file_name)
         if weights:
@@ -68,12 +73,19 @@ def calculate_metrics(input_directory, summary_file, dataset_names_file):
     for root, dirs, files in os.walk(input_directory):
         for file_name in files:
             if file_name.endswith('.csv'):
+                # Skip files containing 'recommendations' in their name
+                if 'recommendations' in file_name:
+                    print(f"Skipping {file_name} as it contains 'recommendations'.")
+                    continue
+
                 file_path = os.path.join(root, file_name)
                 df = pd.read_csv(file_path)
 
                 # Check if the required columns exist in the dataframe
-                if not {'precision', 'recall', 'fscore', 'num_cases'}.issubset(df.columns):
-                    print(f"Skipping {file_name} as it does not contain the required columns.")
+                required_columns = {'precision', 'recall', 'fscore', 'num_cases'}
+                missing_columns = required_columns - set(df.columns)
+                if missing_columns:
+                    print(f"Skipping {file_name} as it does not contain the required columns: {missing_columns}")
                     continue
 
                 # Calculate the average metrics
@@ -99,7 +111,7 @@ def calculate_metrics(input_directory, summary_file, dataset_names_file):
                     parsed_values[4],  # weighted_values
                     f'{avg_fscore:.3f}'.replace('.', ','),  # average fscore
                     f'{avg_precision:.3f}'.replace('.', ','),  # average precision
-                    '',  # blank column
+                    '|',  # blank column
                     f'{weighted_avg_fscore:.3f}'.replace('.', ','),  # weighted average fscore
                     f'{weighted_avg_precision:.3f}'.replace('.', ',')  # weighted average precision
                 ])
@@ -125,7 +137,7 @@ def calculate_metrics(input_directory, summary_file, dataset_names_file):
 if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     input_directory = os.path.join(script_dir, '..', '..', 'media', 'output', 'result')
-    output_directory = os.path.join(script_dir, '..', '..', 'media', 'output', 'postprocessing')
+    output_directory = os.path.join(script_dir, '..', '..', 'media', 'postprocessing')
 
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)

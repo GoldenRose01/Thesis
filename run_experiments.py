@@ -344,6 +344,7 @@ def rec_sys_exp(dataset_name):
             value = getattr(results[pref_id], metric)
             if settings.Allprint is True:
                 print(f"{metric}:{value}".format(metric=metric, value=value))
+
     plot = PlotResult(results, prefix_lenght_list_test, settings.results_dir)
 
     for metric in ["fscore"]:

@@ -186,10 +186,46 @@ wresource_att = temp_wresource_att
 
 # ========================================= folders ====================================================================
 
+output_dt_dir_s = "media/output/dt/simple"
+output_dt_dir_cl = "media/output/dt/complex/lib"
+output_dt_dir_cc = "media/output/dt/complex/code"
+output_dt_dir_cw = "media/output/dt/complex/weighted"
 
-output_dir = "media/output"
+if type_encoding == "simple":
+    output_dir = output_dt_dir_s
+elif type_encoding == "complex" and selected_evaluation_edit_distance == "weighted_edit_distance":
+    output_dir = output_dt_dir_cw
+elif type_encoding == "complex" and selected_evaluation_edit_distance == "edit_distance_lib":
+    output_dir = output_dt_dir_cl
+elif type_encoding == "complex" and selected_evaluation_edit_distance == "edit_distance_separate":
+    output_dir = output_dt_dir_cc
+else:
+    output_dir = "media/output"
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
+
 csv_dir = "media/output/results.csv"
-results_dir = os.path.join(output_dir, "result")
+
+
+results_dir_s = "media/output/result/simple"
+results_dir_cl = "media/output/result/complex/lib"
+results_dir_cc = "media/output/result/complex/code"
+results_dir_cw = "media/output/result/complex/weighted"
+
+if type_encoding == "simple":
+    results_dir = results_dir_s
+elif type_encoding == "complex" and selected_evaluation_edit_distance == "weighted_edit_distance":
+    results_dir = results_dir_cw
+elif type_encoding == "complex" and selected_evaluation_edit_distance == "edit_distance_lib":
+    results_dir = results_dir_cl
+elif type_encoding == "complex" and selected_evaluation_edit_distance == "edit_distance_separate":
+    results_dir = results_dir_cc
+else:
+    results_dir = "media/output/result"
+if not os.path.exists(results_dir):
+    os.makedirs(results_dir)
+
+
 dataset_folder = "media/input"
 
 # ========================================= checkers ===================================================================
