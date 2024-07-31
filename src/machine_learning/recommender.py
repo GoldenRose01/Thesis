@@ -861,3 +861,4 @@ def prefix_evaluation_to_csv(result_dict, dataset):
             worksheet.cell(row=row_idx, column=col_idx).value = value
 
     workbook.save(excel_file)
+    return csv_file

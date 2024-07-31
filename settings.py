@@ -225,6 +225,7 @@ else:
 if not os.path.exists(results_dir):
     os.makedirs(results_dir)
 
+postprocessing_folder = "media/postprocessing"
 
 dataset_folder = "media/input"
 

@@ -40,3 +40,7 @@ class TerminalWindow(QWidget):
 
     def enable_next_button(self):
         self.next_button.setEnabled(True)
+
+    def update_color_map(self, new_color_map):
+       self.color_map = new_color_map
+       self.initUI()

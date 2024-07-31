@@ -1,5 +1,6 @@
 from src.machine_learning import recommender as rcm
 from src.dataset_manager.datasetManager import *
+import src.file_verifier.Postprocessing as postprocessing
 import src.file_verifier.verify as verify
 from src.machine_learning import *
 from Colorlib.Colors import *
@@ -358,15 +359,41 @@ def rec_sys_exp(dataset_name):
                        f"{settings.selected_evaluation_edit_distance}{settings.wtrace_att},"
                        f"{settings.wactivities},{settings.wresource_att}_{metric}")
     # Salva i risultati della valutazione dei prefissi in un file CSV
-    rcm.prefix_evaluation_to_csv(results, dataset_name)
+    namefile = rcm.prefix_evaluation_to_csv(results, dataset_name)
 
     # Timer per simulazioni
     time_h_exp = (time.time() - start_time_exp) / 3600
     time_m_exp = (time.time() - start_time_exp) / 60
 
+    if settings.selected_evaluation_edit_distance != "weighted_edit_distance":
+        dataset_info = {
+            'dataset_name': dataset_name,
+            'ruleprefix': settings.ruleprefix,
+            'type_encoding': settings.type_encoding,
+            'selected_evaluation_edit_distance': settings.selected_evaluation_edit_distance,
+            'namefile':namefile
+        }
+    else:
+        dataset_info = {
+            'dataset_name': dataset_name,
+            'ruleprefix': settings.ruleprefix,
+            'type_encoding': settings.type_encoding,
+            'selected_evaluation_edit_distance': 'weighted_edit_distance',
+            'wtrace_att': settings.wtrace_att,
+            'wactivities': settings.wactivities,
+            'wresource_att': settings.wresource_att,
+            'namefile': namefile,
+        }
+
+    if not os.path.exists(settings.postprocessing_folder):
+        os.makedirs(settings.postprocessing_folder)
+
     verify.printprefixlength(dataset_name, prefix_length)
+
     verify.timeprinter(dataset_name, settings.type_encoding, settings.selected_evaluation_edit_distance,
                        settings.wtrace_att, settings.wactivities, settings.wresource_att, time_m_exp)
+
+    postprocessing.process_and_update_summary(settings.results_dir, settings.postprocessing_folder, dataset_info)
 
     at_endexp = f"{dataset_name} simulation required {time_h_exp:.2f}H or {time_m_exp:.2f}min"
     print(f"\n{GREEN}{at_endexp.center(main.infoconsole())}{RESET}\n\n")

@@ -3,7 +3,6 @@ import traceback
 from PyQt6.QtCore import *
 from PyQt6.QtSvgWidgets import *
 from PyQt6.QtWidgets import *
-
 from details_complex import DetailsComplexWindow
 from details_declarative import DetailsDeclarativeWindow
 from details_simple import DetailsSimpleWindow
