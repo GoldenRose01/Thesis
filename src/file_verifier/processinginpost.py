@@ -3,18 +3,15 @@ import pandas as pd
 import itertools
 import re
 
-
 def load_dataset_names(file_path):
     with open(file_path, 'r') as file:
         return [line.strip() for line in file]
-
 
 def calculate_weighted_average(df, column):
     total_weight = df['num_cases'].sum()
     if total_weight == 0:
         return 0
     return (df[column] * df['num_cases']).sum() / total_weight
-
 
 def extract_weighted_values(file_name):
     match = re.search(r'weighted_edit_distance([\d.]+),([\d.]+),([\d.]+)', file_name)
@@ -26,16 +23,16 @@ def extract_weighted_values(file_name):
         }
     return None
 
-
 def generate_namefile(dataset, ruleprefix, type_encoding, selected_evaluation_edit_distance, settings=None):
     if selected_evaluation_edit_distance == 'weighted_edit_distance' and settings:
         return f"{dataset}_{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}{settings['wtrace_att']},{settings['wactivities']},{settings['wresource_att']}.csv"
     else:
         return f"{dataset}_{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}.csv"
 
+def format_percentage(value):
+    return f"{value * 100:.3f}%".rstrip('0').rstrip('.') if value < 1 else "100%"
 
-def process_single_dataset(file_path, dataset_name, rule_prefix, type_encoding, selected_evaluation_edit_distance,
-                           settings=None):
+def process_single_dataset(file_path, dataset_name, rule_prefix, type_encoding, selected_evaluation_edit_distance, settings=None):
     if not os.path.exists(file_path):
         print(f"File {file_path} does not exist.")
         return None
@@ -62,6 +59,14 @@ def process_single_dataset(file_path, dataset_name, rule_prefix, type_encoding, 
     weighted_avg_precision = calculate_weighted_average(df, 'precision')
     weighted_avg_recall = calculate_weighted_average(df, 'recall')
 
+    # Convert values to percentages
+    avg_fscore = format_percentage(avg_fscore)
+    avg_precision = format_percentage(avg_precision)
+    avg_recall = format_percentage(avg_recall)
+    weighted_avg_fscore = format_percentage(weighted_avg_fscore)
+    weighted_avg_precision = format_percentage(weighted_avg_precision)
+    weighted_avg_recall = format_percentage(weighted_avg_recall)
+
     weighted_values = '/'
     if selected_evaluation_edit_distance == 'weighted_edit_distance' and settings:
         weighted_values = f'{settings["wtrace_att"] * 100:.0f}% {settings["wactivities"] * 100:.0f}% {settings["wresource_att"] * 100:.0f}%'
@@ -83,7 +88,6 @@ def process_single_dataset(file_path, dataset_name, rule_prefix, type_encoding, 
         weighted_avg_precision,
         weighted_avg_recall
     ]
-
 
 def append_to_summary(summary_file, data_row):
     if os.path.exists(summary_file):
@@ -115,7 +119,6 @@ def append_to_summary(summary_file, data_row):
 
     print(f'{summary_file} has been updated.')
 
-
 def compare_and_delete_if_needed(existing_file_path, new_data_row):
     existing_data = pd.read_csv(existing_file_path)
 
@@ -128,17 +131,16 @@ def compare_and_delete_if_needed(existing_file_path, new_data_row):
     existing_weighted_avg_recall = calculate_weighted_average(existing_data, 'recall')
 
     # Compare average values and weighted values
-    if (new_data_row[5] > existing_avg_fscore and
-            new_data_row[6] > existing_avg_precision and
-            new_data_row[7] > existing_avg_recall and
-            new_data_row[10] > existing_weighted_avg_fscore and
-            new_data_row[11] > existing_weighted_avg_precision and
-            new_data_row[12] > existing_weighted_avg_recall):
+    if (float(new_data_row[5].rstrip('%')) > existing_avg_fscore * 100 and
+            float(new_data_row[6].rstrip('%')) > existing_avg_precision * 100 and
+            float(new_data_row[7].rstrip('%')) > existing_avg_recall * 100 and
+            float(new_data_row[10].rstrip('%')) > existing_weighted_avg_fscore * 100 and
+            float(new_data_row[11].rstrip('%')) > existing_weighted_avg_precision * 100 and
+            float(new_data_row[12].rstrip('%')) > existing_weighted_avg_recall * 100):
         os.remove(existing_file_path)
         print(f"Removed lower value file: {existing_file_path}")
         return True
     return False
-
 
 def process_and_update_summary(results_dir, postprocessing_folder, dataset_names):
     rule_prefixes = ['N', 'W', 'QN', 'QW', '']  # Include an empty string to handle files without the rule prefix
@@ -149,21 +151,19 @@ def process_and_update_summary(results_dir, postprocessing_folder, dataset_names
 
     for dataset in dataset_names:
         processed_files = {}
-        for (rule_prefix, type_encoding, selected_evaluation_edit_distance) in itertools.product(rule_prefixes,
-                                                                                                 type_encodings,
-                                                                                                 selected_evaluation_edit_distances):
+        for (rule_prefix, type_encoding, selected_evaluation_edit_distance) in itertools.product(rule_prefixes, type_encodings, selected_evaluation_edit_distances):
             for root, _, files in os.walk(results_dir):
                 for file_name in files:
                     if file_name.endswith(".csv"):
                         file_path = os.path.join(root, file_name)
+                        print(f"Found file: {file_path}")  # Debugging statement
+                        normalized_name = file_name.replace(f"{dataset}_", f"{dataset}_N")
                         if selected_evaluation_edit_distance == 'weighted_edit_distance':
-                            if file_name.startswith(
-                                    f"{dataset}_{rule_prefix}{type_encoding}_evaluation_weighted_edit_distance"):
+                            if file_name.startswith(f"{dataset}_{rule_prefix}{type_encoding}_evaluation_weighted_edit_distance"):
                                 settings = extract_weighted_values(file_name)
-                                data_row = process_single_dataset(file_path, dataset, rule_prefix, type_encoding,
-                                                                  selected_evaluation_edit_distance, settings)
+                                data_row = process_single_dataset(file_path, dataset, rule_prefix, type_encoding, selected_evaluation_edit_distance, settings)
                                 if data_row:
-                                    unique_key = file_name
+                                    unique_key = normalized_name
                                     if unique_key in processed_files:
                                         if compare_and_delete_if_needed(processed_files[unique_key], data_row):
                                             processed_files[unique_key] = file_path
@@ -174,13 +174,12 @@ def process_and_update_summary(results_dir, postprocessing_folder, dataset_names
                                         processed_files[unique_key] = file_path
                                         append_to_summary(summary_file, data_row)
                         else:
-                            namefile = generate_namefile(dataset, rule_prefix, type_encoding,
-                                                         selected_evaluation_edit_distance)
+                            namefile = generate_namefile(dataset, rule_prefix, type_encoding, selected_evaluation_edit_distance)
+                            normalized_namefile = namefile.replace(f"{dataset}_", f"{dataset}_N")
                             if file_name == namefile or file_name == namefile.replace(f"{rule_prefix}_", ""):
-                                data_row = process_single_dataset(file_path, dataset, rule_prefix, type_encoding,
-                                                                  selected_evaluation_edit_distance)
+                                data_row = process_single_dataset(file_path, dataset, rule_prefix, type_encoding, selected_evaluation_edit_distance)
                                 if data_row:
-                                    unique_key = file_name
+                                    unique_key = normalized_name
                                     if unique_key in processed_files:
                                         if compare_and_delete_if_needed(processed_files[unique_key], data_row):
                                             processed_files[unique_key] = file_path
@@ -191,8 +190,14 @@ def process_and_update_summary(results_dir, postprocessing_folder, dataset_names
                                         processed_files[unique_key] = file_path
                                         append_to_summary(summary_file, data_row)
 
-    print(f'{summary_file} has been updated.')
+                                        # Rename the file to include the rule prefix if needed
+                                        if rule_prefix == '':
+                                            new_file_path = os.path.join(root, normalized_namefile)
+                                            os.rename(file_path, new_file_path)
+                                            processed_files[unique_key] = new_file_path
+                                            print(f"Renamed file: {file_path} to {new_file_path}")
 
+    print(f'{summary_file} has been updated.')
 
 if __name__ == "__main__":
     results_dir = os.path.join('media', 'output')
