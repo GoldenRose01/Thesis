@@ -1,4 +1,3 @@
-import os
 def save_type_encoding(encoding_type):
     with open('../Encoding.dat','w') as file:
         file.write(encoding_type)

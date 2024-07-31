@@ -1,5 +1,4 @@
-from src.enums import TraceLabel  # Import delle librerie necessarie
-import pdb
+from src.enums import TraceLabel
 import numpy as np
 
 # Classe Bucket per tenere traccia delle statistiche

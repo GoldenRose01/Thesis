@@ -3,7 +3,7 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 from styles import *
 from content import contents_main
-from theme_selection_widget import CustomSwitch
+
 
 class MainWindow(QWidget):
     options_dat_path = "Option.dat"

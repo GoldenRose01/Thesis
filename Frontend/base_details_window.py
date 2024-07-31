@@ -2,8 +2,7 @@ from PyQt6 import QtCore as Qt
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from styles import *
-from function import *
-import os
+
 
 class BaseDetailsWindow(QWidget):
     def __init__(self, encoding, switch_view_callback, content_details, color_map):

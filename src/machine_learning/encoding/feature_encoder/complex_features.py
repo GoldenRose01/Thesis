@@ -1,8 +1,6 @@
-from functools import reduce
 from pandas import DataFrame
 from src.machine_learning.encoding.constants import get_max_prefix_length, get_prefix_length, PrefixLengthStrategy
 from src.machine_learning.label.common import add_label_column
-from src.machine_learning.encoding.Encoding_setting import read_attributes_from_file
 from src.machine_learning.encoding.addons import clean_lists
 import settings
 

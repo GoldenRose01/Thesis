@@ -1,7 +1,5 @@
 from base_details_window import BaseDetailsWindow
 from content import contents_declarative_details
-from PyQt6.QtWidgets import *
-from function import add_excluded_attribute, remove_excluded_attribute
 
 
 class DetailsDeclarativeWindow(BaseDetailsWindow):

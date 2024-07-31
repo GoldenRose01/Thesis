@@ -1,0 +1,187 @@
+dataset_name;letter;complexity_type;encoding_type;weighted_values;average_fscore;average_precision;;weighted_average_fscore;weighted_average_precision
+Production;/;complex;edit_distance_lib_;/;0,780;0,640;|;0,784;0,645
+Production;/;complex;edit_distance_lib_;/;0,780;0,640;|;0,784;0,645
+Production;/;complex;weighted_edit_distance;0% 0% 100%;0,000;0,000;|;0,000;0,000
+Production;/;complex;weighted_edit_distance;0% 50% 50%;0,778;0,638;|;0,784;0,645
+Production;/;complex;weighted_edit_distance;25% 50% 25%;0,778;0,638;|;0,784;0,645
+Production;/;complex;weighted_edit_distance;33% 33% 33%;0,752;0,606;|;0,776;0,636
+Production;N;complex;edit_distance_lib_;/;0,781;0,641;|;0,785;0,646
+Production;N;complex;edit_distance_lib_;/;0,781;0,641;|;0,785;0,646
+Production;N;complex;weighted_edit_distance;0% 0% 100%;0,041;0,200;|;0,064;0,314
+Production;N;complex;weighted_edit_distance;0% 100% 0%;0,781;0,641;|;0,785;0,646
+Production;N;complex;weighted_edit_distance;0% 50% 50%;0,778;0,638;|;0,784;0,645
+Production;N;complex;weighted_edit_distance;25% 50% 25%;0,701;0,574;|;0,757;0,623
+Production;N;complex;weighted_edit_distance;33% 33% 33%;0,701;0,574;|;0,757;0,623
+Production;N;complex;weighted_edit_distance;50% 0% 50%;0,000;0,000;|;0,000;0,000
+Production;N;complex;weighted_edit_distance;50% 50% 0%;0,781;0,641;|;0,785;0,646
+Production;N;simple;edit_distance_lib_;/;0,359;0,377;|;0,453;0,483
+Production;QN;complex;weighted_edit_distance;0% 0% 100%;0,230;0,379;|;0,298;0,487
+Production;W;complex;edit_distance_lib_;/;0,752;0,606;|;0,776;0,636
+Production;W;complex;edit_distance_lib_;/;0,610;0,498;|;0,738;0,607
+Production;W;complex;weighted_edit_distance;0% 0% 100%;0,000;0,000;|;0,000;0,000
+Production;W;complex;weighted_edit_distance;0% 50% 50%;0,752;0,606;|;0,776;0,636
+Production;W;complex;weighted_edit_distance;25% 50% 25%;0,752;0,606;|;0,776;0,636
+Production;W;complex;weighted_edit_distance;33% 33% 33%;0,752;0,606;|;0,776;0,636
+Production;W;complex;weighted_edit_distance;50% 0% 50%;0,752;0,606;|;0,776;0,636
+Production;W;complex;weighted_edit_distance;50% 50% 0%;0,752;0,606;|;0,776;0,636
+Production;W;simple;edit_distance_lib_;/;0,199;0,221;|;0,348;0,389
+bpic2011_f1;/;complex;edit_distance_lib_;/;0,678;0,521;|;0,662;0,500
+bpic2011_f1;/;complex;edit_distance_lib_;/;0,678;0,521;|;0,662;0,500
+bpic2011_f1;N;complex;weighted_edit_distance;0% 0% 100%;0,678;0,522;|;0,663;0,501
+bpic2011_f1;N;complex;weighted_edit_distance;25% 50% 25%;0,678;0,522;|;0,663;0,501
+bpic2011_f1;N;complex;weighted_edit_distance;33% 33% 33%;0,678;0,522;|;0,663;0,501
+bpic2011_f1;QN;complex;weighted_edit_distance;0% 0% 100%;0,678;0,522;|;0,663;0,501
+bpic2011_f1;W;complex;weighted_edit_distance;0% 0% 100%;0,678;0,522;|;0,663;0,501
+bpic2011_f2;/;complex;edit_distance_lib_;/;0,320;0,222;|;0,337;0,234
+bpic2011_f2;/;complex;edit_distance_lib_;/;0,320;0,222;|;0,337;0,234
+bpic2011_f2;N;complex;weighted_edit_distance;0% 0% 100%;0,557;0,387;|;0,557;0,386
+bpic2011_f2;N;complex;weighted_edit_distance;25% 50% 25%;0,557;0,387;|;0,557;0,386
+bpic2011_f2;N;complex;weighted_edit_distance;33% 33% 33%;0,320;0,221;|;0,337;0,233
+bpic2011_f2;QN;complex;weighted_edit_distance;0% 0% 100%;0,557;0,387;|;0,557;0,386
+bpic2011_f3;/;complex;edit_distance_lib_;/;0,756;0,613;|;0,748;0,601
+bpic2011_f3;/;complex;edit_distance_lib_;/;0,756;0,613;|;0,748;0,601
+bpic2011_f3;N;complex;weighted_edit_distance;25% 50% 25%;0,756;0,613;|;0,748;0,601
+bpic2011_f3;N;complex;weighted_edit_distance;33% 33% 33%;0,756;0,613;|;0,748;0,601
+bpic2011_f3;QN;complex;weighted_edit_distance;0% 0% 100%;0,756;0,613;|;0,748;0,601
+bpic2011_f4;/;complex;edit_distance_lib_;/;0,075;0,060;|;0,089;0,071
+bpic2011_f4;/;complex;edit_distance_lib_;/;0,075;0,060;|;0,089;0,071
+bpic2011_f4;N;complex;weighted_edit_distance;0% 50% 50%;0,075;0,060;|;0,089;0,071
+bpic2011_f4;N;complex;weighted_edit_distance;25% 50% 25%;0,691;0,529;|;0,694;0,533
+bpic2011_f4;N;complex;weighted_edit_distance;33% 33% 33%;0,075;0,060;|;0,089;0,071
+bpic2011_f4;N;complex;weighted_edit_distance;50% 0% 50%;0,000;0,000;|;0,000;0,000
+bpic2011_f4;N;complex;weighted_edit_distance;50% 50% 0%;0,699;0,537;|;0,701;0,540
+bpic2011_f4;QN;complex;weighted_edit_distance;0% 0% 100%;0,691;0,529;|;0,694;0,533
+bpic2012_accepted;/;complex;edit_distance_lib_;/;0,616;0,446;|;0,624;0,455
+bpic2012_accepted;/;complex;edit_distance_lib_;/;0,616;0,446;|;0,624;0,455
+bpic2012_accepted;N;complex;weighted_edit_distance;25% 50% 25%;0,616;0,446;|;0,624;0,455
+bpic2012_accepted;N;complex;weighted_edit_distance;33% 33% 33%;0,616;0,446;|;0,624;0,455
+bpic2012_accepted;QN;complex;weighted_edit_distance;0% 0% 100%;0,601;0,437;|;0,616;0,450
+bpic2012_declined;/;complex;edit_distance_lib_;/;0,894;0,808;|;0,893;0,806
+bpic2012_declined;/;complex;edit_distance_lib_;/;0,894;0,808;|;0,893;0,806
+bpic2012_declined;N;complex;weighted_edit_distance;25% 50% 25%;0,894;0,808;|;0,893;0,806
+bpic2012_declined;N;complex;weighted_edit_distance;33% 33% 33%;0,894;0,808;|;0,893;0,806
+bpic2012_declined;QN;complex;weighted_edit_distance;0% 0% 100%;0,867;0,783;|;0,878;0,793
+bpic2015_1_f2;N;complex;weighted_edit_distance;0% 0% 100%;0,824;0,715;|;0,829;0,719
+bpic2015_1_f2;N;complex;weighted_edit_distance;25% 50% 25%;0,733;0,635;|;0,752;0,652
+bpic2015_1_f2;QN;complex;weighted_edit_distance;0% 0% 100%;0,778;0,674;|;0,791;0,686
+bpic2015_2_f2;N;complex;weighted_edit_distance;0% 0% 100%;0,910;0,835;|;0,910;0,835
+bpic2015_2_f2;N;complex;weighted_edit_distance;25% 50% 25%;0,910;0,835;|;0,910;0,835
+bpic2015_2_f2;QN;complex;weighted_edit_distance;0% 0% 100%;0,910;0,835;|;0,910;0,835
+bpic2015_3_f2;/;complex;edit_distance_lib_;/;0,832;0,725;|;0,834;0,727
+bpic2015_3_f2;/;complex;edit_distance_lib_;/;0,832;0,725;|;0,834;0,727
+bpic2015_3_f2;N;complex;weighted_edit_distance;0% 0% 100%;0,832;0,725;|;0,834;0,727
+bpic2015_3_f2;N;complex;weighted_edit_distance;25% 50% 25%;0,832;0,725;|;0,834;0,727
+bpic2015_3_f2;N;complex;weighted_edit_distance;33% 33% 33%;0,832;0,725;|;0,834;0,727
+bpic2015_3_f2;QN;complex;weighted_edit_distance;0% 0% 100%;0,832;0,725;|;0,834;0,727
+bpic2015_4_f2;/;complex;edit_distance_lib_;/;0,506;0,469;|;0,582;0,540
+bpic2015_4_f2;/;complex;edit_distance_lib_;/;0,506;0,469;|;0,582;0,540
+bpic2015_4_f2;/;complex;weighted_edit_distance;0% 50% 50%;0,506;0,469;|;0,582;0,540
+bpic2015_4_f2;/;complex;weighted_edit_distance;25% 50% 25%;0,506;0,469;|;0,582;0,540
+bpic2015_4_f2;N;complex;weighted_edit_distance;0% 0% 100%;0,891;0,820;|;0,898;0,827
+bpic2015_4_f2;N;complex;weighted_edit_distance;0% 50% 50%;0,506;0,469;|;0,582;0,540
+bpic2015_4_f2;N;complex;weighted_edit_distance;25% 50% 25%;0,753;0,694;|;0,793;0,731
+bpic2015_4_f2;N;complex;weighted_edit_distance;33% 33% 33%;0,506;0,469;|;0,582;0,540
+bpic2015_4_f2;N;complex;weighted_edit_distance;50% 0% 50%;0,000;0,000;|;0,000;0,000
+bpic2015_4_f2;N;complex;weighted_edit_distance;50% 50% 0%;0,708;0,652;|;0,757;0,698
+bpic2015_4_f2;QN;complex;weighted_edit_distance;0% 0% 100%;0,891;0,820;|;0,898;0,827
+bpic2015_5_f2;/;complex;edit_distance_lib_;/;0,717;0,621;|;0,725;0,627
+bpic2015_5_f2;/;complex;edit_distance_lib_;/;0,717;0,621;|;0,725;0,627
+bpic2015_5_f2;N;complex;weighted_edit_distance;0% 0% 100%;0,843;0,728;|;0,843;0,729
+bpic2015_5_f2;N;complex;weighted_edit_distance;25% 50% 25%;0,843;0,728;|;0,843;0,729
+bpic2015_5_f2;N;complex;weighted_edit_distance;33% 33% 33%;0,717;0,621;|;0,725;0,627
+bpic2015_5_f2;QN;complex;weighted_edit_distance;0% 0% 100%;0,843;0,728;|;0,843;0,729
+hospital_billing_2;/;complex;edit_distance_lib_;/;0,947;0,901;|;0,945;0,897
+hospital_billing_2;/;complex;edit_distance_lib_;/;0,947;0,901;|;0,945;0,897
+hospital_billing_2;N;complex;weighted_edit_distance;25% 50% 25%;0,947;0,901;|;0,945;0,897
+hospital_billing_2;N;complex;weighted_edit_distance;33% 33% 33%;0,947;0,901;|;0,945;0,897
+hospital_billing_2;QN;complex;weighted_edit_distance;0% 0% 100%;0,623;0,585;|;0,669;0,628
+hospital_billing_3;/;complex;edit_distance_lib_;/;0,977;0,954;|;0,977;0,955
+hospital_billing_3;/;complex;edit_distance_lib_;/;0,977;0,954;|;0,977;0,955
+hospital_billing_3;N;complex;weighted_edit_distance;25% 50% 25%;0,977;0,954;|;0,977;0,955
+hospital_billing_3;N;complex;weighted_edit_distance;33% 33% 33%;0,977;0,954;|;0,977;0,955
+hospital_billing_3;QN;complex;weighted_edit_distance;0% 0% 100%;0,652;0,638;|;0,701;0,686
+sepsis_cases_1;/;complex;edit_distance_lib_;/;0,882;0,837;|;0,911;0,863
+sepsis_cases_1;/;complex;edit_distance_lib_;/;0,882;0,837;|;0,911;0,863
+sepsis_cases_1;/;complex;weighted_edit_distance;0% 0% 100%;0,757;0,719;|;0,903;0,856
+sepsis_cases_1;/;complex;weighted_edit_distance;0% 100% 0%;0,882;0,837;|;0,911;0,863
+sepsis_cases_1;/;complex;weighted_edit_distance;0% 50% 50%;0,882;0,837;|;0,911;0,863
+sepsis_cases_1;/;complex;weighted_edit_distance;25% 50% 25%;0,882;0,837;|;0,911;0,863
+sepsis_cases_1;/;complex;weighted_edit_distance;33% 33% 33%;0,529;0,502;|;0,794;0,752
+sepsis_cases_1;/;complex;weighted_edit_distance;50% 50% 0%;0,629;0,596;|;0,702;0,665
+sepsis_cases_1;N;complex;edit_distance_lib_;/;0,882;0,837;|;0,911;0,863
+sepsis_cases_1;N;complex;edit_distance_lib_;/;0,882;0,837;|;0,911;0,863
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 0% 100%;0,819;0,776;|;0,870;0,825
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 100% 0%;0,882;0,837;|;0,911;0,863
+sepsis_cases_1;N;complex;weighted_edit_distance;0% 50% 50%;0,882;0,837;|;0,911;0,863
+sepsis_cases_1;N;complex;weighted_edit_distance;25% 50% 25%;0,945;0,896;|;0,945;0,895
+sepsis_cases_1;N;complex;weighted_edit_distance;33% 33% 33%;0,882;0,837;|;0,911;0,863
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 0% 50%;0,945;0,896;|;0,945;0,895
+sepsis_cases_1;N;complex;weighted_edit_distance;50% 50% 0%;0,629;0,596;|;0,702;0,665
+sepsis_cases_1;N;simple;edit_distance_lib_;/;0,613;0,597;|;0,684;0,666
+sepsis_cases_1;QN;complex;weighted_edit_distance;0% 0% 100%;0,819;0,776;|;0,870;0,825
+sepsis_cases_1;W;complex;edit_distance_lib_;/;0,942;0,890;|;0,944;0,895
+sepsis_cases_1;W;complex;edit_distance_lib_;/;0,529;0,502;|;0,794;0,752
+sepsis_cases_1;W;complex;weighted_edit_distance;0% 0% 100%;0,757;0,719;|;0,903;0,856
+sepsis_cases_1;W;complex;weighted_edit_distance;0% 50% 50%;0,942;0,890;|;0,944;0,895
+sepsis_cases_1;W;complex;weighted_edit_distance;25% 50% 25%;0,942;0,890;|;0,944;0,895
+sepsis_cases_1;W;complex;weighted_edit_distance;33% 33% 33%;0,529;0,502;|;0,794;0,752
+sepsis_cases_1;W;complex;weighted_edit_distance;50% 0% 50%;0,942;0,890;|;0,944;0,895
+sepsis_cases_1;W;complex;weighted_edit_distance;50% 50% 0%;0,643;0,610;|;0,863;0,818
+sepsis_cases_1;W;simple;edit_distance_lib_;/;0,569;0,611;|;0,781;0,819
+sepsis_cases_2;/;complex;edit_distance_lib_;/;0,947;0,900;|;0,945;0,896
+sepsis_cases_2;/;complex;edit_distance_lib_;/;0,946;0,898;|;0,943;0,894
+sepsis_cases_2;/;complex;weighted_edit_distance;0% 0% 100%;0,881;0,839;|;0,908;0,862
+sepsis_cases_2;/;complex;weighted_edit_distance;0% 50% 50%;0,946;0,898;|;0,943;0,894
+sepsis_cases_2;/;complex;weighted_edit_distance;25% 50% 25%;0,946;0,898;|;0,943;0,894
+sepsis_cases_2;/;complex;weighted_edit_distance;33% 33% 33%;0,951;0,908;|;0,947;0,900
+sepsis_cases_2;N;complex;edit_distance_lib_;/;0,946;0,898;|;0,943;0,894
+sepsis_cases_2;N;complex;edit_distance_lib_;/;0,946;0,898;|;0,943;0,894
+sepsis_cases_2;N;complex;weighted_edit_distance;0% 0% 100%;0,864;0,817;|;0,880;0,831
+sepsis_cases_2;N;complex;weighted_edit_distance;0% 100% 0%;0,946;0,898;|;0,943;0,894
+sepsis_cases_2;N;complex;weighted_edit_distance;0% 50% 50%;0,946;0,898;|;0,943;0,894
+sepsis_cases_2;N;complex;weighted_edit_distance;25% 50% 25%;0,946;0,898;|;0,943;0,894
+sepsis_cases_2;N;complex;weighted_edit_distance;33% 33% 33%;0,946;0,898;|;0,943;0,894
+sepsis_cases_2;N;complex;weighted_edit_distance;50% 0% 50%;0,946;0,898;|;0,943;0,894
+sepsis_cases_2;N;complex;weighted_edit_distance;50% 50% 0%;0,946;0,898;|;0,943;0,894
+sepsis_cases_2;N;simple;edit_distance_lib_;/;0,861;0,845;|;0,880;0,860
+sepsis_cases_2;QN;complex;weighted_edit_distance;0% 0% 100%;0,864;0,817;|;0,880;0,831
+sepsis_cases_2;W;complex;edit_distance_lib_;/;0,951;0,908;|;0,947;0,900
+sepsis_cases_2;W;complex;edit_distance_lib_;/;0,951;0,908;|;0,947;0,900
+sepsis_cases_2;W;complex;weighted_edit_distance;0% 0% 100%;0,881;0,839;|;0,908;0,862
+sepsis_cases_2;W;complex;weighted_edit_distance;0% 50% 50%;0,951;0,908;|;0,947;0,900
+sepsis_cases_2;W;complex;weighted_edit_distance;25% 50% 25%;0,951;0,908;|;0,947;0,900
+sepsis_cases_2;W;complex;weighted_edit_distance;33% 33% 33%;0,951;0,908;|;0,947;0,900
+sepsis_cases_2;W;complex;weighted_edit_distance;50% 0% 50%;0,951;0,908;|;0,947;0,900
+sepsis_cases_2;W;complex;weighted_edit_distance;50% 50% 0%;0,951;0,908;|;0,947;0,900
+sepsis_cases_2;W;simple;edit_distance_lib_;/;0,737;0,727;|;0,800;0,787
+sepsis_cases_4;/;complex;edit_distance_lib_;/;0,294;0,173;|;0,285;0,167
+sepsis_cases_4;/;complex;edit_distance_lib_;/;0,296;0,175;|;0,287;0,168
+sepsis_cases_4;/;complex;weighted_edit_distance;0% 0% 100%;0,363;0,227;|;0,312;0,188
+sepsis_cases_4;/;complex;weighted_edit_distance;0% 50% 50%;0,296;0,175;|;0,287;0,168
+sepsis_cases_4;/;complex;weighted_edit_distance;25% 50% 25%;0,296;0,175;|;0,287;0,168
+sepsis_cases_4;/;complex;weighted_edit_distance;33% 33% 33%;0,363;0,227;|;0,312;0,188
+sepsis_cases_4;N;complex;edit_distance_lib_;/;0,296;0,175;|;0,287;0,168
+sepsis_cases_4;N;complex;edit_distance_lib_;/;0,296;0,175;|;0,287;0,168
+sepsis_cases_4;N;complex;weighted_edit_distance;0% 0% 100%;0,267;0,156;|;0,270;0,158
+sepsis_cases_4;N;complex;weighted_edit_distance;0% 100% 0%;0,296;0,175;|;0,287;0,168
+sepsis_cases_4;N;complex;weighted_edit_distance;0% 50% 50%;0,296;0,175;|;0,287;0,168
+sepsis_cases_4;N;complex;weighted_edit_distance;25% 50% 25%;0,296;0,175;|;0,287;0,168
+sepsis_cases_4;N;complex;weighted_edit_distance;33% 33% 33%;0,296;0,175;|;0,287;0,168
+sepsis_cases_4;N;complex;weighted_edit_distance;50% 0% 50%;0,296;0,175;|;0,287;0,168
+sepsis_cases_4;N;complex;weighted_edit_distance;50% 50% 0%;0,296;0,175;|;0,287;0,168
+sepsis_cases_4;N;simple;edit_distance_lib_;/;0,357;0,248;|;0,369;0,257
+sepsis_cases_4;QN;complex;weighted_edit_distance;0% 0% 100%;0,267;0,156;|;0,270;0,158
+sepsis_cases_4;W;complex;edit_distance_lib_;/;0,366;0,229;|;0,315;0,190
+sepsis_cases_4;W;complex;edit_distance_lib_;/;0,363;0,227;|;0,312;0,188
+sepsis_cases_4;W;complex;weighted_edit_distance;0% 0% 100%;0,363;0,227;|;0,312;0,188
+sepsis_cases_4;W;complex;weighted_edit_distance;0% 50% 50%;0,367;0,230;|;0,316;0,190
+sepsis_cases_4;W;complex;weighted_edit_distance;25% 50% 25%;0,366;0,229;|;0,315;0,190
+sepsis_cases_4;W;complex;weighted_edit_distance;33% 33% 33%;0,363;0,227;|;0,312;0,188
+sepsis_cases_4;W;complex;weighted_edit_distance;50% 0% 50%;0,363;0,227;|;0,312;0,188
+sepsis_cases_4;W;complex;weighted_edit_distance;50% 50% 0%;0,359;0,223;|;0,311;0,186
+sepsis_cases_4;W;simple;edit_distance_lib_;/;0,285;0,232;|;0,366;0,294
+traffic_fines_1;/;complex;edit_distance_lib_;/;0,751;0,601;|;0,751;0,601
+traffic_fines_1;/;complex;edit_distance_lib_;/;0,751;0,601;|;0,751;0,601
+traffic_fines_1;N;complex;weighted_edit_distance;25% 50% 25%;0,751;0,601;|;0,751;0,601
+traffic_fines_1;N;complex;weighted_edit_distance;33% 33% 33%;0,751;0,601;|;0,751;0,601
+traffic_fines_1;QN;complex;weighted_edit_distance;0% 0% 100%;0,376;0,301;|;0,376;0,301
