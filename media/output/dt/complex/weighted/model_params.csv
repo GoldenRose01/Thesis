@@ -1,3 +1,8 @@
 complex with weighted_edit_distance	0.0,0.0,1.0	bpic2011_f3	(None, 'entropy', 8, 1, 0.1)	94.72	94.98	-1	7
 complex with weighted_edit_distance	0.0,0.0,1.0	bpic2011_f4	(None, 'entropy', 4, 10, 0.2)	89.48	89.47	-1	4
 complex with weighted_edit_distance	0.0,0.0,1.0	bpic2012_accepted	('balanced', 'entropy', None, 1, 2)	79.78	92.26	-1	23
+complex with weighted_edit_distance	0.5,0.0,0.5	Production	(None, 'gini', None, 1, 2)	62.85	99.48	-1	22
+complex with weighted_edit_distance	0.5,0.0,0.5	Production	('balanced', 'gini', 4, 10, 0.3)	60.25	65.42	-1	4
+complex with weighted_edit_distance	0.5,0.0,0.5	sepsis_cases_1	(None, 'entropy', 4, 10, 0.1)	91.94	91.94	-1	4
+complex with weighted_edit_distance	0.5,0.0,0.5	Production	('balanced', 'gini', None, 1, 0.2)	57.73	76.08	-1	22
+complex with weighted_edit_distance	0.5,0.0,0.5	sepsis_cases_1	(None, 'entropy', 4, 10, 0.1)	91.94	91.94	-1	4

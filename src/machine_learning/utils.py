@@ -5,6 +5,7 @@ from src.models.Prefix import *
 from src.enums import PrefixType
 from src.machine_learning import fitnessEditDistance
 from pm4py.objects.conversion.log import converter as log_converter
+
 import settings
 import math
 import numpy as np
