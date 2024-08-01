@@ -78,6 +78,7 @@ def rec_sys_exp(dataset_name):
     at_startexp = f"Starting the simulation on {dataset_name}"
     print(f"{BLUE}{at_startexp.center(main.infoconsole())}{RESET}")
 
+
     # ================ inputs ================
 
     # Ricrea la cartella di output
@@ -197,6 +198,7 @@ def rec_sys_exp(dataset_name):
      max_variations,
      features) = dt_input_trainval.encode_traces(numeric_columns, categoric_columns)
 
+    verify.printprefixlength(dataset_name, prefix_length)
     # Lista dei risultati
     results = []
 
@@ -376,7 +378,7 @@ def rec_sys_exp(dataset_name):
     else:
         dataset_info = {
             'dataset_name': dataset_name,
-            'ruleprefix': settings.ruleprefix,
+            'rule_prefix': settings.ruleprefix,
             'type_encoding': settings.type_encoding,
             'selected_evaluation_edit_distance': 'weighted_edit_distance',
             'wtrace_att': settings.wtrace_att,
@@ -388,7 +390,7 @@ def rec_sys_exp(dataset_name):
     if not os.path.exists(settings.postprocessing_folder):
         os.makedirs(settings.postprocessing_folder)
 
-    verify.printprefixlength(dataset_name, prefix_length)
+
 
     verify.timeprinter(dataset_name, settings.type_encoding, settings.selected_evaluation_edit_distance,
                        settings.wtrace_att, settings.wactivities, settings.wresource_att, time_m_exp)

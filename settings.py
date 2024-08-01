@@ -186,10 +186,25 @@ wresource_att = temp_wresource_att
 
 # ========================================= folders ====================================================================
 
-output_dt_dir_s = "media/output/dt/simple"
-output_dt_dir_cl = "media/output/dt/complex/lib"
-output_dt_dir_cc = "media/output/dt/complex/code"
-output_dt_dir_cw = "media/output/dt/complex/weighted"
+
+output_dt_dir_base = "media/output/dt/"
+if ruleprefix == "N":
+    output_dt_dir_rp = os.path.join(output_dt_dir_base, "/N")
+elif ruleprefix == "W":
+    output_dt_dir_rp = os.path.join(output_dt_dir_base, "/W")
+elif ruleprefix == "QN":
+    output_dt_dir_rp = os.path.join(output_dt_dir_base, "/QN")
+elif ruleprefix == "QW":
+    output_dt_dir_rp = os.path.join(output_dt_dir_base, "/QW")
+if not os.path.exists(output_dt_dir_rp):
+    os.makedirs(output_dt_dir_rp)
+
+
+output_dt_dir_s = os.path.join(output_dt_dir_rp, "/simple")
+output_dt_dir_cl = os.path.join(output_dt_dir_rp, "/complex/lib")
+output_dt_dir_cc = os.path.join(output_dt_dir_rp, "/complex/code")
+output_dt_dir_cw = os.path.join(output_dt_dir_rp, "/complex/weighted")
+
 
 if type_encoding == "simple":
     output_dir = output_dt_dir_s
@@ -207,10 +222,22 @@ if not os.path.exists(output_dir):
 csv_dir = "media/output/results.csv"
 
 
-results_dir_s = "media/output/result/simple"
-results_dir_cl = "media/output/result/complex/lib"
-results_dir_cc = "media/output/result/complex/code"
-results_dir_cw = "media/output/result/complex/weighted"
+result_dir_base = "media/output/dt/"
+if ruleprefix == "N":
+    result_dir_rp = os.path.join(result_dir_base, "/N")
+elif ruleprefix == "W":
+    result_dir_rp = os.path.join(result_dir_base, "/W")
+elif ruleprefix == "QN":
+    result_dir_rp = os.path.join(result_dir_base, "/QN")
+elif ruleprefix == "QW":
+    result_dir_rp = os.path.join(result_dir_base, "/QW")
+if not os.path.exists(result_dir_rp):
+    os.makedirs(result_dir_rp)
+
+results_dir_s  = os.path.join(result_dir_rp, "/simple")
+results_dir_cl = os.path.join(result_dir_rp, "/complex/lib")
+results_dir_cc = os.path.join(result_dir_rp, "/complex/code")
+results_dir_cw = os.path.join(result_dir_rp, "/complex/weighted")
 
 if type_encoding == "simple":
     results_dir = results_dir_s

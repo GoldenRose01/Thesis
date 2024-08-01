@@ -187,7 +187,7 @@ def printprefixlength(dataset_name, prefix_length):
     file_path = 'PrefixLength.csv'
 
     # Definizione delle colonne del CSV
-    legend = ['Dataset_name', 'Prefix Length']
+    legend = ['Dataset_name', 'Prefix Length', 'Rule1', 'Rule2', 'Rule3', 'Rule4']
 
     # Controllo se il file esiste
     if os.path.exists(file_path):
@@ -207,26 +207,24 @@ def printprefixlength(dataset_name, prefix_length):
     else:
         df = pd.DataFrame(columns=legend)
 
-    # Aggiungi la colonna 'Dataset_name' se non esiste già
-    if 'Dataset_name' not in df.columns:
-        df['Dataset_name'] = ''
-
-    # Aggiungi la colonna 'Prefix Length' se non esiste già
-    if 'Prefix Length' not in df.columns:
-        df['Prefix Length'] = ''
+    # Aggiungi le colonne se non esistono già
+    for column in legend:
+        if column not in df.columns:
+            df[column] = ''
 
     # Costruzione della riga da aggiungere/aggiornare
-    new_row = {'Dataset_name': f'{settings.ruleprefix}_{dataset_name}', 'Prefix Length': prefix_length}
+    new_row = {'Dataset_name': dataset_name, 'Prefix Length': prefix_length}
 
-    # Controllo se il dataset esiste già nel DataFrame
-    if f'{settings.ruleprefix}_{dataset_name}' in df['Dataset_name'].values:
+    # Aggiorna o aggiungi la riga in base al ruleprefix
+    if dataset_name in df['Dataset_name'].values:
         # Aggiornamento della riga esistente
-        df.loc[df['Dataset_name'] == f'{settings.ruleprefix}_{dataset_name}', 'Prefix Length'] = prefix_length
+        df.loc[df['Dataset_name'] == dataset_name, settings.ruleprefix] = prefix_length
     else:
         # Aggiunta di una nuova riga
+        new_row[settings.ruleprefix] = prefix_length
         df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
 
     # Salvataggio del DataFrame aggiornato nel file CSV
     df.to_csv(file_path, sep=',', index=False)
     print(f"File {file_path} successfully updated with dataset {dataset_name} and prefix length {prefix_length}"
-          f" with the {settings.ruleprefix} method.")
+          f" in the {settings.ruleprefix} column.")

@@ -24,6 +24,6 @@ wresource_att=50%
 eval_stamp=False
 recc_stamp=False
 Allprint=False
-weighted_prefix_generation=False
+weighted_prefix_generation=True
 enable_log=False
 Quick=True

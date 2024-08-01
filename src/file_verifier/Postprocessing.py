@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-
+from settings import *
 
 def calculate_weighted_average(df, column):
     total_weight = df['num_cases'].sum()
@@ -8,11 +8,9 @@ def calculate_weighted_average(df, column):
         return 0
     return (df[column] * df['num_cases']).sum() / total_weight
 
-
 def process_single_dataset(results_dir, dataset_name, rule_prefix, type_encoding, selected_evaluation_edit_distance,
                            namefile, wtrace_att=None, wactivities=None, wresource_att=None):
-    # Generate the file path from the inputs
-    file_path = os.path.join(results_dir, namefile)
+    file_path = namefile
 
     if not os.path.exists(file_path):
         print(f"File {file_path} does not exist.")
@@ -20,24 +18,20 @@ def process_single_dataset(results_dir, dataset_name, rule_prefix, type_encoding
 
     df = pd.read_csv(file_path)
 
-    # Check if the required columns exist in the dataframe
     required_columns = {'precision', 'recall', 'fscore', 'num_cases'}
     missing_columns = required_columns - set(df.columns)
     if missing_columns:
         print(f"File {namefile} does not contain the required columns: {missing_columns}")
         return None
 
-    # Calculate the average metrics
     avg_fscore = df['fscore'].mean()
     avg_precision = df['precision'].mean()
     avg_recall = df['recall'].mean()
 
-    # Calculate the weighted average metrics
     weighted_avg_fscore = calculate_weighted_average(df, 'fscore')
     weighted_avg_precision = calculate_weighted_average(df, 'precision')
     weighted_avg_recall = calculate_weighted_average(df, 'recall')
 
-    # Construct the weighted values string if applicable
     weighted_values = '/'
     if selected_evaluation_edit_distance == 'weighted_edit_distance' and all(
             v is not None for v in [wtrace_att, wactivities, wresource_att]):
@@ -58,59 +52,50 @@ def process_single_dataset(results_dir, dataset_name, rule_prefix, type_encoding
         f'{weighted_avg_recall:.3f}'.replace('.', ',')  # weighted average recall
     ]
 
-
 def append_to_summary(summary_file, data_row):
-    # Check if the summary file exists
     if os.path.exists(summary_file):
         summary_df = pd.read_csv(summary_file, sep=';')
     else:
-        # Create an empty DataFrame with the expected columns
         summary_df = pd.DataFrame(columns=[
             'dataset_name', 'letter', 'complexity_type', 'encoding_type', 'weighted_values',
             'average_fscore', 'average_precision', 'average_recall', '', 'weighted_average_fscore',
             'weighted_average_precision', 'weighted_average_recall'
         ])
 
-    # Append the new row to the DataFrame
-    summary_df = summary_df.append(pd.Series(data_row, index=summary_df.columns), ignore_index=True)
+    # Convert the data row to a DataFrame
+    new_row_df = pd.DataFrame([data_row], columns=summary_df.columns)
 
-    # Sort the DataFrame by dataset_name and other relevant columns to maintain uniqueness
+    # Concatenate the existing DataFrame with the new row
+    summary_df = pd.concat([summary_df, new_row_df], ignore_index=True)
+
+    # Sort the DataFrame by relevant columns
     summary_df = summary_df.sort_values(
-        by=['dataset_name', 'letter', 'complexity_type', 'encoding_type', 'weighted_values'])
+        by=['dataset_name', 'letter', 'complexity_type', 'encoding_type', 'weighted_values']
+    )
 
-    # Save the updated DataFrame to a CSV file
     summary_df.to_csv(summary_file, index=False, sep=';')
-
     print(f'{summary_file} has been updated.')
 
-
 def append_to_individual_summary(individual_summary_file, data_row):
-    # Check if the individual summary file exists
     if os.path.exists(individual_summary_file):
         individual_summary_df = pd.read_csv(individual_summary_file, sep=';')
     else:
-        # Create an empty DataFrame with the expected columns
         individual_summary_df = pd.DataFrame(columns=[
             'dataset_name', 'letter', 'complexity_type', 'encoding_type', 'weighted_values',
             'average_fscore', 'average_precision', 'average_recall', '', 'weighted_average_fscore',
             'weighted_average_precision', 'weighted_average_recall'
         ])
 
-    # Append the new row to the DataFrame
-    individual_summary_df = individual_summary_df.append(pd.Series(data_row, index=individual_summary_df.columns), ignore_index=True)
+    new_row_df = pd.DataFrame([data_row], columns=individual_summary_df.columns)
+    individual_summary_df = pd.concat([individual_summary_df, new_row_df], ignore_index=True)
 
-    # Sort the DataFrame by dataset_name and other relevant columns to maintain uniqueness
     individual_summary_df = individual_summary_df.sort_values(
-        by=['dataset_name', 'letter', 'complexity_type', 'encoding_type', 'weighted_values'])
+        by=['dataset_name', 'letter', 'complexity_type', 'encoding_type', 'weighted_values']
+    )
 
-    # Save the updated DataFrame to a CSV file
     individual_summary_df.to_csv(individual_summary_file, index=False, sep=';')
-
-    # Save the DataFrame to an Excel file
     individual_summary_df.to_excel(individual_summary_file.replace('.csv', '.xlsx'), index=False)
-
     print(f'{individual_summary_file} has been updated.')
-
 
 def process_and_update_summary(results_dir, postprocessing_folder, dataset_info):
     dataset_name = dataset_info['dataset_name']
