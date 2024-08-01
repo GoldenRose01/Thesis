@@ -25,9 +25,9 @@ def extract_weighted_values(file_name):
 
 def generate_namefile(dataset, ruleprefix, type_encoding, selected_evaluation_edit_distance, settings=None):
     if selected_evaluation_edit_distance == 'weighted_edit_distance' and settings:
-        return f"{dataset}_{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}{settings['wtrace_att']},{settings['wactivities']},{settings['wresource_att']}.csv"
+        return f"{dataset}{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}{settings['wtrace_att']},{settings['wactivities']},{settings['wresource_att']}.csv"
     else:
-        return f"{dataset}_{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}.csv"
+        return f"{dataset}{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}.csv"
 
 def format_percentage(value):
     return f"{value * 100:.3f}%".rstrip('0').rstrip('.') if value < 1 else "100%"
@@ -193,9 +193,18 @@ def process_and_update_summary(results_dir, postprocessing_folder, dataset_names
                                         # Rename the file to include the rule prefix if needed
                                         if rule_prefix == '':
                                             new_file_path = os.path.join(root, normalized_namefile)
-                                            os.rename(file_path, new_file_path)
-                                            processed_files[unique_key] = new_file_path
-                                            print(f"Renamed file: {file_path} to {new_file_path}")
+                                            if os.path.exists(new_file_path):
+                                                if compare_and_delete_if_needed(new_file_path, data_row):
+                                                    os.rename(file_path, new_file_path)
+                                                    processed_files[unique_key] = new_file_path
+                                                    print(f"Renamed file: {file_path} to {new_file_path}")
+                                                else:
+                                                    os.remove(file_path)
+                                                    print(f"Removed lower value file: {file_path}")
+                                            else:
+                                                os.rename(file_path, new_file_path)
+                                                processed_files[unique_key] = new_file_path
+                                                print(f"Renamed file: {file_path} to {new_file_path}")
 
     print(f'{summary_file} has been updated.')
 

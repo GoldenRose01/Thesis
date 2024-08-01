@@ -18,3 +18,4 @@ complex with weighted_edit_distance	0.5,0.0,0.5	bpic2011_f2	(None, 'entropy', 8,
 complex with weighted_edit_distance	0.5,0.0,0.5	bpic2011_f3	(None, 'gini', 6, 1, 2)	93.71	96.36	-1	6
 complex with weighted_edit_distance	0.5,0.0,0.5	bpic2011_f4	(None, 'gini', 4, 10, 2)	88.2	89.19	-1	4
 complex with weighted_edit_distance	0.5,0.0,0.5	bpic2012_accepted	('balanced', 'gini', None, 16, 0.1)	77.27	79.0	-1	75
+complex with weighted_edit_distance	0.5,0.0,0.5	bpic2012_declined	(None, 'entropy', 4, 16, 2)	90.97	91.02	-1	4
