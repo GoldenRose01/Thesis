@@ -7,7 +7,6 @@ Production;N;complex;weighted_edit_distance;25% 50% 25%;70.071%;57.403%;90.000%;
 Production;N;complex;weighted_edit_distance;25% 50% 25%;77.838%;63.752%;100%;|;78.364%;64.466%;100%
 Production;N;complex;weighted_edit_distance;33% 33% 33%;70.071%;57.403%;90.000%;|;75.655%;62.257%;96.498%
 Production;N;complex;weighted_edit_distance;33% 33% 33%;75.245%;60.560%;100%;|;77.639%;63.571%;100%
-Production;N;complex;weighted_edit_distance;50% 0% 50%;0.000%;0.000%;0.000%;|;0.000%;0.000%;0.000%
 Production;N;complex;weighted_edit_distance;50% 50% 0%;78.071%;64.070%;100%;|;78.456%;64.591%;100%
 Production;QN;complex;weighted_edit_distance;0% 0% 100%;23.049%;37.880%;16.595%;|;29.769%;48.723%;21.475%
 Production;QN;complex;weighted_edit_distance;50% 0% 50%;70.071%;57.403%;90.000%;|;75.655%;62.257%;96.498%
@@ -53,9 +52,11 @@ bpic2012_declined;QN;complex;weighted_edit_distance;0% 0% 100%;86.734%;78.344%;9
 bpic2012_declined;QN;complex;weighted_edit_distance;50% 0% 50%;81.545%;73.591%;91.429%;|;84.704%;76.439%;94.976%
 bpic2015_1_f2;N;complex;weighted_edit_distance;0% 0% 100%;82.393%;71.457%;97.297%;|;82.869%;71.906%;97.795%
 bpic2015_1_f2;N;complex;weighted_edit_distance;25% 50% 25%;73.253%;63.540%;86.486%;|;75.157%;65.226%;88.671%
+bpic2015_1_f2;N;complex;weighted_edit_distance;50% 50% 0%;0,733;0,635;0,865;|;0,752;0,652;0,887
 bpic2015_1_f2;QN;complex;weighted_edit_distance;0% 0% 100%;77.790%;67.449%;91.892%;|;79.059%;68.588%;93.320%
 bpic2015_1_f2;QN;complex;weighted_edit_distance;50% 0% 50%;77.790%;67.449%;91.892%;|;79.059%;68.588%;93.320%
 bpic2015_1_f2;QW;complex;weighted_edit_distance;50% 0% 50%;84.851%;73.700%;100%;|;84.870%;73.728%;100%
+bpic2015_1_f2;QW;complex;weighted_edit_distance;50% 0% 50%;0,849;0,737;100%;|;0,849;0,737;1,000
 bpic2015_2_f2;N;complex;weighted_edit_distance;0% 0% 100%;90.983%;83.459%;100%;|;90.979%;83.451%;100%
 bpic2015_2_f2;N;complex;weighted_edit_distance;25% 50% 25%;90.983%;83.459%;100%;|;90.979%;83.451%;100%
 bpic2015_2_f2;QN;complex;weighted_edit_distance;0% 0% 100%;90.983%;83.459%;100%;|;90.979%;83.451%;100%

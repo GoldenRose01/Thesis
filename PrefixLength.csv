@@ -1,3 +1,10 @@
-Dataset_name,Prefix Length
-QW_sepsis_cases_2,15
-QW_sepsis_cases_4,25
+Dataset_name,N,W,QN,QW
+bpic2015_1_f2,38.0,,,44.0
+sepsis_cases_2,13.0,,,15.0
+sepsis_cases_4,13.0,,,25.0
+bpic2011_1,25.0,,,
+bpic2011_2,54.0,,,
+bpic2011_3,21.0,,,
+bpic2011_4,44.0,,,
+sepsis_cases_1,14.0,,,26.0
+bpic2015_2_f2,51.0,,,

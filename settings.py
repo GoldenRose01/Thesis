@@ -222,7 +222,7 @@ if not os.path.exists(output_dir):
 csv_dir = "media/output/results.csv"
 
 
-result_dir_base = "media/output/dt/"
+result_dir_base = ("media/output/result")
 if ruleprefix == "N":
     result_dir_rp = os.path.join(result_dir_base, "/N")
 elif ruleprefix == "W":

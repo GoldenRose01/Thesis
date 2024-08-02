@@ -187,7 +187,7 @@ def printprefixlength(dataset_name, prefix_length):
     file_path = 'PrefixLength.csv'
 
     # Definizione delle colonne del CSV
-    legend = ['Dataset_name', 'Prefix Length', 'Rule1', 'Rule2', 'Rule3', 'Rule4']
+    legend = ['Dataset_name', 'N', 'W', 'QN', 'QW']
 
     # Controllo se il file esiste
     if os.path.exists(file_path):
@@ -197,12 +197,12 @@ def printprefixlength(dataset_name, prefix_length):
                 df = pd.read_csv(file_path, sep=',', encoding=encoding, on_bad_lines='skip')
                 break
             except UnicodeDecodeError:
-                print(f"Error reading {file_path} with encoding {encoding}. Trying next encoding")
+                print(f"\nError reading {file_path} with encoding {encoding}. Trying next encoding")
             except pd.errors.ParserError as e:
-                print(f"Parser error reading {file_path} with encoding {encoding}: {e}")
+                print(f"\nParser error reading {file_path} with encoding {encoding}: {e}")
                 return
         else:
-            print(f"Failed to read {file_path} with available encodings.")
+            print(f"\nFailed to read {file_path} with available encodings.")
             return
     else:
         df = pd.DataFrame(columns=legend)
@@ -213,7 +213,14 @@ def printprefixlength(dataset_name, prefix_length):
             df[column] = ''
 
     # Costruzione della riga da aggiungere/aggiornare
-    new_row = {'Dataset_name': dataset_name, 'Prefix Length': prefix_length}
+    if settings.ruleprefix == 'N':
+        new_row = {'Dataset_name': dataset_name, 'N': prefix_length}
+    elif settings.ruleprefix == 'W':
+        new_row = {'Dataset_name': dataset_name, 'W': prefix_length}
+    elif settings.ruleprefix == 'QN':
+        new_row = {'Dataset_name': dataset_name, 'QN': prefix_length}
+    else:
+        new_row = {'Dataset_name': dataset_name, 'QW': prefix_length}
 
     # Aggiorna o aggiungi la riga in base al ruleprefix
     if dataset_name in df['Dataset_name'].values:
@@ -226,5 +233,10 @@ def printprefixlength(dataset_name, prefix_length):
 
     # Salvataggio del DataFrame aggiornato nel file CSV
     df.to_csv(file_path, sep=',', index=False)
-    print(f"File {file_path} successfully updated with dataset {dataset_name} and prefix length {prefix_length}"
-          f" in the {settings.ruleprefix} column.")
+    at_succes_prefix1 = f"File {file_path} successfully updated with dataset {dataset_name} "
+    at_succes_prefix2 = f"and prefix length {prefix_length} in the {settings.ruleprefix} column."
+
+    print(f"\n{BLUEBERRY_BLUE}{at_succes_prefix1.center(main.infoconsole())}"
+          f"{at_succes_prefix2.center(main.infoconsole())}{RESET}\n")
+
+
