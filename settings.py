@@ -1,4 +1,5 @@
 from src.enums.ConstraintChecker import ConstraintChecker
+from Colorlib.Colors import *
 import os
 
 
@@ -14,7 +15,7 @@ def read_options_from_dat(filepath):
                 elif value == '0%':
                     options[key] = 0.0
                 elif value.endswith('%') and value[:-1].replace('.', '', 1).isdigit():
-                    options[key] = float(value[:-1]) / 100
+                    options[key] = float(value[:-1])
                 elif value.replace('.', '', 1).isdigit():
                     options[key] = float(value) if '.' in value else int(value)
                 elif key == 'excluded_attributes':
@@ -124,53 +125,53 @@ else:
 # ======================================== weights =====================================================================
 
 # weights of the three components of the encoding
-temp_wtrace_att =       options['wtrace_att']       if options['wtrace_att']    else 0.0
-temp_wactivities =      options['wactivities']      if options['wactivities']   else 0.0
-temp_wresource_att =    options['wresource_att']    if options['wresource_att'] else 0.0
+temp_wtrace_att =       options['wtrace_att']       if options['wtrace_att']    else 0
+temp_wactivities =      options['wactivities']      if options['wactivities']   else 0
+temp_wresource_att =    options['wresource_att']    if options['wresource_att'] else 0
 
 # Calcola la somma dei valori temporanei
 total = temp_wtrace_att + temp_wactivities + temp_wresource_att
 try:
-    if total > 1.0:
+    if total > 100:
         raise ValueError("Total percentage must be less than or equal to 100%")
 except ValueError as e:
     print(e)
 
 # Se la somma è inferiore a 1.0 o diverso da 33%, arrotonda il valore più grande per ottenere 1.0
 if not (temp_wresource_att == temp_wtrace_att == temp_wactivities == 0.33):
-    if total < 1.0:
+    if total < 100:
         max_value = max(temp_wtrace_att, temp_wactivities, temp_wresource_att)
-        increment_remaining = (1.0 - total)
+        increment_remaining = (100 - total)
 
         if temp_wtrace_att == temp_wactivities == temp_wresource_att:
-            increment = increment_remaining / 3.0
+            increment = increment_remaining / 3
             temp_wtrace_att += increment
             temp_wactivities += increment
             temp_wresource_att += increment
 
-            if temp_wtrace_att + temp_wactivities + temp_wresource_att < 1.0:
-                temp_wtrace_att += 0.01
+            if temp_wtrace_att + temp_wactivities + temp_wresource_att < 100:
+                temp_wtrace_att += 1
         elif temp_wtrace_att == temp_wactivities and temp_wtrace_att > temp_wresource_att:
-            increment = increment_remaining / 2.0
+            increment = increment_remaining / 2
             temp_wtrace_att += increment
             temp_wactivities += increment
 
-            if temp_wtrace_att + temp_wactivities + temp_wresource_att < 1.0:
-                temp_wresource_att += 0.01
+            if temp_wtrace_att + temp_wactivities + temp_wresource_att < 100:
+                temp_wresource_att += 1
         elif temp_wtrace_att == temp_wresource_att and temp_wtrace_att > temp_wactivities:
-            increment = increment_remaining / 2.0
+            increment = increment_remaining / 2
             temp_wtrace_att += increment
             temp_wresource_att += increment
 
-            if temp_wtrace_att + temp_wactivities + temp_wresource_att < 1.0:
-                temp_wactivities += 0.01
+            if temp_wtrace_att + temp_wactivities + temp_wresource_att < 100:
+                temp_wactivities += 1
         elif temp_wactivities == temp_wresource_att and temp_wactivities > temp_wtrace_att:
-            increment = increment_remaining / 2.0
+            increment = increment_remaining / 2
             temp_wactivities += increment
             temp_wresource_att += increment
 
-            if temp_wtrace_att + temp_wactivities + temp_wresource_att < 1.0:
-                temp_wtrace_att += 0.01
+            if temp_wtrace_att + temp_wactivities + temp_wresource_att < 100:
+                temp_wtrace_att += 1
         else:
             if max_value == temp_wtrace_att:
                 temp_wtrace_att += increment_remaining
@@ -208,12 +209,16 @@ output_dt_dir_cw = os.path.join(output_dt_dir_rp, "/complex/weighted")
 
 if type_encoding == "simple":
     output_dir = output_dt_dir_s
+    print(f"{BLUE} Using {output_dir}{RESET} ")
 elif type_encoding == "complex" and selected_evaluation_edit_distance == "weighted_edit_distance":
     output_dir = output_dt_dir_cw
+    print(f"{BLUE} Using {output_dir}{RESET} ")
 elif type_encoding == "complex" and selected_evaluation_edit_distance == "edit_distance_lib":
     output_dir = output_dt_dir_cl
+    print(f"{BLUE} Using {output_dir}{RESET} ")
 elif type_encoding == "complex" and selected_evaluation_edit_distance == "edit_distance_separate":
     output_dir = output_dt_dir_cc
+    print(f"{BLUE} Using {output_dir}{RESET} ")
 else:
     output_dir = "media/output"
 if not os.path.exists(output_dir):
@@ -241,12 +246,16 @@ results_dir_cw = os.path.join(result_dir_rp, "/complex/weighted")
 
 if type_encoding == "simple":
     results_dir = results_dir_s
+    print(f"{BLUE} Using {results_dir}{RESET} ")
 elif type_encoding == "complex" and selected_evaluation_edit_distance == "weighted_edit_distance":
     results_dir = results_dir_cw
+    print(f"{BLUE} Using {results_dir}{RESET} ")
 elif type_encoding == "complex" and selected_evaluation_edit_distance == "edit_distance_lib":
     results_dir = results_dir_cl
+    print(f"{BLUE} Using {results_dir}{RESET} ")
 elif type_encoding == "complex" and selected_evaluation_edit_distance == "edit_distance_separate":
     results_dir = results_dir_cc
+    print(f"{BLUE} Using {results_dir}{RESET} ")
 else:
     results_dir = "media/output/result"
 if not os.path.exists(results_dir):

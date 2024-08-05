@@ -1,2 +1,0 @@
-dataset_name;letter;complexity_type;encoding_type;weighted_values;average_fscore;average_precision;average_recall;;weighted_average_fscore;weighted_average_precision;weighted_average_recall
-Production;QW;complex;weighted_edit_distance;50% 0% 50%;0,752;0,606;1,000;|;0,776;0,636;1,000

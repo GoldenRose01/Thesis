@@ -43,7 +43,7 @@ if __name__ == "__main__":
     else:
         at_mainstart = (f"{FUCSIA}Starting simulation with {settings.type_encoding} "
                         f"encoding & {settings.selected_evaluation_edit_distance} "
-                        f"at {settings.wtrace_att},{settings.wactivities},{settings.wresource_att}{RESET}")
+                        f"at {settings.wtrace_att}%,{settings.wactivities}%,{settings.wresource_att}%{RESET}")
 
     print(at_mainstart.center(infoconsole()))
 
@@ -88,7 +88,7 @@ if __name__ == "__main__":
     # Definisci encoding e proportion
     encoding = f"{settings.type_encoding} with {settings.selected_evaluation_edit_distance}"
     if settings.selected_evaluation_edit_distance == "weighted_edit_distance":
-        proportion = f"{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}"
+        proportion = f"{settings.wtrace_att}%,{settings.wactivities}%,{settings.wresource_att}%"
     else:
         proportion = "Null"
 

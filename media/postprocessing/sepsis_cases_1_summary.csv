@@ -1,2 +1,0 @@
-dataset_name;letter;complexity_type;encoding_type;weighted_values;average_fscore;average_precision;average_recall;;weighted_average_fscore;weighted_average_precision;weighted_average_recall
-sepsis_cases_1;QW;complex;weighted_edit_distance;50% 0% 50%;0,719;0,683;0,760;|;0,890;0,844;0,942

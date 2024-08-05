@@ -34,8 +34,8 @@ class LoggerWriter:
 def generate_log_filename(dataset_name):
     if settings.selected_evaluation_edit_distance == "weighted_edit_distance":
         filename = (f"{dataset_name}_{settings.ruleprefix}{settings.type_encoding} encoding e"
-                    f" {settings.selected_evaluation_edit_distance} at ({settings.wtrace_att*100}%,"
-                    f"{settings.wactivities*100}%,{settings.wresource_att*100}%).log")
+                    f" {settings.selected_evaluation_edit_distance} at ({settings.wtrace_att}%,"
+                    f"{settings.wactivities}%,{settings.wresource_att}%).log")
     else:
         filename = (f"{dataset_name}_{settings.ruleprefix}{settings.type_encoding} encoding e "
                     f"{settings.selected_evaluation_edit_distance}.log")
@@ -358,8 +358,8 @@ def rec_sys_exp(dataset_name):
         else:
             plot.toPng(metric,
                        f"{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_"
-                       f"{settings.selected_evaluation_edit_distance}{settings.wtrace_att},"
-                       f"{settings.wactivities},{settings.wresource_att}_{metric}")
+                       f"{settings.selected_evaluation_edit_distance}{settings.wtrace_att}%,"
+                       f"{settings.wactivities}%,{settings.wresource_att}%_{metric}")
     # Salva i risultati della valutazione dei prefissi in un file CSV
     namefile = rcm.prefix_evaluation_to_csv(results, dataset_name)
 

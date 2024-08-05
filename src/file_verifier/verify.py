@@ -103,9 +103,9 @@ def timeprinter(dataset_name,
               'Declarative']
 
     # Calcolo di a, b, c
-    a = wtrace_att * 100
-    b = wactivities * 100
-    c = wresource_att * 100
+    a = wtrace_att
+    b = wactivities
+    c = wresource_att
     weighted_col_name = f"Complex ({a}%,{b}%,{c}%)"
 
     # Controllo se il file esiste
