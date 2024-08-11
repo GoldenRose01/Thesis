@@ -68,11 +68,11 @@ def weighted_edit_distance(ref, hyp, indices, max_variation, length_t, special_v
 
     # Loop per assegnare i pesi
     for i in range(length_t):
-        weights[i] = wtrace_att
+        weights[i] = wtrace_att/100
     for i in indices['prefix']:
-        weights[i] = wactivities
+        weights[i] = wactivities/100
     for i in indices['resource']:
-        weights[i] = wresource_att
+        weights[i] = wresource_att/100
 
     index_to_numeric = {abs_index - 1: rel_index for rel_index, abs_index in enumerate(indices['numeric'])}
 

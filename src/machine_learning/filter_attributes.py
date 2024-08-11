@@ -1,5 +1,4 @@
 from settings import excluded_attributes
-from src.machine_learning.encoding.Encoding_setting import read_attributes_from_file
 import numpy as np
 
 

@@ -1,7 +1,0 @@
-dataset_name;letter;complexity_type;encoding_type;weighted_values;prefix_length;precision;fscore
-traffic_fines_1;N;complex;unknown;;1.0;0.6014735948771361;0.7511501866795134
-traffic_fines_1;N;complex;unknown;;2.0;0.6014735948771361;0.7511501866795134
-traffic_fines_1;N;complex;unknown;;1.0;0.6014735948771361;0.7511501866795134
-traffic_fines_1;N;complex;unknown;;2.0;0.6014735948771361;0.7511501866795134
-traffic_fines_1;N;simple;unknown;;1.0;0.9990255138199858;0.8390624999999999
-traffic_fines_1;N;simple;unknown;;2.0;0.9886363636363636;0.0220700152207001

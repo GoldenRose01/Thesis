@@ -1,22 +1,83 @@
-import main
-from src.machine_learning import *
 from src.machine_learning import recommender as rcm
 from src.dataset_manager.datasetManager import *
+import src.file_verifier.Postprocessing as postprocessing
 import src.file_verifier.verify as verify
+from src.machine_learning import *
 from Colorlib.Colors import *
 import numpy as np
 import settings
+import logging
+import shutil
 import time
 import copy
 import os
+import sys
+
+
+class LoggerWriter:
+    def __init__(self, level):
+        self.level = level
+        self.buffer = ''
+
+    def write(self, message):
+        if message != '\n':
+            self.buffer += message
+        if '\n' in message:
+            self.level(self.buffer)
+            self.buffer = ''
+
+    def flush(self):
+        self.level(self.buffer)
+        self.buffer = ''
+
+
+def generate_log_filename(dataset_name):
+    if settings.selected_evaluation_edit_distance == "weighted_edit_distance":
+        filename = (f"{dataset_name}_{settings.ruleprefix}{settings.type_encoding} encoding e"
+                    f" {settings.selected_evaluation_edit_distance} at ({settings.wtrace_att}%,"
+                    f"{settings.wactivities}%,{settings.wresource_att}%).log")
+    else:
+        filename = (f"{dataset_name}_{settings.ruleprefix}{settings.type_encoding} encoding e "
+                    f"{settings.selected_evaluation_edit_distance}.log")
+    return filename
 
 
 # Funzione principale che esegue l'esperimento di sistema di raccomandazione
 def rec_sys_exp(dataset_name):
+
+    if settings.enable_log:
+        # Generazione del nome del file di log
+        log_filename = generate_log_filename(dataset_name)
+
+        # Impostazione del logger
+        logger = logging.getLogger()
+        logger.setLevel(logging.DEBUG)
+
+        # Creazione di un handler che scrive su file con il nome dinamico
+        file_handler = logging.FileHandler(log_filename)
+        file_handler.setLevel(logging.DEBUG)
+
+        # Creazione di un handler per il console
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.DEBUG)
+
+        # Creazione di un formatter e aggiunta agli handler
+        formatter = logging.Formatter('%(asctime)s - %(message)s')
+        file_handler.setFormatter(formatter)
+        console_handler.setFormatter(formatter)
+
+        # Aggiunta degli handler al logger
+        logger.addHandler(file_handler)
+        logger.addHandler(console_handler)
+
+        # Ridirezione di stdout e stderr verso il logger
+        sys.stdout = LoggerWriter(logger.info)
+
     # Simulation Timer start
     start_time_exp = time.time()
     at_startexp = f"Starting the simulation on {dataset_name}"
     print(f"{BLUE}{at_startexp.center(main.infoconsole())}{RESET}")
+
 
     # ================ inputs ================
 
@@ -137,6 +198,7 @@ def rec_sys_exp(dataset_name):
      max_variations,
      features) = dt_input_trainval.encode_traces(numeric_columns, categoric_columns)
 
+    verify.printprefixlength(dataset_name, prefix_length)
     # Lista dei risultati
     results = []
 
@@ -201,24 +263,26 @@ def rec_sys_exp(dataset_name):
                 at_rec = f"raccomandazione{prefix_len}/{max_prefix_length_val}"
                 print(f"{AMETHYST_PURPLE}{at_counter.center(main.infoconsole())}{RESET}")
                 print(f"{LAVENDER_GRAY}{at_rec.center(main.infoconsole())}{RESET}")
-            recommendations, evaluation = rcm.generate_recommendations_and_evaluation(test_log=val_log,
-                                                                                      train_log=train_log,
-                                                                                      labeling=labeling,
-                                                                                      prefixing=prefixing,
-                                                                                      rules=settings.rules,
-                                                                                      paths=tmp_paths,
-                                                                                      hyperparams_evaluation=hyperparams_evaluation,
-                                                                                      eval_res=eval_res,
-                                                                                      dt_input_trainval=dt_input_trainval,
-                                                                                      dt_input_trainval_encoded=dt_input_trainval_encoded,
-                                                                                      indices=indices,
-                                                                                      max_variations=max_variations,
-                                                                                      dataset_name=dataset_name,
-                                                                                      prefix_max=prefix_length,
-                                                                                      features=features,
-                                                                                      resource_attributes=resource_attributes,
-                                                                                      trace_attributes=trace_attributes,
-                                                                                      )
+            (recommendations,
+             evaluation) = rcm.generate_recommendations_and_evaluation(
+                                    test_log=val_log,
+                                    train_log=train_log,
+                                    labeling=labeling,
+                                    prefixing=prefixing,
+                                    rules=settings.rules,
+                                    paths=tmp_paths,
+                                    hyperparams_evaluation=hyperparams_evaluation,
+                                    eval_res=eval_res,
+                                    dt_input_trainval=dt_input_trainval,
+                                    dt_input_trainval_encoded=dt_input_trainval_encoded,
+                                    indices=indices,
+                                    max_variations=max_variations,
+                                    dataset_name=dataset_name,
+                                    prefix_max=prefix_length,
+                                    features=features,
+                                    resource_attributes=resource_attributes,
+                                    trace_attributes=trace_attributes,
+                                    )
             if settings.cumulative_res is True:
                 eval_res = copy.deepcopy(evaluation)
             res_val_list.append(evaluation.fscore)
@@ -234,7 +298,8 @@ def rec_sys_exp(dataset_name):
     at_hypcombo = f"Best hyperparams combo {best_hyperparams_combination}"
     print(f"{PINK}{at_hypcombo.center(main.infoconsole())}{RESET}")
 
-    at_maxmin = f"{MUSTARD}MIN ({SALMON}{min_prefix_length}{MUSTARD}) & MAX ({SALMON}{max_prefix_length_test}{MUSTARD}) Prefix Length {RESET}"
+    at_maxmin = (f"{MUSTARD}MIN ({SALMON}{min_prefix_length}{MUSTARD})"
+                 f" & MAX ({SALMON}{max_prefix_length_test}{MUSTARD}) Prefix Length {RESET}")
     print(f"{at_maxmin.center(main.infoconsole())}\n")
 
     # Test sul set di test con la migliore configurazione degli iperparametri di valutazione
@@ -251,25 +316,29 @@ def rec_sys_exp(dataset_name):
             "length": prefix_len
         }
         at_eval = f"Evaluation{prefix_len}/{max_prefix_length_test}"
+
         print(f"{GRAY_LIGHT}{at_eval.center(main.infoconsole())}{RESET}\n")
-        recommendations, evaluation = rcm.generate_recommendations_and_evaluation(test_log=test_log,
-                                                                                  train_log=train_log,
-                                                                                  labeling=labeling,
-                                                                                  prefixing=prefixing,
-                                                                                  rules=settings.rules,
-                                                                                  paths=paths,
-                                                                                  hyperparams_evaluation=best_hyperparams_combination,
-                                                                                  eval_res=eval_res,
-                                                                                  indices=indices,
-                                                                                  max_variations=max_variations,
-                                                                                  dt_input_trainval=dt_input_trainval,
-                                                                                  dt_input_trainval_encoded=dt_input_trainval_encoded,
-                                                                                  dataset_name=dataset_name,
-                                                                                  prefix_max=prefix_length,
-                                                                                  features=features,
-                                                                                  resource_attributes=resource_attributes,
-                                                                                  trace_attributes=trace_attributes,
-                                                                                  )
+
+        (recommendations,
+         evaluation) = rcm.generate_recommendations_and_evaluation(
+                                test_log=test_log,
+                                train_log=train_log,
+                                labeling=labeling,
+                                prefixing=prefixing,
+                                rules=settings.rules,
+                                paths=paths,
+                                hyperparams_evaluation=best_hyperparams_combination,
+                                eval_res=eval_res,
+                                indices=indices,
+                                max_variations=max_variations,
+                                dt_input_trainval=dt_input_trainval,
+                                dt_input_trainval_encoded=dt_input_trainval_encoded,
+                                dataset_name=dataset_name,
+                                prefix_max=prefix_length,
+                                features=features,
+                                resource_attributes=resource_attributes,
+                                trace_attributes=trace_attributes,
+                                )
         results.append(evaluation)
         if settings.cumulative_res is True:
             eval_res = copy.deepcopy(evaluation)
@@ -278,24 +347,55 @@ def rec_sys_exp(dataset_name):
             value = getattr(results[pref_id], metric)
             if settings.Allprint is True:
                 print(f"{metric}:{value}".format(metric=metric, value=value))
+
     plot = PlotResult(results, prefix_lenght_list_test, settings.results_dir)
 
     for metric in ["fscore"]:
         if settings.selected_evaluation_edit_distance != "weighted_edit_distance":
             plot.toPng(metric,
-                       f"{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_{settings.selected_evaluation_edit_distance}_{metric}")
+                       f"{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_"
+                       f"{settings.selected_evaluation_edit_distance}_{metric}")
         else:
             plot.toPng(metric,
-                       f"{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_{settings.selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}_{metric}")
+                       f"{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_"
+                       f"{settings.selected_evaluation_edit_distance}{settings.wtrace_att}%,"
+                       f"{settings.wactivities}%,{settings.wresource_att}%_{metric}")
     # Salva i risultati della valutazione dei prefissi in un file CSV
-    rcm.prefix_evaluation_to_csv(results, dataset_name)
+    namefile = rcm.prefix_evaluation_to_csv(results, dataset_name)
 
     # Timer per simulazioni
     time_h_exp = (time.time() - start_time_exp) / 3600
     time_m_exp = (time.time() - start_time_exp) / 60
 
+    if settings.selected_evaluation_edit_distance != "weighted_edit_distance":
+        dataset_info = {
+            'dataset_name': dataset_name,
+            'ruleprefix': settings.ruleprefix,
+            'type_encoding': settings.type_encoding,
+            'selected_evaluation_edit_distance': settings.selected_evaluation_edit_distance,
+            'namefile':namefile
+        }
+    else:
+        dataset_info = {
+            'dataset_name': dataset_name,
+            'rule_prefix': settings.ruleprefix,
+            'type_encoding': settings.type_encoding,
+            'selected_evaluation_edit_distance': 'weighted_edit_distance',
+            'wtrace_att': settings.wtrace_att,
+            'wactivities': settings.wactivities,
+            'wresource_att': settings.wresource_att,
+            'namefile': namefile,
+        }
+
+    if not os.path.exists(settings.postprocessing_folder):
+        os.makedirs(settings.postprocessing_folder)
+
+
+
     verify.timeprinter(dataset_name, settings.type_encoding, settings.selected_evaluation_edit_distance,
                        settings.wtrace_att, settings.wactivities, settings.wresource_att, time_m_exp)
+
+    postprocessing.process_and_update_summary(settings.results_dir, settings.postprocessing_folder, dataset_info)
 
     at_endexp = f"{dataset_name} simulation required {time_h_exp:.2f}H or {time_m_exp:.2f}min"
     print(f"\n{GREEN}{at_endexp.center(main.infoconsole())}{RESET}\n\n")

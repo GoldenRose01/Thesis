@@ -213,6 +213,7 @@ class Encoding:
 
     def encode(self, log, features):
         prefix_columns = {}
+
         for i, prefix in enumerate(log):
             if i < len(features):
                 column_name = features[i]

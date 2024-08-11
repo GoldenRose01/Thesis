@@ -34,12 +34,18 @@ class DatasetManager:
         # Legge il dataset dal percorso specificato
         # Configura i tipi di dati per le colonne
         dtypes = {col: "object" for col in
-                  self.dynamic_cat_cols + self.static_cat_cols + [self.case_id_col, self.label_col, self.timestamp_col]}
+                  self.dynamic_cat_cols + self.static_cat_cols + [self.case_id_col,
+                                                                  self.label_col,
+                                                                  self.timestamp_col]}
         for col in self.dynamic_num_cols + self.static_num_cols:
             dtypes[col] = "float"
 
         # Legge il dataset CSV e converte la colonna del timestamp in un formato datetime
-        data = pd.read_csv(os.path.join(dataset_path, dataset_confs.filename[self.dataset_name]), sep=";", dtype=dtypes)
+        data = pd.read_csv(os.path.join(dataset_path,
+                                        dataset_confs.filename[self.dataset_name]),
+                           sep=";",
+                           dtype=dtypes)
+
         data[self.timestamp_col] = pd.to_datetime(data[self.timestamp_col])
 
         #Ottieni dal dataset le colonne categoriche e numeriche
@@ -112,14 +118,18 @@ class DatasetManager:
         grouped = data.groupby(self.case_id_col)
         start_timestamps = grouped[self.timestamp_col].min().reset_index()
         if split == "temporal":
-            start_timestamps = start_timestamps.sort_values(self.timestamp_col, ascending=True, kind="mergesort")
+            start_timestamps = start_timestamps.sort_values(self.timestamp_col,
+                                                            ascending=True,
+                                                            kind="mergesort")
         elif split == "random":
             np.random.seed(seed)
             start_timestamps = start_timestamps.reindex(np.random.permutation(start_timestamps.index))
         val_ids = list(start_timestamps[self.case_id_col])[-int(val_ratio * len(start_timestamps)):]
-        val = data[data[self.case_id_col].isin(val_ids)].sort_values(self.sorting_cols, ascending=True,
+        val = data[data[self.case_id_col].isin(val_ids)].sort_values(self.sorting_cols,
+                                                                     ascending=True,
                                                                      kind="mergesort")
-        train = data[~data[self.case_id_col].isin(val_ids)].sort_values(self.sorting_cols, ascending=True,
+        train = data[~data[self.case_id_col].isin(val_ids)].sort_values(self.sorting_cols,
+                                                                        ascending=True,
                                                                         kind="mergesort")
         return (train, val)
 

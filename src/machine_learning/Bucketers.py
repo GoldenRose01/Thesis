@@ -1,13 +1,17 @@
-from src.enums import TraceLabel  # Import delle librerie necessarie
-import pdb
+from src.enums import TraceLabel
 import numpy as np
 
 # Classe Bucket per tenere traccia delle statistiche
 class Bucket:
-    def __init__(self, num_traces=None, trace_attributes=None, resource_attributes=None, num_positive_not_compliant_traces=None, num_positive_compliant_traces=None, num_compliant_traces=None):
+    def __init__(self, num_traces=None,
+                 trace_attributes=None, resource_attributes=None,
+                 num_positive_not_compliant_traces=None, num_positive_compliant_traces=None,
+                 num_compliant_traces=None):
         self._num_traces = num_traces if num_traces is not None else 0
-        self._num_positive_not_compliant_traces = num_positive_not_compliant_traces if num_positive_not_compliant_traces is not None else 0
-        self._num_positive_compliant_traces = num_positive_compliant_traces if num_positive_compliant_traces is not None else 0
+        self._num_positive_not_compliant_traces = num_positive_not_compliant_traces \
+            if num_positive_not_compliant_traces is not None else 0
+        self._num_positive_compliant_traces = num_positive_compliant_traces \
+            if num_positive_compliant_traces is not None else 0
         self._num_compliant_traces = num_compliant_traces if num_compliant_traces is not None else 0
         self._trace_attributes = trace_attributes if trace_attributes is not None else {}
         self._resource_attributes = resource_attributes if resource_attributes is not None else {}
@@ -95,9 +99,12 @@ class Bucketer:
 
     # Calcola la probabilità di tracce positive non compliant
     def prob_positive_not_compliant(self):
-        self.total_pos_not_compl_traces = sum([bucket._num_positive_not_compliant_traces for bucket in self._bucket_list])
-        self.total_compl_traces = sum([bucket._num_compliant_traces for bucket in self._bucket_list])
-        self.total_traces = sum([bucket._num_traces for bucket in self._bucket_list])
+        self.total_pos_not_compl_traces = sum([bucket._num_positive_not_compliant_traces
+                                               for bucket in self._bucket_list])
+        self.total_compl_traces = sum([bucket._num_compliant_traces
+                                       for bucket in self._bucket_list])
+        self.total_traces = sum([bucket._num_traces
+                                 for bucket in self._bucket_list])
 
         prob = (self.total_pos_not_compl_traces + self.smooth_factor) / \
                (self.total_traces - self.total_compl_traces + self.smooth_factor*self.num_classes)

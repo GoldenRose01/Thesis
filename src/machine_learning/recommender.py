@@ -17,21 +17,35 @@ import csv
 
 # Crea una classe ParamsOptimizer per ottimizzare i parametri del modello.
 class ParamsOptimizer:
-    def __init__(self, data_log, train_val_log, val_log, train_log, parameters, labeling, checkers, rules, min_prefix_length, max_prefix_length):
+    def __init__(self, data_log, train_val_log, val_log, train_log, parameters,
+                 labeling, checkers, rules, min_prefix_length, max_prefix_length):
         # Inizializza la classe con i parametri necessari.
-        self.parameter_names = parameters.keys()  # Ottiene i nomi dei parametri.
-        self.val_log = val_log  # Registro di validazione.
-        self.data_log = data_log  # Registro dati.
-        self.train_val_log = train_val_log  # Registro di allenamento e validazione.
-        self.param_grid = [element for element in itertools.product(*parameters.values())]  # Crea una griglia dei parametri possibili.
-        self.train_log = train_log  # Registro di allenamento.
-        self.parameters = parameters  # Parametri del modello.
-        self.labeling = labeling  # Etichettatura dei dati.
-        self.checkers = checkers  # Controllori.
-        self.rules = rules  # Regole.
-        self.model_grid = []  # Griglia dei modelli.
-        self.min_prefix_length = min_prefix_length  # Lunghezza minima del prefisso.
-        self.max_prefix_length = max_prefix_length  # Lunghezza massima del prefisso.
+        self.parameter_names = parameters.keys()
+        # Ottiene i nomi dei parametri.
+        self.val_log = val_log
+        # Registro di validazione.
+        self.data_log = data_log
+        # Registro dati.
+        self.train_val_log = train_val_log
+        # Registro di allenamento e validazione.
+        self.param_grid = [element for element in itertools.product(*parameters.values())]
+        # Crea una griglia dei parametri possibili.
+        self.train_log = train_log
+        # Registro di allenamento.
+        self.parameters = parameters
+        # Parametri del modello.
+        self.labeling = labeling
+        # Etichettatura dei dati.
+        self.checkers = checkers
+        # Controllori.
+        self.rules = rules
+        # Regole.
+        self.model_grid = []
+        # Griglia dei modelli.
+        self.min_prefix_length = min_prefix_length
+        # Lunghezza minima del prefisso.
+        self.max_prefix_length = max_prefix_length
+        # Lunghezza massima del prefisso.
 
     # Funzione per la ricerca nella griglia dei parametri.
     def params_grid_search(self, dataset_name, constr_family):
@@ -58,8 +72,12 @@ class ParamsOptimizer:
             y_val = pd.Categorical(dt_input_val.labels, categories=categories)
 
             # Genera l'albero decisionale e il punteggio sul set di validazione
-            dtc, f1_score_val, f1_score_train = generate_decision_tree(X_train, X_val, y_train, y_val, class_weight=param_tuple[1], min_samples_split=param_tuple[2])
-            paths = generate_paths(dtc=dtc, dt_input_features=dt_input_train.features, target_label=self.labeling["target"])
+            dtc, f1_score_val, f1_score_train = generate_decision_tree(X_train, X_val, y_train, y_val,
+                                                                       class_weight=param_tuple[1],
+                                                                       min_samples_split=param_tuple[2])
+            paths = generate_paths(dtc=dtc,
+                                   dt_input_features=dt_input_train.features,
+                                   target_label=self.labeling["target"])
 
             # Valutazione sui prefissi del set di validazione
             results = []
@@ -70,11 +88,16 @@ class ParamsOptimizer:
                 }
 
                 evaluation = evaluate_recommendations(input_log=self.val_log,
-                                                      labeling=self.labeling, prefixing=prefixing,
-                                                      rules=self.rules, paths=paths,log=self.train_log,
-                                                      dataset_name=dataset_name,features=features,
+                                                      labeling=self.labeling,
+                                                      prefixing=prefixing,
+                                                      rules=self.rules,
+                                                      paths=paths,
+                                                      log=self.train_log,
+                                                      dataset_name=dataset_name,
+                                                      features=features,
                                                       resource_attributes=resource_attributes,
-                                                      trace_attributes=trace_attributes)
+                                                      trace_attributes=trace_attributes
+                                                      )
                 results.append(evaluation)
 
             model_dict['model'] = dtc
@@ -348,7 +371,7 @@ def train_path_recommender(data_log, train_val_log, val_log, train_log, labeling
 
     encoding = f"{settings.type_encoding} with {settings.selected_evaluation_edit_distance}"
     if settings.selected_evaluation_edit_distance == "weighted_edit_distance":
-        proportion = f"{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}"
+        proportion = f"{settings.wtrace_att}%,{settings.wactivities}%,{settings.wresource_att}%"
     else:
         proportion = "Null"
 
@@ -367,7 +390,8 @@ def train_path_recommender(data_log, train_val_log, val_log, train_log, labeling
                            target_label=target_label)
     return paths, best_model_dict
 
-def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train_log,dataset_name,features, resource_attributes, trace_attributes):
+def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train_log,dataset_name,features,
+                             resource_attributes, trace_attributes):
     # if labeling["threshold_type"] == LabelThresholdType.LABEL_MEAN:
     #    labeling["custom_threshold"] = calc_mean_label_threshold(train_log, labeling)
     features = features[1:]
@@ -394,10 +418,13 @@ def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train
             for path_index, path in enumerate(paths):
 
                 if selected_path and (
-                        path.fitness != selected_path.fitness or path.impurity != selected_path.impurity or path.num_samples != selected_path.num_samples):
+                        path.fitness != selected_path.fitness
+                        or path.impurity != selected_path.impurity
+                        or path.num_samples != selected_path.num_samples):
                     break
 
-                recommendation = recommend(prefix.events, path, rules,dataset_name,features, resource_attributes, trace_attributes)
+                recommendation = recommend(prefix.events, path, rules,dataset_name,features,
+                                           resource_attributes, trace_attributes)
                 # print(f"{prefix_length} {prefix.trace_num} {prefix.trace_id} {path_index}->{recommendation}")
                 trace = input_log[prefix.trace_num]
 
@@ -405,7 +432,8 @@ def evaluate_recommendations(input_log, labeling, prefixing, rules, paths, train
                     # if recommendation != "":
                     selected_path = path
                     trace = input_log[prefix.trace_num]
-                    is_compliant, e = evaluate(trace, path, rules, labeling,features, resource_attributes, trace_attributes)
+                    is_compliant, e = evaluate(trace, path, rules, labeling,features,
+                                               resource_attributes, trace_attributes)
 
                     """
                     if prefix_length > 2:
@@ -498,7 +526,8 @@ def generate_recommendations_and_evaluation(test_log,
                                                        train_log,dataset_name,features,
                                                        resource_attributes, trace_attributes)
                 path.score = calcScore(path, pos_paths_total_samples, weights=hyperparams_evaluation[1:])
-            # paths = sorted(paths, key=lambda path: (- path.fitness, path.impurity, - path.num_samples["total"]), reverse=False)
+            # paths = sorted(paths, key=lambda path: (- path.fitness, path.impurity,
+            #                                            - path.num_samples["total"]), reverse=False)
             if settings.use_score:
                 paths = sorted(paths, key=lambda path: (- path.score), reverse=False)
             else:
@@ -528,10 +557,12 @@ def generate_recommendations_and_evaluation(test_log,
                                       or path.num_samples != selected_path.num_samples):
                     break
 
-                recommendation = recommend(prefix.events, path, dt_input_trainval, dataset_name , features, resource_attributes, trace_attributes)
+                recommendation = recommend(prefix.events, path, dt_input_trainval, dataset_name,
+                                           features, resource_attributes, trace_attributes)
                 if settings.Allprint is True:
                     print(recommendation)
-                    print(f"Prefix Lenght:{prefix_length}, {prefix.trace_num} {prefix.trace_id} {path_index}->{recommendation}")
+                    print(f"Prefix Lenght:{prefix_length}, {prefix.trace_num}"
+                          f" {prefix.trace_id} {path_index}->{recommendation}")
 
                 if recommendation != "Contradiction" and recommendation != "":
                     # if True:
@@ -655,10 +686,13 @@ def generate_recommendations_and_evaluation(test_log,
 
 def write_evaluation_to_csv(e, dataset):
     if selected_evaluation_edit_distance != "weighted_edit_distance":
-        csv_file = os.path.join(settings.results_dir, f"{dataset}_{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}.csv")
+        csv_file = os.path.join(settings.results_dir, f"{dataset}_{ruleprefix}{type_encoding}_"
+                                                      f"evaluation_{selected_evaluation_edit_distance}.csv")
     else:
         csv_file = os.path.join(settings.results_dir,
-                                f"{dataset}_{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.csv")
+                                f"{dataset}_{ruleprefix}{type_encoding}_evaluation_"
+                                f"{selected_evaluation_edit_distance}{settings.wtrace_att}%,"
+                                f"{settings.wactivities}%,{settings.wresource_att}%.csv")
     fieldnames = ["tp", "fp", "tn", "fn", "precision", "recall", "accuracy", "fscore", "auc"]
     values = {
         "tp": e.tp,
@@ -683,10 +717,14 @@ def write_evaluation_to_csv(e, dataset):
 def write_recommendations_to_csv(recommendations, dataset):
     if selected_evaluation_edit_distance != "weighted_edit_distance":
         csv_file = os.path.join(settings.results_dir,
-                                f"{dataset}_{ruleprefix}{type_encoding}_recommendations_{selected_evaluation_edit_distance}.csv")
+                                f"{dataset}_{ruleprefix}{type_encoding}_recommendations_"
+                                f"{selected_evaluation_edit_distance}.csv")
     else:
         csv_file = os.path.join(settings.results_dir,
-                                f"{dataset}_{ruleprefix}{type_encoding}_recommendations_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.csv")
+                                f"{dataset}_{ruleprefix}{type_encoding}_recommendations_"
+                                f"{selected_evaluation_edit_distance}{settings.wtrace_att}%,"
+                                f"{settings.wactivities}%,{settings.wresource_att}%.csv")
+
     fieldnames = ["Trace id", "Prefix len", "Complete trace", "Current prefix", "Recommendation", "Actual label",
                   "Target label", "Compliant", "Confusion matrix", "Impurity", "Fitness", "Num samples"]
 
@@ -722,10 +760,13 @@ def write_recommendations_to_csv(recommendations, dataset):
     # Write to Excel
     if selected_evaluation_edit_distance != "weighted_edit_distance":
         excel_file = os.path.join(settings.results_dir,
-                                  f"{dataset}_{ruleprefix}{type_encoding}_recommendations_{selected_evaluation_edit_distance}.xlsx")
+                                  f"{dataset}_{ruleprefix}{type_encoding}_recommendations_"
+                                  f"{selected_evaluation_edit_distance}.xlsx")
     else:
         excel_file = os.path.join(settings.results_dir,
-                                  f"{dataset}_{ruleprefix}{type_encoding}_recommendations_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.xlsx")
+                                  f"{dataset}_{ruleprefix}{type_encoding}_recommendations_"
+                                  f"{selected_evaluation_edit_distance}{settings.wtrace_att}%,"
+                                  f"{settings.wactivities}%,{settings.wresource_att}%.xlsx")
     workbook = openpyxl.Workbook()
     worksheet = workbook.active
     worksheet.title = "Recommendations"
@@ -745,14 +786,20 @@ def write_recommendations_to_csv(recommendations, dataset):
 def prefix_evaluation_to_csv(result_dict, dataset):
     if selected_evaluation_edit_distance != "weighted_edit_distance":
         csv_file = os.path.join(settings.results_dir,
-                                f"{dataset}_{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}.csv")
+                                f"{dataset}_{ruleprefix}{type_encoding}_evaluation_"
+                                f"{selected_evaluation_edit_distance}.csv")
         excel_file = os.path.join(settings.results_dir,
-                                  f"{dataset}_{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}.xlsx")
+                                  f"{dataset}_{ruleprefix}{type_encoding}_evaluation_"
+                                  f"{selected_evaluation_edit_distance}.xlsx")
     else:
         csv_file = os.path.join(settings.results_dir,
-                                f"{dataset}_{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.csv")
+                                f"{dataset}_{ruleprefix}{type_encoding}_evaluation_"
+                                f"{selected_evaluation_edit_distance}{settings.wtrace_att}%,"
+                                f"{settings.wactivities}%,{settings.wresource_att}%.csv")
         excel_file = os.path.join(settings.results_dir,
-                                  f"{dataset}_{ruleprefix}{type_encoding}_evaluation_{selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}.xlsx")
+                                  f"{dataset}_{ruleprefix}{type_encoding}_evaluation_"
+                                  f"{selected_evaluation_edit_distance}{settings.wtrace_att}%,"
+                                  f"{settings.wactivities}%,{settings.wresource_att}%.xlsx")
 
 
     fieldnames = ["prefix_length", "num_cases", "tp", "fp", "tn", "fn", "precision", "recall", "fscore"]
@@ -814,3 +861,4 @@ def prefix_evaluation_to_csv(result_dict, dataset):
             worksheet.cell(row=row_idx, column=col_idx).value = value
 
     workbook.save(excel_file)
+    return csv_file

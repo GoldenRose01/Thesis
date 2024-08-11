@@ -1,0 +1,9 @@
+dataset_name;letter;complexity_type;encoding_type;weighted_values;average_fscore;average_precision;average_recall;Unnamed: 8;weighted_average_fscore;weighted_average_precision;weighted_average_recall
+bpic2011_f1;N;complex;weighted_edit_distance;5000% 0% 5000%;0,678;0,522;1,000;|;0,663;0,501;1,000
+bpic2011_f2;N;complex;weighted_edit_distance;5000% 0% 5000%;0,557;0,387;1,000;|;0,557;0,386;1,000
+bpic2011_f3;N;complex;weighted_edit_distance;5000% 0% 5000%;0,756;0,613;1,000;|;0,748;0,601;1,000
+bpic2011_f4;N;complex;weighted_edit_distance;5000% 0% 5000%;0,691;0,529;1,000;|;0,694;0,533;1,000
+bpic2015_2_f2;N;complex;weighted_edit_distance;5000% 0% 5000%;0,910;0,835;1,000;|;0,910;0,835;1,000
+bpic2015_3_f2;N;complex;weighted_edit_distance;5000% 0% 5000%;0,811;0,707;0,950;|;0,815;0,711;0,956
+bpic2015_4_f2;N;complex;weighted_edit_distance;5000% 0% 5000%;0,891;0,820;0,975;|;0,898;0,827;0,981
+bpic2015_5_f2;N;complex;weighted_edit_distance;5000% 0% 5000%;0,843;0,728;1,000;|;0,843;0,729;1,000

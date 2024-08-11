@@ -2,10 +2,9 @@ import main
 import graphviz
 from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
+from src.enums import *
 from src.models import *
 from Colorlib.Colors import *
-from src.enums import *
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -14,6 +13,7 @@ from collections import Counter
 from imblearn.over_sampling import ADASYN
 from imblearn.combine import SMOTEENN
 from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import train_test_split
 from src.machine_learning.apriori import *
 from src.machine_learning.encoding.encoding import *
 from src.machine_learning.utils import *
@@ -39,7 +39,8 @@ TRACE_TO_DF = {
 
 
 # Funzione per trovare il miglior albero decisionale
-def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input_trainval, resource_attributes, trace_attributes ):
+def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input_trainval,
+                 resource_attributes, trace_attributes ):
     at_DT_par = f"DT params optimization"
     print(f"{PISTACHIO}{at_DT_par.center(main.infoconsole())}{RESET}")
 
@@ -123,10 +124,13 @@ def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input
                                       f'DT_{dataset_name}_{settings.ruleprefix}{settings.type_encoding}'))
         elif settings.selected_evaluation_edit_distance != "weighted_edit_distance":
             graph.render(os.path.join(settings.output_dir,
-                                      f"DT_{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_{settings.selected_evaluation_edit_distance}"))
+                                      f"DT_{dataset_name}_{settings.ruleprefix}{settings.type_encoding}"
+                                      f"_{settings.selected_evaluation_edit_distance}"))
         else:
             graph.render(os.path.join(settings.output_dir,
-                                      f"DT_{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_{settings.selected_evaluation_edit_distance}{settings.wtrace_att},{settings.wactivities},{settings.wresource_att}"))
+                                      f"DT_{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_"
+                                      f"{settings.selected_evaluation_edit_distance}{settings.wtrace_att}%,"
+                                      f"{settings.wactivities}%,{settings.wresource_att}%"))
         at_pdf = "PDF generated"
         print(f"{LILAC}{at_pdf.center(main.infoconsole())}{RESET}")
 
@@ -234,7 +238,8 @@ def generate_paths(dtc, dt_input_features, target_label):
     return paths
 
 
-def process_log_and_model(log, dt_params, support_threshold_dict, dataset_name, render_dt, resource_attributes, trace_attributes):
+def process_log_and_model(log, dt_params, support_threshold_dict, dataset_name, render_dt,
+                          resource_attributes, trace_attributes):
     # Encoding complesso
     complex_data, index = complex_features(log, {})
     X = complex_data.drop(columns=['label'])  # Rimuove la colonna della label

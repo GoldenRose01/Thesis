@@ -51,8 +51,11 @@ def mp_responded_existence(trace, done, a, b, rules):
     elif done and num_violations == 0:
         state = TraceState.SATISFIED
 
-    return CheckerResult(num_fulfillments=num_fulfillments, num_violations=num_violations, num_pendings=num_pendings,
-                         num_activations=num_activations, state=state)
+    return CheckerResult(num_fulfillments=num_fulfillments,
+                         num_violations=num_violations,
+                         num_pendings=num_pendings,
+                         num_activations=num_activations,
+                         state=state)
 
 
 # Funzione mp_response per il controllo del vincolo response
@@ -99,8 +102,11 @@ def mp_response(trace, done, a, b, rules):
     elif done and num_violations == 0:
         state = TraceState.SATISFIED
 
-    return CheckerResult(num_fulfillments=num_fulfillments, num_violations=num_violations, num_pendings=num_pendings,
-                         num_activations=num_activations, state=state)
+    return CheckerResult(num_fulfillments=num_fulfillments,
+                         num_violations=num_violations,
+                         num_pendings=num_pendings,
+                         num_activations=num_activations,
+                         state=state)
 
 
 # Funzione mp_alternate_response per il controllo del vincolo alternateResponse
@@ -146,8 +152,11 @@ def mp_alternate_response(trace, done, a, b, rules):
     elif done and num_violations == 0 and num_pendings == 0:
         state = TraceState.SATISFIED
 
-    return CheckerResult(num_fulfillments=num_fulfillments, num_violations=num_violations, num_pendings=num_pendings,
-                         num_activations=num_activations, state=state)
+    return CheckerResult(num_fulfillments=num_fulfillments,
+                         num_violations=num_violations,
+                         num_pendings=num_pendings,
+                         num_activations=num_activations,
+                         state=state)
 
 
 # Funzione mp_chain_response per il controllo del vincolo chainResponse
@@ -191,8 +200,11 @@ def mp_chain_response(trace, done, a, b, rules):
     elif done and num_violations == 0 and num_pendings == 0:
         state = TraceState.SATISFIED
 
-    return CheckerResult(num_fulfillments=num_fulfillments, num_violations=num_violations, num_pendings=num_pendings,
-                         num_activations=num_activations, state=state)
+    return CheckerResult(num_fulfillments=num_fulfillments,
+                         num_violations=num_violations,
+                         num_pendings=num_pendings,
+                         num_activations=num_activations,
+                         state=state)
 
 
 # Funzione mp_precedence per il controllo del vincolo precedence
@@ -232,8 +244,11 @@ def mp_precedence(trace, done, a, b, rules):
     elif done and num_violations == 0:
         state = TraceState.SATISFIED
 
-    return CheckerResult(num_fulfillments=num_fulfillments, num_violations=num_violations, num_pendings=None,
-                         num_activations=num_activations, state=state)
+    return CheckerResult(num_fulfillments=num_fulfillments,
+                         num_violations=num_violations,
+                         num_pendings=None,
+                         num_activations=num_activations,
+                         state=state)
 
 
 # Funzione mp_alternate_precedence per il controllo del vincolo alternatePrecedence
@@ -274,8 +289,11 @@ def mp_alternate_precedence(trace, done, a, b, rules):
     elif done and num_violations == 0:
         state = TraceState.SATISFIED
 
-    return CheckerResult(num_fulfillments=num_fulfillments, num_violations=num_violations, num_pendings=None,
-                         num_activations=num_activations, state=state)
+    return CheckerResult(num_fulfillments=num_fulfillments,
+                         num_violations=num_violations,
+                         num_pendings=None,
+                         num_activations=num_activations,
+                         state=state)
 
 
 # Funzione mp_chain_precedence per il controllo del vincolo chainPrecedence
@@ -312,5 +330,8 @@ def mp_chain_precedence(trace, done, a, b, rules):
     elif done and num_violations == 0:
         state = TraceState.SATISFIED
 
-    return CheckerResult(num_fulfillments=num_fulfillments, num_violations=num_violations, num_pendings=None,
-                         num_activations=num_activations, state=state)
+    return CheckerResult(num_fulfillments=num_fulfillments,
+                         num_violations=num_violations,
+                         num_pendings=None,
+                         num_activations=num_activations,
+                         state=state)

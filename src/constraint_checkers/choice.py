@@ -32,7 +32,11 @@ def mp_choice(trace, done, a, b, rules):
         state = TraceState.SATISFIED
 
     # Restituzione di un oggetto CheckerResult con conteggi a None e stato calcolato
-    return CheckerResult(num_fulfillments=None, num_violations=None, num_pendings=None, num_activations=None, state=state)
+    return CheckerResult(num_fulfillments=None,
+                         num_violations=None,
+                         num_pendings=None,
+                         num_activations=None,
+                         state=state)
 
 
 # Funzione mp-exclusive-choice per il controllo del vincolo
@@ -75,4 +79,8 @@ def mp_exclusive_choice(trace, done, a, b, rules):
         state = TraceState.SATISFIED
 
     # Restituzione di un oggetto CheckerResult con conteggi a None e stato calcolato
-    return CheckerResult(num_fulfillments=None, num_violations=None, num_pendings=None, num_activations=None, state=state)
+    return CheckerResult(num_fulfillments=None,
+                         num_violations=None,
+                         num_pendings=None,
+                         num_activations=None,
+                         state=state)

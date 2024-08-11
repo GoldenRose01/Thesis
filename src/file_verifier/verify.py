@@ -103,9 +103,9 @@ def timeprinter(dataset_name,
               'Declarative']
 
     # Calcolo di a, b, c
-    a = wtrace_att * 100
-    b = wactivities * 100
-    c = wresource_att * 100
+    a = wtrace_att
+    b = wactivities
+    c = wresource_att
     weighted_col_name = f"Complex ({a}%,{b}%,{c}%)"
 
     # Controllo se il file esiste
@@ -152,8 +152,8 @@ def timeprinter(dataset_name,
         elif selected_evaluation_edit_distance == 'weighted_edit_distance':
             new_row[weighted_col_name] = f"{time_m_finale}m"
 
-    # Determina il nome del dataset basato su settings.weighted_prefix_generation
-    if settings.weighted_prefix_generation:
+    # Determina il nome del dataset basato su settings.weighted_prefix_generation e quick
+    if settings.ruleprefix != 'N':
         dataset_row_name = f"{settings.ruleprefix}-{dataset_name}"
     else:
         dataset_row_name = dataset_name
@@ -177,7 +177,66 @@ def timeprinter(dataset_name,
         at_tp2 = f"{dataset_name} con {settings.selected_evaluation_edit_distance}"
     else:
         at_timeprint = f"File {file_path} successfully updated with"
-        at_tp2 = f"{dataset_name} con {settings.selected_evaluation_edit_distance} al {wtrace_att},{wactivities},{wresource_att}."
+        at_tp2 = (f"{dataset_name} con {settings.selected_evaluation_edit_distance} al"
+                  f" {wtrace_att},{wactivities},{wresource_att}.")
 
     print(f"\n{AQUA_GREEN}{at_timeprint.center(main.infoconsole())}{RESET}")
     print(f"{AQUA_GREEN}{at_tp2.center(main.infoconsole())}{RESET}")
+
+def printprefixlength(dataset_name, prefix_length):
+    file_path = 'PrefixLength.csv'
+
+    # Definizione delle colonne del CSV
+    legend = ['Dataset_name', 'N', 'W', 'QN', 'QW']
+
+    # Controllo se il file esiste
+    if os.path.exists(file_path):
+        encodings = ['utf-8', 'latin1', 'iso-8859-1']
+        for encoding in encodings:
+            try:
+                df = pd.read_csv(file_path, sep=',', encoding=encoding, on_bad_lines='skip')
+                break
+            except UnicodeDecodeError:
+                print(f"\nError reading {file_path} with encoding {encoding}. Trying next encoding")
+            except pd.errors.ParserError as e:
+                print(f"\nParser error reading {file_path} with encoding {encoding}: {e}")
+                return
+        else:
+            print(f"\nFailed to read {file_path} with available encodings.")
+            return
+    else:
+        df = pd.DataFrame(columns=legend)
+
+    # Aggiungi le colonne se non esistono già
+    for column in legend:
+        if column not in df.columns:
+            df[column] = ''
+
+    # Costruzione della riga da aggiungere/aggiornare
+    if settings.ruleprefix == 'N':
+        new_row = {'Dataset_name': dataset_name, 'N': prefix_length}
+    elif settings.ruleprefix == 'W':
+        new_row = {'Dataset_name': dataset_name, 'W': prefix_length}
+    elif settings.ruleprefix == 'QN':
+        new_row = {'Dataset_name': dataset_name, 'QN': prefix_length}
+    else:
+        new_row = {'Dataset_name': dataset_name, 'QW': prefix_length}
+
+    # Aggiorna o aggiungi la riga in base al ruleprefix
+    if dataset_name in df['Dataset_name'].values:
+        # Aggiornamento della riga esistente
+        df.loc[df['Dataset_name'] == dataset_name, settings.ruleprefix] = prefix_length
+    else:
+        # Aggiunta di una nuova riga
+        new_row[settings.ruleprefix] = prefix_length
+        df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
+
+    # Salvataggio del DataFrame aggiornato nel file CSV
+    df.to_csv(file_path, sep=',', index=False)
+    at_succes_prefix1 = f"File {file_path} successfully updated with dataset {dataset_name} "
+    at_succes_prefix2 = f"and prefix length {prefix_length} in the {settings.ruleprefix} column."
+
+    print(f"\n{BLUEBERRY_BLUE}{at_succes_prefix1.center(main.infoconsole())}"
+          f"{at_succes_prefix2.center(main.infoconsole())}{RESET}\n")
+
+

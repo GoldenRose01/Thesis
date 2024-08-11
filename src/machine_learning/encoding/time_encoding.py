@@ -33,7 +33,8 @@ def time_encoding(df: DataFrame, encoding_type) -> DataFrame:
             df_output[column_name] = convert_datetime_in_UTC(current_time)
 
         # Se la colonna contiene date e l'encoding_type è DATE o DATE_AND_DURATION
-        if column_type == TimeType.DATE.value and encoding_type in [TimeEncodingType.DATE.value, TimeEncodingType.DATE_AND_DURATION.value]:
+        if column_type == TimeType.DATE.value and encoding_type in [TimeEncodingType.DATE.value,
+                                                                    TimeEncodingType.DATE_AND_DURATION.value]:
             result_df = parse_date(current_time, column_name)
             df_output = pd.concat([df_output, result_df], axis=1)
 
@@ -42,7 +43,8 @@ def time_encoding(df: DataFrame, encoding_type) -> DataFrame:
             df_output[column_name] = current_time
 
         # Se la colonna contiene durate e l'encoding_type è DURATION o DATE_AND_DURATION
-        if column_type == TimeType.DURATION.value and encoding_type in [TimeEncodingType.DURATION.value, TimeEncodingType.DATE_AND_DURATION.value]:
+        if column_type == TimeType.DURATION.value and encoding_type in [TimeEncodingType.DURATION.value,
+                                                                        TimeEncodingType.DATE_AND_DURATION.value]:
             if not all(val is None for val in last_time) and not all(val is None for val in current_time):
                 result_df = parse_duration(current_time, column_name, last_time)
                 df_output = pd.concat([df_output, result_df], axis=1)

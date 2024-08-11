@@ -1,15 +1,30 @@
-from PyQt6.QtCore import *
-from PyQt6.QtSvgWidgets import *
-from PyQt6.QtWidgets import *
+import sys
+from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtCore import QTimer
+from PySide6.QtSvgWidgets import QSvgWidget
 
-
-class LoadingWindow(QWidget):
-    def __init__(self, duration=5000):
+class LoadingWindow(QMainWindow):
+    def __init__(self):
         super().__init__()
         self.setWindowTitle("Loading")
-        self.setGeometry(100, 100, 800, 600)
-        layout = QVBoxLayout()
+        self.setGeometry(100, 100, 1440, 720)
+
         self.svg_widget = QSvgWidget("Frontend/svg/Sigillo_Università_di_Trento.svg")
-        layout.addWidget(self.svg_widget)
-        self.setLayout(layout)
-        QTimer.singleShot(duration, self.close)
+        self.setCentralWidget(self.svg_widget)
+
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.show_main_window)
+        self.timer.start(5000)  # 5 secondi di caricamento
+
+    def show_main_window(self):
+        self.timer.stop()
+        from encoding_window import EncodingWindow
+        self.main_window = EncodingWindow()
+        self.main_window.show()
+        self.close()
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    loading_window = LoadingWindow()
+    loading_window.show()
+    sys.exit(app.exec())

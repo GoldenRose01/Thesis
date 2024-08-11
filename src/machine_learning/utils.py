@@ -2,18 +2,12 @@ from src.enums.ConstraintChecker import ConstraintChecker
 from src.enums import TraceState
 from src.constants.constants import CONSTRAINT_CHECKER_FUNCTIONS
 from src.models.Prefix import *
-from src.machine_learning.encoding import *
-from src.machine_learning.apriori import generate_frequent_events_and_pairs
-#from src.machine_learning.decision_tree import generate_decision_tree, generate_paths, generate_boost_decision_tree
 from src.enums import PrefixType
-from src.machine_learning import fitnessEditDistance, filter_attributes
-from sklearn.model_selection import train_test_split
-import itertools
-from src.enums import TraceLabel
+from src.machine_learning import fitnessEditDistance
 from pm4py.objects.conversion.log import converter as log_converter
+
 import settings
 import math
-import pandas as pd
 import numpy as np
 import re
 

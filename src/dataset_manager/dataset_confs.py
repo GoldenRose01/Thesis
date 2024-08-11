@@ -32,10 +32,24 @@ for formula in range(1, 3):
     neg_label[dataset] = "regular"
 
     # Caratteristiche per il classificatore
-    dynamic_cat_cols[dataset] = ["Activity", "Resource", "lastSent", "notificationType", "dismissal"]
-    static_cat_cols[dataset] = ["article", "vehicleClass"]
-    dynamic_num_cols[dataset] = ["expense", "timesincelastevent", "timesincecasestart", "timesincemidnight", "event_nr", "month", "weekday", "hour", "open_cases"]
-    static_num_cols[dataset] = ["amount", "points"]
+    dynamic_cat_cols[dataset] = ["Activity",
+                                 "Resource",
+                                 "lastSent",
+                                 "notificationType",
+                                 "dismissal"]
+    static_cat_cols[dataset] = ["article",
+                                "vehicleClass"]
+    dynamic_num_cols[dataset] = ["expense",
+                                 "timesincelastevent",
+                                 "timesincecasestart",
+                                 "timesincemidnight",
+                                 "event_nr",
+                                 "month",
+                                 "weekday",
+                                 "hour",
+                                 "open_cases"]
+    static_num_cols[dataset] = ["amount",
+                                "points"]
 
 
 #### Sepsis Cases settings ####
@@ -54,15 +68,42 @@ for dataset in datasets:
     neg_label[dataset] = "regular"
 
     # features for classifier
-    dynamic_cat_cols[dataset] = ["Activity", 'org:group'] # i.e. event attributes
-    static_cat_cols[dataset] = ['Diagnose', 'DiagnosticArtAstrup', 'DiagnosticBlood', 'DiagnosticECG',
-                       'DiagnosticIC', 'DiagnosticLacticAcid', 'DiagnosticLiquor',
-                       'DiagnosticOther', 'DiagnosticSputum', 'DiagnosticUrinaryCulture',
-                       'DiagnosticUrinarySediment', 'DiagnosticXthorax', 'DisfuncOrg',
-                       'Hypotensie', 'Hypoxie', 'InfectionSuspected', 'Infusion', 'Oligurie',
-                       'SIRSCritHeartRate', 'SIRSCritLeucos', 'SIRSCritTachypnea',
-                       'SIRSCritTemperature', 'SIRSCriteria2OrMore'] # i.e. case attributes that are known from the start
-    dynamic_num_cols[dataset] = ['CRP', 'LacticAcid', 'Leucocytes', "hour", "weekday", "month", "timesincemidnight", "timesincelastevent", "timesincecasestart", "event_nr", "open_cases"]
+    dynamic_cat_cols[dataset] = ["Activity",
+                                 'org:group'] # i.e. event attributes
+    static_cat_cols[dataset] = ['Diagnose',
+                                'DiagnosticArtAstrup',
+                                'DiagnosticBlood',
+                                'DiagnosticECG',
+                                'DiagnosticIC',
+                                'DiagnosticLacticAcid',
+                                'DiagnosticLiquor',
+                                'DiagnosticOther',
+                                'DiagnosticSputum',
+                                'DiagnosticUrinaryCulture',
+                                'DiagnosticUrinarySediment',
+                                'DiagnosticXthorax',
+                                'DisfuncOrg',
+                                'Hypotensie',
+                                'Hypoxie',
+                                'InfectionSuspected',
+                                'Infusion',
+                                'Oligurie',
+                               'SIRSCritHeartRate',
+                                'SIRSCritLeucos',
+                                'SIRSCritTachypnea',
+                               'SIRSCritTemperature',
+                                'SIRSCriteria2OrMore'] # i.e. case attributes that are known from the start
+    dynamic_num_cols[dataset] = ['CRP',
+                                 'LacticAcid',
+                                 'Leucocytes',
+                                 "hour",
+                                 "weekday",
+                                 "month",
+                                 "timesincemidnight",
+                                 "timesincelastevent",
+                                 "timesincecasestart",
+                                 "event_nr",
+                                 "open_cases"]
     static_num_cols[dataset] = ['Age']
 
 
@@ -80,10 +121,24 @@ neg_label[dataset] = "regular"
 pos_label[dataset] = "deviant"
 
 # features for classifier
-static_cat_cols[dataset] = ["Part_Desc_", "Rework"]
+static_cat_cols[dataset] = ["Part_Desc_",
+                            "Rework"]
 static_num_cols[dataset] = ["Work_Order_Qty"]
-dynamic_cat_cols[dataset] = ["Activity", "Resource", "Report_Type", "Resource.1"]
-dynamic_num_cols[dataset] = ["Qty_Completed", "Qty_for_MRB", "activity_duration", "hour", "weekday", "month", "timesincemidnight", "timesincelastevent", "timesincecasestart", "event_nr", "open_cases"]
+dynamic_cat_cols[dataset] = ["Activity",
+                             "Resource",
+                             "Report_Type",
+                             "Resource.1"]
+dynamic_num_cols[dataset] = ["Qty_Completed",
+                             "Qty_for_MRB",
+                             "activity_duration",
+                             "hour",
+                             "weekday",
+                             "month",
+                             "timesincemidnight",
+                             "timesincelastevent",
+                             "timesincecasestart",
+                             "event_nr",
+                             "open_cases"]
 
 #### BPIC2017 settings ####
 
@@ -105,10 +160,28 @@ for dataset, fname in bpic2017_dict.items():
     pos_label[dataset] = "deviant"
 
     # features for classifier
-    dynamic_cat_cols[dataset] = ["Activity", 'org:resource', 'Action', 'EventOrigin', 'lifecycle:transition',
-                                "Accepted", "Selected"] 
-    static_cat_cols[dataset] = ['ApplicationType', 'LoanGoal']
-    dynamic_num_cols[dataset] = ['FirstWithdrawalAmount', 'MonthlyCost', 'NumberOfTerms', 'OfferedAmount', 'CreditScore',  "timesincelastevent", "timesincecasestart", "timesincemidnight", "event_nr", "month", "weekday", "hour", "open_cases"]
+    dynamic_cat_cols[dataset] = ["Activity",
+                                 'org:resource',
+                                 'Action',
+                                 'EventOrigin',
+                                 'lifecycle:transition',
+                                "Accepted",
+                                 "Selected"]
+    static_cat_cols[dataset] = ['ApplicationType',
+                                'LoanGoal']
+    dynamic_num_cols[dataset] = ['FirstWithdrawalAmount',
+                                 'MonthlyCost',
+                                 'NumberOfTerms',
+                                 'OfferedAmount',
+                                 'CreditScore',
+                                 "timesincelastevent",
+                                 "timesincecasestart",
+                                 "timesincemidnight",
+                                 "event_nr",
+                                 "month",
+                                 "weekday",
+                                 "hour",
+                                 "open_cases"]
     static_num_cols[dataset] = ['RequestedAmount']
     
     
@@ -132,9 +205,32 @@ for i in range(1, 7):
             pos_label[dataset] = "regular"
 
         # features for classifier
-        dynamic_cat_cols[dataset] = ["Activity", 'Resource', 'actOrange', 'actRed', 'blocked', 'caseType', 'diagnosis', 'flagC', 'flagD', 'msgCode', 'msgType', 'state', 'version']#, 'isCancelled', 'isClosed', 'closeCode'] 
+        dynamic_cat_cols[dataset] = ["Activity",
+                                     'Resource',
+                                     'actOrange',
+                                     'actRed',
+                                     'blocked',
+                                     'caseType',
+                                     'diagnosis',
+                                     'flagC',
+                                     'flagD',
+                                     'msgCode',
+                                     'msgType',
+                                     'state',
+                                     'version',]
+                                    # 'isCancelled',
+                                    # 'isClosed',
+                                    # 'closeCode']
         static_cat_cols[dataset] = ['speciality']
-        dynamic_num_cols[dataset] = ['msgCount', "timesincelastevent", "timesincecasestart", "timesincemidnight", "event_nr", "month", "weekday", "hour"]#, "open_cases"]
+        dynamic_num_cols[dataset] = ['msgCount',
+                                     "timesincelastevent",
+                                     "timesincecasestart",
+                                     "timesincemidnight",
+                                     "event_nr",
+                                     "month",
+                                     "weekday",
+                                     "hour"]
+                                    #, "open_cases"]
         static_num_cols[dataset] = []
 
         if i == 1: # label is created based on isCancelled attribute
@@ -162,9 +258,17 @@ for dataset, fname in bpic2012_dict.items():
     pos_label[dataset] = "deviant"
 
     # features for classifier
-    dynamic_cat_cols[dataset] = ["Activity", "Resource"]
+    dynamic_cat_cols[dataset] = ["Activity",
+                                 "Resource"]
     static_cat_cols[dataset] = []
-    dynamic_num_cols[dataset] = ["hour", "weekday", "month", "timesincemidnight", "timesincelastevent", "timesincecasestart", "event_nr", "open_cases"]
+    dynamic_num_cols[dataset] = ["hour",
+                                 "weekday",
+                                 "month",
+                                 "timesincemidnight",
+                                 "timesincelastevent",
+                                 "timesincecasestart",
+                                 "event_nr",
+                                 "open_cases"]
     static_num_cols[dataset] = ['AMOUNT_REQ']
 
     
@@ -184,10 +288,33 @@ for municipality in range(1,6):
         neg_label[dataset] = "regular"
 
         # features for classifier
-        dynamic_cat_cols[dataset] = ["Activity", "monitoringResource", "question", "org:resource"]
+        dynamic_cat_cols[dataset] = ["Activity",
+                                     "monitoringResource",
+                                     "question",
+                                     "org:resource"]
         static_cat_cols[dataset] = ["Responsible_actor"]
-        dynamic_num_cols[dataset] = ["hour", "weekday", "month", "timesincemidnight", "timesincelastevent", "timesincecasestart", "event_nr", "open_cases"]
-        static_num_cols[dataset] = ["SUMleges", 'Aanleg (Uitvoeren werk of werkzaamheid)', 'Bouw', 'Brandveilig gebruik (vergunning)', 'Gebiedsbescherming', 'Handelen in strijd met regels RO', 'Inrit/Uitweg', 'Kap', 'Milieu (neutraal wijziging)', 'Milieu (omgevingsvergunning beperkte milieutoets)', 'Milieu (vergunning)', 'Monument', 'Reclame', 'Sloop']
+        dynamic_num_cols[dataset] = ["hour",
+                                     "weekday",
+                                     "month",
+                                     "timesincemidnight",
+                                     "timesincelastevent",
+                                     "timesincecasestart",
+                                     "event_nr",
+                                     "open_cases"]
+        static_num_cols[dataset] = ["SUMleges",
+                                    'Aanleg (Uitvoeren werk of werkzaamheid)',
+                                    'Bouw',
+                                    'Brandveilig gebruik (vergunning)',
+                                    'Gebiedsbescherming',
+                                    'Handelen in strijd met regels RO',
+                                    'Inrit/Uitweg',
+                                    'Kap',
+                                    'Milieu (neutraal wijziging)',
+                                    'Milieu (omgevingsvergunning beperkte milieutoets)',
+                                    'Milieu (vergunning)',
+                                    'Monument',
+                                    'Reclame',
+                                    'Sloop']
         
         if municipality in [3,5]:
             static_num_cols[dataset].append('Flora en Fauna')
@@ -211,8 +338,24 @@ for formula in range(1,5):
     neg_label[dataset] = "regular"
 
     # features for classifier
-    dynamic_cat_cols[dataset] = ["Activity code", "Producer code", "Section", "Specialism code.1", "group"]
-    static_cat_cols[dataset] = ["Diagnosis", "Treatment code", "Diagnosis code", "Specialism code", "Diagnosis Treatment Combination ID"]
-    dynamic_num_cols[dataset] = ["Number of executions", "hour", "weekday", "month", "timesincemidnight", "timesincelastevent", "timesincecasestart", "event_nr", "open_cases"]
+    dynamic_cat_cols[dataset] = ["Activity code",
+                                 "Producer code",
+                                 "Section",
+                                 "Specialism code.1",
+                                 "group"]
+    static_cat_cols[dataset] = ["Diagnosis",
+                                "Treatment code",
+                                "Diagnosis code",
+                                "Specialism code",
+                                "Diagnosis Treatment Combination ID"]
+    dynamic_num_cols[dataset] = ["Number of executions",
+                                 "hour",
+                                 "weekday",
+                                 "month",
+                                 "timesincemidnight",
+                                 "timesincelastevent",
+                                 "timesincecasestart",
+                                 "event_nr",
+                                 "open_cases"]
     static_num_cols[dataset] = ["Age"]
     
