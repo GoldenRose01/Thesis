@@ -34,13 +34,34 @@ def read_datasets_from_dat(filepath):
                 datasets_names.append(dataset_name)
     return datasets_names
 
+def create_directory_structure(base_dir, ruleprefix):
+    dir_rp = os.path.join(base_dir, ruleprefix)
+    if not os.path.exists(dir_rp):
+        os.makedirs(dir_rp)
+    return {
+        "simple": os.path.join(dir_rp, "simple"),
+        "complex_lib": os.path.join(dir_rp, "complex/lib"),
+        "complex_code": os.path.join(dir_rp, "complex/code"),
+        "complex_weighted": os.path.join(dir_rp, "complex/weighted")
+    }
+
+def get_output_dir(type_encoding, selected_evaluation_edit_distance, dirs):
+    if type_encoding == "simple":
+        return dirs["simple"]
+    elif type_encoding == "complex":
+        if selected_evaluation_edit_distance == "weighted_edit_distance":
+            return dirs["complex_weighted"]
+        elif selected_evaluation_edit_distance == "edit_distance_lib":
+            return dirs["complex_lib"]
+        elif selected_evaluation_edit_distance == "edit_distance_separate":
+            return dirs["complex_code"]
 
 # ========================================paths=========================================================================
 
 
 options_filepath = 'Option.dat'
 datasets_names_filepath = 'Datasets_names.dat'
-dataset_debug = 'Dataset_name.txt'
+dataset_debug = 'Datasetnames.txt'
 encoding_path = 'Encoding.dat'
 
 
@@ -61,6 +82,7 @@ type_encoding = read_type_encoding(encoding_path) if read_type_encoding(encoding
 
 datasets_names = read_datasets_from_dat(datasets_names_filepath) if read_datasets_from_dat(
     datasets_names_filepath) else read_datasets_from_dat(dataset_debug)
+
 options = read_options_from_dat(options_filepath)
 
 # ================================================= thresholds =========================================================
@@ -110,7 +132,9 @@ quick = options['Quick'] if options['Quick'] else False
 
 
 # ======================================== Rule_of_prefix ==============================================================
+
 weighted_prefix_generation = options['weighted_prefix_generation'] if options['weighted_prefix_generation'] else False
+
 if quick:
     if weighted_prefix_generation:
         ruleprefix = "QW"
@@ -187,82 +211,24 @@ wresource_att = temp_wresource_att
 
 # ========================================= folders ====================================================================
 
-
 output_dt_dir_base = "media/output/dt/"
-if ruleprefix == "N":
-    output_dt_dir_rp = os.path.join(output_dt_dir_base, "/N")
-elif ruleprefix == "W":
-    output_dt_dir_rp = os.path.join(output_dt_dir_base, "/W")
-elif ruleprefix == "QN":
-    output_dt_dir_rp = os.path.join(output_dt_dir_base, "/QN")
-elif ruleprefix == "QW":
-    output_dt_dir_rp = os.path.join(output_dt_dir_base, "/QW")
-if not os.path.exists(output_dt_dir_rp):
-    os.makedirs(output_dt_dir_rp)
+result_dir_base = "media/output/result"
 
-
-output_dt_dir_s = os.path.join(output_dt_dir_rp, "/simple")
-output_dt_dir_cl = os.path.join(output_dt_dir_rp, "/complex/lib")
-output_dt_dir_cc = os.path.join(output_dt_dir_rp, "/complex/code")
-output_dt_dir_cw = os.path.join(output_dt_dir_rp, "/complex/weighted")
-
-
-if type_encoding == "simple":
-    output_dir = output_dt_dir_s
-    print(f"{BLUE} Using {output_dir}{RESET} ")
-elif type_encoding == "complex" and selected_evaluation_edit_distance == "weighted_edit_distance":
-    output_dir = output_dt_dir_cw
-    print(f"{BLUE} Using {output_dir}{RESET} ")
-elif type_encoding == "complex" and selected_evaluation_edit_distance == "edit_distance_lib":
-    output_dir = output_dt_dir_cl
-    print(f"{BLUE} Using {output_dir}{RESET} ")
-elif type_encoding == "complex" and selected_evaluation_edit_distance == "edit_distance_separate":
-    output_dir = output_dt_dir_cc
-    print(f"{BLUE} Using {output_dir}{RESET} ")
-else:
-    output_dir = "media/output"
+output_dirs = create_directory_structure(output_dt_dir_base, ruleprefix)
+output_dir = get_output_dir(type_encoding, selected_evaluation_edit_distance, output_dirs)
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
+print(f"{BLUE} Using {output_dir}{RESET} ")
 
 csv_dir = "media/output/results.csv"
 
-
-result_dir_base = ("media/output/result")
-if ruleprefix == "N":
-    result_dir_rp = os.path.join(result_dir_base, "/N")
-elif ruleprefix == "W":
-    result_dir_rp = os.path.join(result_dir_base, "/W")
-elif ruleprefix == "QN":
-    result_dir_rp = os.path.join(result_dir_base, "/QN")
-elif ruleprefix == "QW":
-    result_dir_rp = os.path.join(result_dir_base, "/QW")
-if not os.path.exists(result_dir_rp):
-    os.makedirs(result_dir_rp)
-
-results_dir_s  = os.path.join(result_dir_rp, "/simple")
-results_dir_cl = os.path.join(result_dir_rp, "/complex/lib")
-results_dir_cc = os.path.join(result_dir_rp, "/complex/code")
-results_dir_cw = os.path.join(result_dir_rp, "/complex/weighted")
-
-if type_encoding == "simple":
-    results_dir = results_dir_s
-    print(f"{BLUE} Using {results_dir}{RESET} ")
-elif type_encoding == "complex" and selected_evaluation_edit_distance == "weighted_edit_distance":
-    results_dir = results_dir_cw
-    print(f"{BLUE} Using {results_dir}{RESET} ")
-elif type_encoding == "complex" and selected_evaluation_edit_distance == "edit_distance_lib":
-    results_dir = results_dir_cl
-    print(f"{BLUE} Using {results_dir}{RESET} ")
-elif type_encoding == "complex" and selected_evaluation_edit_distance == "edit_distance_separate":
-    results_dir = results_dir_cc
-    print(f"{BLUE} Using {results_dir}{RESET} ")
-else:
-    results_dir = "media/output/result"
+result_dirs = create_directory_structure(result_dir_base, ruleprefix)
+results_dir = get_output_dir(type_encoding, selected_evaluation_edit_distance, result_dirs)
 if not os.path.exists(results_dir):
     os.makedirs(results_dir)
+print(f"{BLUE} Using {results_dir}{RESET} ")
 
 postprocessing_folder = "media/postprocessing"
-
 dataset_folder = "media/input"
 
 # ========================================= checkers ===================================================================
@@ -312,16 +278,12 @@ datasets_labels = {"bpic2011_f1": "bpic2011_1",
                    "bpic2011_f3": "bpic2011_3",
                    "bpic2011_f4": "bpic2011_4",
                    "bpic2012_accepted": "bpic2012_accepted",
-                   "bpic2012_cancelled": "bpic2012_cancelled",
                    "bpic2012_declined": "bpic2012_rejected",
                    "bpic2015_1_f2": "bpic2015_1",
                    "bpic2015_2_f2": "bpic2015_2",
                    "bpic2015_3_f2": "bpic2015_3",
                    "bpic2015_4_f2": "bpic2015_4",
                    "bpic2015_5_f2": "bpic2015_5",
-                   # "bpic2017_accepted": "bpic2017_accepted",
-                   # "bpic2017_cancelled": "bpic2017_cancelled",
-                   # "bpic2017_refused": "bpic2017_rejected",
                    "hospital_billing_2": "hospital_billing_1",
                    "hospital_billing_3": "hospital_billing_2",
                    "Production": "production",

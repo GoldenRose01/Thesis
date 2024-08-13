@@ -1,3 +1,4 @@
+import main
 from src.machine_learning import recommender as rcm
 from src.dataset_manager.datasetManager import *
 import src.file_verifier.Postprocessing as postprocessing
@@ -352,14 +353,15 @@ def rec_sys_exp(dataset_name):
 
     for metric in ["fscore"]:
         if settings.selected_evaluation_edit_distance != "weighted_edit_distance":
-            plot.toPng(metric,
-                       f"{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_"
-                       f"{settings.selected_evaluation_edit_distance}_{metric}")
+            namefilepr: str = (f"{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_"
+                          f"{settings.selected_evaluation_edit_distance}_{metric}")
         else:
-            plot.toPng(metric,
-                       f"{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_"
+            namefilepr: str = (f"{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_"
                        f"{settings.selected_evaluation_edit_distance}{settings.wtrace_att}%,"
                        f"{settings.wactivities}%,{settings.wresource_att}%_{metric}")
+        plot.toPng(metric, namefilepr)
+        print(f"{GREEN}{namefilepr.center(main.infoconsole())}{RESET}")
+
     # Salva i risultati della valutazione dei prefissi in un file CSV
     namefile = rcm.prefix_evaluation_to_csv(results, dataset_name)
 
@@ -370,10 +372,10 @@ def rec_sys_exp(dataset_name):
     if settings.selected_evaluation_edit_distance != "weighted_edit_distance":
         dataset_info = {
             'dataset_name': dataset_name,
-            'ruleprefix': settings.ruleprefix,
+            'rule_prefix': settings.ruleprefix,
             'type_encoding': settings.type_encoding,
             'selected_evaluation_edit_distance': settings.selected_evaluation_edit_distance,
-            'namefile':namefile
+            'namefile': namefile
         }
     else:
         dataset_info = {

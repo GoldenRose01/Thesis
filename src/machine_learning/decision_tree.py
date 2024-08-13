@@ -122,17 +122,24 @@ def find_best_dt(dataset_name, data, support_threshold_dict, render_dt, dt_input
         if settings.type_encoding != "complex":
             graph.render(os.path.join(settings.output_dir,
                                       f'DT_{dataset_name}_{settings.ruleprefix}{settings.type_encoding}'))
+            ptnamefile = (f'DT_{dataset_name}_{settings.ruleprefix}{settings.type_encoding}')
         elif settings.selected_evaluation_edit_distance != "weighted_edit_distance":
             graph.render(os.path.join(settings.output_dir,
                                       f"DT_{dataset_name}_{settings.ruleprefix}{settings.type_encoding}"
                                       f"_{settings.selected_evaluation_edit_distance}"))
+            ptnamefile = (f"DT_{dataset_name}_{settings.ruleprefix}{settings.type_encoding}"
+                          f"_{settings.selected_evaluation_edit_distance}")
         else:
             graph.render(os.path.join(settings.output_dir,
                                       f"DT_{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_"
                                       f"{settings.selected_evaluation_edit_distance}{settings.wtrace_att}%,"
                                       f"{settings.wactivities}%,{settings.wresource_att}%"))
+            ptnamefile = (f"DT_{dataset_name}_{settings.ruleprefix}{settings.type_encoding}_"
+                          f"{settings.selected_evaluation_edit_distance}{settings.wtrace_att}%,"
+                          f"{settings.wactivities}%,{settings.wresource_att}%")
         at_pdf = "PDF generated"
         print(f"{LILAC}{at_pdf.center(main.infoconsole())}{RESET}")
+        print(f"{LILAC}{ptnamefile.center(main.infoconsole())}{RESET}")
 
     return model_dict, new_feature_names
 

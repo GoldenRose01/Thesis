@@ -100,7 +100,7 @@ class DebugWindow(QMainWindow):
             'print_dt': self.boolean_options[7][1].isChecked()
         }
 
-        with open("options.dat", "w") as f:
+        with open("Options.dat", "w") as f:
             for key, value in options.items():
                 f.write(f"{key}={value}\n")
 
