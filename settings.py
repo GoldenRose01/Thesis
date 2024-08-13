@@ -48,7 +48,7 @@ encoding_path = 'Encoding.dat'
 
 def read_type_encoding(filepath):
     with open(filepath, 'r') as file:
-        type_encoding = file.readline().strip()
+        type_encoding = file.readline().strip().lower()
     return type_encoding
 
 

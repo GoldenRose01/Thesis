@@ -211,12 +211,11 @@ class Encoding:
         self.encoder.decode(df=df_input)
         return df_input
 
-    # Modifica la funzione Encoding.encode
     def encode(self, log, features):
         prefix_columns = {}
 
         for i, prefix in enumerate(log):
-            if i< len(features):
+            if i < len(features):
                 column_name = features[i]
                 prefix_columns[column_name] = [prefix]
             else:
