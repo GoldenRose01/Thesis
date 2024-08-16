@@ -1,0 +1,19 @@
+dataset,current_folder,upper_folder,precision_mean (%),recall_mean (%),fscore_mean (%),precision_weighted (%),recall_weighted (%),fscore_weighted (%)
+bpic2011_f1,simple,N,21.39,40.4,27.41,24.17,45.57,30.99
+bpic2011_f2,simple,N,21.55,43.8,27.34,22.89,46.7,29.1
+bpic2011_f3,simple,N,32.54,45.36,37.16,35.59,49.67,40.7
+bpic2011_f4,simple,N,40.94,68.92,50.54,42.71,71.8,52.76
+bpic2012_accepted,simple,N,41.59,68.48,47.43,43.6,73.39,50.4
+bpic2012_declined,simple,N,71.02,73.57,71.9,74.44,77.52,75.55
+bpic2015_1_f2,simple,N,35.83,46.15,40.34,38.85,50.02,43.73
+bpic2015_2_f2,simple,N,52.1,61.51,56.42,52.85,62.38,57.22
+bpic2015_3_f2,simple,N,32.65,30.38,29.38,33.51,31.0,30.05
+bpic2015_4_f2,simple,N,44.12,40.36,38.4,50.88,47.76,45.41
+bpic2015_5_f2,simple,N,43.67,58.59,50.04,44.93,60.26,51.47
+hospital_billing_2,simple,N,95.4,52.9,66.26,95.23,54.27,67.4
+hospital_billing_3,simple,N,94.11,6.7,12.48,94.51,6.85,12.74
+Production,simple,N,37.67,34.79,35.95,48.31,43.19,45.34
+sepsis_cases_1,simple,N,59.7,63.19,61.29,66.61,70.56,68.41
+sepsis_cases_2,simple,N,84.46,88.24,86.08,86.03,90.46,87.98
+sepsis_cases_4,simple,N,24.78,67.33,35.74,25.66,69.35,36.93
+traffic_fines_1,simple,N,99.38,36.72,43.06,99.38,36.72,43.06

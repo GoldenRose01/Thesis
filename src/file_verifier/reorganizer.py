@@ -1,124 +1,112 @@
 import os
-import re
+import shutil
+import pandas as pd
 
-# Funzione per caricare i nomi dei dataset validi dal file datasetnames.txt
-def load_valid_datasets(file_path):
-    try:
-        with open(file_path, 'r') as file:
-            datasets = [line.strip() for line in file.readlines()]
-        print(f"Caricati {len(datasets)} dataset validi.")
-        return datasets
-    except Exception as e:
-        print(f"Errore durante il caricamento dei dataset validi: {e}")
-        return []
-
-# Funzione per normalizzare i nomi dei dataset
-def normalize_dataset_name(dataset_name):
-    dataset_name = dataset_name.lower().replace("dt_", "").replace("_", "").replace(" ", "")
-    print(f"Nome dataset normalizzato: {dataset_name}")
-    return dataset_name
-
-# Funzione per controllare se un nome di dataset è valido
-def is_valid_dataset(dataset_name, valid_datasets):
-    dataset_name = normalize_dataset_name(dataset_name)
-    normalized_valid_datasets = [normalize_dataset_name(ds) for ds in valid_datasets]
-    is_valid = dataset_name in normalized_valid_datasets
-    print(f"Dataset '{dataset_name}' valido: {is_valid}")
-    return is_valid
-
-# Funzione per controllare se un file deve essere ignorato
-def should_ignore(file_path):
-    ignore = 'postprocessing' in file_path
-    print(f"Ignorare file '{file_path}': {ignore}")
-    return ignore
-
-# Funzione per rinominare e spostare un singolo file
-def process_file(file_path, valid_datasets, root_directory):
-    pattern = re.compile(
-        r'(DT_)?([a-zA-Z0-9]+(?:_[a-zA-Z0-9]+)*)_?(\w*)_(complex|simple)_(weighted_edit_distance|edit_distance|evaluation_weighted_edit_distance|evaluation_edit_distance|recommendations_weighted_edit_distance|evaluation_edit_distance_lib)?([a-zA-Z0-9\.,]*)(?:\.csv|\.xlsx|\.pdf)?')
-
-    file_name = os.path.basename(file_path)
-    if should_ignore(file_path):
-        return
-    print(f"Elaborazione del file: {file_name}")
-    if file_name.endswith('.csv') or file_name.endswith('.xlsx') or file_name.endswith('.pdf'):
-        match = pattern.match(file_name)
-        if match:
-            dt_prefix = match.group(1) or ""
-            dataset_name = match.group(2)
-            ruleprefix = match.group(3) or "N"
-            type_encoding = match.group(4)
-            selected_evaluation_edit_distance = match.group(5) or ""
-            percentages = match.group(6) or ""
-
-            print(f"Pattern trovato per il file: {file_name}")
-            print(
-                f"dt_prefix: {dt_prefix}, dataset_name: {dataset_name}, ruleprefix: {ruleprefix}, type_encoding: {type_encoding}, selected_evaluation_edit_distance: {selected_evaluation_edit_distance}, percentages: {percentages}")
-
-            if is_valid_dataset(dataset_name, valid_datasets):
-                print(f"Dataset valido trovato: {dataset_name}")
-                # Normalizza i valori percentuali
-                new_percentages = ""
-                if 'weighted_edit_distance' in selected_evaluation_edit_distance:
-                    percentage_values = re.findall(r'\d+\.\d+', percentages)
-                    percentage_values = [f"{int(float(p) * 100)}%" for p in percentage_values]
-                    new_percentages = ','.join(percentage_values)
-                    new_file_name = file_name.replace(percentages, new_percentages)
-                    print(f"Valori percentuali normalizzati: {new_percentages}")
+"""
+# FUnzione per convertire i file .xlsx in .csv quando non era stato introdotto il sistema exel
+def convert_xlsx_to_csv(directory):
+    for root, dirs, files in os.walk(directory):
+        for filename in files:
+            if filename.endswith('.xlsx'):
+                csv_filename = filename.replace('.xlsx', '.csv')
+                csv_filepath = os.path.join(root, csv_filename)
+                if not os.path.exists(csv_filepath):
+                    xlsx_filepath = os.path.join(root, filename)
+                    df = pd.read_excel(xlsx_filepath)
+                    df.to_csv(csv_filepath, index=False)
+                    print(f'Converted {filename} to {csv_filename}')
                 else:
-                    new_file_name = file_name
+                    print(f'{csv_filename} already exists. Skipping conversion.')
 
-                # Ricostruisci il nuovo nome del file
-                new_file_name = f"{dt_prefix}{dataset_name}_{ruleprefix}_{type_encoding}"
-                if selected_evaluation_edit_distance:
-                    new_file_name += f"_{selected_evaluation_edit_distance}"
-                if new_percentages:
-                    new_file_name += new_percentages
 
-                # Aggiungi l'estensione del file
-                new_file_name += os.path.splitext(file_name)[1]
+# Esegui la funzione con la directory desiderata
+convert_xlsx_to_csv('media/output/result')
 
-                # Definisci il percorso di destinazione
-                if dt_prefix:
-                    new_path = os.path.join(root_directory, 'DT', ruleprefix, type_encoding,
-                                            selected_evaluation_edit_distance)
-                else:
-                    new_path = os.path.join(root_directory, 'result', ruleprefix, type_encoding,
-                                            selected_evaluation_edit_distance)
 
-                if 'weighted_edit_distance' in selected_evaluation_edit_distance:
-                    new_path = os.path.join(new_path, new_percentages)
 
-                print(f"Percorso di destinazione: {new_path}")
-                os.makedirs(new_path, exist_ok=True)
-                new_file_path = os.path.join(new_path, new_file_name)
-                os.rename(file_path, new_file_path)
-                print(f"File {file_name} rinominato e spostato in {new_file_path}")
+# Funzione per spostare i file nelle cartelle corrette quando creati prima dell'autosorting
+# Directory di input
+input_directory = 'media/output/result/N' # sostituire a N le varie prefix W/QW e QN
+
+# Mappatura delle stringhe alle cartelle di destinazione
+mappings = {
+    'simple': 'simple',
+    'edit_distance_lib': 'complex/lib',
+    'separate': 'complex/code',
+    '0.0,0.0,1.0': 'complex/weighted/0% 0% 100%',
+    '0%,0%,100%': 'complex/weighted/0% 0% 100%',
+    '1.0,0.0,0.0': 'complex/weighted/100% 0% 0%',
+    '100% 0% 0%': 'complex/weighted/100% 0% 0%',
+    '0.0,1.0,0.0': 'complex/weighted/0% 100% 0%',
+    '0% 100% 0%': 'complex/weighted/0% 100% 0%',
+    '0.33,0.33,0.33': 'complex/weighted/33%',
+    '33%,33%,33%': 'complex/weighted/33%',
+    '0.25,0.5,0.25': 'complex/weighted/25% 50% 25%',
+    '25%,50%,25%': 'complex/weighted/25% 50% 25%',
+    '0.5,0.5,0.0': 'complex/weighted/50% 50% 0%',
+    '50%,50%,0%': 'complex/weighted/50% 50% 0%',
+    '0.0,0.5,0.5': 'complex/weighted/0% 50% 50%',
+    '0%,50%,50%': 'complex/weighted/0% 50% 50%',
+    '0.5,0.0,0.5': 'complex/weighted/50% 0% 50%',
+    '50%,0%,50%': 'complex/weighted/50% 0% 50%'
+}
+
+# Creazione delle cartelle di destinazione se non esistono
+for folder in set(mappings.values()):
+    os.makedirs(os.path.join(input_directory, folder), exist_ok=True)
+
+# Iterazione dei file nella directory di input e nelle sottodirectory
+for root, dirs, files in os.walk(input_directory):
+    for filename in files:
+        file_path = os.path.join(root, filename)
+        # Controllo se il nome del file contiene una delle stringhe specificate
+        for key, folder in mappings.items():
+            if key in filename:
+                # Costruzione del percorso di destinazione
+                dest_folder = os.path.join(input_directory, folder)
+                dest_path = os.path.join(dest_folder, filename)
+                # Spostamento del file
+                shutil.move(file_path, dest_path)
+                break
+
+print("Organizzazione completata.")
+
+
+# Rinomina i file nella directory principale e nelle sottodirectory se creati prima delle regole N
+def process_files(root_directory):
+    # Lista di file da eliminare perché non possono essere rinominati
+    files_to_delete = []
+
+    # Itera attraverso la directory principale e tutte le sottodirectory
+    for dirpath, dirnames, filenames in os.walk(root_directory):
+        for filename in filenames:
+            old_filepath = os.path.join(dirpath, filename)
+
+            # Controlla se il nome del file contiene "NNcomplex" e lo rinomina in "Ncomplex"
+            if "NNcomplex" in filename:
+                new_filename = filename.replace("NNcomplex", "Ncomplex")
+            # Controlla se il nome del file contiene "complex" ma non "Ncomplex" e lo rinomina in "Ncomplex"
+            elif "complex" in filename and "Ncomplex" not in filename:
+                new_filename = filename.replace("complex", "Ncomplex")
             else:
-                print(f"Dataset {dataset_name} non è nella lista dei dataset validi.")
-        else:
-            print(f"Nessun pattern trovato per il file: {file_name}")
+                continue
 
-# Funzione di lancio per analizzare tutta la cartella e le sottocartelle
-def process_directory(directory_path, valid_datasets):
-    print(f"Analisi della directory: {directory_path}")
-    for root, _, files in os.walk(directory_path):
-        print(f"Esplorazione della cartella: {root}")
-        for file_name in files:
-            print(f"Trovato file: {file_name}")
-            file_path = os.path.join(root, file_name)
-            process_file(file_path, valid_datasets, directory_path)
+            new_filepath = os.path.join(dirpath, new_filename)
 
-if __name__ == "__main__":
-    # Percorso del file datasetnames.txt
-    datasetnames_file_path = 'datasetnames.txt'
+            # Verifica se esiste già un file con il nuovo nome
+            if os.path.exists(new_filepath):
+                # Se esiste, aggiungi il file alla lista di quelli da eliminare
+                files_to_delete.append(old_filepath)
+            else:
+                # Altrimenti, rinomina il file
+                os.rename(old_filepath, new_filepath)
 
-    # Carica i nomi dei dataset validi
-    valid_datasets = load_valid_datasets(datasetnames_file_path)
-    print("Dataset validi caricati:", valid_datasets)
+    # Elimina i file che non possono essere rinominati
+    for filepath in files_to_delete:
+        os.remove(filepath)
+        print(f"Deleted file: {filepath}")
 
-    # Directory radice contenente i file estratti
-    root_directory = '/data/output'
 
-    # Processa tutta la directory
-    process_directory(root_directory, valid_datasets)
+# Esegui la funzione sulla directory desiderata
+process_files("media/output/result/N/complex")
+"""

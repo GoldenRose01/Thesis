@@ -27,6 +27,10 @@ def parse_file_name(file_name, dataset_names):
     letter = 'N'
     if '_W' in file_name:
         letter = 'W'
+    elif '_QW' in file_name:
+        letter = 'QW'
+    elif '_QN' in file_name:
+        letter = 'QN'
 
     complexity_type = 'simple' if 'simple' in file_name else 'complex'
 

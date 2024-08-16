@@ -1,0 +1,2 @@
+simple with edit_distance_lib	Null	bpic2015_1_f2	(None, 'gini', 6, 10, 0.1)	89.61	91.01	-1	6
+simple with edit_distance_lib	Null	bpic2015_2_f2	(None, 'entropy', 10, 10, 0.1)	92.12	94.07	-1	10

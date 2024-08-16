@@ -1,0 +1,6 @@
+dataset,current_folder,upper_folder,precision_mean (%),recall_mean (%),fscore_mean (%),precision_weighted (%),recall_weighted (%),fscore_weighted (%)
+bpic2011_f1,0% 0% 100%,W,52.16,100.0,67.85,50.09,100.0,66.3
+Production,0% 0% 100%,W,0.0,0.0,0.0,0.0,0.0,0.0
+sepsis_cases_1,0% 0% 100%,W,71.9,80.0,75.73,85.58,95.47,90.26
+sepsis_cases_2,0% 0% 100%,W,83.91,92.86,88.09,86.21,96.02,90.79
+sepsis_cases_4,0% 0% 100%,W,22.65,100.0,36.33,18.77,100.0,31.24

@@ -45,16 +45,19 @@ def create_directory_structure(base_dir, ruleprefix):
         "complex_weighted": os.path.join(dir_rp, "complex/weighted")
     }
 
-def get_output_dir(type_encoding, selected_evaluation_edit_distance, dirs):
+def get_output_dir(type_encoding, selected_evaluation_edit_distance, dirs, weight_subdir=""):
     if type_encoding == "simple":
         return dirs["simple"]
     elif type_encoding == "complex":
         if selected_evaluation_edit_distance == "weighted_edit_distance":
-            return dirs["complex_weighted"]
+            return os.path.join(dirs["complex_weighted"], weight_subdir)
         elif selected_evaluation_edit_distance == "edit_distance_lib":
             return dirs["complex_lib"]
         elif selected_evaluation_edit_distance == "edit_distance_separate":
             return dirs["complex_code"]
+
+def get_weight_subdir(wtrace_att, wactivities, wresource_att):
+    return f"{wtrace_att}% {wactivities}% {wresource_att}%"
 
 # ========================================paths=========================================================================
 

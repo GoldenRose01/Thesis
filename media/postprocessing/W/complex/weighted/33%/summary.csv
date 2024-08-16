@@ -1,0 +1,5 @@
+dataset,current_folder,upper_folder,precision_mean (%),recall_mean (%),fscore_mean (%),precision_weighted (%),recall_weighted (%),fscore_weighted (%)
+Production,33%,W,60.56,100.0,75.25,63.57,100.0,77.64
+sepsis_cases_1,33%,W,50.2,56.0,52.94,75.23,83.99,79.37
+sepsis_cases_2,33%,W,90.77,100.0,95.1,90.03,100.0,94.69
+sepsis_cases_4,33%,W,22.65,100.0,36.33,18.77,100.0,31.24
