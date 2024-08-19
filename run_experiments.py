@@ -176,7 +176,9 @@ def rec_sys_exp(dataset_name):
 
     """
     labeling = {
-        "type": LabelType.TRACE_DURATION,
+        "type": LabelType.TRACE_DURATION, 
+        "type": LabelType.TRACE_DURATION, 
+        "type": LabelType.TRACE_DURATION, 
         "threshold_type": LabelThresholdType.LABEL_MEAN,
         "target": TraceLabel.TRUE,
         "trace_attribute": "",
@@ -397,7 +399,7 @@ def rec_sys_exp(dataset_name):
     verify.timeprinter(dataset_name, settings.type_encoding, settings.selected_evaluation_edit_distance,
                        settings.wtrace_att, settings.wactivities, settings.wresource_att, time_m_exp)
 
-    postprocessing.process_and_update_summary(settings.results_dir, settings.postprocessing_folder, dataset_info)
+    #postprocessing.process_and_update_summary(settings.results_dir, settings.postprocessing_folder, dataset_info)
 
     at_endexp = f"{dataset_name} simulation required {time_h_exp:.2f}H or {time_m_exp:.2f}min"
     print(f"\n{GREEN}{at_endexp.center(main.infoconsole())}{RESET}\n\n")

@@ -142,3 +142,5 @@ media/input/*
 /.idea
 .idea
 .history
+
+.run

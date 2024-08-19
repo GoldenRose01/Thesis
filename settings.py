@@ -231,7 +231,13 @@ if not os.path.exists(results_dir):
     os.makedirs(results_dir)
 print(f"{BLUE} Using {results_dir}{RESET} ")
 
-postprocessing_folder = "media/postprocessing"
+postprocessing_folder_base = "media/postprocessing"
+postprocessing_dirs = create_directory_structure(postprocessing_folder_base, ruleprefix)
+postprocessing_folder = get_output_dir(type_encoding, selected_evaluation_edit_distance, postprocessing_dirs)
+if not os.path.exists(postprocessing_folder):
+    os.makedirs(postprocessing_folder)
+print(f"{BLUE} Using {postprocessing_folder}{RESET} ")
+
 dataset_folder = "media/input"
 
 # ========================================= checkers ===================================================================
