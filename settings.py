@@ -165,7 +165,7 @@ except ValueError as e:
     print(e)
 
 # Se la somma è inferiore a 1.0 o diverso da 33%, arrotonda il valore più grande per ottenere 1.0
-if not (temp_wresource_att == temp_wtrace_att == temp_wactivities == 0.33):
+if not (temp_wresource_att == temp_wtrace_att == temp_wactivities == 33):
     if total < 100:
         max_value = max(temp_wtrace_att, temp_wactivities, temp_wresource_att)
         increment_remaining = (100 - total)

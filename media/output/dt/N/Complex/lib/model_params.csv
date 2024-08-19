@@ -1,2 +1,4 @@
 complex with edit_distance_lib	Null	bpic2015_1_f2	('balanced', 'gini', None, 1, 0.1)	93.88	97.27	-1	26
 complex with edit_distance_lib	Null	bpic2015_2_f2	(None, 'gini', None, 1, 0.1)	95.04	99.61	-1	29
+complex with edit_distance_lib	Null	bpic2015_1_f2	(None, 'entropy', 10, 1, 2)	94.22	97.23	-1	10
+complex with edit_distance_lib	Null	bpic2015_2_f2	(None, 'gini', None, 1, 0.1)	93.72	98.87	-1	27

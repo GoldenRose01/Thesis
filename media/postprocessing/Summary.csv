@@ -1,3 +1,11 @@
 dataset_name;letter;complexity_type;encoding_type;weighted_values;average_fscore;average_precision;average_recall;Unnamed: 8;weighted_average_fscore;weighted_average_precision;weighted_average_recall
 bpic2015_1_f2;N;complex;edit_distance_lib;/;0,824;0,715;0,973;|;0,829;0,719;0,978
+bpic2015_1_f2;N;complex;edit_distance_lib;/;0,733;0,635;0,865;|;0,752;0,652;0,887
+bpic2015_1_f2;N;complex;weighted_edit_distance;3300% 3300% 3300%;0,733;0,635;0,865;|;0,752;0,652;0,887
+bpic2015_1_f2;N;complex;weighted_edit_distance;3333% 3333% 3333%;0,733;0,635;0,865;|;0,752;0,652;0,887
+bpic2015_1_f2;N;complex;weighted_edit_distance;5000% 5000% 0%;0,733;0,635;0,865;|;0,752;0,652;0,887
 bpic2015_2_f2;N;complex;edit_distance_lib;/;0,910;0,835;1,000;|;0,910;0,835;1,000
+bpic2015_2_f2;N;complex;edit_distance_lib;/;0,819;0,751;0,900;|;0,821;0,753;0,903
+bpic2015_2_f2;N;complex;weighted_edit_distance;3300% 3300% 3300%;0,819;0,751;0,900;|;0,821;0,753;0,903
+bpic2015_2_f2;N;complex;weighted_edit_distance;3333% 3333% 3333%;0,910;0,835;1,000;|;0,910;0,835;1,000
+bpic2015_2_f2;N;complex;weighted_edit_distance;5000% 5000% 0%;0,910;0,835;1,000;|;0,910;0,835;1,000
