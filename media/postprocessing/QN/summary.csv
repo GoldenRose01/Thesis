@@ -1,4 +1,5 @@
 dataset,current_folder,upper_folder,precision_mean (%),recall_mean (%),fscore_mean (%),precision_weighted (%),recall_weighted (%),fscore_weighted (%)
+hospital_billing_3,weighted,QN,95.42,100.0,97.66,95.47,100.0,97.68
 bpic2011_f1,0% 0% 100%,QN,52.16,100.0,67.85,50.09,100.0,66.3
 bpic2011_f2,0% 0% 100%,QN,38.66,100.0,55.74,38.6,100.0,55.68
 bpic2011_f3,0% 0% 100%,QN,61.32,100.0,75.59,60.08,100.0,74.76
