@@ -1,0 +1,2 @@
+dataset_name;letter;complexity_type;encoding_type;weighted_values;average_fscore;average_precision;average_recall;;weighted_average_fscore;weighted_average_precision;weighted_average_recall
+bpic2015_4_f2;N;complex;weighted_edit_distance;5000% 5000% 0%;0,708;0,652;0,775;|;0,757;0,698;0,827

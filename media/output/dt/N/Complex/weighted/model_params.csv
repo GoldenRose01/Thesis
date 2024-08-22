@@ -1,6 +1,3 @@
-complex with weighted_edit_distance	33.333333333333336%,33.333333333333336%,33.333333333333336%	bpic2015_1_f2	(None, 'gini', 10, 1, 2)	94.28	97.49	-1	10
-complex with weighted_edit_distance	33.333333333333336%,33.333333333333336%,33.333333333333336%	bpic2015_2_f2	(None, 'gini', None, 1, 0.1)	95.04	99.61	-1	29
-complex with weighted_edit_distance	33.333333333333336%,33.333333333333336%,33.333333333333336%	bpic2015_1_f2	(None, 'gini', None, 1, 0.1)	93.65	98.95	-1	25
 complex with weighted_edit_distance	33.0%,33.0%,33.0%	bpic2015_1_f2	(None, 'gini', 10, 1, 2)	94.28	97.49	-1	10
 complex with weighted_edit_distance	33.0%,33.0%,33.0%	bpic2015_2_f2	(None, 'gini', None, 1, 0.1)	93.72	98.87	-1	27
 complex with weighted_edit_distance	50.0%,50.0%,0%	bpic2015_1_f2	(None, 'gini', 10, 1, 2)	94.55	97.32	-1	10
@@ -9,3 +6,10 @@ complex with weighted_edit_distance	50.0%,50.0%,0%	bpic2015_3_f2	('balanced', 'g
 complex with weighted_edit_distance	50.0%,50.0%,0%	bpic2015_1_f2	(None, 'gini', 10, 1, 2)	94.55	97.32	-1	10
 complex with weighted_edit_distance	50.0%,50.0%,0%	bpic2015_1_f2	(None, 'gini', 10, 1, 2)	94.55	97.32	-1	10
 complex with weighted_edit_distance	50.0%,50.0%,0%	bpic2015_1_f2	(None, 'gini', 10, 1, 2)	94.55	97.32	-1	10
+complex with weighted_edit_distance	50.0%,50.0%,0%	bpic2015_4_f2	('balanced', 'entropy', None, 1, 2)	97.63	100.0	-1	16
+complex with weighted_edit_distance	50.0%,50.0%,0%	bpic2015_5_f2	(None, 'gini', 4, 10, 0.1)	88.75	91.97	-1	4
+complex with weighted_edit_distance	50.0%,50.0%,0%	bpic2011_f1	(None, 'gini', 8, 10, 2)	88.44	88.93	-1	8
+complex with weighted_edit_distance	50.0%,50.0%,0%	bpic2011_f2	(None, 'gini', None, 1, 0.1)	65.46	86.55	-1	36
+complex with weighted_edit_distance	50.0%,50.0%,0%	bpic2011_f3	(None, 'entropy', 4, 1, 2)	94.42	95.97	-1	4
+complex with weighted_edit_distance	50.0%,50.0%,0%	bpic2011_f4	(None, 'entropy', 8, 1, 2)	85.74	92.81	-1	8
+complex with weighted_edit_distance	50.0%,50.0%,0%	bpic2012_accepted	(None, 'gini', None, 1, 0.1)	80.85	82.23	-1	35
