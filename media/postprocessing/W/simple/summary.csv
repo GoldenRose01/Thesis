@@ -1,6 +1,0 @@
-dataset,current_folder,upper_folder,precision_mean (%),recall_mean (%),fscore_mean (%),precision_weighted (%),recall_weighted (%),fscore_weighted (%)
-Production,simple,W,22.07,18.29,19.92,38.87,31.78,34.8
-sepsis_cases_1,simple,W,61.06,54.41,56.92,81.88,76.1,78.09
-sepsis_cases_2,simple,W,72.73,75.21,73.74,78.67,81.86,80.02
-sepsis_cases_4,simple,W,23.15,37.91,28.48,29.4,49.65,36.59
-sepsis_cases_4,simple,W,23.15,37.91,28.48,29.4,49.65,36.59
