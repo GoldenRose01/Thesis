@@ -4,6 +4,7 @@ import pandas as pd
 
 def process_csv(file_path):
     df = pd.read_csv(file_path)
+
     precision_mean = round(df['precision'].mean() * 100, 2)
     recall_mean = round(df['recall'].mean() * 100, 2)
     fscore_mean = round(df['fscore'].mean() * 100, 2)
