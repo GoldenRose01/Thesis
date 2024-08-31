@@ -5,14 +5,17 @@ import pandas as pd
 def process_csv(file_path):
     df = pd.read_csv(file_path)
 
-    precision_mean = round(df['precision'].mean() * 100, 2)
-    recall_mean = round(df['recall'].mean() * 100, 2)
-    fscore_mean = round(df['fscore'].mean() * 100, 2)
+    # Filtra le righe dove tp, fp, tn, fn sono tutte uguali a 0
+    df_filtered = df[(df['tp'] != 0) | (df['fp'] != 0) | (df['tn'] != 0) | (df['fn'] != 0)]
 
-    total_cases = df['num_cases'].sum()
-    precision_weighted = round((df['precision'] * df['num_cases']).sum() / total_cases * 100, 2)
-    recall_weighted = round((df['recall'] * df['num_cases']).sum() / total_cases * 100, 2)
-    fscore_weighted = round((df['fscore'] * df['num_cases']).sum() / total_cases * 100, 2)
+    precision_mean = round(df_filtered['precision'].mean() * 100, 2)
+    recall_mean = round(df_filtered['recall'].mean() * 100, 2)
+    fscore_mean = round(df_filtered['fscore'].mean() * 100, 2)
+
+    total_cases = df_filtered['num_cases'].sum()
+    precision_weighted = round((df_filtered['precision'] * df_filtered['num_cases']).sum() / total_cases * 100, 2)
+    recall_weighted = round((df_filtered['recall'] * df_filtered['num_cases']).sum() / total_cases * 100, 2)
+    fscore_weighted = round((df_filtered['fscore'] * df_filtered['num_cases']).sum() / total_cases * 100, 2)
 
     return precision_mean, recall_mean, fscore_mean, precision_weighted, recall_weighted, fscore_weighted
 
