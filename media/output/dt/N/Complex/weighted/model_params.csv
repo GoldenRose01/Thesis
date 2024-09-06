@@ -21,3 +21,16 @@ complex with weighted_edit_distance	50.0%,50.0%,0%	traffic_fines_1	('balanced', 
 complex with weighted_edit_distance	0%,0%,100.0%	bpic2012_accepted	('balanced', 'entropy', None, 1, 2)	79.78	92.26	-1	23
 complex with weighted_edit_distance	0%,0%,100.0%	bpic2015_1_f2	(None, 'entropy', 4, 16, 0.1)	87.42	87.42	-1	4
 complex with weighted_edit_distance	0%,0%,100.0%	bpic2012_accepted	('balanced', 'entropy', None, 1, 2)	79.78	92.26	-1	23
+complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2015_2_f2	(None, 'entropy', 4, 16, 2)	89.94	90.86	-1	4
+complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2015_3_f2	(None, 'entropy', 4, 10, 0.3)	88.73	89.83	-1	4
+complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2015_4_f2	(None, 'gini', 8, 1, 2)	93.82	97.9	-1	8
+complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2015_5_f2	('balanced', 'gini', None, 1, 2)	90.34	99.29	-1	37
+complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2011_f2	(None, 'gini', 6, 16, 0.1)	62.71	66.27	-1	6
+complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2011_f3	(None, 'gini', 8, 1, 2)	94.47	98.61	-1	8
+complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2011_f4	(None, 'gini', 6, 10, 0.1)	88.28	89.8	-1	6
+complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2012_accepted	('balanced', 'gini', None, 16, 0.1)	77.27	79.0	-1	75
+complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2012_declined	(None, 'entropy', 4, 16, 2)	90.97	91.02	-1	4
+complex with weighted_edit_distance	50.0%,0%,50.0%	hospital_billing_2	(None, 'entropy', 4, 10, 0.2)	95.82	95.72	-1	4
+complex with weighted_edit_distance	50.0%,0%,50.0%	hospital_billing_3	(None, 'entropy', 4, 16, 2)	97.17	97.17	-1	4
+complex with weighted_edit_distance	50.0%,0%,50.0%	traffic_fines_1	(None, 'entropy', 4, 10, 0.1)	69.58	69.59	-1	1
+complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2015_1_f2	(None, 'gini', 4, 10, 0.2)	86.78	87.65	-1	4
