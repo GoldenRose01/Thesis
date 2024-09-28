@@ -1,0 +1,2 @@
+dataset,current_folder,upper_folder,precision_mean (%),recall_mean (%),fscore_mean (%),precision_weighted (%),recall_weighted (%),fscore_weighted (%)
+hospital_billing_3,50% 50% 0%,QN,95.42,100.0,97.66,95.47,100.0,97.68
