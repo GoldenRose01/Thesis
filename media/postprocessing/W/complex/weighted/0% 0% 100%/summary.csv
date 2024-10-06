@@ -1,6 +1,6 @@
 dataset,current_folder,upper_folder,precision_mean (%),recall_mean (%),fscore_mean (%),precision_weighted (%),recall_weighted (%),fscore_weighted (%)
 bpic2011_f1,0% 0% 100%,W,52.16,100.0,67.85,50.09,100.0,66.3
 Production,0% 0% 100%,W,0.0,0.0,0.0,0.0,0.0,0.0
-sepsis_cases_1,0% 0% 100%,W,89.87,100.0,94.66,89.65,100.0,94.54
-sepsis_cases_2,0% 0% 100%,W,90.36,100.0,94.87,89.78,100.0,94.55
-sepsis_cases_4,0% 0% 100%,W,22.65,100.0,36.33,18.77,100.0,31.24
+Unknown,0% 0% 100%,W,89.87,100.0,94.66,89.65,100.0,94.54
+Unknown,0% 0% 100%,W,90.36,100.0,94.87,89.78,100.0,94.55
+Unknown,0% 0% 100%,W,22.65,100.0,36.33,18.77,100.0,31.24
