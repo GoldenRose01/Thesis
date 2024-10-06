@@ -18,8 +18,8 @@ print_log=False
 print_length=False
 excluded_attributes=concept:name,time:timestamp,label,Case ID
 selected_evaluation_edit_distance=weighted_edit_distance
-wtrace_att=0%
-wactivities=50%
+wtrace_att=50%
+wactivities=0%
 wresource_att=50%
 eval_stamp=False
 recc_stamp=False
@@ -27,3 +27,4 @@ Allprint=False
 weighted_prefix_generation=False
 enable_log=False
 Quick=False
+ 
