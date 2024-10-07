@@ -58,3 +58,7 @@ complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2012_declined	(None, 'ent
 complex with weighted_edit_distance	50.0%,0%,50.0%	hospital_billing_2	(None, 'entropy', 8, 10, 2)	96.79	96.79	-1	8
 complex with weighted_edit_distance	50.0%,0%,50.0%	hospital_billing_3	(None, 'entropy', None, 10, 2)	97.19	97.23	-1	187
 complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2011_f1	(None, 'gini', None, 1, 2)	89.72	100.0	-1	17
+complex with weighted_edit_distance	50.0%,0%,50.0%	Production	('balanced', 'gini', None, 1, 0.2)	57.73	76.08	-1	22
+complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2015_5_f2	('balanced', 'gini', None, 1, 2)	90.34	99.29	-1	37
+complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2012_accepted	('balanced', 'entropy', None, 1, 2)	79.78	92.26	-1	23
+complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2012_accepted	('balanced', 'entropy', None, 1, 2)	79.78	92.26	-1	23
