@@ -1,0 +1,8 @@
+enable_log=False
+Allprint=False
+eval_stamp=False
+recc_stamp=False
+print_length=False
+print_log=False
+Print_edit_distance=False
+print_dt=True

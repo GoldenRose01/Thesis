@@ -2,3 +2,9 @@ complex with edit_distance_lib	Null	bpic2015_1_f2	('balanced', 'gini', None, 1, 
 complex with edit_distance_lib	Null	bpic2015_2_f2	(None, 'gini', None, 1, 0.1)	95.04	99.61	-1	29
 complex with edit_distance_lib	Null	bpic2015_1_f2	(None, 'entropy', 10, 1, 2)	94.22	97.23	-1	10
 complex with edit_distance_lib	Null	bpic2015_2_f2	(None, 'gini', None, 1, 0.1)	93.72	98.87	-1	27
+complex with edit_distance_lib	Null	bpic2012_accepted	('balanced', 'entropy', None, 1, 2)	81.78	94.45	-1	56
+complex with edit_distance_lib	Null	bpic2012_accepted	('balanced', 'gini', None, 1, 0.3)	79.09	80.72	-1	23
+complex with edit_distance_lib	Null	bpic2012_declined	(None, 'gini', None, 1, 0.3)	95.12	95.64	-1	77
+complex with edit_distance_lib	Null	hospital_billing_2	(None, 'entropy', 10, 10, 2)	98.86	98.87	-1	10
+complex with edit_distance_lib	Null	hospital_billing_3	(None, 'entropy', 10, 10, 2)	97.19	97.21	-1	10
+complex with edit_distance_lib	Null	traffic_fines_1	('balanced', 'entropy', 8, 1, 0.1)	82.15	82.16	-1	8

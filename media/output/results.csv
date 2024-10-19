@@ -478,3 +478,8 @@ traffic_fines_1,75.12,"(0.85, 0.1, 0.1, 0.8)",1,2,"('balanced', 'entropy', 6, 1,
 bpic2011_f1,67.85,"(0.85, 0.1, 0.1, 0.8)",1,40,"('balanced', 'gini', None, 1, 2)"
 Production,70.07,"(0.85, 0.1, 0.1, 0.8)",1,40,"('balanced', 'gini', None, 1, 2)"
 bpic2015_5_f2,84.28,"(0.85, 0.1, 0.1, 0.8)",1,40,"('balanced', 'gini', None, 1, 2)"
+bpic2012_accepted,61.57,"(0.85, 0.1, 0.1, 0.8)",1,2,"('balanced', 'entropy', 8, 1, 0.1)"
+bpic2012_declined,89.35,"(0.85, 0.1, 0.1, 0.8)",1,2,"('balanced', 'entropy', 8, 1, 0.1)"
+hospital_billing_2,94.74,"(0.85, 0.1, 0.1, 0.8)",1,2,"('balanced', 'entropy', 8, 1, 0.1)"
+hospital_billing_3,97.66,"(0.85, 0.1, 0.1, 0.8)",1,2,"('balanced', 'entropy', 8, 1, 0.1)"
+traffic_fines_1,75.12,"(0.85, 0.1, 0.1, 0.8)",1,2,"('balanced', 'entropy', 8, 1, 0.1)"
