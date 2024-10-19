@@ -14,7 +14,7 @@ class LoadingWindow(QMainWindow):
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.show_main_window)
-        self.timer.start(5000)  # 5 secondi di caricamento
+        self.timer.start(2500)  # 2,5 secondi di caricamento
 
     def show_main_window(self):
         self.timer.stop()

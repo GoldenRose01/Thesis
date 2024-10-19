@@ -62,3 +62,4 @@ complex with weighted_edit_distance	50.0%,0%,50.0%	Production	('balanced', 'gini
 complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2015_5_f2	('balanced', 'gini', None, 1, 2)	90.34	99.29	-1	37
 complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2012_accepted	('balanced', 'entropy', None, 1, 2)	79.78	92.26	-1	23
 complex with weighted_edit_distance	50.0%,0%,50.0%	bpic2012_accepted	('balanced', 'entropy', None, 1, 2)	79.78	92.26	-1	23
+complex with weighted_edit_distance	0%,0%,100.0%	bpic2012_accepted	('balanced', 'entropy', None, 1, 2)	79.78	92.26	-1	23

@@ -1,9 +1,7 @@
 import sys
-from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QCheckBox, QHBoxLayout, \
-    QPushButton
+from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QCheckBox, QHBoxLayout, QPushButton
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont
-
 
 class DebugWindow(QMainWindow):
     def __init__(self, theme):
@@ -15,11 +13,13 @@ class DebugWindow(QMainWindow):
 
         self.central_widget = QWidget()
         if theme == "dark":
-            self.central_widget.setStyleSheet("background-color: black; color: white;")
-            self.text_color = "white"
+            self.central_widget.setStyleSheet("background-color: black; color: #ccc;")
+            self.text_color = "#ccc"
+            self.check_box_style = "QCheckBox {color: #ccc; background-color: #333; border: 1px solid #ccc;}"
         else:
             self.central_widget.setStyleSheet("background-color: white; color: black;")
             self.text_color = "black"
+            self.check_box_style = "QCheckBox {color: black; background-color: #ddd; border: 1px solid black;}"
         self.setCentralWidget(self.central_widget)
 
         self.main_layout = QVBoxLayout()
@@ -53,12 +53,19 @@ class DebugWindow(QMainWindow):
 
         self.main_layout.addLayout(self.nav_layout)
 
+        # Improve layout organization
+        self.main_layout.setSpacing(10)
+        self.nav_layout.setSpacing(10)
+
+        # Add some padding to the central widget
+        self.central_widget.setContentsMargins(10, 10, 10, 10)
+
     def add_boolean_option(self, option_name, label_text):
         layout = QHBoxLayout()
 
         check_box = QCheckBox("")
         check_box.setChecked(option_name == "print_dt")  # preset attivo di default solo per print_dt
-        check_box.setStyleSheet(f"QCheckBox {{color: {self.text_color};}}")
+        check_box.setStyleSheet(self.check_box_style)
         check_box.toggled.connect(
             lambda checked, lbl=label_text, box=check_box: self.update_boolean_option(lbl, checked, box))
 
@@ -79,8 +86,10 @@ class DebugWindow(QMainWindow):
             check_box.toggled.connect(self.allprint_toggled)
 
     def update_boolean_option(self, label_text, checked, box):
-        color = "green" if checked else "red"
-        box.setStyleSheet(f"QCheckBox {{color: {self.text_color};}}")
+        if checked:
+            box.setStyleSheet(f"{self.check_box_style} color: green;")
+        else:
+            box.setStyleSheet(f"{self.check_box_style} color: red;")
 
     def allprint_toggled(self, checked):
         for label_text, check_box in self.boolean_options:
@@ -99,10 +108,7 @@ class DebugWindow(QMainWindow):
             'Print_edit_distance': self.boolean_options[6][1].isChecked(),
             'print_dt': self.boolean_options[7][1].isChecked()
         }
-
-        with open("Options.dat", "w") as f:
-            for key, value in options.items():
-                f.write(f"{key}={value}\n")
+        return options
 
     def go_back(self):
         from encoding_window import EncodingWindow
@@ -117,9 +123,8 @@ class DebugWindow(QMainWindow):
         self.dataset_window.show()
         self.close()
 
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = DebugWindow("light")  # Usa "light" o "dark" a seconda del tema
+    window = DebugWindow("dark")
     window.show()
     sys.exit(app.exec())

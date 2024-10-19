@@ -6,6 +6,7 @@ from PySide6.QtGui import QColor, QPalette, QFont
 from content import contents_simple_details
 from styles import styles
 
+
 # Presettaggi
 preset_options = {
     'sat_threshold': 0.75,
@@ -175,13 +176,6 @@ class Simpleencoding(QMainWindow):
         self.main_layout.addWidget(container_widget, row, col, 1, 3)
 
     def save_options(self):
-        import sys
-        from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QPushButton, QHBoxLayout, \
-            QSlider, QRadioButton, QButtonGroup, QGridLayout
-        from PySide6.QtCore import Qt
-        from PySide6.QtGui import QColor, QPalette, QFont
-        from content import contents_simple_details
-        from styles import styles
 
         # Presettaggi
         preset_options = {

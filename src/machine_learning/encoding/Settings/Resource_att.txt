@@ -16,4 +16,4 @@ bpic2015_4_f2: Activity;question;org:resource
 bpic2015_5_f2: Activity;question;org:resource
 hospital_billing_2: speciality;Activity;Resource;actOrange;actRed;caseType;flagC;msgCode;msgType;state;version;closeCode
 hospital_billing_3: speciality;Activity;Resource;actOrange;actRed;caseType;flagC;msgCode;msgType;state;version;closeCode
-traffic_fines_1: article;vehicleClass;Activity;Resource;lastSent;notificationType;dismissal
+traffic_fines_1: article;Activity;Resource;lastSent;notificationType;dismissal

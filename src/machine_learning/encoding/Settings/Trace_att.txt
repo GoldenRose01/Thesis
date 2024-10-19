@@ -16,4 +16,4 @@ bpic2015_4_f2:
 bpic2015_5_f2:
 hospital_billing_2: diagnosis
 hospital_billing_3: diagnosis
-traffic_fines_1:
+traffic_fines_1:vehicleClass
