@@ -1,28 +1,55 @@
-# Outcome-Oriented Prescriptive Process Monitoring: Generazione di Raccomandazioni con  Index Encoding
-This repository contains the source code of a prescriptive process monitoring system that provides recommendations for achieving a positive outcome of an ongoing process using a simple or complex index encoding. The recommendations specify which activities to perform and when to execute them. The work is based on  the system available at this [link](https://github.com/ivanDonadello/temporal-prescriptive-process-monitoring_old.git), which establishes temporal relationships among the activities executed within the process to provide recommendations.
+## Outcome-Oriented Prescriptive Process Monitoring with Selectable Index Encoding
 
-# Instruction for running the experiments
-Clone this repo,then follow the instructions below.
+This repository implements a prescriptive process monitoring system that offers recommendations for achieving positive process outcomes. It leverages index encoding (simple or complex) to suggest specific activities and their optimal execution times.
 
-## Requirements
-Verify if the .venv is present if not the libraries needed will be displayed in <code>requirements.txt</code>
-Create a .env file in the root folder and add the <code>C:</code> path to <code>Graphviz\bin</code> 
+**Project Inspiration**
 
-Secondly add the input logs in the folder <code>media/input</code>. The logs used in this experiments are available [here](https://drive.google.com/file/d/1DDP7OKQhD8cno2tbSpLlIPZ-Mh5y-XUC/view). The <code>option.dat</code> file contains the configuration parameters for the experiments and the <code>Encoding.dat</code> let you choose the encoding type.
-To run the experiment type:
-```
-$ python main.py
-```
-The result will be available in the folder <code>media/output</code>.
+This work builds upon the temporal prescriptive process monitoring system developed by ivanDonadello ([Ivan's project link](https://github.com/ivanDonadello/temporal-prescriptive-process-monitoring_old.git)). That system focuses on identifying temporal relationships between process activities to provide recommendations.
 
-## Frontend Block
-The frontend block is available in the folder <code>frontend</code>.It let you have a more User-friendly interface for running the experiment. Please note that not all the option of the frontend are 100% functioning(Declarative button and setting of it are present but not implemented).
-```
-$ cd Fontend
-$ python Gui_runner.py 
-```
-## Postprocessing Block
-If needed a more organzied structure, after the run of the main part, you can use the <code>src/file_verifier/reorganizer.py</code> and then the <code>src/file_verifier/processinginpost.py</code> to move the result folder in subgroups and then scan all the files to ave in the <code>media/postprocessing</code> folder the summary of all the data.
+**Running the Experiments**
 
-# Project based on work of Luca Boschiero
-The repository of his work can be found there [here](https://github.com/lucaboschiero/tesi)
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/GoldenRose01/Thesis
+   ```
+
+2. **Set Up the Environment:**
+   - **Verify Virtual Environment:** Check if a virtual environment named `.venv` exists. If not, install the required libraries listed in `requirements.txt`. You can use `pip install -r requirements.txt` to install them.
+   - **Create a `.env` File:** In the project's root directory, create a file named `.env`. Add a line specifying the path to the `Graphviz\bin` directory on your system (e.g., `C:\Graphviz\bin`).
+
+3. **Prepare Input Logs:**
+   - **Download Logs:** Download the process execution logs from the following link: [Dataset_files](https://drive.google.com/file/d/1DDP7OKQhD8cno2tbSpLlIPZ-Mh5y-XUC/view)
+   - **Place Logs:** Place the downloaded logs in the `media/input` folder.
+   - **(Optional)** Feel free to clean up all the folders on `media/output` and subfolders for not have to deal with my particular results.
+4. **Configuration Files:**
+   - **`option.dat`:** This file holds configuration parameters for the experiments. Modify it to adjust settings as needed.
+   - **`Encoding.dat`:** This file specifies the type of index encoding to use (simple or complex).
+
+5. **Run the Main Script:**
+   ```bash
+   python main.py
+   ```
+
+   The results will be generated and saved in the `media/output` folder.
+
+6. **Frontend Interface (Optional):**
+   - The `frontend` directory contains a Python script for a user-friendly interface to run experiments. However, be aware that not all features are fully functional yet (declarative button functionality is still under development).
+   - To use the interface:
+     ```bash
+     cd frontend
+     python Gui_runner.py
+     ```
+
+7. **Postprocessing (Optional):**
+   - If you desire a more organized result structure:
+     - After running the main script, use `src/file_verifier/reorganizer.py` to organize output folders.
+     - Then, use `src/file_verifier/processinginpost.py` to scan all files and generate a summary of the data in the `media/postprocessing` folder.
+
+**Project Inspiration:**
+
+- Luca Boschiero's work ([https://github.com/lucaboschiero/tesi](https://github.com/lucaboschiero/tesi)) served as a foundational source for this project.
+
+**Additional Considerations:**
+
+- Ensure you have the necessary permissions to access the provided Google Drive link for downloading logs.
+- Customize configuration parameters in `option.dat` to tailor experiments to your specific process and goals.
