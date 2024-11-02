@@ -1,2 +1,3 @@
 complex with edit_distance_separate	Null	bpic2015_1_f2	(None, 'entropy', 10, 1, 2)	94.22	97.23	-1	10
 complex with edit_distance_separate	Null	bpic2015_2_f2	(None, 'gini', None, 1, 0.1)	95.04	99.61	-1	29
+complex with edit_distance_separate	Null	traffic_fines_1	('balanced', 'entropy', 8, 1, 0.1)	82.15	82.16	-1	8

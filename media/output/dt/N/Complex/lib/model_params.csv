@@ -8,3 +8,4 @@ complex with edit_distance_lib	Null	bpic2012_declined	(None, 'gini', None, 1, 0.
 complex with edit_distance_lib	Null	hospital_billing_2	(None, 'entropy', 10, 10, 2)	98.86	98.87	-1	10
 complex with edit_distance_lib	Null	hospital_billing_3	(None, 'entropy', 10, 10, 2)	97.19	97.21	-1	10
 complex with edit_distance_lib	Null	traffic_fines_1	('balanced', 'entropy', 8, 1, 0.1)	82.15	82.16	-1	8
+complex with edit_distance_lib	Null	traffic_fines_1	('balanced', 'entropy', 6, 1, 0.1)	82.16	82.17	-1	6
