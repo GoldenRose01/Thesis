@@ -244,6 +244,10 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold,
     activities = dt_input_trainval.encode(activities,features)
     # Pre-elaborazione di hyp da dati codificati
     hyp_t = [int(value) if isinstance(value, str) and value.isdigit() else value for value in activities.iloc[0].values]
+    #if settings.Allprint:
+    print(f"{features}\n")
+    print(f"{hyp_t}\n")
+
     if settings.type_encoding == "complex":
         hyp = rm_vect_element(hyp=hyp_t,
                               list_of_index=list_of_index,
@@ -296,6 +300,9 @@ def evaluate(trace, path, num_prefixes, dt_input_trainval, sat_threshold,
         ref = ref[num_prefixes:]
 
     ref = ref.tolist()
+    #if settings.Allprint:
+    print(f"{features}\n")
+    print(f"{hyp}\n")
 
     ed = 0
     # Override di sicurezza per simple encoding
